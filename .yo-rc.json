@@ -1,0 +1,47 @@
+{
+  "generator-material-app": {
+    "appname": "austack",
+    "registerRoutesFile": "server/routes.js",
+    "routesNeedle": "// Insert routes below",
+    "insertRoutes": true,
+    "routesBase": "/api/",
+    "pluralizeRoutes": true,
+    "insertSockets": true,
+    "registerSocketsFile": "server/config/socketio.js",
+    "socketsNeedle": "// Insert sockets below",
+    "modulesNeedle": "// Add modules below",
+    "features": {
+      "auth": true,
+      "socketio": true
+    },
+    "angularModules": [
+      "'ngCookies'",
+      "'ngResource'",
+      "'ngSanitize'",
+      "'ngMessages'",
+      "'ngMaterial'",
+      "'ui.router'",
+      "'btford.socket-io'",
+      "'austackApp.lodash'",
+      "'austackApp.mainMenu'",
+      "'austackApp.io'",
+      "'austackApp.socket'",
+      "'austackApp.auth'",
+      "'austackApp.admin'",
+      "'austackApp.account'",
+      "'austackApp.main'"
+    ],
+    "componentsDirectory": "client/app/components/",
+    "routeDirectory": "client/app/",
+    "directiveDirectory": "client/app/components",
+    "filterDirectory": "client/app/components",
+    "serviceDirectory": "client/app/components",
+    "basePath": "app",
+    "moduleName": "",
+    "extensions": [
+      "js",
+      "html",
+      "scss"
+    ]
+  }
+}

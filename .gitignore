@@ -1,0 +1,6 @@
+node_modules/
+client/bower_components/
+.sass-cache/
+.tmp/
+dist/
+npm-debug.log
