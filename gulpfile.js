@@ -1,44 +1,31 @@
-/**
- * Usage
- * gulp [task]  --env development
- */
 'use strict';
 
 var gulp = require('gulp');
-var del = require('del');
-var minimist = require('minimist');
-var requireDir = require('require-dir');
-var conf = require('./gulp/config');
+var gutil = require('gulp-util');
+var wrench = require('wrench');
 
-// all known options that can be passed by --option
-// and their defaults
-var knownOptions = {
-	string: ['env'],
-	default: {
-		env: process.env.NODE_ENV || 'test'
-	}
+var options = {
+  src: 'client',
+  dist: 'dist',
+  tmp: '.tmp',
+  e2e: 'e2e',
+  errorHandler: function (title) {
+    return function (err) {
+      gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
+      this.emit('end');
+    };
+  },
+  wiredep: {
+    directory: 'bower_components'
+  }
 };
 
-// parse optional arguments and set environment variables
-var options = minimist(process.argv.slice(2), knownOptions);
-process.env.NODE_ENV = options.env;
-
-// include tasks
-requireDir('./gulp/tasks');
-
-/**
- * Default task definitions
- */
-
-/**
- * Clean task
- * Removes the dist and build directories
- */
-gulp.task('clean', function () {
-	return del([conf.dirs.dist, conf.dirs.build]);
+wrench.readdirSyncRecursive('./gulp').filter(function (file) {
+  return (/\.(js|coffee)$/i).test(file);
+}).map(function (file) {
+  require('./gulp/' + file)(options);
 });
 
-/**
- * Grouped task definitions
- */
-gulp.task('default', ['build']);
+gulp.task('default', ['clean'], function () {
+  gulp.start('build');
+});
