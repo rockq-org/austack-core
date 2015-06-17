@@ -1,4 +1,4 @@
- /*jshint unused:false */
+/*jshint unused:false */
 
 /***************
 
@@ -21,13 +21,13 @@ var chalk = require('chalk');
 /*
  * Location of your backend server
  */
-var proxyTarget = 'http://server/context/';
+var proxyTarget = 'http://localhost:9001/';
 
 var proxy = httpProxy.createProxyServer({
   target: proxyTarget
 });
 
-proxy.on('error', function(error, req, res) {
+proxy.on('error', function (error, req, res) {
   res.writeHead(500, {
     'Content-Type': 'text/plain'
   });
@@ -48,10 +48,11 @@ function proxyMiddleware(req, res, next) {
    * for your needs. If you can, you could also check on a context in the url which
    * may be more reliable but can't be generic.
    */
-  if (/\.(html|css|js|png|jpg|jpeg|gif|ico|xml|rss|txt|eot|svg|ttf|woff|woff2|cur)(\?((r|v|rel|rev)=[\-\.\w]*)?)?$/.test(req.url)) {
-    next();
-  } else {
+  //if (/\.(html|css|js|png|jpg|jpeg|gif|ico|xml|rss|txt|eot|svg|ttf|woff|woff2|cur)(\?((r|v|rel|rev)=[\-\.\w]*)?)?$/.test(req.url)) {
+  if (req.url.indexOf('/api') > -1 || req.url.indexOf('/auth') > -1 || req.url.indexOf('socket.io') > -1) {
     proxy.web(req, res);
+  } else {
+    next();
   }
 }
 
@@ -62,6 +63,6 @@ function proxyMiddleware(req, res, next) {
  */
 
 //module.exports = [proxyMiddleware];
-module.exports = function() {
-  return [];
+module.exports = function () {
+  return [proxyMiddleware];
 };

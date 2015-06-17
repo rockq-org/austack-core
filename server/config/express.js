@@ -16,7 +16,6 @@ var methodOverride = require('method-override');
 var favicon = require('serve-favicon');
 var errorHandler = require('errorhandler');
 var passport = require('passport');
-var cors = require('cors');
 var config = require('./index');
 
 // export the express configuration function
@@ -59,7 +58,6 @@ function initExpress(app) {
     app.use(express.static(publicDir));
     app.set('appPath', publicDir);
     app.use(morgan('dev'));
-    app.use(cors());
     // Error handler - has to be last
     app.use(errorHandler());
   }

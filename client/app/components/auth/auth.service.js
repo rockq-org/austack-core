@@ -95,7 +95,7 @@
       var deferred = $q.defer();
       $cookies.customerId = user.customerId;
 
-      $http.post('http://localhost:9001/auth/local', {
+      $http.post('/auth/local', {
         customerId: user.customerId,
         name: user.name,
         password: user.password

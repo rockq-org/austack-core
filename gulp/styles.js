@@ -7,7 +7,7 @@ var $ = require('gulp-load-plugins')();
 
 var wiredep = require('wiredep').stream;
 
-module.exports = function(options) {
+module.exports = function (options) {
   gulp.task('styles', function () {
     var sassOptions = {
       style: 'expanded'
@@ -17,10 +17,12 @@ module.exports = function(options) {
       options.src + '/app/**/*.scss',
       '!' + options.src + '/app/index.scss',
       '!' + options.src + '/app/vendor.scss'
-    ], { read: false });
+    ], {
+      read: false
+    });
 
     var injectOptions = {
-      transform: function(filePath) {
+      transform: function (filePath) {
         filePath = filePath.replace(options.src + '/app/', '');
         return '@import \'' + filePath + '\';';
       },
@@ -33,9 +35,9 @@ module.exports = function(options) {
     var vendorFilter = $.filter('vendor.scss');
 
     return gulp.src([
-      options.src + '/app/index.scss',
-      options.src + '/app/vendor.scss'
-    ])
+        options.src + '/app/index.scss',
+        options.src + '/app/vendor.scss'
+      ])
       .pipe(indexFilter)
       .pipe($.inject(injectFiles, injectOptions))
       .pipe(indexFilter.restore())
@@ -47,6 +49,8 @@ module.exports = function(options) {
       .pipe($.autoprefixer()).on('error', options.errorHandler('Autoprefixer'))
       .pipe($.sourcemaps.write())
       .pipe(gulp.dest(options.tmp + '/serve/app/'))
-      .pipe(browserSync.reload({ stream: true }));
+      .pipe(browserSync.reload({
+        stream: true 
+      }));
   });
 };
