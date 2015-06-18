@@ -49,9 +49,8 @@
 
     $httpProvider.interceptors.push('AuthInterceptor');
 
-
     // set the default palette name
-    var defaultPalette = 'blue';
+    var defaultPalette = 'teal';
     // define a palette to darken the background of components
     var greyBackgroundMap = $mdThemingProvider.extendPalette(defaultPalette, {
       'A100': 'fafafa'
