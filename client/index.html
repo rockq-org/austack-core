@@ -22,14 +22,13 @@
   <!-- endbuild -->
 </head>
 
-<body ng-app="austackApp" ng-controller="AppController as appController" layout="row">
+<body ng-app="austackApp" ng-controller="AppController as appController">
   <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-	your browser</a> to improve your experience.</p>
+  your browser</a> to improve your experience.</p>
 <![endif]-->
-  <main-menu></main-menu>
   <!-- Add your site or application content here -->
-  <main ng-cloak layout="column" flex ui-view></main>
+  <div ui-view></div>
   <script src="socket.io-client/socket.io.js"></script>
   <!-- build:js(src) scripts/vendor.js -->
   <!-- bower:js -->

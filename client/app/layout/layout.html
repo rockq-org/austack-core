@@ -1,0 +1,9 @@
+<div layout="row">
+  <main-menu></main-menu>
+  <div layout="column" flex>
+    <header ng-include="'app/layout/header/header.html'"></header>
+    <section ng-include="'app/layout/breadcrumb/breadcrumb.html'"></section>
+    <section ui-view></section>
+    <footer ng-include="'app/layout/footer/footer.html'"></footer>
+  </div>
+</div>

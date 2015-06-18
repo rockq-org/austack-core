@@ -26,7 +26,8 @@
       'austackApp.auth',
       'austackApp.admin',
       'austackApp.account',
-      'austackApp.main'
+      'austackApp.main',
+      'austackApp.layout'
     ])
     .config(appConfig)
     .run(appRun);
