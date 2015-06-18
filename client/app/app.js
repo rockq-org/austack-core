@@ -18,6 +18,7 @@
       'ngMaterial',
       'ui.router',
       'btford.socket-io',
+      'angular-loading-bar',
       'austackApp.lodash',
       'austackApp.mainMenu',
       'austackApp.io',
