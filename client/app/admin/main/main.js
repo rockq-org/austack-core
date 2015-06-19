@@ -37,7 +37,10 @@
       role: 'admin',
       templateUrl: 'app/admin/main/main.html',
       controller: 'AdminMainController',
-      controllerAs: 'main'
+      controllerAs: 'main',
+      ncyBreadcrumb: {
+        label: 'Admin'
+      }
     };
 
     $stateProvider.state(mainState);

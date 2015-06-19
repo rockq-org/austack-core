@@ -18,7 +18,10 @@
       authenticate: true,
       templateUrl: 'app/dashboard/dashboard.html',
       controller: 'DashboardController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      ncyBreadcrumb: {
+        label: 'Dashboard'
+      }
     };
 
     $stateProvider.state(dashboardState);

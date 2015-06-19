@@ -64,6 +64,9 @@
           controller: 'UserItemsController',
           controllerAs: 'items'
         }
+      },
+      ncyBreadcrumb: {
+        label: 'User'
       }
     };
 

@@ -23,7 +23,10 @@
       abstract: true,
       templateUrl: 'app/admin/admin.html',
       controller: 'AdminController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      ncyBreadcrumb: {
+        label: 'User'
+      }
     };
 
     //$urlRouterProvider.when('/admin', '/admin/');

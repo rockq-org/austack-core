@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('austackApp.layout.breadcrumb', [])
+    .module('austackApp.layout.breadcrumb', ['ncy-angular-breadcrumb'])
     .controller('BreadcrumbController', BreadcrumbController);
 
   BreadcrumbController.$inject = [];
