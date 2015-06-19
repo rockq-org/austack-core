@@ -41,7 +41,8 @@
   function configUserListRoutes($stateProvider, sidebarProvider) {
     // The list state configuration
     var listState = {
-      name: 'root.admin.user.list',
+      name: 'admin.user.list',
+      parent: 'admin.user',
       url: '/',
       authenticate: true,
       role: 'admin',
@@ -51,14 +52,14 @@
       views: {
 
         // target the unnamed view in the user state
-        '@root.admin.user': {
+        '@admin.user': {
           templateUrl: 'app/admin/user/list/list.html',
           controller: 'UserListController',
           controllerAs: 'list'
         },
 
         // target the content view in the admin.user.list state
-        'content@root.admin.user.list': {
+        'content@admin.user.list': {
           templateUrl: 'app/admin/user/list/items/items.html',
           controller: 'UserItemsController',
           controllerAs: 'items'

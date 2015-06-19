@@ -39,8 +39,8 @@
        */
       function openPage() {
         $mdSidenav(componentId)
-          .close()
-          .then(mainContentArea.focus());
+          .close();
+        //.then(mainContentArea.focus());
       }
     }
   }

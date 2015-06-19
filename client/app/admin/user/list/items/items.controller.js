@@ -65,7 +65,7 @@
      */
     function showInDetails(user) {
       curUserId = user._id;
-      $state.go('root.admin.user.list.detail', {
+      $state.go('admin.user.list.detail', {
         'id': curUserId
       });
     }

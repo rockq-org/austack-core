@@ -30,8 +30,9 @@
   function configAdminMain($stateProvider, sidebarProvider) {
     // The main state configuration
     var mainState = {
-      name: 'root.admin.main',
-      url: '/admin',
+      name: 'admin.main',
+      parent: 'root',
+      url: '/admin/main',
       authenticate: true,
       role: 'admin',
       templateUrl: 'app/admin/main/main.html',

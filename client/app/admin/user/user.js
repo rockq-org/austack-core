@@ -35,7 +35,8 @@
   function configUserRoutes($urlRouterProvider, $stateProvider) {
     // The user state configuration
     var userState = {
-      name: 'root.admin.user',
+      name: 'admin.user',
+      parent: 'admin',
       url: '/user',
       abstract: true,
       templateUrl: 'app/admin/user/user.html',

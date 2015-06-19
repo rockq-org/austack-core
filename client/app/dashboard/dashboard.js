@@ -12,7 +12,8 @@
   // route config function configuring the passed $stateProvider
   function configMainRoute($stateProvider, sidebarProvider) {
     var dashboardState = {
-      name: 'root.dashboard',
+      name: 'dashboard',
+      parent: 'root',
       url: '/',
       authenticate: true,
       templateUrl: 'app/dashboard/dashboard.html',

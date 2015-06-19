@@ -49,13 +49,14 @@
   function configureUserListEdit($stateProvider) {
     // The edit state configuration.
     var editState = {
-      name: 'root.admin.user.list.edit',
-      url: 'edit/:id',
+      name: 'admin.user.list.edit',
+      parent: 'admin.user.list',
+      url: '/edit/:id',
       authenticate: true,
       role: 'admin',
       onEnter: onEnterUserListEdit,
       views: {
-        'detail@root.admin.user.list': {
+        'detail@root': {
           templateUrl: 'app/admin/user/list/edit/edit.html',
           controller: 'UserEditController',
           controllerAs: 'edit',

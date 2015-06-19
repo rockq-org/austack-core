@@ -38,13 +38,14 @@
   function configureUserListDetail($stateProvider) {
     // The detail state configuration
     var detailState = {
-      name: 'root.admin.user.list.detail',
-      url: 'detail/:id',
+      name: 'admin.user.list.detail',
+      parent: 'admin.user.list',
+      url: '/detail/:id',
       onEnter: onEnterUserListDetail,
       authenticate: true,
       role: 'admin',
       views: {
-        'detail@admin.user.list': {
+        'detail@root': {
           templateUrl: 'app/admin/user/list/detail/detail.html',
           controller: 'UserDetailController',
           controllerAs: 'detail',

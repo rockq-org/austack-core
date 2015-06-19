@@ -41,8 +41,9 @@
 
   function configureUserCreateRoutes($stateProvider) {
     var createListState = {
-      name: 'root.admin.user.list.create',
-      url: 'create',
+      name: 'admin.user.list.create',
+      parent: 'admin.user',
+      url: '/create',
       authenticate: true,
       role: 'admin',
       onEnter: onEnterUserListCreateView
@@ -77,7 +78,7 @@
      * @returns {promise}
      */
     function transitionTo(answer) {
-      return $state.transitionTo('root.admin.user.list');
+      return $state.transitionTo('admin.user.list');
     }
 
     /**

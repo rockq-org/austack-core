@@ -17,8 +17,10 @@
   // route config function configuring the passed $stateProvider
   function configAdminRoute($urlRouterProvider, $stateProvider) {
     var adminState = {
-      name: 'root.admin',
+      name: 'admin',
+      parent: 'root',
       url: '/admin',
+      abstract: true,
       templateUrl: 'app/admin/admin.html',
       controller: 'AdminController',
       controllerAs: 'vm'
