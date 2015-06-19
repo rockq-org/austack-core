@@ -1,18 +1,18 @@
 (function () {
   'use strict';
 
-  // register the service as MainMenu
+  // register the service as Sidebar
   angular
-    .module('austackApp.mainMenu')
-    .directive('mainMenu', MainMenu);
+    .module('austackApp.sidebar')
+    .directive('sidebar', Sidebar);
 
-  // add MainMenu dependencies to inject
-  MainMenu.$inject = ['$rootScope', '$mdSidenav', '$document'];
+  // add Sidebar dependencies to inject
+  Sidebar.$inject = ['$rootScope', '$mdSidenav', '$document'];
 
   /**
-   * MainMenu directive
+   * Sidebar directive
    */
-  function MainMenu($rootScope, $mdSidenav, $document) {
+  function Sidebar($rootScope, $mdSidenav, $document) {
     // directive definition members
     var directive = {
       link: link,
@@ -25,7 +25,7 @@
 
     // directives link definition
     function link(scope, elem, attrs) {
-      var componentId = attrs.mdComponentId || 'mainMenu';
+      var componentId = attrs.mdComponentId || 'sidebar';
       var mainContentArea = $document[0].querySelector(attrs.mainContent || 'main');
 
       $rootScope.$on('$locationChangeSuccess', openPage);
@@ -33,7 +33,7 @@
       /**
        * @ngdoc function
        * @name openPage
-       * @methodOf mainMenu.directive:
+       * @methodOf sidebar.directive:
        * @description
        * Open a page
        */

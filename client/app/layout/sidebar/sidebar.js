@@ -1,21 +1,21 @@
 /**
  * @ngdoc overview
- * @name mainMenu
+ * @name sidebar
  * @requires austackApp.lodash
  * @requires austackApp.auth
  * @description
- * The `austackApp.mainMenu` module which provides:
+ * The `austackApp.sidebar` module which provides:
  *
- * - {@link mainMenu.controller:MainMenuController MainMenuController}
- * - {@link mainMenu.service:mainMenu mainMenu-service}
+ * - {@link sidebar.controller:SidebarController SidebarController}
+ * - {@link sidebar.service:sidebar sidebar-service}
  */
 
 (function () {
-	'use strict';
+  'use strict';
 
-	angular.module('austackApp.mainMenu', [
-		'austackApp.lodash',
-		'austackApp.auth'
-	])
+  angular.module('austackApp.sidebar', [
+    'austackApp.lodash',
+    'austackApp.auth'
+  ])
 
 })();

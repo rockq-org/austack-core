@@ -1,67 +1,59 @@
 /**
  * @ngdoc controller
- * @name mainMenu.controller:MainMenuController
+ * @name sidebar.controller:SidebarController
  * @description
  * The controller for the main menu
  *
  */
 
 (function () {
-	'use strict';
+  'use strict';
 
-	// register the controller as MainMenuController
-	angular
-		.module('austackApp.mainMenu')
-		.controller('MainMenuController', MainMenuController);
-
-
-	/**
-	 * @ngdoc function
-	 * @name mainMenu.provider:MainMenuController
-	 * @description
-	 * Provider of the {@link mainMenu.controller:MainMenuController MainMenuController}
-	 * @param {Service} $rootScope The rootScope service to use
-	 * @param {Service} mainMenu The mainMenu service to use
-	 * @param {Service} $mdSidenav The mdSidenav service to use
-	 * @param {Service} _ The lodash service to use
-	 * @returns {Service} {@link mainMenu.controller:MainMenuController MainMenuController}
-	 */
-
-	MainMenuController.$inject = ['mainMenu', '$mdSidenav', '_', 'Auth'];
+  // register the controller as SidebarController
+  angular
+    .module('austackApp.sidebar')
+    .controller('SidebarController', SidebarController);
 
 
-	function MainMenuController(mainMenu, $mdSidenav, _ , Auth) {
-		var vm = this;
+  /**
+   * @ngdoc function
+   * @name sidebar.provider:SidebarController
+   * @description
+   * Provider of the {@link sidebar.controller:SidebarController SidebarController}
+   * @param {Service} $rootScope The rootScope service to use
+   * @param {Service} sidebar The sidebar service to use
+   * @param {Service} $mdSidenav The mdSidenav service to use
+   * @param {Service} _ The lodash service to use
+   * @returns {Service} {@link sidebar.controller:SidebarController SidebarController}
+   */
 
-		// view model bindings
-		vm.sidenavId = 'mainMenu';
-		vm.items = _.sortBy(mainMenu.getMenu(), 'order');
-		vm.close = close;
-		vm.canAccess = canAccess;
-		vm.logout = logout;
+  SidebarController.$inject = ['sidebar', '$mdSidenav', '_', 'Auth'];
 
-		function close() {
-			return $mdSidenav(vm.sidenavId).close();
-		}
 
-		/**
-		 * Check if the current user can access the menu item
-		 * @param {Object} menuItem
-		 */
-		function canAccess(menuItem) {
-			if (menuItem.role) {
-				return Auth.hasRole(menuItem.role);
-			}
+  function SidebarController(sidebar, $mdSidenav, _, Auth) {
+    var vm = this;
 
-			return true;
-		}
+    // view model bindings
+    vm.sidenavId = 'sidebar';
+    vm.items = _.sortBy(sidebar.getMenu(), 'order');
+    vm.close = close;
+    vm.canAccess = canAccess;
 
-		/**
-		 * Logout the current user
-		 */
-		function logout() {
-			vm.close().then(Auth.logout);
-		}
-	}
+    function close() {
+      return $mdSidenav(vm.sidenavId).close();
+    }
+
+    /**
+     * Check if the current user can access the menu item
+     * @param {Object} menuItem
+     */
+    function canAccess(menuItem) {
+      if (menuItem.role) {
+        return Auth.hasRole(menuItem.role);
+      }
+
+      return true;
+    }
+  }
 
 })();

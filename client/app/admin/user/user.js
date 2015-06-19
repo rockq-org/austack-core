@@ -1,51 +1,49 @@
 (function () {
-	'use strict';
+  'use strict';
 
-	/**
-	 * Introduce the austackApp.user module
-	 * and configure it.
-	 *
-	 * @requires ngResource
-	 * @requires ui.router
-	 * @requires {austackApp.admin.user.list}
-	 * @requires {austackApp.admin.user.create}
-	 */
-	angular
-		.module('austackApp.admin.user', [
-			'ngResource',
-			'ui.router',
-			'austackApp.admin.user.list',
-			'austackApp.admin.user.create'
-		])
-		.config(configUserRoutes);
+  /**
+   * Introduce the austackApp.user module
+   * and configure it.
+   *
+   * @requires ngResource
+   * @requires ui.router
+   * @requires {austackApp.admin.user.list}
+   * @requires {austackApp.admin.user.create}
+   */
+  angular
+    .module('austackApp.admin.user', [
+      'ngResource',
+      'ui.router',
+      'austackApp.admin.user.list',
+      'austackApp.admin.user.create'
+    ])
+    .config(configUserRoutes);
 
-	// inject configUserRoutes dependencies
-	configUserRoutes.$inject = ['$urlRouterProvider', '$stateProvider'];
+  // inject configUserRoutes dependencies
+  configUserRoutes.$inject = ['$urlRouterProvider', '$stateProvider'];
 
-	/**
-	 * Route configuration function configuring the passed $stateProvider.
-	 * Register the abstract user state with the user template
-	 * paired with the UserController as 'index'.
-	 * The injectable 'users' is resolved as a list of all users
-	 * and can be injected in all sub controllers.
-	 *
-	 * @param {$urlRouterProvider} $urlRouterProvider - The URL router provider to redirect to the main state
-	 * @param {$stateProvider} $stateProvider - The state provider to configure
-	 */
-	function configUserRoutes($urlRouterProvider, $stateProvider) {
-		// The user state configuration
-		var userState = {
-			name: 'admin.user',
-			parent: 'admin',
-			url: '/user',
-			abstract: true,
-			templateUrl: 'app/admin/user/user.html',
-			controller: 'UserController',
-			controllerAs: 'index'
-		};
+  /**
+   * Route configuration function configuring the passed $stateProvider.
+   * Register the abstract user state with the user template
+   * paired with the UserController as 'index'.
+   * The injectable 'users' is resolved as a list of all users
+   * and can be injected in all sub controllers.
+   *
+   * @param {$urlRouterProvider} $urlRouterProvider - The URL router provider to redirect to the main state
+   * @param {$stateProvider} $stateProvider - The state provider to configure
+   */
+  function configUserRoutes($urlRouterProvider, $stateProvider) {
+    // The user state configuration
+    var userState = {
+      name: 'root.admin.user',
+      url: '/user',
+      abstract: true,
+      templateUrl: 'app/admin/user/user.html',
+      controller: 'UserController',
+      controllerAs: 'index'
+    };
 
-		$urlRouterProvider.when('/admin/user', '/admin/user/');
-		$stateProvider.state(userState);
-	}
+    $stateProvider.state(userState);
+  }
 
 })();

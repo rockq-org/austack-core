@@ -2,13 +2,21 @@
   'use strict';
 
   angular
-    .module('austackApp.layout.header', [])
+    .module('austackApp.layout.header', ['austackApp.auth'])
     .controller('HeaderController', HeaderController);
 
-  HeaderController.$inject = [];
+  HeaderController.$inject = ['Auth'];
   /* @ngInject */
-  function HeaderController() {
+  function HeaderController(Auth) {
     var vm = this;
 
+    vm.logout = logout;
+
+    /**
+     * Logout the current user
+     */
+    function logout() {
+      Auth.logout();
+    }
   }
 })();

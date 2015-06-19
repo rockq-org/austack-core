@@ -1,15 +1,10 @@
-<md-sidenav md-component-id="mainMenu" class="md-sidenav-left md-whiteframe-z2" md-is-locked-open="$mdMedia('gt-sm')">
+<md-sidenav md-component-id="sidebar" class="md-sidenav-left md-whiteframe-z2" md-is-locked-open="$mdMedia('gt-sm')">
   <md-toolbar>
     <span class="logo md-toolbar-tools" layout="column">
       <img src="assets/images/angular.png"><span>Austack</span>
     </span>
   </md-toolbar>
-  <md-content flex ng-controller="MainMenuController as menu">
-    <ul>
-      <li>
-        <md-button ng-click="menu.logout()">Logout</md-button>
-      </li>
-    </ul>
+  <md-content flex ng-controller="SidebarController as menu">
     <ul ng-repeat="item in menu.items">
       <li ng-show="menu.canAccess(item)">
         <md-button ui-sref-active="md-primary" ui-sref="{{item.state}}">{{item.name}}</md-button>

@@ -20,13 +20,13 @@
       'btford.socket-io',
       'angular-loading-bar',
       'austackApp.lodash',
-      'austackApp.mainMenu',
+      'austackApp.sidebar',
       'austackApp.io',
       'austackApp.socket',
       'austackApp.auth',
       'austackApp.admin',
       'austackApp.account',
-      'austackApp.main',
+      'austackApp.dashboard',
       'austackApp.layout'
     ])
     .config(appConfig)
@@ -74,6 +74,7 @@
     $mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');
     $mdIconProvider.iconSet('toggle', spritePath + 'svg-sprite-toggle.svg');
     $mdIconProvider.iconSet('alert', spritePath + 'svg-sprite-alert.svg');
+    $mdIconProvider.iconSet('logout', spritePath + 'svg-sprite-navigation.svg');
   }
 
   /* App run bootstrap */
