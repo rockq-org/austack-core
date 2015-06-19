@@ -46,7 +46,10 @@
       url: '/create',
       authenticate: true,
       role: 'admin',
-      onEnter: onEnterUserListCreateView
+      onEnter: onEnterUserListCreateView,
+      ncyBreadcrumb: {
+        label: 'Create'
+      }
     };
 
     $stateProvider.state(createListState);

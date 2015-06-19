@@ -41,7 +41,10 @@
       abstract: true,
       templateUrl: 'app/admin/user/user.html',
       controller: 'UserController',
-      controllerAs: 'index'
+      controllerAs: 'index',
+      ncyBreadcrumb: {
+        skip: true
+      }
     };
 
     $stateProvider.state(userState);

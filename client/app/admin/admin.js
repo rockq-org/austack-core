@@ -25,7 +25,7 @@
       controller: 'AdminController',
       controllerAs: 'vm',
       ncyBreadcrumb: {
-        label: 'User'
+        label: 'Admin'
       }
     };
 
