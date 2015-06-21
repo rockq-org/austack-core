@@ -1,15 +1,18 @@
 {
   "html": {
     "indent_char": " ",
-    "indent_size": 2
+    "indent_size": 2,
+    "end_with_newline": true
   },
   "css": {
     "indent_char": " ",
-    "indent_size": 2
+    "indent_size": 2,
+    "end_with_newline": true
   },
   "js": {
     "indent_char": " ",
     "indent_size": 2,
-    "jslint_happy": true
+    "jslint_happy": true,
+    "end_with_newline": true
   }
 }
