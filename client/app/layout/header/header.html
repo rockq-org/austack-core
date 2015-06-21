@@ -1,0 +1,12 @@
+<md-toolbar ng-controller="HeaderController as vm">
+  <div class="md-toolbar-tools" flex layout="row">
+    <md-button hide-gt-sm ng-click="appController.openSidebar()" aria-label="Open sidebar">
+      <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+    </md-button>
+    <span flex></span>
+    <md-button>升级账户</md-button>
+    <md-button>支持和帮助</md-button>
+    <md-button>文档</md-button>
+    <md-button ng-click="vm.logout()">注销</md-button>
+  </div>
+</md-toolbar>
