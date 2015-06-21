@@ -1,6 +1,6 @@
 /**
  * @ngdoc controller
- * @name austackApp.main.controller:MainController
+ * @name austackApp.main.controller:DashboardController
  * @description
  * Controls mainly nothing currently
  */
@@ -8,22 +8,22 @@
 (function () {
   'use strict';
 
-  // register the controller as MainController
+  // register the controller as DashboardController
   angular
     .module('austackApp.dashboard')
     .controller('DashboardController', DashboardController);
 
   /**
    * @ngdoc function
-   * @name austackApp.main.provider:MainController
+   * @name austackApp.main.provider:DashboardController
    * @description
-   * Provider of the {@link austackApp.main.controller:MainController MainController}
+   * Provider of the {@link austackApp.main.controller:DashboardController DashboardController}
    *
    * @param {Service} $scope The scope service to use
    * @param {Service} $http The http service to use
    */
 
-  // MainController.$inject = [];
+  DashboardController.$inject = [];
 
   function DashboardController() {
     var vm = this;
