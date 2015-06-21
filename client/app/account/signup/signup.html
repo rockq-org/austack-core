@@ -2,14 +2,14 @@
   <h1>Sign Up</h1>
   <p ng-show="signup.error" class="md-warn">{{signup.error.message}}</p>
   <form class="card" name="signupForm" layout="column" layout-fill layout-align="space-between" ng-submit="signup.signup(signupForm)">
-    <md-input-container md-is-error="signupForm.mobile.$error.required && signupForm.mobile.$dirty">
+    <md-input-container md-is-error="signupForm.mobile.$error.length && signupForm.mobile.$dirty">
       <label>Mobile</label>
       <input name="mobile" ng-model="signup.user.mobile" as-tenant-mobile ng-model-options="{ updateOn: 'blur' }" required/>
       <div ng-messages="signupForm.mobile.$error" ng-if="signupForm.mobile.$dirty">
         <div ng-message="required">Mobile is required</div>
-        <div ng-message="exist">This Mobile is already taken!</div>
+        <div ng-message="as-tenant-mobile">This Mobile is already taken!</div>
       </div>
-      <span ng-show="signupForm.mobile.$pending">Checking if this mobile is available...</span>
+      <div ng-show="signupForm.mobile.$pending">Checking if this mobile is available...</div>
     </md-input-container>
     <md-input-container md-is-error="signupForm.verifiedCode.$error.required && signupForm.verifiedCode.$dirty">
       <label>Verify Code</label>
@@ -17,6 +17,7 @@
       <div ng-messages="signupForm.verifiedCode.$error" ng-if="signupForm.verifiedCode.$dirty">
         <div ng-message="required">Verify Code is required</div>
       </div>
+      <md-button class="md-raised md-primary">Resend Verify Code</md-button>
     </md-input-container>
     <md-input-container md-is-error="signupForm.userName.$error.required && signupForm.userName.$dirty">
       <label>User Name</label>
