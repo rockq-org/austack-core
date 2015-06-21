@@ -1,0 +1,46 @@
+<section id="signup-content" layout="column" flex layout-align="center center">
+  <h1>Sign Up</h1>
+  <p ng-show="signup.error" class="md-warn">{{signup.error.message}}</p>
+  <form class="card" name="signupForm" layout="column" layout-fill layout-align="space-between" ng-submit="signup.signup(signupForm)">
+    <md-input-container md-is-error="signupForm.mobile.$error.required && signupForm.mobile.$dirty">
+      <label>Mobile</label>
+      <input name="mobile" ng-model="signup.user.mobile" as-tenant-mobile ng-model-options="{ updateOn: 'blur' }" required/>
+      <div ng-messages="signupForm.mobile.$error" ng-if="signupForm.mobile.$dirty">
+        <div ng-message="required">Mobile is required</div>
+        <div ng-message="exist">This Mobile is already taken!</div>
+      </div>
+      <span ng-show="signupForm.mobile.$pending">Checking if this mobile is available...</span>
+    </md-input-container>
+    <md-input-container md-is-error="signupForm.verifiedCode.$error.required && signupForm.verifiedCode.$dirty">
+      <label>Verify Code</label>
+      <input name="verifiedCode" ng-model="signup.user.verifiedCode" required/>
+      <div ng-messages="signupForm.verifiedCode.$error" ng-if="signupForm.verifiedCode.$dirty">
+        <div ng-message="required">Verify Code is required</div>
+      </div>
+    </md-input-container>
+    <md-input-container md-is-error="signupForm.userName.$error.required && signupForm.userName.$dirty">
+      <label>User Name</label>
+      <input name="userName" ng-model="signup.user.userName" required/>
+      <div ng-messages="signupForm.userName.$error" ng-if="signupForm.userName.$dirty">
+        <div ng-message="required">User Name is required</div>
+      </div>
+    </md-input-container>
+    <md-input-container md-is-error="signupForm.password.$error.required && signupForm.password.$dirty">
+      <label>Password</label>
+      <input name="password" type="password" ng-model="signup.user.password" required/>
+      <div ng-messages="signupForm.password.$error" ng-if="signupForm.password.$dirty">
+        <div ng-message="required">Password is required</div>
+      </div>
+    </md-input-container>
+    <md-input-container md-is-error="signupForm.domain.$error.required && signupForm.domain.$dirty">
+      <label>Domain</label>
+      <input name="domain" ng-model="signup.user.domain" required/>
+      <div ng-messages="signupForm.domain.$error" ng-if="signupForm.domain.$dirty">
+        <div ng-message="required">Domain is required</div>
+      </div>
+    </md-input-container>
+    <span layout="row" layout-align="end">
+      <md-button class="md-primary md-raised" ng-disabled="!signupForm.$valid" type="submit">Sign Up</md-button>
+    </span>
+  </form>
+</section>

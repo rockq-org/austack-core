@@ -7,6 +7,12 @@
   <md-content flex ng-controller="MainMenuController as menu">
     <ul>
       <li>
+        <md-button ui-sref-active="md-primary" ui-sref="signup">Sign Up</md-button>
+      </li>
+      <li>
+        <md-button ng-click="menu.logout()">Login</md-button>
+      </li>
+      <li>
         <md-button ng-click="menu.logout()">Logout</md-button>
       </li>
     </ul>
