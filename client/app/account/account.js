@@ -15,6 +15,7 @@
     .module('austackApp.account', [
       'ui.router',
       'austackApp.account.login',
+      'austackApp.account.logout',
       'austackApp.account.signup',
     ])
     .config(configAccountRoute);
@@ -27,9 +28,9 @@
     var loginState = {
       name: 'account',
       url: '/acount',
-      templateUrl: 'app/account/login/login.html',
-      controller: 'LoginController',
-      controllerAs: 'login'
+      templateUrl: 'app/account/account.html',
+      controller: 'AccountController',
+      controllerAs: 'account'
     };
 
     $stateProvider.state(loginState);
