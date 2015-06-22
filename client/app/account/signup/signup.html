@@ -40,8 +40,11 @@
         <div ng-message="required">Domain is required</div>
       </div>
     </md-input-container>
-    <span layout="row" layout-align="end">
+    <span layout="row" layout-align="center center">
       <md-button class="md-primary md-raised" ng-disabled="!signupForm.$valid" type="submit">Sign Up</md-button>
     </span>
+    <section layout="row" layout-sm="column" layout-align="center center">
+      <md-button ui-sref="account.login">cancel</md-button>
+    </section>
   </form>
 </section>

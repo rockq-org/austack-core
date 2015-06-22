@@ -14,8 +14,8 @@
   // route config function configuring the passed $stateProvider
   function configSignupRoute($stateProvider) {
     $stateProvider
-      .state('signup', {
-        url: '/signup',
+      .state('account.signup', {
+        url: '^/signup',
         templateUrl: 'app/account/signup/signup.html',
         controller: 'SignupCtrl',
         controllerAs: 'vm'

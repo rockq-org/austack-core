@@ -96,8 +96,10 @@
         return;
       }
 
+      console.log(Auth.hasRole(next.role));
       Auth.isLoggedInAsync(function (loggedIn) {
-        if (!loggedIn || next.role && !Auth.hasRole(next.role)) {
+        var noPermission = next.role && !Auth.hasRole(next.role);
+        if (!loggedIn || noPermission) {
           $location.path('/login');
         }
       });

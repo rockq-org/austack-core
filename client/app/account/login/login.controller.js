@@ -10,7 +10,7 @@
 
   // register the controller as AccountLoginController
   angular
-    .module('austackApp.account.login')
+    .module('austackApp.account')
     .controller('AccountLoginController', AccountLoginController);
 
 

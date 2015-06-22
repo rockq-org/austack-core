@@ -16,8 +16,14 @@
         <div ng-message="required">Password is required</div>
       </div>
     </md-input-container>
-    <span layout="row" layout-align="end">
+    <span layout="row" layout-align="center center">
 			<md-button class="md-primary md-raised" ng-disabled="!loginForm.$valid" type="submit">Login</md-button>
 		</span>
+    <br>
+    <br>
+    <section layout="row" layout-sm="column" layout-align="center center">
+      <md-button class="md-primary" ui-sref="account.signup">Sign Up</md-button>
+      <md-button ui-sref="account.resetPassword">Reset Password</md-button>
+    </section>
   </form>
 </section>

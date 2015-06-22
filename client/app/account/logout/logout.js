@@ -9,11 +9,7 @@
    */
 
   angular
-    .module('austackApp.account.logout', [
-      'ui.router',
-      'austackApp.sidebar',
-      'austackApp.layout'
-    ])
+    .module('austackApp.account')
     .config(configAccountLogout);
 
   // inject configAccountLogout dependencies

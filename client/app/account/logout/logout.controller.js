@@ -10,7 +10,7 @@
 
   // register the controller as AccountLogoutController
   angular
-    .module('austackApp.account.logout')
+    .module('austackApp.account')
     .controller('AccountLogoutController', AccountLogoutController);
 
 
