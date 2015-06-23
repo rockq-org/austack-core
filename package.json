@@ -1,7 +1,7 @@
 {
   "name": "austack",
   "version": "0.0.0",
-  "description": "Generated austack app.",
+  "description": "Authentication as a service platform.",
   "main": "server/index.js",
   "private": true,
   "dependencies": {
@@ -41,12 +41,13 @@
   },
   "keywords": [
     "material design",
-    "austack"
+    "austack",
+    "authentication"
   ],
   "engines": {
     "node": ">=0.10.33"
   },
-  "author": "",
+  "author": "Dev Team of Beijing Arrking Tech Co., Ltd",
   "devDependencies": {
     "browser-sync": "~2.1.4",
     "browser-sync-spa": "~1.0.2",
