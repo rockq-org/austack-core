@@ -1,0 +1,6 @@
+{
+    "src":          "/root/git/austack/dist",
+    "dest":         "qiniu:access_key=AJESJBpE_S8ItnIkMlQzzEpLJEI3PeozNJN0aGeV&secret_key=RtzTNwNku6lPb8vYktvwgpeK2zM-9pUM5dItwcDw&bucket=austack-stg&key_prefix=/",
+    "deletable":    0,
+    "debug_level":  0
+}
