@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.DATABASE_NAME = process.env.DATABASE_NAME || 'austack';
+process.env.DATABASE_NAME = process.env.DATABASE_NAME || 'austackdb';
 
 module.exports = {
 
@@ -11,6 +11,6 @@ module.exports = {
 	publicDir: 'public',
 
 	mongo: {
-		uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
+		uri: 'mongodb://peter:Be8s2fsisOdWy@115.28.162.221:27088/' + process.env.DATABASE_NAME
 	}
 };
