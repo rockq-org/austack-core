@@ -4,9 +4,9 @@ process.env.DATABASE_NAME = process.env.DATABASE_NAME || 'austackdb';
 
 module.exports = {
 
-	ip: process.env.ip || undefined,
+	ip: process.env.AUSTACK_SYS_IP || undefined,
 
-	port: process.env.PORT || 8080,
+	port: process.env.AUSTACK_SYS_PORT || 9888,
 
 	publicDir: 'public',
 
