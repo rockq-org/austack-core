@@ -16,7 +16,7 @@
     // view model bindings
     vm.title = 'signup';
     vm.user = {};
-    // vm.user = _demoData();
+    vm.user = _demoData();
     vm.step = 'step1';
     vm.pending = false;
     vm.pendingMsg = '加载中...';
@@ -26,13 +26,14 @@
     vm.submitUserDetail = submitUserDetail;
     vm.resendVerifyCode = resendVerifyCode;
 
-    // vm.step = 'step3';
+    vm.step = 'step3';
+
     function _demoData() {
       return {
-        // _id: '558a24449e2fc2056cb4ff31',
-        mobile: '18959264501',
+        _id: '558a6edff7a49124d6edc764',
+        mobile: '18959264502',
         verifyCode: '1234',
-        userId: 'lymanlai',
+        userId: 'lymanlai-',
         password: 'laijinyue'
       };
     }
@@ -81,7 +82,14 @@
         });
       }).catch(function (err) {
         vm.step = 'step3';
-        Msg('该用户ID已被使用');
+        switch (err.data.type) {
+        case 'formatInvalidate':
+          Msg('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
+          break;
+        case 'inuse':
+          Msg('该用户ID已被使用');
+          break;
+        }
       });
     }
 

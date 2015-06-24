@@ -107,6 +107,15 @@ TenantController.prototype = {
     var userId = String(req.body.userId);
     var password = String(req.body.password);
 
+    var userIdReg = /^[a-zA-Z0-9\-]{1,}[a-zA-Z0-9]$/; //字母数字及“-”并以字母数字结尾
+
+    if (!userIdReg.test(userId)) {
+      return res.badRequest({
+        type: 'formatInvalidate',
+        message: 'userId format is invalidate'
+      });
+    }
+
     this.model.findOne({
       '_id': tenantId
     }, function (err, tenant) {
