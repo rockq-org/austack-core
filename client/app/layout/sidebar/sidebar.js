@@ -16,6 +16,6 @@
   angular.module('austackApp.sidebar', [
     'austackApp.lodash',
     'austackApp.auth'
-  ])
+  ]);
 
 })();

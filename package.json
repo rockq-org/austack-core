@@ -61,7 +61,7 @@
     "gulp-filter": "~2.0.2",
     "gulp-flatten": "~0.0.4",
     "gulp-inject": "~1.1.1",
-    "gulp-jshint": "~1.9.0",
+    "gulp-jshint": "^1.11.0",
     "gulp-load-plugins": "~0.8.0",
     "gulp-minify-html": "~0.1.7",
     "gulp-ng-annotate": "~0.5.2",

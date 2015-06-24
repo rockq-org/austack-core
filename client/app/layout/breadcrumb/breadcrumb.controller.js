@@ -12,13 +12,12 @@
     $breadcrumbProvider.setOptions({
       includeAbstract: true,
       template: 'bootstrap3'
-    })
+    });
   }
 
   BreadcrumbController.$inject = [];
   /* @ngInject */
   function BreadcrumbController() {
     var vm = this;
-
   }
 })();
