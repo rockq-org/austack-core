@@ -10,7 +10,7 @@
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
 var config = require('../../config');
-
+var Weimi = require('../../lib/weimi/index');
 /**
  * The Tenant model instance
  * @type {tenant:model~Tenant}
@@ -46,8 +46,11 @@ TenantController.prototype = {
 
   create: function (req, res) {
     var self = this;
+    var mobile = req.body['mobile'];
     var fiveMinutes = 60000 * 5;
-    req.body['verifyCode'] = '1234';
+    // 四位数字验证码
+    var verifyCode = Math.floor(Math.random() * (9999 - 1000) + 1000);
+    req.body['verifyCode'] = verifyCode;
     req.body['verifyCodeExpiredAt'] = new Date(new Date().valueOf() + fiveMinutes);
 
     this.model.create(req.body, function (err, document) {
@@ -55,11 +58,15 @@ TenantController.prototype = {
         return res.handleError(err);
       }
 
-      return res.created(self.getResponseObject(document));
+      Weimi.sendVerifyCode(mobile, verifyCode)
+        .then(function () {
+          return res.created(self.getResponseObject(document));
+        }).fail(function (err) {
+          return res.handleError(err);
+        });
     });
   },
 
-  // TODO: connect with jwt
   verifyMobile: function (req, res) {
     if (!req[this.paramName]._id) {
       return res.badRequest();
@@ -92,7 +99,6 @@ TenantController.prototype = {
     });
   },
 
-  // TODO: connect with jwt
   submitUserDetail: function (req, res) {
     if (!req[this.paramName]._id) {
       return res.badRequest();

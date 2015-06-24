@@ -6,7 +6,7 @@
       <label>用户ID / 手机号</label>
       <input name="name" ng-model="login.user.name" required/>
       <div ng-messages="loginForm.name.$error" ng-if="loginForm.name.$dirty">
-        <div ng-message="required">用户ID / 手机号 is required</div>
+        <div ng-message="required">请输入您的用户ID / 手机号</div>
       </div>
     </md-input-container>
     <md-input-container md-is-error="loginForm.password.$error.required && loginForm.password.$dirty">
