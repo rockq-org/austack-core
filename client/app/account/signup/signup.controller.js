@@ -62,6 +62,7 @@
       vm.step = 'loading';
       Tenant.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
+        Msg('验证成功！');
       }).catch(function (err) {
         vm.step = 'step2';
         Msg('验证码错误或验证码已过期！');

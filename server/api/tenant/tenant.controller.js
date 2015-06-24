@@ -47,11 +47,11 @@ TenantController.prototype = {
   create: function (req, res) {
     var self = this;
     var mobile = req.body['mobile'];
-    var fiveMinutes = 60000 * 5;
+    var expiredTimeSpan = 60000 * 3; // three minutes
     // 四位数字验证码
     var verifyCode = Math.floor(Math.random() * (9999 - 1000) + 1000);
     req.body['verifyCode'] = verifyCode;
-    req.body['verifyCodeExpiredAt'] = new Date(new Date().valueOf() + fiveMinutes);
+    req.body['verifyCodeExpiredAt'] = new Date(new Date().valueOf() + expiredTimeSpan);
 
     this.model.create(req.body, function (err, document) {
       if (err) {
@@ -83,11 +83,11 @@ TenantController.prototype = {
         });
       }
 
-      // if (tenant.verifyCodeExpiredAt < new Date()) {
-      //   return res.forbidden({
-      //     message: "Verify Code Is Expired"
-      //   });
-      // }
+      if (tenant.verifyCodeExpiredAt < new Date()) {
+        return res.forbidden({
+          message: "Verify Code Is Expired"
+        });
+      }
 
       tenant.isVerified = true;
       tenant.save(function (err) {
