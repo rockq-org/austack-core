@@ -1,50 +1,19 @@
-<section id="signup-content" layout="column" flex layout-align="center center">
-  <h1>Sign Up</h1>
-  <p ng-show="signup.error" class="md-warn">{{signup.error.message}}</p>
-  <form class="card" name="signupForm" layout="column" layout-fill layout-align="space-between" ng-submit="signup.signup(signupForm)">
-    <md-input-container md-is-error="signupForm.mobile.$error.length && signupForm.mobile.$dirty">
-      <label>Mobile</label>
-      <input name="mobile" ng-model="signup.user.mobile" as-tenant-mobile ng-model-options="{ updateOn: 'blur' }" required/>
-      <div ng-messages="signupForm.mobile.$error" ng-if="signupForm.mobile.$dirty">
-        <div ng-message="required">Mobile is required</div>
-        <div ng-message="as-tenant-mobile">This Mobile is already taken!</div>
-      </div>
-      <div ng-show="signupForm.mobile.$pending">Checking if this mobile is available...</div>
-    </md-input-container>
-    <md-input-container md-is-error="signupForm.verifiedCode.$error.required && signupForm.verifiedCode.$dirty">
-      <label>Verify Code</label>
-      <input name="verifiedCode" ng-model="signup.user.verifiedCode" required/>
-      <div ng-messages="signupForm.verifiedCode.$error" ng-if="signupForm.verifiedCode.$dirty">
-        <div ng-message="required">Verify Code is required</div>
-      </div>
-      <md-button class="md-raised md-primary">Resend Verify Code</md-button>
-    </md-input-container>
-    <md-input-container md-is-error="signupForm.userName.$error.required && signupForm.userName.$dirty">
-      <label>User Name</label>
-      <input name="userName" ng-model="signup.user.userName" required/>
-      <div ng-messages="signupForm.userName.$error" ng-if="signupForm.userName.$dirty">
-        <div ng-message="required">User Name is required</div>
-      </div>
-    </md-input-container>
-    <md-input-container md-is-error="signupForm.password.$error.required && signupForm.password.$dirty">
-      <label>Password</label>
-      <input name="password" type="password" ng-model="signup.user.password" required/>
-      <div ng-messages="signupForm.password.$error" ng-if="signupForm.password.$dirty">
-        <div ng-message="required">Password is required</div>
-      </div>
-    </md-input-container>
-    <md-input-container md-is-error="signupForm.domain.$error.required && signupForm.domain.$dirty">
-      <label>Domain</label>
-      <input name="domain" ng-model="signup.user.domain" required/>
-      <div ng-messages="signupForm.domain.$error" ng-if="signupForm.domain.$dirty">
-        <div ng-message="required">Domain is required</div>
-      </div>
-    </md-input-container>
-    <span layout="row" layout-align="center center">
-      <md-button class="md-primary md-raised" ng-disabled="!signupForm.$valid" type="submit">Sign Up</md-button>
-    </span>
-    <section layout="row" layout-sm="column" layout-align="center center">
-      <md-button ui-sref="account.login">cancel</md-button>
-    </section>
-  </form>
+<section id="signup-content" layout="column" flex layout-align="center center" ng-switch on="signup.step">
+  <h1>注册</h1>
+  <div ng-switch-when="loading" layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    <p>&nbsp;&nbsp;{{signup.pendingMsg}}</p>
+  </div>
+  <div ng-switch-when="step1">
+    <ng-include src="'app/account/signup/signup.step1.html'"></ng-include>
+  </div>
+  <div ng-switch-when="step2">
+    <ng-include src="'app/account/signup/signup.step2.html'"></ng-include>
+  </div>
+  <div ng-switch-when="step3">
+    <ng-include src="'app/account/signup/signup.step3.html'"></ng-include>
+  </div>
+  <div layout="row" layout-sm="column" layout-align="center center">
+    <md-button class="md-primary" ui-sref="account.login">取消</md-button>
+  </div>
 </section>

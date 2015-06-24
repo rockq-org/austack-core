@@ -19,7 +19,9 @@
       'ui.router',
       'btford.socket-io',
       'angular-loading-bar',
+      'austackApp.constants',
       'austackApp.lodash',
+      'austackApp.directive',
       'austackApp.sidebar',
       'austackApp.io',
       'austackApp.socket',
@@ -96,7 +98,6 @@
         return;
       }
 
-      console.log(Auth.hasRole(next.role));
       Auth.isLoggedInAsync(function (loggedIn) {
         var noPermission = next.role && !Auth.hasRole(next.role);
         if (!loggedIn || noPermission) {

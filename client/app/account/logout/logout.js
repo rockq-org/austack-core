@@ -40,11 +40,11 @@
 
     $stateProvider.state(logoutState);
 
-    sidebarProvider.addMenuItem({
-      name: 'Logout',
-      state: logoutState.name,
-      role: logoutState.role
-    });
+    // sidebarProvider.addMenuItem({
+    //   name: 'Logout',
+    //   state: logoutState.name,
+    //   role: logoutState.role
+    // });
   }
 
 })();

@@ -4,7 +4,8 @@
   // register the route config on the application
   angular
     .module('austackApp.account.signup', [
-      'austackApp.account.signup.directive'
+      'austackApp.account.signup.directive',
+      'austackApp.tenant'
     ])
     .config(configSignupRoute);
 
@@ -18,7 +19,7 @@
         url: '^/signup',
         templateUrl: 'app/account/signup/signup.html',
         controller: 'SignupCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'signup'
       });
   }
 
