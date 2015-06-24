@@ -82,6 +82,8 @@ module.exports = function (options) {
   gulp.task('other', function () {
     return gulp.src([
         options.src + '/**/*',
+        '!' + options.src + '/app',
+        '!' + options.src + '/app/**/*',
         '!' + options.src + '/**/*.{html,css,js,scss}'
       ])
       .pipe(gulp.dest(options.dist + '/'));
