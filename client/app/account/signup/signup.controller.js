@@ -6,17 +6,16 @@
     .module('austackApp.account.signup')
     .controller('SignupCtrl', SignupCtrl);
 
-
   /**
    * @ngInject
    */
-  function SignupCtrl($timeout, $mdToast, Auth, $state, Tenant, Config) {
+  function SignupCtrl($timeout, $mdToast, Auth, $state, User) {
     var vm = this;
 
     // view model bindings
     vm.title = 'signup';
     vm.user = {};
-    vm.user = _demoData();
+    // vm.user = _demoData();
     vm.step = 'step1';
     vm.pending = false;
     vm.pendingMsg = '加载中...';
@@ -26,12 +25,12 @@
     vm.submitUserDetail = submitUserDetail;
     vm.resendVerifyCode = resendVerifyCode;
 
-    vm.step = 'step3';
+    // vm.step = 'step3';
 
     function _demoData() {
       return {
         _id: '558a6edff7a49124d6edc764',
-        mobile: '18959264502',
+        name: '18959264502',
         verifyCode: '1234',
         userId: 'lymanlai-',
         password: 'laijinyue'
@@ -44,14 +43,15 @@
       }
 
       vm.step = 'loading';
-      Tenant.create({
-        mobile: vm.user.mobile
+      User.create({
+        name: vm.user.name,
+        role: 'admin' // for tenant's role
       }).$promise.then(function (data) {
         vm.step = 'step2';
         vm.user._id = data._id;
       }).catch(function (err) {
         vm.step = 'step1';
-        Msg('手机号不合法或者已经被注册');
+        msg('手机号不合法或者已经被注册');
       });
     }
 
@@ -61,12 +61,12 @@
       }
 
       vm.step = 'loading';
-      Tenant.verifyMobile(vm.user).$promise.then(function (data) {
+      User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
-        Msg('验证成功！');
+        msg('验证成功！');
       }).catch(function (err) {
         vm.step = 'step2';
-        Msg('验证码错误或验证码已过期！');
+        msg('验证码错误或验证码已过期！');
       });
     }
 
@@ -76,18 +76,18 @@
       }
 
       vm.step = 'loading';
-      Tenant.submitUserDetail(vm.user).$promise.then(function (data) {
-        Msg('注册成功！', function () {
+      User.submitUserDetail(vm.user).$promise.then(function (data) {
+        msg('注册成功！', function () {
           $state.go('account.login');
         });
       }).catch(function (err) {
         vm.step = 'step3';
         switch (err.data.type) {
         case 'formatInvalidate':
-          Msg('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
+          msg('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
           break;
         case 'inuse':
-          Msg('该用户ID已被使用');
+          msg('该用户ID已被使用');
           break;
         }
       });
@@ -97,7 +97,7 @@
       vm.step = 'step2';
     }
 
-    function Msg(title, callback) {
+    function msg(title, callback) {
       var toast = $mdToast.simple()
         .content(title)
         // .action('OK')

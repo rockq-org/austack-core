@@ -21,13 +21,12 @@
    * Provider of the {@link austackApp.account.controller:AccountLoginController AccountLoginController}
    *
    * @param {Service} Auth The Auth service to use
-   * @param {Service} $location The location service to use
+   * @param {Service} $state The state service to use
    * @returns {Service} {@link austackApp.account.controller:AccountLoginController AccountLoginController}
    */
 
-  AccountLoginController.$inject = ['Auth', '$location'];
-
-  function AccountLoginController(Auth, $location) {
+  /* @ngInject */
+  function AccountLoginController($state, Auth) {
     var vm = this;
 
     // view model bindings
@@ -42,8 +41,8 @@
      */
     vm.user = {};
     vm.user = {
-      name: 'Admin',
-      password: 'password'
+      name: '18959264502',
+      password: 'laijinyue'
     };
 
     /**
@@ -75,7 +74,8 @@
           password: vm.user.password
         }).then(function () {
           // Logged in, redirect to home
-          $location.path('/');
+          // $location.path('/');
+          $state.go('dashboard');
         }).catch(function (err) {
           vm.error = err;
         });
