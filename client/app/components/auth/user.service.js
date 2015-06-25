@@ -50,6 +50,18 @@
     // factory members
     var apiURL = '/api/users';
     var methods = {
+      verifyMobile: {
+        method: 'PUT',
+        params: {
+          controller: 'verifyMobile'
+        }
+      },
+      submitUserDetail: {
+        method: 'PUT',
+        params: {
+          controller: 'submitUserDetail'
+        }
+      },
       changePassword: {
         method: 'PUT',
         params: {

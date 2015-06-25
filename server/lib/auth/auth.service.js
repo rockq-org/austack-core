@@ -132,10 +132,10 @@ function hasRole(roleRequired) {
  * @param {String} id - Id used to sign a token
  * @return {String}
  */
-function signToken(id, role) {
+function signToken(id, mobile) {
   return jwt.sign({
     _id: id,
-    role: role
+    mobile: mobile
   }, config.secrets.session, {
     expiresInMinutes: 60 * 5
   });
