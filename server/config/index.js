@@ -39,6 +39,12 @@ var common = {
   // List of user roles
   userRoles: ['user', 'admin', 'root'],
 
+  weimi: {
+    uid: "lmf8FDhlAHHB",
+    pas: "r2z36xbh",
+    cid: "Zh07NWBGgr1r"
+  },
+
   // options passed to create mongo connections
   mongo: {
     options: {

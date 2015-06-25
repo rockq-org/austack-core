@@ -5,17 +5,6 @@
     </span>
   </md-toolbar>
   <md-content flex ng-controller="SidebarController as menu">
-    <ul>
-      <li>
-        <md-button ui-sref-active="md-primary" ui-sref="signup">Sign Up</md-button>
-      </li>
-      <li>
-        <md-button ng-click="menu.logout()">Login</md-button>
-      </li>
-      <li>
-        <md-button ng-click="menu.logout()">Logout</md-button>
-      </li>
-    </ul>
     <ul ng-repeat="item in menu.items">
       <li ng-show="menu.canAccess(item)">
         <md-button ui-sref-active="md-primary" ui-sref="{{item.state}}">{{item.name}}</md-button>

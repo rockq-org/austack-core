@@ -23,13 +23,13 @@
       "'ui.router'",
       "'btford.socket-io'",
       "'austackApp.lodash'",
-      "'austackApp.sidebar'",
+      "'austackApp.mainMenu'",
       "'austackApp.io'",
       "'austackApp.socket'",
       "'austackApp.auth'",
       "'austackApp.admin'",
       "'austackApp.account'",
-      "'austackApp.dashboard'"
+      "'austackApp.main'"
     ],
     "componentsDirectory": "client/app/components/",
     "routeDirectory": "client/app/",

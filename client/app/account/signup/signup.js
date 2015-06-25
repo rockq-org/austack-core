@@ -3,9 +3,7 @@
 
   // register the route config on the application
   angular
-    .module('austackApp.account.signup', [
-      'austackApp.account.signup.directive'
-    ])
+    .module('austackApp.account.signup', [])
     .config(configSignupRoute);
 
   // inject configSignupRoute dependencies
@@ -14,11 +12,11 @@
   // route config function configuring the passed $stateProvider
   function configSignupRoute($stateProvider) {
     $stateProvider
-      .state('signup', {
-        url: '/signup',
+      .state('account.signup', {
+        url: '^/signup',
         templateUrl: 'app/account/signup/signup.html',
         controller: 'SignupCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'signup'
       });
   }
 

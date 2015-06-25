@@ -23,15 +23,15 @@
 
   // route config function configuring the passed $stateProvider
   function configAccountRoute($stateProvider) {
-    var loginState = {
-      name: 'login',
-      url: '/login',
-      templateUrl: 'app/account/login/login.html',
-      controller: 'LoginController',
-      controllerAs: 'login'
+    var accountState = {
+      name: 'account',
+      url: '/acount',
+      templateUrl: 'app/account/account.html',
+      controller: 'AccountController',
+      controllerAs: 'account'
     };
 
-    $stateProvider.state(loginState);
+    $stateProvider.state(accountState);
   }
 
 })();
