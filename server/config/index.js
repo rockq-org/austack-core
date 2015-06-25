@@ -25,7 +25,7 @@ var common = {
 
   root: path.normalize(__dirname + '/../..'),
 
-  publicDir: 'client',
+  publicDir: 'dist',
 
   ip: '0.0.0.0',
 
@@ -38,7 +38,6 @@ var common = {
 
   // List of user roles
   userRoles: ['user', 'admin', 'root'],
-
 
   weimi: {
     uid: "lmf8FDhlAHHB",
