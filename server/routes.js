@@ -28,7 +28,6 @@ module.exports = function (app) {
   // app.use('/api/tenant', require('./api/tenant'));
   app.use('/auth', require('./lib/auth'));
 
-
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
     .get(function invalidRoute(req, res) {
