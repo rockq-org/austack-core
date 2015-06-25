@@ -1,0 +1,12 @@
+<form class="card" name="getVerifyCodeForm" layout="column" layout-fill layout-align="space-between" ng-submit="signup.getVerifyCode(getVerifyCodeForm)">
+  <md-input-container>
+    <label>手机号</label>
+    <input name="name" ng-model="signup.user.name" required/>
+    <div ng-messages="getVerifyCodeForm.name.$error" ng-if="getVerifyCodeForm.name.$dirty">
+      <div ng-message="required">请输入您的手机号！</div>
+    </div>
+  </md-input-container>
+  <md-input-container>
+    <md-button class="md-primary md-raised" ng-disabled="!getVerifyCodeForm.$valid" type="submit">获取手机验证码</md-button>
+  </md-input-container>
+</form>

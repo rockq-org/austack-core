@@ -14,7 +14,6 @@
   angular
     .module('austackApp.account', [
       'ui.router',
-      'austackApp.account.login',
       'austackApp.account.signup',
     ])
     .config(configAccountRoute);
@@ -24,15 +23,15 @@
 
   // route config function configuring the passed $stateProvider
   function configAccountRoute($stateProvider) {
-    var loginState = {
+    var accountState = {
       name: 'account',
       url: '/acount',
-      templateUrl: 'app/account/login/login.html',
-      controller: 'LoginController',
-      controllerAs: 'login'
+      templateUrl: 'app/account/account.html',
+      controller: 'AccountController',
+      controllerAs: 'account'
     };
 
-    $stateProvider.state(loginState);
+    $stateProvider.state(accountState);
   }
 
 })();

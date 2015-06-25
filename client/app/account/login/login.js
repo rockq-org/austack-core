@@ -9,11 +9,7 @@
    */
 
   angular
-    .module('austackApp.account.login', [
-      'ui.router',
-      'austackApp.sidebar',
-      'austackApp.layout'
-    ])
+    .module('austackApp.account')
     .config(configAccountLogin);
 
   // inject configAccountLogin dependencies
@@ -31,10 +27,9 @@
     // The login state configuration
     var loginState = {
       name: 'account.login',
-      parent: 'root',
-      url: '/account/login',
+      url: '^/login',
       authenticate: false,
-      role: 'account',
+      // role: 'anonymous',
       templateUrl: 'app/account/login/login.html',
       controller: 'AccountLoginController',
       controllerAs: 'login',
@@ -44,12 +39,6 @@
     };
 
     $stateProvider.state(loginState);
-
-    sidebarProvider.addMenuItem({
-      name: 'Login',
-      state: loginState.name,
-      role: 'account'
-    });
   }
 
 })();

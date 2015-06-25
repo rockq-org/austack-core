@@ -32,7 +32,6 @@ module.exports = function (options) {
     browserSync.instance = browserSync.init({
       startPath: '/',
       server: server,
-      notify: false,
       browser: browser
     });
   }

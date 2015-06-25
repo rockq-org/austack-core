@@ -19,7 +19,9 @@
       'ui.router',
       'btford.socket-io',
       'angular-loading-bar',
+      'austackApp.constants',
       'austackApp.lodash',
+      'austackApp.directive',
       'austackApp.sidebar',
       'austackApp.io',
       'austackApp.socket',
@@ -97,11 +99,12 @@
       }
 
       Auth.isLoggedInAsync(function (loggedIn) {
-        if (!loggedIn || next.role && !Auth.hasRole(next.role)) {
+        var noPermission = next.role && !Auth.hasRole(next.role);
+        if (!loggedIn || noPermission) {
           $location.path('/login');
         }
       });
     });
-  };
+  }
 
 })();

@@ -48,8 +48,9 @@ function proxyMiddleware(req, res, next) {
    * for your needs. If you can, you could also check on a context in the url which
    * may be more reliable but can't be generic.
    */
+  console.log('proxy', req.url);
   //if (/\.(html|css|js|png|jpg|jpeg|gif|ico|xml|rss|txt|eot|svg|ttf|woff|woff2|cur)(\?((r|v|rel|rev)=[\-\.\w]*)?)?$/.test(req.url)) {
-  if (req.url.indexOf('/api') > -1 || req.url.indexOf('/auth') > -1 || req.url.indexOf('socket.io') > -1) {
+  if (req.url.indexOf('/api') > -1 || req.url.indexOf('/auth') == 0 || req.url.indexOf('socket.io') > -1) {
     proxy.web(req, res);
   } else {
     next();

@@ -38,32 +38,43 @@ var isAuthenticated = auth.isAuthenticated();
 // check if the authenticated user has at least the 'admin' role
 var isAdmin = auth.hasRole('admin');
 
+// create
+router.route('/')
+  .post(controller.create);
+// verifyMobile
+router.route('/' + controller.paramString + '/verifyMobile')
+  .put(controller.verifyMobile);
+// submitUserDetail
+router.route('/' + controller.paramString + '/submitUserDetail')
+  .put(controller.submitUserDetail);
+
 // wrap in domain, check authentication and attach userInfo object, set user request context
 router.route('*')
-	.all(addRequestContext, isAuthenticated, addUserContext);
+  .all(addRequestContext, isAuthenticated, addUserContext);
+
 
 // register user routes
 router.route('/')
-	.get(isAdmin, controller.index)
-	.post(isAdmin, controller.create);
+  .get(isAdmin, controller.index)
+  // .post(isAdmin, controller.create);
 
 // fetch authenticated user info
 router.route('/me')
-	.get(controller.me);
+  .get(controller.me);
 
 // user crud routes
 router.route('/' + controller.paramString)
-	.get(isAdmin, controller.show)
-	.delete(isAdmin, controller.destroy)
-	.put(isAdmin, controller.update)
-	.patch(isAdmin, controller.update);
+  .get(isAdmin, controller.show)
+  .delete(isAdmin, controller.destroy)
+  .put(isAdmin, controller.update)
+  .patch(isAdmin, controller.update);
 
 // set the password for a user
-router.route('/' + controller.paramString +  '/password')
-	.put(controller.changePassword)
-	.patch(controller.changePassword);
+router.route('/' + controller.paramString + '/password')
+  .put(controller.changePassword)
+  .patch(controller.changePassword);
 
 // admin only - administrative tasks for a user resource (force set password)
 router.route('/' + controller.paramString + '/admin')
-	.put(isAdmin, controller.setPassword)
-	.patch(isAdmin, controller.setPassword);
+  .put(isAdmin, controller.setPassword)
+  .patch(isAdmin, controller.setPassword);

@@ -21,46 +21,52 @@ var path = require('path');
  */
 
 var common = {
-	env: process.env.NODE_ENV,
+  env: process.env.NODE_ENV,
 
-	root: path.normalize(__dirname + '/../..'),
+  root: path.normalize(__dirname + '/../..'),
 
-	publicDir: 'client',
+  publicDir: 'dist',
 
-	ip: '0.0.0.0',
+  ip: '0.0.0.0',
 
-	port: process.env.PORT || 9001,
+  port: process.env.PORT || 9001,
 
-	// Secret for session, you will want to change this and make it an environment variable
-	secrets: {
-		session: process.env.SESSION_SECRET || 'my-austack-secret'
-	},
+  // Secret for session, you will want to change this and make it an environment variable
+  secrets: {
+    session: process.env.SESSION_SECRET || 'my-austack-secret'
+  },
 
-	// List of user roles
-	userRoles: ['user', 'admin', 'root'],
+  // List of user roles
+  userRoles: ['user', 'admin', 'root'],
 
-	// options passed to create mongo connections
-	mongo: {
-		options: {
-			db: {
-				safe: true
-			},
-			server: {
-				socketOptions: {
-					keepAlive: 1,
-					connectTimeoutMS: 10000
-				}
-			},
-			replset: {
-				socketOptions: {
-					keepAlive: 1,
-					connectTimeoutMS: 10000
-				}
-			}
-		}
-	}
+  weimi: {
+    uid: "lmf8FDhlAHHB",
+    pas: "r2z36xbh",
+    cid: "Zh07NWBGgr1r"
+  },
+
+  // options passed to create mongo connections
+  mongo: {
+    options: {
+      db: {
+        safe: true
+      },
+      server: {
+        socketOptions: {
+          keepAlive: 1,
+          connectTimeoutMS: 10000
+        }
+      },
+      replset: {
+        socketOptions: {
+          keepAlive: 1,
+          connectTimeoutMS: 10000
+        }
+      }
+    }
+  }
 };
 
 module.exports = _.merge(
-	common,
-	require('./env/' + process.env.NODE_ENV + '.js') || {});
+  common,
+  require('./env/' + process.env.NODE_ENV + '.js') || {});

@@ -50,8 +50,6 @@
    * @returns {Service} {@link auth.service:Auth Auth-service}
    */
 
-  Auth.$inject = ['$http', '$cookieStore', '$cookies', '$location', '$q', '$templateCache', '_', 'User', 'userRoles'];
-
   function Auth($http, $cookieStore, $cookies, $location, $q, $templateCache, _, User, userRoles) {
     var currentUser = {};
 
@@ -100,6 +98,7 @@
         name: user.name,
         password: user.password
       }).success(function (data) {
+        console.log(data);
         $cookieStore.put('token', data.token);
         $cookieStore.remove('customerID');
         currentUser = User.get();
