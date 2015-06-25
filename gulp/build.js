@@ -18,7 +18,7 @@ module.exports = function (options) {
         quotes: true
       }))
       .pipe($.angularTemplatecache('templateCacheHtml.js', {
-        module: 'gulpappes5',
+        module: 'austackApp',
         root: 'app'
       }))
       .pipe(gulp.dest(options.tmp + '/partials/'));
@@ -82,6 +82,8 @@ module.exports = function (options) {
   gulp.task('other', function () {
     return gulp.src([
         options.src + '/**/*',
+        '!' + options.src + '/app',
+        '!' + options.src + '/app/**/*',
         '!' + options.src + '/**/*.{html,css,js,scss}'
       ])
       .pipe(gulp.dest(options.dist + '/'));
