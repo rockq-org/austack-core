@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
   },
 
-  seedDB: false
+  seedDB: true
 };

@@ -23,9 +23,9 @@ if ('production' === env) {
  */
 exports.users = [{
   // provider: 'local',
-  name: '18959264501',
-  password: 'password',
-  // active: true
+  name: '18959264502',
+  password: 'laijinyue',
+  active: true
 }, {
   provider: 'local',
   name: 'Test User',
