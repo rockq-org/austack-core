@@ -25,6 +25,7 @@ exports.users = [{
   // provider: 'local',
   name: '18959264502',
   password: 'laijinyue',
+  role: 'admin',
   active: true
 }, {
   provider: 'local',
