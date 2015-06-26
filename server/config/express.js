@@ -13,7 +13,7 @@ var compression = require('compression');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
-var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var errorHandler = require('errorhandler');
 var passport = require('passport');
 var config = require('./index');
@@ -45,7 +45,7 @@ function initExpress(app) {
   app.use(methodOverride());
   app.use(cookieParser());
   app.use(passport.initialize());
-  app.use(favicon(path.join(publicDir, 'favicon.ico')));
+  // app.use(favicon(path.join(publicDir, 'favicon.ico')));
 
   if ('production' === env) {
     app.use(express.static(publicDir));
