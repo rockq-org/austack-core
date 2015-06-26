@@ -13,7 +13,6 @@
     .module('austackApp.account')
     .controller('AccountLoginController', AccountLoginController);
 
-
   /**
    * @ngdoc function
    * @name austackApp.account.provider:AccountLoginController
