@@ -22,27 +22,24 @@ if ('production' === env) {
  * Insert dummy data to test the application
  */
 exports.users = [{
-  // provider: 'local',
+  provider: 'local',
   name: '18959264502',
   password: 'laijinyue',
   role: 'admin',
   active: true
 }, {
   provider: 'local',
-  name: 'Test User',
-  password: 'password',
-  active: true
-}, {
-  provider: 'local',
   role: 'admin',
-  name: 'Admin',
-  password: 'password',
+  name: '15801213126',
+  password: 'auth4fun',
+  userId: 'dave',
   active: true
 }, {
   provider: 'local',
   role: 'root',
   name: 'Root',
-  password: 'password',
+  userId: 'root',
+  password: 'auth4fun',
   active: true
 }];
 

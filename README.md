@@ -18,7 +18,28 @@ http://design.1sters.com/
 git clone git@github.com:arrking/austack.git
 npm install
 bower install
-npm start
-gulp serve
+npm start # start server at http://localhost:9001/
+gulp serve # start client at http://localhost:3000/
 ```
+
 > trouble shooting https://github.com/arrking/austack/issues/2
+
+
+### Login Accounts for development
+```
+exports.users = [{
+  provider: 'local',
+  role: 'admin',
+  name: '15801213126',
+  password: 'auth4fun',
+  userId: 'dave',
+  active: true
+}, {
+  provider: 'local',
+  role: 'root',
+  name: 'Root',
+  userId: 'root',
+  password: 'auth4fun',
+  active: true
+}];
+```
