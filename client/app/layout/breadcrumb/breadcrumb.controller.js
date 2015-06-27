@@ -10,8 +10,7 @@
 
   function configBreadcrumb($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
-      includeAbstract: true,
-      template: 'bootstrap3'
+      includeAbstract: true
     });
   }
 
