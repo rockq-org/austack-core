@@ -4,7 +4,7 @@
   angular
     .module('austackApp.layout.breadcrumb', ['ncy-angular-breadcrumb'])
     .config(configBreadcrumb)
-    .controller('BreadcrumbController', BreadcrumbController);
+    .directive('atBreadcrumb', Breadcrumb);
 
   configBreadcrumb.$inject = ['$breadcrumbProvider'];
 
@@ -14,9 +14,19 @@
     });
   }
 
-  BreadcrumbController.$inject = [];
-  /* @ngInject */
-  function BreadcrumbController() {
-    var vm = this;
+  Breadcrumb.$inject = [];
+
+  function Breadcrumb() {
+    var directive = {
+      link: link,
+      restrict: 'E',
+      replace: true,
+      templateUrl: 'app/layout/breadcrumb/breadcrumb.html'
+    };
+
+    return directive;
+
+    function link(scope, elem, attrs) {}
   }
+
 })();

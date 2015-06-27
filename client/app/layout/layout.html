@@ -1,10 +1,10 @@
-<sidebar>
-</sidebar>
+<at-sidebar>
+</at-sidebar>
 <div layout="column" flex>
-  <header ng-include="'app/layout/header/header.html'"></header>
-  <section ng-include="'app/layout/breadcrumb/breadcrumb.html'"></section>
+  <at-header></at-header>
+  <at-breadcrumb></at-breadcrumb>
   <section ui-view></section>
-  <footer ng-include="'app/layout/footer/footer.html'"></footer>
+  <at-footer></at-footer>
 </div>
 <md-content ui-view="detail" toggle-component id="user-detail-content" md-component-id="user.detailView" layout="column" flex-sm="100" flex-md="50" flex-gt-md="33" style="z-index: 30" class="md-whiteframe-z1">
 </md-content>

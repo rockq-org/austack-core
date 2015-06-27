@@ -4,7 +4,7 @@
   // register the service as Sidebar
   angular
     .module('austackApp.sidebar')
-    .directive('sidebar', Sidebar);
+    .directive('atSidebar', Sidebar);
 
   // add Sidebar dependencies to inject
   Sidebar.$inject = ['$rootScope', '$mdSidenav', '$document'];
@@ -44,6 +44,5 @@
       }
     }
   }
-
 
 })();
