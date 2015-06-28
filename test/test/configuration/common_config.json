@@ -1,0 +1,10 @@
+{
+	"defaultURL" : "http://localhost:9001",
+	"credential" :{
+	"user":"xxx",
+	"passwd":"xxx!"
+	},
+	"collection" :{
+		"name" : "xxx"
+	}
+}

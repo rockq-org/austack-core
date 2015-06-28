@@ -1,0 +1,23 @@
+{
+  "name": "austack-test",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node austack-test.js"
+  },
+  "author": "Dev Team of Beijing Arrking Tech Co., Ltd",
+  "dependencies": {
+    "express": ">=3.4.7 <4",
+    "jade": "*",
+    "should": "*",
+    "mocha": "*",
+    "mongoose": "*",
+    "selenium-webdriver": "*",
+    "superagent": "*",
+    "connect-timeout": "*",
+    "eventsource": "*",
+    "glob": "*",
+    "underscore": "*",
+    "adm-zip": "*"
+  }
+}

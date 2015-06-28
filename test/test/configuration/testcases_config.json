@@ -1,0 +1,4 @@
+{
+    "pattern" : "./test/**/testFvt*.js",
+    "skip"   : ["unit","svt"]
+}

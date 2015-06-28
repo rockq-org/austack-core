@@ -1,0 +1,50 @@
+extends layout
+
+block content
+    h1= title
+    form(method="post", action='/')
+       p(style="color:blue") Austack API Address
+       input(id='url',name='_url',type='text',value!=defaultURL,style='width: 400px;')
+       p(style="color:blue") Test Suite
+       input(id='testsuite',name='_testsuite',type='text',value!=defaultTC,style='width: 400px;')
+       p
+       button(type='submit',id='runtest_btn') RunTest
+       p
+       p
+    -if (results.length<=0)
+        h2 No Any Test Results
+    -else  
+        table(border='1', cellpadding='5')
+            tr
+                th Timestamp
+                th Summary
+                th Percentage
+                th URL Tested
+            for result in results
+                tr
+                    -var getParam = encodeURIComponent(result.timestamp);
+                    td
+                        a(href='/timestamp/' + getParam)=result.timestamp 
+                       
+                    td=result.summary
+                    
+                    - var color
+                    - var pct
+                    - pct = result.percentage
+                    - pct = pct.slice(0, pct.length-1)
+                    - if (pct >= 95.00 && pct <= 100.00)
+                        - color = 'background-color: #00FF00'
+                    - else if (pct >= 80.00 && pct < 95.00)
+                        - color = 'background-color: #FFFF00'
+                    - else if (pct < 80.00)
+                        - color = 'background-color: #FF0000'
+                    - else if (result.percentage === 'In Progress')
+                        - color = 'background-color: #FFFFFF'
+                    - else
+                        result.percentage = "Error!"
+                    td(valign='middle',style=color)=result.percentage
+                    
+                    td(valign='left')
+                        a(href=result.url)=result.url
+                    
+                    
