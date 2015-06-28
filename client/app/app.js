@@ -19,7 +19,7 @@
       'ui.router',
       'btford.socket-io',
       'angular-loading-bar',
-      'austackApp.constants',
+      'austackApp.config',
       'austackApp.lodash',
       'austackApp.directive',
       'austackApp.sidebar',

@@ -7,3 +7,4 @@ dist/
 npm-debug.log
 *.swp
 *.swo
+client/app/config.js

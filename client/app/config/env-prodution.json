@@ -1,0 +1,6 @@
+{
+  "Config": {
+    "API": "http://austack-stg-server.arrking.com/api/",
+    "TEMPLATE_PREFIX": "http://austack-stg-client.arrking.com/app/"
+  }
+}
