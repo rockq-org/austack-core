@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('austackApp.layout.footer', [])
+    .module('austackApp.layout')
     .directive('atFooter', Footer);
 
   Footer.$inject = [];

@@ -1,0 +1,6 @@
+{
+  "Config": {
+    "API": "http://localhost:9001/api/",
+    "TEMPLATE_PREFIX": "http://localhost:3000/app/"
+  }
+}

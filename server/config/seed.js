@@ -29,6 +29,12 @@ exports.users = [{
   active: true
 }, {
   provider: 'local',
+  name: 'neo',
+  password: 'neo',
+  role: 'admin',
+  active: true
+}, {
+  provider: 'local',
   role: 'admin',
   name: '15801213126',
   password: 'auth4fun',

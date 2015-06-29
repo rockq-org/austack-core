@@ -3,7 +3,7 @@
 
   // register the controller as SignupCtrl
   angular
-    .module('austackApp.account.signup')
+    .module('austackApp.account')
     .controller('SignupCtrl', SignupCtrl);
 
   /**

@@ -1,62 +1,65 @@
 {
-    "bitwise": false, //Unexpected use of '<<'.
-    "camelcase": true,
-    "curly": true,
-    //"enforceall": false,
-    "eqeqeq": true,
-    //"es3": true,
-    //"es5": true,
-    "forin": true,
-    "freeze": false,
-    "funcscope": true,
-    //"futurehostile": fale
-    "immed": true,
-    "indent": 2,
-    "iterator": true,
-    "latedef": "nofunc",
-    //"maxcomplexity": false,
-    //"maxdepth": 2,
-    //"maxerr": 50,
-    //"maxparams": 3,
-    //"maxstatements": 4
-    "newcap": false, //Missing 'new' prefix when invoking a constructor.
-    "noarg": true,
-    "nocomma": true,
-    "noempty": true,
-    //"nonbsp": true,
-    "notypeof": true,
-    "quotmark": "single",
-    "shadow": false,
-    "singleGroups": false,
-    "strict": true,
-    "undef": true,
-    "unused": false, //set to 'true' in prod-env.'model' is defined but never used.
-    //"varstmt": false,
-    "globals": {
-        "angular": false,
-        // Angular Mocks
-        "inject": false,
-        "module": false,
-        // JASMINE
-        "describe": false,
-        "it": false,
-        "before": false,
-        "beforeEach": false,
-        "after": false,
-        "afterEach": false,
-        "expect": false,
-        // Karma
-        "Should": false,
-        // Lodash
-        "_": false,
-        // sinon
-        "sinon": true
-    },
-    //relaxing options
-    "globalstrict": true,
-    // environments
-    "browser": false, //'close' is already defined.
-    "devel": true //'console' is not defined.
+  "bitwise": false, //Unexpected use of '<<'.
+  "camelcase": true,
+  "curly": true,
+  //"enforceall": false,
+  "eqeqeq": true,
+  //"es3": true,
+  //"es5": true,
+  "forin": true,
+  "freeze": false,
+  "funcscope": true,
+  //"futurehostile": fale
+  "immed": true,
+  "indent": 2,
+  "iterator": true,
+  "latedef": "nofunc",
+  //"maxcomplexity": false,
+  //"maxdepth": 2,
+  //"maxerr": 50,
+  //"maxparams": 3,
+  //"maxstatements": 4
+  "newcap": false, //Missing 'new' prefix when invoking a constructor.
+  "noarg": true,
+  "nocomma": true,
+  "noempty": true,
+  //"nonbsp": true,
+  "notypeof": true,
+  "quotmark": "single",
+  "shadow": false,
+  "singleGroups": false,
+  "strict": true,
+  "undef": true,
+  "unused": false, //set to 'true' in prod-env.'model' is defined but never used.
+  //"varstmt": false,
+  "globals": {
+    "angular": false,
+    // Angular Mocks
+    "inject": false,
+    "module": false,
+    // JASMINE
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+    "expect": false,
+    // Karma
+    "Should": false,
+    // Lodash
+    "_": false,
+    // sinon
+    "sinon": false,
+    // Browser
+    "document": false,
+    "console": false
+  },
+  //relaxing options
+  "globalstrict": true,
+  // environments
+  "browser": false, //'close' is already defined.
+  "devel": true //'console' is not defined.
 
-    //"jasmine": true
+  //"jasmine": true
 }
