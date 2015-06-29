@@ -14,7 +14,7 @@
   angular
     .module('austackApp.account', [
       'ui.router',
-      'austackApp.account.signup',
+      'ngMaterial'
     ])
     .config(configAccountRoute);
 

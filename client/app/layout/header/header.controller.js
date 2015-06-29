@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('austackApp.layout.header')
+    .module('austackApp.layout')
     .controller('HeaderController', HeaderController);
 
-  HeaderController.$inject = ['Auth'];
+  HeaderController.$inject = ['Auth', 'ProfileService', 'SettingsService'];
   /* @ngInject */
-  function HeaderController(Auth) {
+  function HeaderController(Auth, ProfileService, SettingsService) {
     var vm = this;
 
     vm.menus = [{
@@ -21,11 +21,21 @@
       url: '#'
     }];
 
+    vm.user = Auth.getCurrentUser();
+    vm.user.avatar = 'assets/images/profile.png';
+
+    vm.profile = profile;
+    vm.setting = setting;
     vm.logout = logout;
 
-    /**
-     * Logout the current user
-     */
+    function profile() {
+      ProfileService.show();
+    }
+
+    function setting() {
+      SettingsService.show();
+    }
+
     function logout() {
       Auth.logout();
     }
