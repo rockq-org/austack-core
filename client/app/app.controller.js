@@ -28,7 +28,7 @@
   function AppController(Auth, $mdSidenav) {
     var vm = this;
 
-    vm.sidenavId = 'sidebar';
+    vm.sidenavId = 'mainMenu';
 
     /**
      * @ngdoc function

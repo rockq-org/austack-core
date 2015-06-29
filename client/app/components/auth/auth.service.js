@@ -26,11 +26,11 @@
       'ngResource',
       'ngCookies',
       'austackApp.auth.interceptor',
+      'austackApp.config',
       'austackApp.auth.user'
     ])
     .factory('Auth', Auth)
     .constant('userRoles', getUserRoles());
-
 
   /**
    * @ngdoc function
@@ -50,7 +50,7 @@
    * @returns {Service} {@link auth.service:Auth Auth-service}
    */
 
-  function Auth($http, $cookieStore, $cookies, $location, $q, $templateCache, _, User, userRoles) {
+  function Auth($http, $cookieStore, $cookies, $location, $q, $templateCache, _, User, userRoles, Config) {
     var currentUser = {};
 
     if ($cookieStore.get('token')) {
@@ -75,7 +75,6 @@
       getNameForRole: getNameForRole
     };
 
-
     /**
      * @ngdoc function
      * @name login
@@ -93,7 +92,7 @@
       var deferred = $q.defer();
       $cookies.customerId = user.customerId;
 
-      $http.post('/auth/local', {
+      $http.post(Config.API + 'auth/local', {
         customerId: user.customerId,
         name: user.name,
         password: user.password
@@ -113,7 +112,6 @@
       return deferred.promise;
     }
 
-
     /**
      * @ngdoc function
      * @name logout
@@ -129,7 +127,6 @@
       $templateCache.removeAll();
       $location.path('/login');
     }
-
 
     /**
      * @ngdoc function
@@ -154,7 +151,6 @@
           return cb(err);
         }.bind(this)).$promise;
     }
-
 
     /**
      * @ngdoc method
@@ -183,7 +179,6 @@
       }).$promise;
     }
 
-
     /**
      * @ngdoc function
      * @name getCurrentUser
@@ -197,7 +192,6 @@
       return currentUser;
     }
 
-
     /**
      * @ngdoc function
      * @name isLoggedIn
@@ -210,7 +204,6 @@
     function isLoggedIn() {
       return currentUser.hasOwnProperty('role');
     }
-
 
     /**
      * @ngdoc function
@@ -235,7 +228,6 @@
       }
     }
 
-
     /**
      * @ngdoc function
      * @name isAdmin
@@ -252,7 +244,6 @@
       return user.role === 'admin';
     }
 
-
     /**
      * @ngdoc function
      * @name isRoot
@@ -268,7 +259,6 @@
       user = user || getCurrentUser();
       return user.role === 'root';
     }
-
 
     /**
      * @ngdoc function

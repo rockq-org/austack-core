@@ -1,6 +1,6 @@
 /**
  * @ngdoc service
- * @name austackApp.sidebar.service:sidebar
+ * @name austackApp.mainMenu.service:mainMenu
  * @description
  * Service to manage the main menu
  */
@@ -9,12 +9,12 @@
   'use strict';
 
   // register the service as MenuService
-  angular.module('austackApp.sidebar')
-    .provider('sidebar', sidebarProvider);
+  angular.module('austackApp.mainMenu')
+    .provider('mainMenu', mainMenuProvider);
 
   /**
    * @ngdoc function
-   * @name sidebar.provider:sidebar
+   * @name mainMenu.provider:mainMenu
    * @description
    * MenuProvider definition
    * AngularJS will instantiate a singleton which is
@@ -23,7 +23,7 @@
    * phase of your angular application
    * @returns {Object} Singleton
    */
-  function sidebarProvider() {
+  function mainMenuProvider() {
     /* jshint validthis:true */
     // factory members
     var menu = [];
@@ -36,7 +36,7 @@
     /**
      * @ngdoc function
      * @name setMenu
-     * @methodOf sidebar.service:sidebar
+     * @methodOf mainMenu.service:mainMenu
      * @description
      * Sets a new menu
      * @param {*} newMenu The new menu
@@ -48,7 +48,7 @@
     /**
      * @ngdoc function
      * @name addMenuItem
-     * @methodOf sidebar.service:sidebar
+     * @methodOf mainMenu.service:mainMenu
      * @description
      * Adds a new menu item to the current menu
      * @param {*} menuData The menu data to add
@@ -60,7 +60,7 @@
     /**
      * @ngdoc function
      * @name addSubMenuItem
-     * @methodOf sidebar.service:sidebar
+     * @methodOf mainMenu.service:mainMenu
      * @description
      * Adds a new submenu item to a parent menu
      * @param {String} parent The state of the parent element
@@ -86,7 +86,7 @@
     }
 
     // Method for instantiating
-    this.$get = function sidebarFactory() {
+    this.$get = function mainMenuFactory() {
       return new Sidebar();
     };
   }

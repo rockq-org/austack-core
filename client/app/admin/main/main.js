@@ -11,13 +11,13 @@
   angular
     .module('austackApp.admin.main', [
       'ui.router',
-      'austackApp.sidebar',
+      'austackApp.mainMenu',
       'austackApp.layout'
     ])
     .config(configAdminMain);
 
   // inject configAdminMain dependencies
-  configAdminMain.$inject = ['$stateProvider', 'sidebarProvider'];
+  configAdminMain.$inject = ['$stateProvider', 'mainMenuProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -25,9 +25,9 @@
    * 'main' view paired with the UserMainController as 'main'.
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
-   * @param {sidebarProvider} sidebarProvider - The service to pass navigation information to
+   * @param {mainMenuProvider} mainMenuProvider - The service to pass navigation information to
    */
-  function configAdminMain($stateProvider, sidebarProvider) {
+  function configAdminMain($stateProvider, mainMenuProvider) {
     // The main state configuration
     var mainState = {
       name: 'admin.main',
@@ -45,7 +45,7 @@
 
     $stateProvider.state(mainState);
 
-    sidebarProvider.addMenuItem({
+    mainMenuProvider.addMenuItem({
       name: 'Administration',
       state: mainState.name,
       role: 'admin'

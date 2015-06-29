@@ -9,6 +9,7 @@
 var express = require('express');
 var path = require('path');
 var morgan = require('morgan');
+var cors = require('cors');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -37,6 +38,7 @@ function initExpress(app) {
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
 
+  app.use(cors());
   app.use(compression());
   app.use(bodyParser.urlencoded({
     extended: false

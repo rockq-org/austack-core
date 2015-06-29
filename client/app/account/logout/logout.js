@@ -13,7 +13,7 @@
     .config(configAccountLogout);
 
   // inject configAccountLogout dependencies
-  configAccountLogout.$inject = ['$stateProvider', 'sidebarProvider'];
+  configAccountLogout.$inject = ['$stateProvider', 'mainMenuProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -21,9 +21,9 @@
    * 'logout' view paired with the UserMainController as 'logout'.
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
-   * @param {sidebarProvider} sidebarProvider - The service to pass navigation information to
+   * @param {mainMenuProvider} mainMenuProvider - The service to pass navigation information to
    */
-  function configAccountLogout($stateProvider, sidebarProvider) {
+  function configAccountLogout($stateProvider, mainMenuProvider) {
     // The logout state configuration
     var logoutState = {
       name: 'account.logout',
@@ -40,7 +40,7 @@
 
     $stateProvider.state(logoutState);
 
-    // sidebarProvider.addMenuItem({
+    // mainMenuProvider.addMenuItem({
     //   name: 'Logout',
     //   state: logoutState.name,
     //   role: logoutState.role

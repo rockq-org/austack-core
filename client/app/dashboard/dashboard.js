@@ -7,10 +7,10 @@
     .config(configMainRoute);
 
   // inject configMainRoute dependencies
-  configMainRoute.$inject = ['$stateProvider', 'sidebarProvider'];
+  configMainRoute.$inject = ['$stateProvider', 'mainMenuProvider'];
 
   // route config function configuring the passed $stateProvider
-  function configMainRoute($stateProvider, sidebarProvider) {
+  function configMainRoute($stateProvider, mainMenuProvider) {
     var dashboardState = {
       name: 'dashboard',
       parent: 'root',
@@ -26,7 +26,7 @@
 
     $stateProvider.state(dashboardState);
 
-    sidebarProvider.addMenuItem({
+    mainMenuProvider.addMenuItem({
       name: '仪表盘',
       state: dashboardState.name,
       order: 1
