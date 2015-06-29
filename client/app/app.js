@@ -11,6 +11,7 @@
   angular
     .module('austackApp', [
       // Add modules below
+'austackApp.app',
       'ngCookies',
       'ngResource',
       'ngSanitize',
