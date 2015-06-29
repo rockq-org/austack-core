@@ -7,7 +7,7 @@
       'ui.router',
       'austackApp.admin.main',
       'austackApp.admin.user',
-      'austackApp.sidebar'
+      'austackApp.mainMenu'
     ])
     .config(configAdminRoute);
 

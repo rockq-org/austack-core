@@ -20,25 +20,6 @@
       ncyBreadcrumb: {
         label: 'Home'
       }
-      /*,
-            views: {
-              'header': {
-                templateUrl: 'app/layout/header/header.html',
-                controller: 'HeaderController as vm'
-              },
-              'sidebar': {
-                templateUrl: 'app/layout/sidebar/sidebar.html',
-                controller: 'SidebarController as vm'
-              },
-              'breadcrumb': {
-                templateUrl: 'app/layout/breadcrumb/breadcrumb.html',
-                controller: 'BreadcrumbController as vm'
-              },
-              'footer': {
-                templateUrl: 'app/layout/footer/footer.html',
-                controller: 'FooterController as vm'
-              }
-            }*/
     };
 
     $stateProvider.state(layoutState);

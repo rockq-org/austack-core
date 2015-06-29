@@ -8,7 +8,7 @@
    * @requires ui.router
    * @requires ngMaterial
    * @requires {austackApp.socket}
-   * @requires austackApp.sidebar
+   * @requires austackApp.mainMenu
    * @requires components/toggleComponent
    * @requires austackApp.admin.user.list.detail
    * @requires austackApp.admin.user.list.edit
@@ -20,7 +20,7 @@
       'ngMaterial',
       'ui.router',
       'austackApp.socket',
-      'austackApp.sidebar',
+      'austackApp.mainMenu',
       'austackApp.toggleComponent',
       'austackApp.admin.user.list.detail',
       'austackApp.admin.user.list.edit',
@@ -29,7 +29,7 @@
     .config(configUserListRoutes);
 
   // inject configUserListRoutes dependencies
-  configUserListRoutes.$inject = ['$stateProvider', 'sidebarProvider'];
+  configUserListRoutes.$inject = ['$stateProvider', 'mainMenuProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -38,7 +38,7 @@
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
    */
-  function configUserListRoutes($stateProvider, sidebarProvider) {
+  function configUserListRoutes($stateProvider, mainMenuProvider) {
     // The list state configuration
     var listState = {
       name: 'admin.user.list',
@@ -72,7 +72,7 @@
 
     $stateProvider.state(listState);
 
-    sidebarProvider.addSubMenuItem('admin.main', {
+    mainMenuProvider.addSubMenuItem('admin.main', {
       name: 'Users',
       state: listState.name,
       order: Infinity

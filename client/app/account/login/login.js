@@ -13,7 +13,7 @@
     .config(configAccountLogin);
 
   // inject configAccountLogin dependencies
-  configAccountLogin.$inject = ['$stateProvider', 'sidebarProvider'];
+  configAccountLogin.$inject = ['$stateProvider', 'mainMenuProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -21,9 +21,9 @@
    * 'login' view paired with the UserMainController as 'login'.
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
-   * @param {sidebarProvider} sidebarProvider - The service to pass navigation information to
+   * @param {mainMenuProvider} mainMenuProvider - The service to pass navigation information to
    */
-  function configAccountLogin($stateProvider, sidebarProvider) {
+  function configAccountLogin($stateProvider, mainMenuProvider) {
     // The login state configuration
     var loginState = {
       name: 'account.login',
