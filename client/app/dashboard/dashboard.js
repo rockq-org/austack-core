@@ -27,7 +27,7 @@
     $stateProvider.state(dashboardState);
 
     sidebarProvider.addMenuItem({
-      name: 'Dashboard',
+      name: '仪表盘',
       state: dashboardState.name,
       order: 1
     });
