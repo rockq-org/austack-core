@@ -3,7 +3,7 @@
 
   angular
     .module('austackApp.layout')
-    .directive('atFooter', Footer);
+    .directive('asFooter', Footer);
 
   Footer.$inject = [];
 
