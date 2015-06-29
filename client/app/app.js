@@ -11,6 +11,7 @@
   angular
     .module('austackApp', [
       // Add modules below
+      'austackApp.app',
       'ngCookies',
       'ngResource',
       'ngSanitize',
@@ -22,7 +23,7 @@
       'austackApp.config',
       'austackApp.lodash',
       'austackApp.directive',
-      'austackApp.sidebar',
+      'austackApp.mainMenu',
       'austackApp.io',
       'austackApp.socket',
       'austackApp.auth',

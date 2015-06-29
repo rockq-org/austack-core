@@ -4,7 +4,7 @@
   angular
     .module('austackApp.layout.breadcrumb', ['ncy-angular-breadcrumb'])
     .config(configBreadcrumb)
-    .directive('atBreadcrumb', Breadcrumb);
+    .directive('asBreadcrumb', Breadcrumb);
 
   configBreadcrumb.$inject = ['$breadcrumbProvider'];
 

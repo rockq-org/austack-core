@@ -3,7 +3,7 @@
 
   angular
     .module('austackApp.layout')
-    .directive('atHeader', Header);
+    .directive('asHeader', Header);
 
   Header.$inject = [];
 
