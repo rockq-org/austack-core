@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('austackApp.layout.header')
+    .module('austackApp.layout')
     .directive('atHeader', Header);
 
   Header.$inject = [];

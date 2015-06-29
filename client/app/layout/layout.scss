@@ -1,3 +1,14 @@
 .md-button {
   min-width: inherit;
+  img {
+    vertical-align: middle;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+}
+
+md-dialog {
+  max-width: 600px;
 }

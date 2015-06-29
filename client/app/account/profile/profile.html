@@ -1,10 +1,10 @@
-<md-dialog>
+<md-dialog id="user-profile">
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>设置</h2>
+        <h2>账号</h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="vm.answer('not applicable')" aria-label="Close settings">
+        <md-button class="md-icon-button" ng-click="vm.answer('not applicable')" aria-label="Close profile">
           <md-icon md-svg-src="navigation:ic_close_24px"></md-icon>
         </md-button>
       </div>
@@ -17,15 +17,9 @@
       </div>
     </md-dialog-content>
     <div class="md-actions" layout="row">
-      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank">
-        查看帮助
-      </md-button>
       <span flex></span>
-      <md-button ng-click="vm.answer('not useful')" class="md-primary">
-        取消
-      </md-button>
       <md-button ng-click="vm.answer('useful')" class="md-primary">
-        保存
+        确定
       </md-button>
     </div>
   </form>

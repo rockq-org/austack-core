@@ -3,7 +3,7 @@
 
   // register the route config on the application
   angular
-    .module('austackApp.account.signup', [])
+    .module('austackApp.account')
     .config(configSignupRoute);
 
   // inject configSignupRoute dependencies
