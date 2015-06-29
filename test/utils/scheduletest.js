@@ -56,8 +56,6 @@ function scheduleTest(req , res, fn){
 	utility.sleep(1000);
     mocha.run();
     index.index(req, res);
-	res.redirect("/");
-	res.end();
 }
 
 exports.scheduleTest = scheduleTest;
