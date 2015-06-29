@@ -1,18 +1,18 @@
 (function () {
   'use strict';
 
-  // register the service as Sidebar
+  // register the service as MainMenu
   angular
     .module('austackApp.mainMenu')
-    .directive('asSidebar', Sidebar);
+    .directive('asMainMenu', MainMenu);
 
-  // add Sidebar dependencies to inject
-  Sidebar.$inject = ['$rootScope', '$mdSidenav', '$document'];
+  // add MainMenu dependencies to inject
+  MainMenu.$inject = ['$rootScope', '$mdSidenav', '$document'];
 
   /**
-   * Sidebar directive
+   * MainMenu directive
    */
-  function Sidebar($rootScope, $mdSidenav, $document) {
+  function MainMenu($rootScope, $mdSidenav, $document) {
     // directive definition members
     var directive = {
       link: link,
