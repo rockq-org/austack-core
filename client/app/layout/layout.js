@@ -5,6 +5,7 @@
   angular
     .module('austackApp.layout', [
       'ui.router',
+      'austackApp.mainMenu',
       'austackApp.layout.breadcrumb'
     ])
     .config(configLayoutRoute);
