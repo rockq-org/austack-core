@@ -36,7 +36,7 @@ exports.users = [{
 }, {
   provider: 'local',
   role: 'admin',
-  name: '15801213126',
+  name: 'dave',
   password: 'auth4fun',
   userId: 'dave',
   active: true

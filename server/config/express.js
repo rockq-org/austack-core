@@ -38,6 +38,10 @@ function initExpress(app) {
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
 
+  /**
+   * Simple Usage (Enable All CORS Requests)
+   * https://www.npmjs.com/package/cors
+   */
   app.use(cors());
   app.use(compression());
   app.use(bodyParser.urlencoded({

@@ -7,17 +7,18 @@
   },
   "author": "Dev Team of Beijing Arrking Tech Co., Ltd",
   "dependencies": {
-    "express": ">=3.4.7 <4",
-    "jade": "*",
-    "should": "*",
-    "mocha": "*",
-    "mongoose": "*",
-    "selenium-webdriver": "*",
-    "superagent": "*",
+    "adm-zip": "*",
     "connect-timeout": "*",
     "eventsource": "*",
+    "express": ">=3.4.7 <4",
     "glob": "*",
-    "underscore": "*",
-    "adm-zip": "*"
+    "jade": "*",
+    "mocha": "*",
+    "mongoose": "*",
+    "q": "^1.4.1",
+    "selenium-webdriver": "*",
+    "should": "*",
+    "superagent": "*",
+    "underscore": "*"
   }
 }

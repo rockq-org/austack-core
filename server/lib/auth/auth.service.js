@@ -35,7 +35,6 @@ module.exports = {
    * Middleware for add the current user object to the request context as the given name
    * @see {auth:service~addAuthContex}
    * @type {Function}
-
    */
   addAuthContext: addAuthContext,
 
