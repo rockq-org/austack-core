@@ -55,7 +55,7 @@ ApplicationSchema.plugin(requestContext, {
  * Validations
  */
 ApplicationSchema
-  .path('name')
+  .path('appName')
   .validate(validateUniqueName, 'The specified name is already in use.');
 
 /**
