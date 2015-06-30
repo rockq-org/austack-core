@@ -4,37 +4,37 @@
 var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
-var appModel = require('./app.model');
+var applicationModel = require('./application.model');
 
-// Clear all apps
+// Clear all applications
 function cleanup(done) {
-	appModel.model.remove().exec().then(function () { done();	});
+	applicationModel.model.remove().exec().then(function () { done();	});
 }
 
-describe('/api/apps', function () {
+describe('/api/application', function () {
 
-	var app;
+	var application;
 
-	// reset app before each test
+	// reset application before each test
 	beforeEach(function () {
-		app = {
+		application = {
 			name: 'Dog',
 			info: 'Hello, this is dog.',
 			active: true
 		};
 	});
 
-	// Clear apps before each test
+	// Clear applications before each test
 	beforeEach(cleanup);
 
-	// Clear apps after each test
+	// Clear applications after each test
 	afterEach(cleanup);
 
 	describe('GET', function () {
 
 		it('should respond with JSON array', function (done) {
 			request(app)
-				.get('/api/apps')
+				.get('/api/application')
 				.set('Accept', 'application/json')
 				.expect(200)
 				.expect('Content-Type', /json/)
@@ -47,28 +47,28 @@ describe('/api/apps', function () {
 				});
 		});
 
-		it('should respond with an error for a malformed app id parameter', function (done) {
+		it('should respond with an error for a malformed application id parameter', function (done) {
 			request(app)
-				.get('/api/apps/malformedid')
+				.get('/api/application/malformedid')
 				.set('Accept', 'application/json')
 				.expect(400)
 				.expect('Content-Type', /json/)
 				.end(done);
 		});
 
-		it('should respond with an not found error for a not existing app id', function (done) {
+		it('should respond with an not found error for a not existing application id', function (done) {
 			request(app)
-				.get('/api/apps/cccccccccccccccccccccccc')
+				.get('/api/application/cccccccccccccccccccccccc')
 				.set('Accept', 'application/json')
 				.expect(404)
 				.expect('Content-Type', /json/)
 				.end(done);
 		});
 
-		it('should return a app for its id', function (done) {
-			appModel.model(app).save(function (err, doc) {
+		it('should return a application for its id', function (done) {
+			applicationModel.model(application).save(function (err, doc) {
 				request(app)
-					.get('/api/apps/' + doc._id)
+					.get('/api/application/' + doc._id)
 					.set('Accept', 'application/json')
 					.expect(200)
 					.expect('Content-Type', /json/)
@@ -76,7 +76,7 @@ describe('/api/apps', function () {
 						if (err) {
 							return done(err);
 						}
-						res.body.should.be.an.Object.and.have.properties(app);
+						res.body.should.be.an.Object.and.have.properties(application);
 						res.body._id.should.exist;
 						done();
 					});
@@ -87,18 +87,18 @@ describe('/api/apps', function () {
 
 	describe('POST', function () {
 
-		it('should create a new app and respond with 201 and the created app', function (done) {
+		it('should create a new application and respond with 201 and the created application', function (done) {
 			request(app)
-				.post('/api/apps')
+				.post('/api/application')
 				.set('Accept', 'application/json')
-				.send(app)
+				.send(application)
 				.expect(201)
 				.expect('Content-Type', /json/)
 				.end(function (err, res) {
 					if (err) {
 						return done(err);
 					}
-					res.body.should.be.an.Object.and.have.properties(app);
+					res.body.should.be.an.Object.and.have.properties(application);
 					res.body._id.should.exist;
 					done();
 				});
@@ -110,45 +110,45 @@ describe('/api/apps', function () {
 
 		it('should return an error if attempting a put without an id', function (done) {
 			request(app)
-				.put('/api/apps')
+				.put('/api/application')
 				.set('Accept', 'application/json')
-				.send(app)
+				.send(application)
 				.expect(404)
 				.end(done);
 		});
 
-		it('should respond with an not found error for a not existing app id', function (done) {
+		it('should respond with an not found error for a not existing application id', function (done) {
 			request(app)
-				.put('/api/apps/cccccccccccccccccccccccc')
+				.put('/api/application/cccccccccccccccccccccccc')
 				.set('Accept', 'application/json')
 				.expect(404)
 				.expect('Content-Type', /json/)
 				.end(done);
 		});
 
-		it('should update a app and respond with the updated app', function (done) {
+		it('should update a application and respond with the updated application', function (done) {
 			request(app)
-				.post('/api/apps')
+				.post('/api/application')
 				.set('Accept', 'application/json')
-				.send(app)
+				.send(application)
 				.end(function (err, res) {
 					if (err) {
 						return done(err);
 					}
-					app.name = 'Cat';
+					application.name = 'Cat';
 					// check if id is stripped on update
-					app._id = 'malformed id string';
+					application._id = 'malformed id string';
 					request(app)
-						.put('/api/apps/' + res.body._id)
+						.put('/api/application/' + res.body._id)
 						.set('Accept', 'application/json')
-						.send(app)
+						.send(application)
 						.expect(200)
 						.expect('Content-Type', /json/)
 						.end(function (err, res) {
 							if (err) {
 								return done(err);
 							}
-							res.body.should.be.an.Object.and.have.property('name', app.name);
+							res.body.should.be.an.Object.and.have.property('name', application.name);
 							done();
 						});
 				});
@@ -160,32 +160,32 @@ describe('/api/apps', function () {
 
 		it('should return an error if attempting a delete without an id', function (done) {
 			request(app)
-				.delete('/api/apps')
+				.delete('/api/application')
 				.set('Accept', 'application/json')
 				.expect(404)
 				.end(done);
 		});
 
-		it('should respond with an not found error for a not existing app id', function (done) {
+		it('should respond with an not found error for a not existing application id', function (done) {
 			request(app)
-				.delete('/api/apps/cccccccccccccccccccccccc')
+				.delete('/api/application/cccccccccccccccccccccccc')
 				.set('Accept', 'application/json')
 				.expect(404)
 				.expect('Content-Type', /json/)
 				.end(done);
 		});
 
-		it('should delete a app and respond with 204', function (done) {
+		it('should delete a application and respond with 204', function (done) {
 			request(app)
-				.post('/api/apps')
+				.post('/api/application')
 				.set('Accept', 'application/json')
-				.send(app)
+				.send(application)
 				.end(function (err, res) {
 					if (err) {
 						return done(err);
 					}
 					request(app)
-						.delete('/api/apps/' + res.body._id)
+						.delete('/api/application/' + res.body._id)
 						.set('Accept', 'application/json')
 						.expect(204)
 						.end(done);

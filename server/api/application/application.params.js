@@ -1,32 +1,32 @@
 /**
- * Module for initializing the app api request parameters for /api/apps routes.
- * Export the {@link app:Parameters~registerAppParams}
+ * Module for initializing the application api request parameters for /api/application routes.
+ * Export the {@link application:Parameters~registerApplicationParams}
  * function to register the api routes on the passed express router.
- * @module {function} app:parameters
- * @requires {@link app:model}
+ * @module {function} application:parameters
+ * @requires {@link application:model}
  */
 'use strict';
 
-// export the function to register all app request params
-module.exports = registerAppParams;
+// export the function to register all application request params
+module.exports = registerApplicationParams;
 
 /**
  * Attach request parameters to the given router.
  * @param router {express.Router} - The router to attach the parameters to
  */
-function registerAppParams(router) {
+function registerApplicationParams(router) {
 	// router.param('id', registerParamName);
 	// add params below
 }
 
 /*
- * Register a parameter for /api/apps requests.
+ * Register a parameter for /api/application requests.
  * Add a  property to the current request.
  * @param {http.IncomingMessage} req - The request message object
  * @param {http.ServerResponse} res - The outgoing response object
  * @param next {function} - The next handler function to call when done
  * @param id {String} - The id parameter parsed from the current request
- * @see app:model~App
+ * @see application:model~Application
  * @returns {function} This function sets a status of 400 for malformed MongoDB
  * id's and a status of 404 if no document has been found for the passed
  * parameter. Calls the passed next function when done.
