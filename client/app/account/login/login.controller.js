@@ -40,8 +40,8 @@
      */
     vm.user = {};
     vm.user = {
-      name: '',
-      password: ''
+      name: '18959264502',
+      password: 'laijinyue'
     };
 
     /**
