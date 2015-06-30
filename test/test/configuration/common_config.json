@@ -1,10 +1,7 @@
 {
-	"defaultURL" : "http://localhost:9001",
-	"credential" :{
-	"user":"xxx",
-	"passwd":"xxx!"
-	},
-	"collection" :{
-		"name" : "xxx"
-	}
+  "defaultURL": "http://localhost:9001",
+  "credential": {
+    "name": "dave",
+    "passwd": "auth4fun!"
+  }
 }
