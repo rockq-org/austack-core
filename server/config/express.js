@@ -38,7 +38,7 @@ function initExpress(app) {
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
 
-  app.use(cors());
+  app.use(cors(config.corsOptions));
   app.use(compression());
   app.use(bodyParser.urlencoded({
     extended: false

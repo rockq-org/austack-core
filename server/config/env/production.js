@@ -4,13 +4,16 @@ process.env.DATABASE_NAME = process.env.DATABASE_NAME || 'austackdb';
 
 module.exports = {
 
-	ip: process.env.AUSTACK_SYS_IP || undefined,
+  corsOptions: {
+    origin: 'http://austack-stg-client.arrking.com'
+  },
+  ip: process.env.AUSTACK_SYS_IP || undefined,
 
-	port: process.env.AUSTACK_SYS_PORT || 9888,
+  port: process.env.AUSTACK_SYS_PORT || 9888,
 
-	publicDir: 'public',
+  publicDir: 'public',
 
-	mongo: {
-		uri: 'mongodb://peter:Be8s2fsisOdWy@115.28.162.221:27088/' + process.env.DATABASE_NAME
-	}
+  mongo: {
+    uri: 'mongodb://peter:Be8s2fsisOdWy@115.28.162.221:27088/' + process.env.DATABASE_NAME
+  }
 };
