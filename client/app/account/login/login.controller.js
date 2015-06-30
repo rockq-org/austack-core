@@ -40,8 +40,8 @@
      */
     vm.user = {};
     vm.user = {
-      name: '',
-      password: ''
+      name: '18959264502',
+      password: 'laijinyue'
     };
 
     /**
@@ -68,7 +68,6 @@
     function login(form) {
       if (form.$valid) {
         Auth.login({
-          customerId: vm.user.customerId,
           name: vm.user.name,
           password: vm.user.password
         }).then(function () {

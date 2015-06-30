@@ -38,11 +38,7 @@ function initExpress(app) {
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
 
-  /**
-   * Simple Usage (Enable All CORS Requests)
-   * https://www.npmjs.com/package/cors
-   */
-  app.use(cors());
+  app.use(cors(config.corsOptions));
   app.use(compression());
   app.use(bodyParser.urlencoded({
     extended: false
@@ -62,7 +58,7 @@ function initExpress(app) {
   if ('development' === env || 'test' === env) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(publicDir));
-    app.use('/bower_components', express.static(path.join(config.root, 'bower_components')));
+    //app.use('/bower_components', express.static(path.join(config.root, 'bower_components')));
     app.set('appPath', publicDir);
     app.use(morgan('dev'));
     // Error handler - has to be last

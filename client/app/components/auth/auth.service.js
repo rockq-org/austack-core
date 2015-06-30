@@ -90,16 +90,13 @@
       /* jshint validthis:true */
       var cb = callback || angular.noop;
       var deferred = $q.defer();
-      $cookies.customerId = user.customerId;
 
       $http.post(Config.API + 'auth/local', {
-        customerId: user.customerId,
         name: user.name,
         password: user.password
       }).success(function (data) {
         console.log(data);
         $cookieStore.put('token', data.token);
-        $cookieStore.remove('customerID');
         currentUser = User.get();
         deferred.resolve(data);
         return cb();

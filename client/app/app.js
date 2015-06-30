@@ -38,7 +38,7 @@
   /* App configuration */
 
   // add appConfig dependencies to inject
-  appConfig.$inject = ['$urlRouterProvider', '$urlMatcherFactoryProvider', '$locationProvider', '$mdThemingProvider', '$mdIconProvider', '$httpProvider'];
+  appConfig.$inject = ['Config', '$urlRouterProvider', '$urlMatcherFactoryProvider', '$locationProvider', '$mdThemingProvider', '$mdIconProvider', '$httpProvider'];
 
   /**
    * Application config function
@@ -47,7 +47,7 @@
    * @param $urlRouterProvider
    * @param $locationProvider
    */
-  function appConfig($urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, $httpProvider) {
+  function appConfig(Config, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/');
     $urlMatcherFactoryProvider.strictMode(false);
     $locationProvider.html5Mode(true);
@@ -71,7 +71,7 @@
           .accentPalette('pink')
           .backgroundPalette('grey-background');
     */
-    var spritePath = 'bower_components/material-design-icons/sprites/svg-sprite/';
+    var spritePath = Config.ICON_ROOT;
     $mdIconProvider.iconSet('navigation', spritePath + 'svg-sprite-navigation.svg');
     $mdIconProvider.iconSet('action', spritePath + 'svg-sprite-action.svg');
     $mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');

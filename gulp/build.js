@@ -79,6 +79,12 @@ module.exports = function (options) {
       .pipe(gulp.dest(options.dist + '/fonts/'));
   });
 
+  gulp.task('icons', function () {
+    return gulp.src('bower_components/material-design-icons/sprites/**/*')
+      .pipe($.filter('**/*.svg'))
+      .pipe(gulp.dest(options.dist + '/assets/'));
+  });
+
   gulp.task('other', function () {
     return gulp.src([
         options.src + '/**/*',
@@ -93,5 +99,5 @@ module.exports = function (options) {
     $.del([options.dist + '/', options.tmp + '/'], done);
   });
 
-  gulp.task('build', ['html', 'fonts', 'other']);
+  gulp.task('build', ['html', 'fonts', 'icons', 'other']);
 };

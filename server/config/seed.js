@@ -49,16 +49,16 @@ exports.users = [{
   active: true
 }];
 
-if ('development' === env) {
-  console.log('Populating test and development data ...');
+// if ('development' === env) {
+console.log('Populating test and development data ...');
 
-  User.find({}).remove(function () {
-    User.create(exports.users, function (err) {
-      if (err) {
-        console.error('Error while populating users: %s', err);
-      } else {
-        console.log('finished populating users');
-      }
-    });
+User.find({}).remove(function () {
+  User.create(exports.users, function (err) {
+    if (err) {
+      console.error('Error while populating users: %s', err);
+    } else {
+      console.log('finished populating users');
+    }
   });
-}
+});
+// }
