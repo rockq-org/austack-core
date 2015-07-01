@@ -46,7 +46,7 @@
   /* @ngInject */
   function User($resource, Config) {
     // factory members
-    var apiURL = Config.API + 'user';
+    var apiURL = Config.API + 'users';
     var methods = {
       verifyMobile: {
         method: 'PUT',

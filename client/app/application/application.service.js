@@ -14,14 +14,14 @@
     .service('ApplicationService', ApplicationService);
 
   // add Application dependencies to inject
-  Application.$inject = ['Resource'];
+  Application.$inject = ['Resource', 'Config'];
 
   /**
    * Application resource constructor
    */
-  function Application($resource) {
+  function Application($resource, Config) {
     // factory members
-    var apiURL = '/api/applications';
+    var apiURL = Config.API + 'applications';
     // public API
     return $resource(apiURL + '/:id/:controller');
   }
