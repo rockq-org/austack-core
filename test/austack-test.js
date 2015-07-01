@@ -18,7 +18,7 @@ var app = express();
 var page_title = 'Test Server for Austack';
 
 // all environments
-app.set('port', process.env.PORT || 3666);
+app.set('port', process.env.AUSTACK_TEST_PORT || 3666);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
