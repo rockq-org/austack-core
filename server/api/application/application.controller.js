@@ -1,6 +1,6 @@
 /**
  * Module for the controller definition of the application api.
- * The ApplicationController is handling /api/application requests.
+ * The ApplicationController is handling /api/applications requests.
  * @module {application:controller~ApplicationController} application:controller
  * @requires {@link ParamController}
  */
@@ -18,7 +18,7 @@ var Application = require('./application.model').model;
 
 /**
  * ApplicationController constructor
- * @classdesc Controller that handles /api/application route requests
+ * @classdesc Controller that handles /api/applications route requests
  * for the application api.
  * Uses the 'applicationId' parameter and the 'applicationParam' request property
  * to operate with the [main application API Model]{@link application:model~Application} model.
@@ -27,29 +27,28 @@ var Application = require('./application.model').model;
  * @see application:model~Application
  */
 function ApplicationController(router) {
-	ParamController.call(this, Application,  router);
+  ParamController.call(this, Application, router);
 
-	// modify select only properties
-	// this.select = ['-__v'];
+  // modify select only properties
+  // this.select = ['-__v'];
 
-	// omit properties on update
-	// this.omit = ['hashedPassword'];
+  // omit properties on update
+  // this.omit = ['hashedPassword'];
 
-	// property to return (maybe a virtual getter of the model)
-	// this.defaultReturn = 'profile';
+  // property to return (maybe a virtual getter of the model)
+  // this.defaultReturn = 'profile';
 }
 
 // define properties for the ApplicationController here
 ApplicationController.prototype = {
 
-	/**
-	 * Set our own constructor property for instanceof checks
-	 * @private
-	 */
-	constructor: ApplicationController
+  /**
+   * Set our own constructor property for instanceof checks
+   * @private
+   */
+  constructor: ApplicationController
 
 };
 
 // inherit from ParamController
 ApplicationController.prototype = Object.create(ParamController.prototype);
-

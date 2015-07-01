@@ -20,7 +20,7 @@
       controller: 'DashboardController',
       controllerAs: 'vm',
       ncyBreadcrumb: {
-        label: 'Dashboard'
+        label: '仪表盘'
       }
     };
 

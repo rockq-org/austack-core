@@ -32,7 +32,6 @@
     ])
     .config(configureUserListEdit);
 
-
   /**
    * Route configuration function configuring the passed $stateProvider.
    * Register the admin.user.list.edit state with the edit template
@@ -56,7 +55,7 @@
       role: 'admin',
       onEnter: onEnterUserListEdit,
       views: {
-        'detail@root': {
+        'content@admin.user.list': {
           templateUrl: 'app/admin/user/list/edit/edit.html',
           controller: 'UserEditController',
           controllerAs: 'edit',
@@ -69,7 +68,6 @@
 
     $stateProvider.state(editState);
   }
-
 
   /**
    * Executed when entering the admin.user.list.detail state. Open the component

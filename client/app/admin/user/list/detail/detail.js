@@ -21,7 +21,6 @@
     ])
     .config(configureUserListDetail);
 
-
   /**
    * Route configuration function configuring the passed $stateProvider.
    * Register the 'user.detail' state with the detail template
@@ -45,7 +44,7 @@
       authenticate: true,
       role: 'admin',
       views: {
-        'detail@root': {
+        'content@admin.user.list': {
           templateUrl: 'app/admin/user/list/detail/detail.html',
           controller: 'UserDetailController',
           controllerAs: 'detail',
