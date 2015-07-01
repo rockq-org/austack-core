@@ -10,7 +10,7 @@
 
   function configBreadcrumb($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
-      includeAbstract: true
+      includeAbstract: false
     });
   }
 

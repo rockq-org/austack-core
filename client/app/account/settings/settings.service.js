@@ -3,8 +3,7 @@
 
   angular
     .module('austackApp.account')
-    .service('SettingsService', SettingsService)
-    .controller('SettingsController', SettingsController);
+    .service('SettingsService', SettingsService);
 
   SettingsService.$inject = ['$mdDialog', '$log'];
 
@@ -32,22 +31,6 @@
     function hideSettings() {
       return $mdDialog.hide();
     }
-  }
-
-  SettingsController.$inject = ['$mdDialog'];
-
-  function SettingsController($mdDialog) {
-    var vm = this;
-
-    vm.hide = function () {
-      $mdDialog.hide();
-    };
-    vm.cancel = function () {
-      $mdDialog.cancel();
-    };
-    vm.answer = function (answer) {
-      $mdDialog.hide(answer);
-    };
   }
 
 })();

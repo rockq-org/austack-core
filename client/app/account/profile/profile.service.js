@@ -3,8 +3,7 @@
 
   angular
     .module('austackApp.account')
-    .service('ProfileService', ProfileService)
-    .controller('ProfileController', ProfileController);
+    .service('ProfileService', ProfileService);
 
   ProfileService.$inject = ['$mdDialog', '$log'];
 
@@ -32,22 +31,6 @@
     function hideProfile() {
       return $mdDialog.hide();
     }
-  }
-
-  ProfileController.$inject = ['$mdDialog'];
-
-  function ProfileController($mdDialog) {
-    var vm = this;
-
-    vm.hide = function () {
-      $mdDialog.hide();
-    };
-    vm.cancel = function () {
-      $mdDialog.cancel();
-    };
-    vm.answer = function (answer) {
-      $mdDialog.hide(answer);
-    };
   }
 
 })();
