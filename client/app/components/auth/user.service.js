@@ -33,7 +33,6 @@
     .factory('User', User)
     .service('UserService', UserService);
 
-
   /**
    * @ngdoc function
    * @name auth.user.provider:User
@@ -44,11 +43,10 @@
    * @returns {Service} {@link auth.user.service:User User-service}
    */
 
-  User.$inject = ['Resource'];
-
-  function User($resource) {
+  /* @ngInject */
+  function User($resource, Config) {
     // factory members
-    var apiURL = '/api/users';
+    var apiURL = Config.API + 'user';
     var methods = {
       verifyMobile: {
         method: 'PUT',
@@ -84,7 +82,6 @@
 
     return $resource(apiURL + '/:id/:controller', {}, methods);
   }
-
 
   /**
    * @ngdoc function
