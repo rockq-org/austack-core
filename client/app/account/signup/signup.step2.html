@@ -6,9 +6,8 @@
       <div ng-message="required">请输入验证码！</div>
     </div>
   </md-input-container>
-  <md-input-container>
-    <md-button class="md-primary md-raised" ng-disabled="!verifyCodeForm.$valid" type="submit">提交手机验证码</md-button>
-    <br>
-    <md-button class="md-raised md-primary" ng-click="signup.resendVerifyCode()">重发验证码</md-button>
-  </md-input-container>
+  <md-button class="md-raised md-primary" ng-disabled="!verifyCodeForm.$valid" type="submit">提交手机验证码</md-button>
+  <div class="md-actions" layout="row" layout-align="end center">
+    <md-button class="md-accent" ng-click="signup.resendVerifyCode()">重发验证码</md-button>
+  </div>
 </form>
