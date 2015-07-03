@@ -58,6 +58,20 @@ describe('/api/application', function () {
   // afterEach(cleanup);
 
   describe('POST', function () {
+    it('should not create a new application and respond with 401', function (done) {
+      request(app)
+        .post('/api/application')
+        .set('Accept', 'application/json')
+        .send(application)
+        .expect(401)
+        .expect('Content-Type', /json/)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
     it('should create a new application and respond with 201 and the created application', function (done) {
       request(app)
         .post('/api/application')
@@ -80,9 +94,9 @@ describe('/api/application', function () {
           done();
         });
     });
-  })
+  });
 
-  describe('GET', function () {
+  describe.only('GET', function () {
 
     it('should respond with JSON array', function (done) {
       request(app)
