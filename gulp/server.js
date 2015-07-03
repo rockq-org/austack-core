@@ -14,11 +14,11 @@ module.exports = function (options) {
     browser = browser === undefined ? 'default' : browser;
 
     var routes = null;
-    if (baseDir === options.src || (util.isArray(baseDir) && baseDir.indexOf(options.src) !== -1)) {
-      routes = {
-        '/bower_components': 'bower_components'
-      };
-    }
+    //if (baseDir === options.src || (util.isArray(baseDir) && baseDir.indexOf(options.src) !== -1)) {
+    routes = {
+      '/bower_components': 'bower_components'
+    };
+    //}
 
     var server = {
       baseDir: baseDir,
