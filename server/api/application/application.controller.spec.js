@@ -22,9 +22,14 @@ var root = {
 
 var TestHelper = {
   item: {
-    name: 'My App',
+    name: 'My App2',
     ownerId: dave2._id
   },
+  itemForDave1: {
+    name: 'My App1',
+    ownerId: dave1._id
+  },
+
   dataArray: [{
     name: 'Dave1 App 1',
     ownerId: dave1._id
@@ -102,15 +107,16 @@ var TestHelper = {
   }
 };
 
-describe.only('/api/applications', function () {
+describe.only('#42 As a developer, Dave can access application with RESt API', function () {
   before(function (done) {
     seed.seed(done);
   });
   beforeEach(TestHelper.cleanupApplicationDataInDatabase);
+  beforeEach(TestHelper.initListDataInDatabase);
   beforeEach(TestHelper.getJwtToken);
   // afterEach(TestHelper.cleanupApplicationDataInDatabase);
 
-  describe('#67 POST', function () {
+  describe('#67 enable POST /api/app', function () {
     // can not run, as expressJwt will trigger UnauthorizedError, and break the expect
     // it('should not create a new application and respond with 401', function (done) {
     //   request(app)
@@ -144,8 +150,7 @@ describe.only('/api/applications', function () {
     });
   });
 
-  describe('#66 GET', function () {
-    beforeEach(TestHelper.initListDataInDatabase);
+  describe('#66 enable GET /api/app', function () {
     it('should respond with JSON array', function (done) {
       request(app)
         .get('/api/applications')
@@ -236,8 +241,7 @@ describe.only('/api/applications', function () {
     });
   });
 
-  describe.skip('more task', function () {
-    beforeEach(TestHelper.initListDataInDatabase);
+  describe('#68 enable GET /api/app/:id', function () {
     it('should respond with an error for a malformed application id parameter', function (done) {
       request(app)
         .get('/api/applications/malformedid')
@@ -258,8 +262,9 @@ describe.only('/api/applications', function () {
         .end(done);
     });
 
-    it('should return a application for its id', function (done) {
+    it('As admin, Dave2 can get his own app details', function (done) {
       applicationModel.model(TestHelper.item).save(function (err, doc) {
+        debug(TestHelper.item.ownerId, doc);
         request(app)
           .get('/api/applications/' + doc._id)
           .set('Accept', 'application/json')
@@ -274,6 +279,18 @@ describe.only('/api/applications', function () {
             res.body._id.should.exist;
             done();
           });
+      });
+    });
+
+    it('As admin, Dave2 can not get dave1 app details', function (done) {
+      applicationModel.model(TestHelper.itemForDave1).save(function (err, doc) {
+        request(app)
+          .get('/api/applications/' + doc._id)
+          .set('Accept', 'application/json')
+          .set('Authorization', 'Bearer ' + TestHelper.token)
+          .expect(401)
+          .expect('Content-Type', /json/)
+          .end(done);
       });
     });
 

@@ -139,7 +139,7 @@ CrudController.prototype = {
    */
   show: function (req, res) {
     var self = this;
-
+    debug('show in crud controller', this.idName);
     this.model.findOne({
       '_id': req.params[this.idName]
     }, function (err, document) {
@@ -241,6 +241,7 @@ CrudController.prototype = {
   },
 
   getResponseObject: function (obj) {
+    debug('getResponseObject', obj);
     return this.defaultReturn && obj[this.defaultReturn] || obj;
   }
 };

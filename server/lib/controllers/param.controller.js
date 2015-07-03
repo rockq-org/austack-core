@@ -4,7 +4,7 @@ var _ = require('lodash');
 var ObjectID = require('mongoose').Types.ObjectId;
 
 var CrudController = require('./crud.controller');
-
+var debug = require('debug')('controller:param');
 /**
  * The CrudController for basic CRUD functionality on Mongoose models
  * @type {ParamController}
@@ -82,6 +82,7 @@ ParamController.prototype = {
    * @returns {ServerResponse} A single document or NOT FOUND if no document has been found
    */
   show: function (req, res) {
+    debug('show in param controller', req[this.paramName]);
     if (req[this.paramName]) {
       return res.ok(this.getResponseObject(req[this.paramName]));
     }

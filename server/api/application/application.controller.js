@@ -67,6 +67,38 @@ ApplicationController.prototype = {
     });
   },
 
+  show: function (req, res) {
+    if (!req[this.paramName]) {
+      return res.notFound();
+    }
+
+    var doc = req[this.paramName];
+    if (doc.ownerId != req.userInfo._id) {
+      return res.unauthorized();
+    }
+
+    return res.ok(this.getResponseObject(req[this.paramName]));
+  },
+
+  read: function (req, res) {
+    console.log('wwww', req.params[this.idName]);
+    var self = this;
+    this.model.findOne({
+      '_id': req.params[this.idName],
+      'ownerId': req.userInfo._id
+    }, function (err, document) {
+      if (err) {
+        return res.handleError(err);
+      }
+
+      if (!document) {
+        return res.notFound();
+      }
+
+      return res.ok(self.getResponseObject(document));
+    });
+  },
+
   index: function (req, res) {
     var query = {
       'ownerId': req.userInfo._id
@@ -74,7 +106,7 @@ ApplicationController.prototype = {
     if (roles.hasRole(req.userInfo.role, 'root')) {
       query = {};
     }
-    debug('===============', req.userInfo.role);
+
     this.model.paginate(
       query,
       this.getPaginateOptions(req),
