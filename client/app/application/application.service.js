@@ -21,7 +21,7 @@
    */
   function Application($resource, Config) {
     // factory members
-    var apiURL = Config.API + 'applications';
+    var apiURL = Config.API_URL + 'applications';
     // public API
     return $resource(apiURL + '/:id/:controller');
   }
