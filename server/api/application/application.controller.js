@@ -11,6 +11,7 @@ module.exports = ApplicationController;
 var _ = require('lodash');
 var debug = require('debug')('application');
 var ParamController = require('../../lib/controllers/param.controller');
+var roles = require('../../lib/auth/roles');
 
 /**
  * The Application model instance
@@ -64,8 +65,26 @@ ApplicationController.prototype = {
 
       return res.created(self.getResponseObject(document));
     });
-  }
+  },
 
+  index: function (req, res) {
+    var query = {
+      'ownerId': req.userInfo._id
+    };
+    if (roles.hasRole(req.userInfo.role, 'root')) {
+      query = {};
+    }
+    debug('===============', req.userInfo.role);
+    this.model.paginate(
+      query,
+      this.getPaginateOptions(req),
+      function (err, results, pageCount, itemCount) {
+        if (err) {
+          return res.handleError(err);
+        }
+        return res.ok(results);
+      });
+  }
 };
 
 // inherit from ParamController

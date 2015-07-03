@@ -6,8 +6,10 @@ var $ = require('gulp-load-plugins')();
 module.exports = function (options) {
 
   gulp.task('tdd', function () {
+    process.env.NODE_ENV = 'test';
     gulp.start('mocha');
-    gulp.watch([options.server + '/api/**/*.js'], ['mocha']);
+    var watchList = [options.server + '/**/*.js'];
+    gulp.watch(watchList, ['mocha']);
   });
 
   gulp.task('mocha', function () {

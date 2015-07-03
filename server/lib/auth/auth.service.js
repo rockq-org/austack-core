@@ -71,7 +71,7 @@ function isAuthenticated() {
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
       }
-      debug(req.userInfo);
+      // debug(req.userInfo);
       validateJwt(req, res, next);
     })
 
@@ -84,7 +84,7 @@ function isAuthenticated() {
     // load user model on demand
     var User = require('../../api/user/user.model').model;
 
-    debug(req.user);
+    // debug(req.user);
     // read the user id from the token information provided in req.user
     User.findOne({
       _id: req.user._id,

@@ -2,7 +2,8 @@
 
 var _ = require('lodash');
 var BaseController = require('./base.controller');
-
+var Config = require('../../config/index');
+var debug = require('debug')('controller:crud');
 /**
  * The CrudController for basic CRUD functionality on Mongoose models
  * @type {CrudController}
@@ -117,6 +118,18 @@ CrudController.prototype = {
     });
   },
 
+  getPaginateOptions: function (req) {
+    var query = req.query;
+    var page = parseInt(query.page) || 1;
+    var limit = parseInt(query.limit) || Config.limit;
+    page = page < 1 ? 1 : page;
+    limit = limit < 1 ? 1 : limit;
+
+    return {
+      page: page,
+      limit: limit
+    };
+  },
   /**
    * Get a single document. The requested document id is read from the request parameters
    * by using the {@link CrudController#idName} property.

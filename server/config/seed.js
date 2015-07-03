@@ -7,7 +7,7 @@
 
 var mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
-
+var ObjectId = mongoose.Schema.Types.ObjectId;
 var User = require('../api/user/user.model').model;
 
 /*
@@ -23,43 +23,47 @@ if ('production' === env) {
  */
 exports.users = [{
   provider: 'local',
-  name: '18959264502',
-  password: 'laijinyue',
+  // _id: 'dave1_id',
+  _id: '5596b9bd30e816d8f84bba33',
+  name: 'dave1',
+  userId: 'dave1',
+  password: 'dave1',
   role: 'admin',
   isVerified: true,
   active: true
 }, {
   provider: 'local',
-  name: 'neo',
-  password: 'neo',
+  // _id: 'dave2_id',
+  _id: '5596b9bd30e816d8f84bba34',
   role: 'admin',
+  name: 'dave2',
+  password: 'dave2',
+  isVerified: true,
+  userId: 'dave2',
   active: true
 }, {
   provider: 'local',
-  role: 'admin',
-  name: 'dave',
-  password: 'auth4fun',
-  userId: 'dave',
-  active: true
-}, {
-  provider: 'local',
+  // _id: 'root_id',
+  _id: '5596b9bd30e816d8f84bba35',
   role: 'root',
-  name: 'Root',
+  name: 'root',
   userId: 'root',
-  password: 'auth4fun',
+  password: 'root',
+  isVerified: true,
   active: true
 }];
 
-// if ('development' === env) {
-console.log('Populating test and development data ...');
-
-User.find({}).remove(function () {
-  User.create(exports.users, function (err) {
-    if (err) {
-      console.error('Error while populating users: %s', err);
-    } else {
-      console.log('finished populating users');
-    }
+exports.seed = function (done) {
+  User.find({}).remove(function () {
+    User.create(exports.users, function (err) {
+      if (err) {
+        console.error('Error while populating users: %s', err);
+      } else {
+        console.log('finished populating users');
+      }
+      if (done) {
+        done();
+      }
+    });
   });
-});
-// }
+}

@@ -52,7 +52,6 @@ router.route('/' + controller.paramString + '/submitUserDetail')
 router.route('*')
   .all(addRequestContext, isAuthenticated, addUserContext);
 
-
 // register user routes
 router.route('/')
   .get(isAdmin, controller.index)

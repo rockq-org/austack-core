@@ -12,6 +12,7 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
+var mongoosePaginatePlugin = require('../../lib/mongoose/mongoose-paginate');
 
 /**
  * The Application model definition
@@ -52,12 +53,14 @@ ApplicationSchema.plugin(requestContext, {
   contextPath: 'request:acl.user.name'
 });
 
+ApplicationSchema.plugin(mongoosePaginatePlugin);
+
 /**
  * Validations
  */
-ApplicationSchema
-  .path('name')
-  .validate(validateUniqueName, 'The specified name is already in use.');
+// ApplicationSchema
+//   .path('name')
+//   .validate(validateUniqueName, 'The specified name is already in use.');
 
 ApplicationSchema.statics.generateRandomObjectId = function generateRandomObjectId() {
   return crypto.createHash('md5').update(Math.random().toString()).digest('hex').substring(0, 24);
@@ -67,7 +70,12 @@ ApplicationSchema.statics.generateRandomObjectId = function generateRandomObject
  *  The registered mongoose model instance of the Application model
  *  @type {Application}
  */
-var Application = mongoose.model('Application', ApplicationSchema);
+var Application;
+if (mongoose.models.Application) {
+  Application = mongoose.model('Application');
+} else {
+  Application = mongoose.model('Application', ApplicationSchema);
+}
 
 module.exports = {
 
