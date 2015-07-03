@@ -20,7 +20,7 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
  * @property {Boolean} active - Flag indicating this application is active
  */
 var ApplicationDefinition = {
-  appName: {
+  name: {
     type: String,
     required: true
   },
@@ -55,7 +55,7 @@ ApplicationSchema.plugin(requestContext, {
  * Validations
  */
 ApplicationSchema
-  .path('appName')
+  .path('name')
   .validate(validateUniqueName, 'The specified name is already in use.');
 
 /**
