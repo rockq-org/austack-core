@@ -49,7 +49,7 @@ function proxyMiddleware(req, res, next) {
    * may be more reliable but can't be generic.
    */
   //if (/\.(html|css|js|png|jpg|jpeg|gif|ico|xml|rss|txt|eot|svg|ttf|woff|woff2|cur)(\?((r|v|rel|rev)=[\-\.\w]*)?)?$/.test(req.url)) {
-  if (req.url.indexOf('/api') == 0 || req.url.indexOf('/auth') == 0 || req.url.indexOf('socket.io') > -1) {
+  if (req.url.indexOf('socket.io') > -1) {
     proxy.web(req, res);
   } else {
     next();

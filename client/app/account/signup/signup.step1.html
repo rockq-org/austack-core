@@ -6,7 +6,11 @@
       <div ng-message="required">请输入您的手机号！</div>
     </div>
   </md-input-container>
-  <md-input-container>
-    <md-button class="md-primary md-raised" ng-disabled="!getVerifyCodeForm.$valid" type="submit">获取手机验证码</md-button>
-  </md-input-container>
+  <md-button class="md-primary md-raised" ng-disabled="!getVerifyCodeForm.$valid" type="submit">
+    <span>获取手机验证码</span>
+    <md-icon md-svg-icon="content:ic_send_24px"></md-icon>
+  </md-button>
+  <div class="md-actions" layout="row" layout-align="end center">
+    <md-button ui-sref="account.login">取消</md-button>
+  </div>
 </form>

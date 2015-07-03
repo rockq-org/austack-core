@@ -1,5 +1,33 @@
 #signup-content {
-  form > .md-warn {
-    padding-bottom: 20px;
+  background-color: #eee;
+  md-card {
+    min-width: 360px;
+  }
+  .done {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background-color: rgb(255, 64, 129);
+    color: #fff;
+  }
+  .step {
+    padding: 8px 16px;
+    margin: 8px;
+    //list-style: none;
+    //background-color: #f5f5f5;
+    //border-radius: 4px;
+    li {
+      color: #888;
+      display: inline-block;
+    }
+    li + li:before {
+      padding: 0 6px;
+      color: #ccc;
+      content: "/\00a0";
+    }
+    .active {
+      color: rgb(255, 64, 129);
+    }
   }
 }

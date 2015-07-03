@@ -85,6 +85,11 @@ module.exports = function (options) {
       .pipe(gulp.dest(options.dist + '/assets/'));
   });
 
+  gulp.task('socket', function () {
+    return gulp.src('node_modules/socket.io-client/**/*')
+      .pipe(gulp.dest(options.dist + '/socket.io-client'));
+  });
+
   gulp.task('other', function () {
     return gulp.src([
         options.src + '/**/*',
@@ -99,5 +104,5 @@ module.exports = function (options) {
     $.del([options.dist + '/', options.tmp + '/'], done);
   });
 
-  gulp.task('build', ['html', 'fonts', 'icons', 'other']);
+  gulp.task('build', ['html', 'fonts', 'icons', 'other', 'socket']);
 };

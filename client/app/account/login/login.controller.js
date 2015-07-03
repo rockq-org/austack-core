@@ -39,10 +39,6 @@
      * @returns {User} The user data
      */
     vm.user = {};
-    vm.user = {
-      name: '18959264502',
-      password: 'laijinyue'
-    };
 
     /**
      * @ngdoc property

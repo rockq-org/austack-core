@@ -1,6 +1,6 @@
 /**
  * Module for the controller definition of the application api.
- * The ApplicationController is handling /api/application requests.
+ * The ApplicationController is handling /api/applications requests.
  * @module {application:controller~ApplicationController} application:controller
  * @requires {@link ParamController}
  */
@@ -20,7 +20,7 @@ var Application = require('./application.model').model;
 
 /**
  * ApplicationController constructor
- * @classdesc Controller that handles /api/application route requests
+ * @classdesc Controller that handles /api/applications route requests
  * for the application api.
  * Uses the 'applicationId' parameter and the 'applicationParam' request property
  * to operate with the [main application API Model]{@link application:model~Application} model.
