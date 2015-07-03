@@ -57,7 +57,7 @@ describe('/api/application', function () {
   // Clear applications after each test
   // afterEach(cleanup);
 
-  describe.only('POST', function () {
+  describe('POST', function () {
     it('should create a new application and respond with 201 and the created application', function (done) {
       request(app)
         .post('/api/application')
