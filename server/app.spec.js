@@ -3,7 +3,7 @@
 
 var mongoose = require('mongoose');
 var should = require('should');
-var app = require('./austack-server');
+var app = require('./app');
 var request = require('supertest');
 
 describe('App', function () {
