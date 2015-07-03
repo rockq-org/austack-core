@@ -5,6 +5,7 @@
  */
 'use strict';
 
+var debug = require('debug')('lib:auth:auth.service.js');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
@@ -70,7 +71,7 @@ function isAuthenticated() {
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
       }
-
+      debug(req.userInfo);
       validateJwt(req, res, next);
     })
 
@@ -83,6 +84,7 @@ function isAuthenticated() {
     // load user model on demand
     var User = require('../../api/user/user.model').model;
 
+    debug(req.user);
     // read the user id from the token information provided in req.user
     User.findOne({
       _id: req.user._id,
@@ -99,6 +101,7 @@ function isAuthenticated() {
 
       // set the requests userInfo object as the authenticated user
       req.userInfo = user;
+      debug(req.userInfo);
       next();
     });
   });
@@ -131,10 +134,10 @@ function hasRole(roleRequired) {
  * @param {String} id - Id used to sign a token
  * @return {String}
  */
-function signToken(id, mobile) {
+function signToken(id, role) {
   return jwt.sign({
     _id: id,
-    mobile: mobile
+    role: role
   }, config.secrets.session, {
     expiresInMinutes: 60 * 5
   });

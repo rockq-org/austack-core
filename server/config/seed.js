@@ -26,6 +26,7 @@ exports.users = [{
   name: '18959264502',
   password: 'laijinyue',
   role: 'admin',
+  isVerified: true,
   active: true
 }, {
   provider: 'local',

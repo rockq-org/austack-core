@@ -11,6 +11,7 @@
     "connect-mongo": "^0.4.1",
     "cookie-parser": "~1.0.1",
     "cors": "^2.7.1",
+    "debug": "^2.2.0",
     "ejs": "~0.8.4",
     "errorhandler": "~1.0.0",
     "express": "~4.9.0",
@@ -70,6 +71,7 @@
     "gulp-jshint": "^1.11.0",
     "gulp-load-plugins": "~0.8.0",
     "gulp-minify-html": "~0.1.7",
+    "gulp-mocha": "^2.1.2",
     "gulp-ng-annotate": "~0.5.2",
     "gulp-ng-constant": "^0.3.0",
     "gulp-protractor": "~0.0.12",
@@ -93,6 +95,7 @@
     "merge-stream": "~0.1.7",
     "protractor": "~1.7.0",
     "require-dir": "~0.1.0",
+    "supertest": "^1.0.1",
     "uglify-save-license": "~0.4.1",
     "wiredep": "~2.2.0",
     "wrench": "~1.5.8"

@@ -9,6 +9,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var crypto = require('crypto');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
 
@@ -57,6 +58,10 @@ ApplicationSchema.plugin(requestContext, {
 ApplicationSchema
   .path('appName')
   .validate(validateUniqueName, 'The specified name is already in use.');
+
+ApplicationSchema.statics.generateRandomObjectId = function generateRandomObjectId() {
+  return crypto.createHash('md5').update(Math.random().toString()).digest('hex').substring(0, 24);
+};
 
 /**
  *  The registered mongoose model instance of the Application model

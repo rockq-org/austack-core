@@ -137,7 +137,6 @@ UserController.prototype = {
     });
   },
 
-
   /**README
    * Replaces an existing user password in the DB using the request body
    * property named 'password'. Should be an admin only route.

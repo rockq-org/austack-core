@@ -7,6 +7,8 @@ var wrench = require('wrench');
 var options = {
   src: 'client',
   dist: 'dist',
+  gulp: 'gulp',
+  server: 'server',
   tmp: '.tmp',
   e2e: 'e2e',
   errorHandler: function (title) {
