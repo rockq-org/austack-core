@@ -30,16 +30,23 @@ gulp serve # start client at http://localhost:3000/
 exports.users = [{
   provider: 'local',
   role: 'admin',
-  name: '15801213126',
-  password: 'auth4fun',
-  userId: 'dave',
+  name: 'dave1',
+  password: 'dave1',
+  userId: 'dave1',
+  active: true
+}, {
+  provider: 'local',
+  role: 'admin',
+  name: 'dave2',
+  password: 'dave2',
+  userId: 'dave2',
   active: true
 }, {
   provider: 'local',
   role: 'root',
-  name: 'Root',
+  name: 'root',
   userId: 'root',
-  password: 'auth4fun',
+  password: 'root',
   active: true
 }];
 ```
