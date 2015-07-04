@@ -34,7 +34,11 @@ var ApplicationDefinition = {
     default: 36000
   },
   callbackUrls: [String],
-  corsDomains: [String]
+  corsDomains: [String],
+  isTrashed: {
+    type: Boolean,
+    default: false
+  }
 };
 
 /**

@@ -82,6 +82,9 @@ ApplicationController.prototype = {
     if (!req[this.paramName]) {
       return res.notFound();
     }
+    if (req[this.paramName].isTrashed) {
+      return res.notFound();
+    }
 
     if (!this.hasPermission(req, res)) {
       return res.unauthorized();
@@ -123,20 +126,23 @@ ApplicationController.prototype = {
       return res.unauthorized();
     };
 
-    req[this.paramName].remove(function (err) {
+    req[this.paramName].isTrashed = true;
+
+    req[this.paramName].save(function (err) {
       if (err) {
         return res.handleError(err);
       }
 
-      delete req[this.paramName];
       return res.noContent();
     });
   },
 
   index: function (req, res) {
     var query = {
-      'ownerId': req.userInfo._id
+      'ownerId': req.userInfo._id,
+      'isTrashed': false
     };
+
     if (roles.hasRole(req.userInfo.role, 'root')) {
       query = {};
     }

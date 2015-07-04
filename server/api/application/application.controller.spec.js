@@ -296,7 +296,7 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
 
   });
 
-  describe.only('#69 enable PUT /api/app/:id', function () {
+  describe('#69 enable PUT /api/app/:id', function () {
 
     it('should return an error if attempting a put without an id', function (done) {
       request(app)
@@ -384,11 +384,12 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
 
   });
 
-  describe.skip('#70 enable DELETE /api/app/:id', function () {
+  describe.only('#70 enable DELETE /api/app/:id', function () {
 
     it('should return an error if attempting a delete without an id', function (done) {
       request(app)
         .delete('/api/applications')
+        .set('Authorization', 'Bearer ' + TestHelper.token)
         .set('Accept', 'application/json')
         .expect(404)
         .end(done);
@@ -397,6 +398,7 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
     it('should respond with an not found error for a not existing application id', function (done) {
       request(app)
         .delete('/api/applications/cccccccccccccccccccccccc')
+        .set('Authorization', 'Bearer ' + TestHelper.token)
         .set('Accept', 'application/json')
         .expect(404)
         .expect('Content-Type', /json/)
@@ -407,17 +409,43 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
       request(app)
         .post('/api/applications')
         .set('Accept', 'application/json')
-        .send(application)
+        .set('Authorization', 'Bearer ' + TestHelper.token)
+        .send(TestHelper.item)
         .end(function (err, res) {
           if (err) {
             return done(err);
           }
           request(app)
             .delete('/api/applications/' + res.body._id)
+            .set('Authorization', 'Bearer ' + TestHelper.token)
             .set('Accept', 'application/json')
             .expect(204)
             .end(done);
         });
+    });
+
+    it('Dave2 can not delete dave1 app', function (done) {
+      applicationModel.model(TestHelper.itemForDave1).save(function (err, doc) {
+        request(app)
+          .delete('/api/applications/' + doc._id)
+          .set('Authorization', 'Bearer ' + TestHelper.token)
+          .set('Accept', 'application/json')
+          .expect(401)
+          .end(done);
+      });
+    });
+
+    it('root can delete any app', function (done) {
+      TestHelper.getRootJwt(function (tokenForRoot) {
+        applicationModel.model(TestHelper.itemForDave1).save(function (err, doc) {
+          request(app)
+            .delete('/api/applications/' + doc._id)
+            .set('Authorization', 'Bearer ' + tokenForRoot)
+            .set('Accept', 'application/json')
+            .expect(204)
+            .end(done);
+        });
+      });
     });
   });
 });
