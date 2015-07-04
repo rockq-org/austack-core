@@ -107,7 +107,7 @@ var TestHelper = {
   }
 };
 
-describe.only('#42 As a developer, Dave can access application with RESt API', function () {
+describe('#42 As a developer, Dave can access application with RESt API', function () {
   before(function (done) {
     seed.seed(done);
   });
@@ -296,13 +296,14 @@ describe.only('#42 As a developer, Dave can access application with RESt API', f
 
   });
 
-  describe.skip('PUT', function () {
+  describe.only('#69 enable PUT /api/app/:id', function () {
 
     it('should return an error if attempting a put without an id', function (done) {
       request(app)
         .put('/api/applications')
         .set('Accept', 'application/json')
-        .send(application)
+        .set('Authorization', 'Bearer ' + TestHelper.token)
+        .send(TestHelper.item)
         .expect(404)
         .end(done);
     });
@@ -311,6 +312,7 @@ describe.only('#42 As a developer, Dave can access application with RESt API', f
       request(app)
         .put('/api/applications/cccccccccccccccccccccccc')
         .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + TestHelper.token)
         .expect(404)
         .expect('Content-Type', /json/)
         .end(done);
@@ -319,34 +321,70 @@ describe.only('#42 As a developer, Dave can access application with RESt API', f
     it('should update a application and respond with the updated application', function (done) {
       request(app)
         .post('/api/applications')
+        .set('Authorization', 'Bearer ' + TestHelper.token)
         .set('Accept', 'application/json')
-        .send(application)
+        .send(TestHelper.item)
         .end(function (err, res) {
           if (err) {
             return done(err);
           }
-          application.name = 'Cat';
-          // check if id is stripped on update
-          application._id = 'malformed id string';
+          TestHelper.item.name = 'Name 2';
           request(app)
             .put('/api/applications/' + res.body._id)
             .set('Accept', 'application/json')
-            .send(application)
+            .set('Authorization', 'Bearer ' + TestHelper.token)
+            .send(TestHelper.item)
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function (err, res) {
               if (err) {
                 return done(err);
               }
-              res.body.should.be.an.Object.and.have.property('name', application.name);
+              res.body.should.be.an.Object.and.have.property('name', TestHelper.item.name);
               done();
             });
         });
     });
 
+    it('Dave2 can not update dave1 app', function (done) {
+      applicationModel.model(TestHelper.itemForDave1).save(function (err, doc) {
+        TestHelper.itemForDave1.name = 'update from dave2';
+        request(app)
+          .put('/api/applications/' + doc._id)
+          .set('Accept', 'application/json')
+          .send(TestHelper.itemForDave1)
+          .set('Authorization', 'Bearer ' + TestHelper.token)
+          .expect(401)
+          .expect('Content-Type', /json/)
+          .end(done);
+      });
+    });
+
+    it('root can update all app', function (done) {
+      TestHelper.getRootJwt(function (tokenForRoot) {
+        applicationModel.model(TestHelper.itemForDave1).save(function (err, doc) {
+          TestHelper.itemForDave1.name = 'update from root';
+          request(app)
+            .put('/api/applications/' + doc._id)
+            .set('Accept', 'application/json')
+            .send(TestHelper.itemForDave1)
+            .set('Authorization', 'Bearer ' + tokenForRoot)
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function (err, res) {
+              if (err) {
+                return done(err);
+              }
+              res.body.should.be.an.Object.and.have.property('name', TestHelper.itemForDave1.name);
+              done();
+            });
+        });
+      });
+    });
+
   });
 
-  describe.skip('DELETE', function () {
+  describe.skip('#70 enable DELETE /api/app/:id', function () {
 
     it('should return an error if attempting a delete without an id', function (done) {
       request(app)

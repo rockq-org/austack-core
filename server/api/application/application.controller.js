@@ -67,35 +67,69 @@ ApplicationController.prototype = {
     });
   },
 
+  hasPermission: function (req, res) {
+    if (req.userInfo.role == 'root') {
+      return true;
+    }
+    var doc = req[this.paramName];
+    if (doc.ownerId == req.userInfo._id) {
+      return true;
+    }
+
+    return false;
+  },
   show: function (req, res) {
     if (!req[this.paramName]) {
       return res.notFound();
     }
 
-    var doc = req[this.paramName];
-    if (doc.ownerId != req.userInfo._id) {
+    if (!this.hasPermission(req, res)) {
       return res.unauthorized();
     }
-
     return res.ok(this.getResponseObject(req[this.paramName]));
   },
 
-  read: function (req, res) {
-    console.log('wwww', req.params[this.idName]);
+  update: function (req, res) {
+    if (req.body._id) {
+      delete req.body._id;
+    }
+    if (!this.hasPermission(req, res)) {
+      return res.unauthorized();
+    }
+
     var self = this;
-    this.model.findOne({
-      '_id': req.params[this.idName],
-      'ownerId': req.userInfo._id
-    }, function (err, document) {
+    var bodyData = _.omit(req.body, this.omit);
+    var updated = _.merge(req[this.paramName], bodyData);
+
+    updated.save(function (err) {
       if (err) {
         return res.handleError(err);
       }
 
-      if (!document) {
-        return res.notFound();
+      req[this.paramName] = updated;
+      return res.ok(self.getResponseObject(updated));
+    });
+  },
+
+  /**
+   * Deletes an document from the DB using the request
+   * property named {@link ParamController#paramName}.
+   * @param {IncomingMessage} req - The request message object
+   * @param {ServerResponse} res - The outgoing response object
+   * @returns {ServerResponse} The response status 201 CREATED or an error response
+   */
+  destroy: function (req, res) {
+    if (!this.hasPermission(req, res)) {
+      return res.unauthorized();
+    };
+
+    req[this.paramName].remove(function (err) {
+      if (err) {
+        return res.handleError(err);
       }
 
-      return res.ok(self.getResponseObject(document));
+      delete req[this.paramName];
+      return res.noContent();
     });
   },
 
