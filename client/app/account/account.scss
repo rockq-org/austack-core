@@ -1,1 +1,10 @@
-#account-items-content {}
+#account-content {
+  background-color: #eee;
+  nav .logo {
+    height: 60px;
+  }
+  md-card {
+    width: 100%;
+    max-width: 360px;
+  }
+}
