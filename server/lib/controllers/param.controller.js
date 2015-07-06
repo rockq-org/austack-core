@@ -4,7 +4,6 @@ var _ = require('lodash');
 var ObjectID = require('mongoose').Types.ObjectId;
 
 var CrudController = require('./crud.controller');
-var debug = require('debug')('controller:param');
 /**
  * The CrudController for basic CRUD functionality on Mongoose models
  * @type {ParamController}

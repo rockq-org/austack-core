@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var BaseController = require('./base.controller');
 var Config = require('../../config/index');
-var debug = require('debug')('controller:crud');
 /**
  * The CrudController for basic CRUD functionality on Mongoose models
  * @type {CrudController}
