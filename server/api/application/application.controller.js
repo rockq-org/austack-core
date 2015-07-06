@@ -9,7 +9,6 @@
 module.exports = ApplicationController;
 
 var _ = require('lodash');
-var debug = require('debug')('application');
 var ParamController = require('../../lib/controllers/param.controller');
 var roles = require('../../lib/auth/roles');
 

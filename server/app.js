@@ -5,6 +5,7 @@
 
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+require('./config/logger');
 
 var express = require('express');
 var socketio = require('socket.io');

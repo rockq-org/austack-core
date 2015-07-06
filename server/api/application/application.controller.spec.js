@@ -4,7 +4,6 @@
 var should = require('should');
 var jwt = require('jsonwebtoken');
 var config = require('../../config');
-var debug = require('debug')('application.spec');
 var app = require('../../app');
 var request = require('supertest');
 var applicationModel = require('./application.model');

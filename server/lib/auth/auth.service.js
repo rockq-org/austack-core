@@ -5,7 +5,6 @@
  */
 'use strict';
 
-var debug = require('debug')('lib:auth:auth.service.js');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
