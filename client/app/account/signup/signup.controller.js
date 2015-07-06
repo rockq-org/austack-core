@@ -15,7 +15,7 @@
     // view model bindings
     vm.title = 'signup';
     vm.user = {};
-    // vm.user = _demoData();
+    vm.user = _demoData();
     vm.step = 'step1';
     vm.pending = false;
     vm.pendingMsg = '加载中...';

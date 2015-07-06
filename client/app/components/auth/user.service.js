@@ -44,7 +44,7 @@
    */
 
   /* @ngInject */
-  function User($resource, Config) {
+  function User(Resource, Config) {
     // factory members
     var apiURL = Config.API_URL + 'users';
     var methods = {
@@ -80,7 +80,7 @@
       }
     };
 
-    return $resource(apiURL + '/:id/:controller', {}, methods);
+    return Resource(apiURL + '/:id/:controller', {}, methods);
   }
 
   /**
