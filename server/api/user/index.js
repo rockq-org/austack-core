@@ -16,6 +16,7 @@ var router = require('express').Router();
 var contextService = require('request-context');
 var UserController = require('./user.controller');
 var auth = require('../../lib/auth/auth.service');
+var debug = require('debug')('dev');
 
 // Export the configured express router for the user api routes
 module.exports = router;
@@ -44,6 +45,9 @@ router.route('/')
 // verifyMobile
 router.route('/' + controller.paramString + '/verifyMobile')
   .put(controller.verifyMobile);
+// resendVerifyCode
+router.route('/' + controller.paramString + '/resendVerifyCode')
+  .put(controller.resendVerifyCode);
 // submitUserDetail
 router.route('/' + controller.paramString + '/submitUserDetail')
   .put(controller.submitUserDetail);

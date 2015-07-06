@@ -24,9 +24,7 @@ module.exports = function (app) {
 
   // Insert routes below
   app.use('/api/applications', require('./api/application'));
-
   app.use('/api/users', require('./api/user'));
-  // app.use('/api/tenant', require('./api/tenant'));
   app.use('/api/auth', require('./lib/auth'));
 
   // All undefined asset or api routes should return a 404
@@ -36,11 +34,11 @@ module.exports = function (app) {
     });
 
   // All other routes should redirect to the index.html
-  app.route('/*')
-    .get(function getIndexFile(req, res) {
-      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
-    });
+  // app.route('/*')
+  //   .get(function getIndexFile(req, res) {
+  //     res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+  //   });
 
   // register the default error handler
-  app.use(middleware.defaultErrorHandler);
+  // app.use(middleware.defaultErrorHandler);
 };
