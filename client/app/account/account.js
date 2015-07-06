@@ -14,6 +14,7 @@
   angular
     .module('austackApp.account', [
       'ui.router',
+      'timer',
       'ngMaterial'
     ])
     .config(configAccountRoute);

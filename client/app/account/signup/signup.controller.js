@@ -9,7 +9,8 @@
   /**
    * @ngInject
    */
-  function SignupCtrl($timeout, $mdToast, Auth, $state, User) {
+  function SignupCtrl($scope, $timeout, $mdToast, Auth, $state, User) {
+    // here we use $scope in case of the angular-timer
     var vm = this;
 
     // view model bindings
@@ -17,6 +18,8 @@
     vm.user = {};
     vm.user = _demoData();
     vm.step = 'step1';
+    vm.disableResendVerifyCodeBtn = false;
+    vm.disableResendVerifyCodeBtn = true;
     vm.pending = false;
     vm.pendingMsg = '加载中...';
     vm.errorMsg = '';
@@ -24,14 +27,16 @@
     vm.submitVerifyCode = submitVerifyCode;
     vm.submitUserDetail = submitUserDetail;
     vm.resendVerifyCode = resendVerifyCode;
+    vm.countDownFinish = countDownFinish;
+    vm.chageResendBtnState = chageResendBtnState;
 
-    // vm.step = 'step3';
+    // vm.step = 'step2';
 
     function _demoData() {
       return {
         _id: '558a6edff7a49124d6edc764',
         name: '18959264502',
-        verifyCode: '1234',
+        verifyCode: '5168',
         userId: 'lymanlai-',
         password: 'laijinyue'
       };
@@ -49,9 +54,43 @@
       }).$promise.then(function (data) {
         vm.step = 'step2';
         vm.user._id = data._id;
+        vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
         msg('手机号不合法或者已经被注册');
+      });
+    }
+
+    function countDownFinish() {
+      $timeout(function () {
+        vm.disableResendVerifyCodeBtn = false;
+      });
+    }
+
+    function resendVerifyCode(form) {
+      vm.step = 'loading';
+      User.resendVerifyCode(vm.user).$promise.then(function (data) {
+        msg('验证码发送成功！');
+        vm.chageResendBtnState('disableResend');
+      }).catch(function (err) {
+        msg('验证码发送失败！请60秒后再重试！');
+        vm.chageResendBtnState('enableResend');
+      });
+    }
+
+    function chageResendBtnState(state) {
+      $timeout(function () {
+        switch (state) {
+        case 'enableResend':
+          $scope.$broadcast('timer-stop');
+          vm.disableResend = false;
+          break;
+        case 'disableResend':
+          $scope.$broadcast('timer-start');
+          vm.disableResend = true;
+          break;
+        }
+        vm.step = 'step2';
       });
     }
 
@@ -65,8 +104,8 @@
         vm.step = 'step3';
         msg('验证成功！');
       }).catch(function (err) {
-        vm.step = 'step2';
         msg('验证码错误或验证码已过期！');
+        vm.chageResendBtnState('enableResend');
       });
     }
 
@@ -93,16 +132,11 @@
       });
     }
 
-    function resendVerifyCode(form) {
-      vm.step = 'step2';
-    }
-
     function msg(title, callback) {
       var toast = $mdToast.simple()
         .content(title)
-        // .action('OK')
-        // .highlightAction(false)
         .position('top right');
+
       $mdToast.show(toast);
       if (callback) {
         $timeout(callback, 3000);

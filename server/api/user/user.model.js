@@ -51,6 +51,7 @@ var UserDefinition = {
   },
   verifyCode: String,
   verifyCodeExpiredAt: Date,
+  verifyCodeLatestSendTime: Date,
   isVerified: {
     type: Boolean,
     default: false

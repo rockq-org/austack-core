@@ -5,7 +5,7 @@ var $ = require('gulp-load-plugins')();
 
 module.exports = function (options) {
 
-  gulp.task('tdd', function () {
+  gulp.task('bdd', function () {
     process.env.NODE_ENV = 'test';
     gulp.start('mocha');
     var watchList = [options.server + '/**/*.js'];

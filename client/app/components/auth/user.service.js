@@ -54,6 +54,12 @@
           controller: 'verifyMobile'
         }
       },
+      resendVerifyCode: {
+        method: 'PUT',
+        params: {
+          controller: 'resendVerifyCode'
+        }
+      },
       submitUserDetail: {
         method: 'PUT',
         params: {
