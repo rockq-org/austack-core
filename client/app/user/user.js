@@ -11,11 +11,13 @@
    * @requires {austackApp.admin.user.create}
    */
   angular
-    .module('austackApp.admin.user', [
+    .module('austackApp.user', [
       'ngResource',
       'ui.router',
-      'austackApp.admin.user.list',
-      'austackApp.admin.user.create'
+      'austackApp.user.list',
+      'austackApp.user.detail',
+      'austackApp.user.edit',
+      'austackApp.user.create'
     ])
     .config(configUserRoutes);
 
@@ -35,15 +37,15 @@
   function configUserRoutes($urlRouterProvider, $stateProvider) {
     // The user state configuration
     var userState = {
-      name: 'admin.user',
-      parent: 'admin',
+      name: 'user',
+      parent: 'root',
       url: '/user',
       abstract: true,
-      templateUrl: 'app/admin/user/user.html',
+      templateUrl: 'app/user/user.html',
       controller: 'UserController',
       controllerAs: 'index',
       ncyBreadcrumb: {
-        skip: true
+        label: '用户'
       }
     };
 

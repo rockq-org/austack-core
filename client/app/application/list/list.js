@@ -57,7 +57,9 @@
 
     mainMenuProvider.addMenuItem({
       name: '应用',
-      state: listState.name
+      state: listState.name,
+      icon: 'action:ic_view_list_24px',
+      order: 2
     });
   }
 

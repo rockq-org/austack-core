@@ -4,7 +4,7 @@
       <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
     </md-button>
     <span flex></span>
-    <md-button ng-repeat="menu in vm.menus" ng-href="{{menu.url}}">{{menu.text}}</md-button>
+    <md-button hide-md hide-sm ng-repeat="menu in vm.menus" ng-href="{{menu.url}}">{{menu.text}}</md-button>
     <md-menu>
       <md-button ng-click="$mdOpenMenu()">
         <img ng-src="{{vm.user.avatar}}">

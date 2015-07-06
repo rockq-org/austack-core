@@ -29,6 +29,7 @@
     mainMenuProvider.addMenuItem({
       name: '仪表盘',
       state: dashboardState.name,
+      icon: 'action:ic_dashboard_24px',
       order: 1
     });
   }

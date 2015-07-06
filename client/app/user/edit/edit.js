@@ -20,7 +20,7 @@
   'use strict';
 
   angular
-    .module('austackApp.admin.user.list.edit', [
+    .module('austackApp.user.edit', [
       'ui.router',
       'ngMaterial',
       'ngMessages',
@@ -48,15 +48,14 @@
   function configureUserListEdit($stateProvider) {
     // The edit state configuration.
     var editState = {
-      name: 'admin.user.list.edit',
-      parent: 'admin.user.list',
-      url: '/edit/:id',
+      name: 'user.edit',
+      parent: 'user',
+      url: '/:id/edit',
       authenticate: true,
       role: 'admin',
-      onEnter: onEnterUserListEdit,
       views: {
-        'content@admin.user.list': {
-          templateUrl: 'app/admin/user/list/edit/edit.html',
+        '': {
+          templateUrl: 'app/user/edit/edit.html',
           controller: 'UserEditController',
           controllerAs: 'edit',
           resolve: {
@@ -67,25 +66,6 @@
     };
 
     $stateProvider.state(editState);
-  }
-
-  /**
-   * Executed when entering the admin.user.list.detail state. Open the component
-   * registered with the component id 'user.detailView'.
-   *
-   * @params {$timeout} $timeout - The $timeout service to wait for view initialization
-   * @params {ToggleComponent} ToggleComponent - The service to toggle the detail view
-   * @params {Auth} Auth - The auth service to check user rights with
-   */
-
-  onEnterUserListEdit.$inject = ['$timeout', 'ToggleComponent', 'Auth'];
-
-  function onEnterUserListEdit($timeout, ToggleComponent) {
-    $timeout(showDetails, 0, false);
-
-    function showDetails() {
-      ToggleComponent('user.detailView').open();
-    }
   }
 
   /**

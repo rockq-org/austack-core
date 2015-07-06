@@ -2,6 +2,9 @@ md-sidenav[md-component-id="mainMenu"] {
   md-toolbar list-image div {
     margin: 0 16px 0 0;
   }
+  md-divider {
+    margin: 10px;
+  }
   md-toolbar .logo {
     img {
       height: 60px;

@@ -10,9 +10,8 @@
 
   // register the controller as EditPasswordController
   angular
-    .module('austackApp.admin.user.list.edit')
+    .module('austackApp.user.edit')
     .controller('EditPasswordController', EditPasswordController);
-
 
   /**
    * @ngdoc function

@@ -16,15 +16,11 @@
    */
 
   angular
-    .module('austackApp.admin.user.list', [
+    .module('austackApp.user.list', [
       'ngMaterial',
       'ui.router',
       'austackApp.socket',
-      'austackApp.mainMenu',
-      'austackApp.toggleComponent',
-      'austackApp.admin.user.list.detail',
-      'austackApp.admin.user.list.edit',
-      'austackApp.admin.user.list.items'
+      'austackApp.mainMenu'
     ])
     .config(configUserListRoutes);
 
@@ -41,41 +37,33 @@
   function configUserListRoutes($stateProvider, mainMenuProvider) {
     // The list state configuration
     var listState = {
-      name: 'admin.user.list',
-      parent: 'admin.user',
-      url: '/',
+      name: 'user.list',
+      parent: 'user',
+      url: '',
       authenticate: true,
       role: 'admin',
       resolve: {
         users: resolveUsers
       },
       views: {
-
-        // target the unnamed view in the user state
-        '@admin.user': {
-          templateUrl: 'app/admin/user/list/list.html',
+        '': {
+          templateUrl: 'app/user/list/list.html',
           controller: 'UserListController',
           controllerAs: 'list'
-        },
-
-        // target the content view in the admin.user.list state
-        'content@admin.user.list': {
-          templateUrl: 'app/admin/user/list/items/items.html',
-          controller: 'UserItemsController',
-          controllerAs: 'items'
         }
       },
       ncyBreadcrumb: {
-        label: 'User'
+        label: '用户'
       }
     };
 
     $stateProvider.state(listState);
 
-    mainMenuProvider.addSubMenuItem('admin.main', {
-      name: 'Users',
+    mainMenuProvider.addMenuItem({
+      name: '用户',
       state: listState.name,
-      order: Infinity
+      icon: 'action:ic_perm_identity_24px',
+      order: 3
     });
   }
 

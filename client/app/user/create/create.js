@@ -18,7 +18,7 @@
   'use strict';
 
   angular
-    .module('austackApp.admin.user.create', [
+    .module('austackApp.user.create', [
       'ui.router',
       'ngMessages',
       'ngMaterial',
@@ -54,7 +54,6 @@
 
     $stateProvider.state(createListState);
   }
-
 
   /**
    * Function executed when entering the admin.user.create state.

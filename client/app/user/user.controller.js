@@ -3,7 +3,7 @@
 
   // register the controller as UserController
   angular
-    .module('austackApp.admin.user')
+    .module('austackApp.user')
     .controller('UserController', UserController);
 
   // add UserController dependencies to inject

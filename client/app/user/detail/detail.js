@@ -14,7 +14,7 @@
   'use strict';
 
   angular
-    .module('austackApp.admin.user.list.detail', [
+    .module('austackApp.user.detail', [
       'ui.router',
       'angularMoment',
       'austackApp.auth.user'
@@ -37,15 +37,14 @@
   function configureUserListDetail($stateProvider) {
     // The detail state configuration
     var detailState = {
-      name: 'admin.user.list.detail',
-      parent: 'admin.user.list',
-      url: '/detail/:id',
-      onEnter: onEnterUserListDetail,
+      name: 'user.detail',
+      parent: 'user',
+      url: '/:id',
       authenticate: true,
       role: 'admin',
       views: {
-        'content@admin.user.list': {
-          templateUrl: 'app/admin/user/list/detail/detail.html',
+        '': {
+          templateUrl: 'app/user/detail/detail.html',
           controller: 'UserDetailController',
           controllerAs: 'detail',
           resolve: {
@@ -56,24 +55,6 @@
     };
 
     $stateProvider.state(detailState);
-  }
-
-  // inject onUserListDetailEnter dependencies
-  onEnterUserListDetail.$inject = ['$timeout', 'ToggleComponent'];
-
-  /**
-   * Executed when entering the admin.user.list.detail state. Open the component
-   * registered with the component id 'user.detailView'.
-   *
-   * @params {$timeout} $timeout - The $timeout service to wait for view initialization
-   * @params {ToggleComponent} ToggleComponent - The service to toggle the detail view
-   */
-  function onEnterUserListDetail($timeout, ToggleComponent) {
-    $timeout(showDetails, 0, false);
-
-    function showDetails() {
-      ToggleComponent('user.detailView').open();
-    }
   }
 
   // inject resolveUserFromArray dependencies
