@@ -14,8 +14,8 @@
         </md-button>
       </md-menu-item>
     </div>
-    <md-divider></md-divider>
     <div hide-gt-md ng-controller="HeaderController as vm">
+      <md-divider></md-divider>
       <md-menu-item href="{{item.url}}" ng-repeat="item in vm.menus">
         <md-button>
           <md-icon md-svg-icon="{{ item.icon }}"></md-icon>

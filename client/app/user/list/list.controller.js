@@ -9,7 +9,7 @@
     .controller('UserListController', UserListController);
 
   // add UserListController dependencies to inject
-  UserListController.$inject = ['Auth', 'users', '$state', 'ToggleComponent', '$scope', 'socket'];
+  UserListController.$inject = ['Auth', 'users', '$state', '$scope', 'socket'];
 
   /**
    * UserListController constructor
@@ -18,13 +18,11 @@
    * @param {$state} $state - The $state to activate routing states on
    * @param {ToggleComponent} ToggleComponent - The toggle component service for switching the detail view
    */
-  function UserListController(Auth, users, $state, ToggleComponent, $scope, socket) {
+  function UserListController(Auth, users, $state, $scope, socket) {
     var vm = this;
 
     // the array of users
     vm.users = users;
-    // toggle detail view
-    vm.toggleDetails = toggleDetails;
 
     // the selected item id
     var curUserId = null;
@@ -79,13 +77,6 @@
       function unsyncUserUpdates() {
         socket.unsyncUpdates('user');
       }
-    }
-
-    /**
-     * Toggle the detail view
-     */
-    function toggleDetails() {
-      ToggleComponent('user.detailView').toggle();
     }
   }
 

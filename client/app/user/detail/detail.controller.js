@@ -98,7 +98,7 @@
      * Return to the parent state
      */
     function goBack() {
-      $state.go('^');
+      $state.go('^.list');
     }
   }
 })();

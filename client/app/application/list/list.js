@@ -19,6 +19,7 @@
       'ngMaterial',
       'ui.router',
       'austackApp.socket',
+      'austackApp.listImage',
       'austackApp.mainMenu'
     ])
     .config(configApplicationListRoutes);
