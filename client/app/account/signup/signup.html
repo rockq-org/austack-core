@@ -1,10 +1,10 @@
-<section id="signup-content" layout="column" flex layout-align="center center">
-  <img src="assets/images/logo.png">
+<section id="signup-content" layout="column" layout-fill layout-align="center center">
+
   <ol class="step">
-    <li class="md-accent" ng-class="signup.step=='step1'&&'active'">确认账户</li>
-    <li class="md-accent" ng-class="signup.step=='step2'&&'active'">安全验证</li>
-    <li class="md-accent" ng-class="signup.step=='step3'&&'active'">重置密码</li>
-    <li class="md-accent" ng-class="signup.step=='step4'&&'active'">重置密码成功</li>
+    <li class="md-accent" ng-class="signup.step=='step1'&&'active'">1. 填写手机</li>
+    <li class="md-accent" ng-class="signup.step=='step2'&&'active'">2. 输入验证码</li>
+    <li class="md-accent" ng-class="signup.step=='step3'&&'active'">3. 填写账户信息</li>
+    <li class="md-accent" ng-class="signup.step=='step4'&&'active'">4. 注册成功</li>
   </ol>
   <md-card>
     <md-card-content ng-switch on="signup.step">
