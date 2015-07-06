@@ -13,7 +13,7 @@
    */
 
   angular
-    .module('austackApp.user.create')
+    .module('austackApp.user.create', [])
     .controller('UserCreateController', UserCreateController);
 
   /**

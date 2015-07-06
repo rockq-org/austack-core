@@ -20,6 +20,7 @@
       'ngMaterial',
       'ui.router',
       'austackApp.socket',
+      'austackApp.listImage',
       'austackApp.mainMenu'
     ])
     .config(configUserListRoutes);
@@ -39,12 +40,9 @@
     var listState = {
       name: 'user.list',
       parent: 'user',
-      url: '',
+      url: '/',
       authenticate: true,
       role: 'admin',
-      resolve: {
-        users: resolveUsers
-      },
       views: {
         '': {
           templateUrl: 'app/user/list/list.html',
@@ -65,19 +63,6 @@
       icon: 'action:ic_perm_identity_24px',
       order: 3
     });
-  }
-
-  // inject resolveUsers dependencies
-  resolveUsers.$inject = ['User'];
-
-  /**
-   * Resolve dependencies for the admin.user.list state
-   *
-   * @params {User} User - The service to query users
-   * @returns {Promise} A promise that, when fullfilled, returns an array of users
-   */
-  function resolveUsers(User) {
-    return User.query().$promise;
   }
 
 })();

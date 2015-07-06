@@ -39,17 +39,33 @@
     var userState = {
       name: 'user',
       parent: 'root',
-      url: '/user',
+      url: '/users',
       abstract: true,
       templateUrl: 'app/user/user.html',
       controller: 'UserController',
       controllerAs: 'index',
+      resolve: {
+        users: resolveUsers
+      },
       ncyBreadcrumb: {
         label: '用户'
       }
     };
 
     $stateProvider.state(userState);
+  }
+
+  // inject resolveUsers dependencies
+  resolveUsers.$inject = ['User'];
+
+  /**
+   * Resolve dependencies for the admin.user.list state
+   *
+   * @params {User} User - The service to query users
+   * @returns {Promise} A promise that, when fullfilled, returns an array of users
+   */
+  function resolveUsers(User) {
+    return User.query().$promise;
   }
 
 })();

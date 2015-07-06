@@ -51,6 +51,10 @@
             user: resolveUserFromArray
           }
         }
+      },
+      ncyBreadcrumb: {
+        label: '{{detail.user.name}}',
+        parent: 'user.list'
       }
     };
 
