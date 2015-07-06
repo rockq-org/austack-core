@@ -7,7 +7,7 @@
   </md-toolbar>
   <md-list flex ng-controller="SidebarController as menu">
     <div ng-repeat="item in menu.items">
-      <md-menu-item ui-sref="{{item.state}}">
+      <md-menu-item ui-sref="{{item.state}}" ui-sref-active="active">
         <md-button>
           <md-icon ng-if="item.icon" md-svg-icon="{{ item.icon }}"></md-icon>
           {{ item.name }}

@@ -13,32 +13,10 @@ md-sidenav[md-component-id="mainMenu"] {
       font-size: 32px;
     }
   }
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  li {
-    margin: 0;
-  }
-  md-content {
-    ul > li > ul > li > .md-button {
-      padding-left: 42px;
-    }
-    .md-button {
-      display: block;
-      border-radius: 0;
-      color: inherit;
-      cursor: pointer;
-      font-weight: 400;
-      line-height: 40px;
-      margin: 0;
-      max-height: 40px;
-      overflow: hidden;
-      padding: 0px 16px;
-      text-align: left;
-      text-decoration: none;
-      white-space: normal;
-      width: 100%;
+  md-menu-item.active {
+    color: rgb(255, 64, 129);
+    md-icon {
+      color: rgb(255, 64, 129);
     }
   }
 }
