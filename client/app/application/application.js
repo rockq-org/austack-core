@@ -49,7 +49,7 @@
       controllerAs: 'index'
     };
 
-    //$urlRouterProvider.when('/application', '/application/');
+    $urlRouterProvider.when('/applications/', '/applications');
     $stateProvider.state(applicationState);
   }
 

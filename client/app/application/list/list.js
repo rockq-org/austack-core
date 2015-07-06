@@ -39,7 +39,7 @@
     var listState = {
       name: 'application.list',
       parent: 'application',
-      url: '/',
+      url: '',
       ncyBreadcrumb: {
         label: '应用'
       },

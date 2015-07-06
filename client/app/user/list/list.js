@@ -40,7 +40,7 @@
     var listState = {
       name: 'user.list',
       parent: 'user',
-      url: '/',
+      url: '',
       authenticate: true,
       role: 'admin',
       views: {

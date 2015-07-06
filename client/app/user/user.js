@@ -52,6 +52,7 @@
       }
     };
 
+    $urlRouterProvider.when('/users/', '/users');
     $stateProvider.state(userState);
   }
 
