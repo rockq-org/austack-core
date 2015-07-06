@@ -5,7 +5,7 @@
     </md-button>
     <div ncy-breadcrumb></div>
     <span flex></span>
-    <md-button hide show-gt-md ng-repeat="menu in vm.menus" ng-href="{{menu.url}}">{{menu.text}}</md-button>
+    <md-button hide show-gt-md ng-repeat="menu in vm.menus" ng-href="{{menu.url}}">{{menu.name}}</md-button>
     <md-menu>
       <md-button ng-click="$mdOpenMenu()">
         <img ng-src="{{vm.user.avatar}}">

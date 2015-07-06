@@ -5,10 +5,19 @@
   angular
     .module('austackApp.layout', [
       'ui.router',
-      'austackApp.mainMenu',
-      'austackApp.layout.breadcrumb'
+      'ncy-angular-breadcrumb',
+      'austackApp.mainMenu'
     ])
+    .config(configBreadcrumb)
     .config(configLayoutRoute);
+
+  configBreadcrumb.$inject = ['$breadcrumbProvider'];
+
+  function configBreadcrumb($breadcrumbProvider) {
+    $breadcrumbProvider.setOptions({
+      includeAbstract: false
+    });
+  }
 
   configLayoutRoute.$inject = ['$stateProvider'];
 

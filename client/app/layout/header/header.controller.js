@@ -11,13 +11,13 @@
     var vm = this;
 
     vm.menus = [{
-      text: '升级账户',
+      name: '升级账户',
       url: '#'
     }, {
-      text: '支持和帮助',
+      name: '支持和帮助',
       url: '#'
     }, {
-      text: '文档',
+      name: '文档',
       url: '#'
     }];
 
