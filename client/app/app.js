@@ -27,9 +27,9 @@
       'austackApp.io',
       'austackApp.socket',
       'austackApp.auth',
-      'austackApp.admin',
       'austackApp.account',
       'austackApp.dashboard',
+      'austackApp.user',
       'austackApp.layout'
     ])
     .config(appConfig)
