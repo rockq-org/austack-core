@@ -100,7 +100,7 @@ function isAuthenticated() {
 
       // set the requests userInfo object as the authenticated user
       req.userInfo = user;
-      debug(req.userInfo);
+      //debug(req.userInfo);
       next();
     });
   });
