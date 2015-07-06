@@ -11,6 +11,7 @@ var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
 var config = require('../../config');
 var Weimi = require('../../lib/weimi/index');
+var debug = require('debug')('dev');
 /**
  * The User model instance
  * @type {user:model~User}
@@ -48,10 +49,12 @@ UserController.prototype = {
     var self = this;
     var name = req.body['name'];
     var expiredTimeSpan = 60000 * 3; // three minutes
+    var now = new Date();
     // 四位数字验证码
-    var verifyCode = Math.floor(Math.random() * (9999 - 1000) + 1000);
+    var verifyCode = self.generateVefifyCode();
     req.body['verifyCode'] = verifyCode;
-    req.body['verifyCodeExpiredAt'] = new Date(new Date().valueOf() + expiredTimeSpan);
+    req.body['verifyCodeExpiredAt'] = new Date(now.valueOf() + expiredTimeSpan);
+    req.body['verifyCodeLatestSendTime'] = now;
 
     req.body['password'] = 'password'; // moogose need this field or we can not create new user
 
@@ -59,10 +62,47 @@ UserController.prototype = {
       if (err) {
         return res.handleError(err);
       }
+      if (config.env == 'development') {
+        return res.created(self.getResponseObject(document));
+      }
 
       Weimi.sendVerifyCode(name, verifyCode)
         .then(function () {
           return res.created(self.getResponseObject(document));
+        }).fail(function (err) {
+          return res.handleError(err);
+        });
+    });
+  },
+
+  resendVerifyCode: function (req, res) {
+    if (!req[this.paramName]._id) {
+      return res.badRequest();
+    }
+    var _id = req[this.paramName]._id;
+    var self = this;
+
+    this.model.findOne({
+      '_id': _id
+    }, function (err, user) {
+      var now = new Date();
+      var timeSpan = now - user.verifyCodeLatestSendTime;
+      if (timeSpan < (+1) * 1000) {
+        return res.forbidden({
+          message: 'please resend after 60 seconds'
+        });
+      }
+      var verifyCode = self.generateVefifyCode();
+      user.verifyCodeLatestSendTime = now;
+      user.verifyCode = verifyCode;
+      Weimi.sendVerifyCode(user.name, verifyCode)
+        .then(function () {
+          user.save(function (err) {
+            if (err) {
+              return res.handleError(err);
+            }
+            return res.noContent();
+          });
         }).fail(function (err) {
           return res.handleError(err);
         });
@@ -215,6 +255,11 @@ UserController.prototype = {
    */
   authCallback: function (req, res) {
     res.redirect('/');
+  },
+
+  // 四位数字验证码
+  generateVefifyCode: function () {
+    return Math.floor(Math.random() * (9999 - 1000) + 1000);
   }
 };
 
