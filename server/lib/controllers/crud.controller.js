@@ -239,7 +239,6 @@ CrudController.prototype = {
   },
 
   getResponseObject: function (obj) {
-    debug('getResponseObject', obj);
     return this.defaultReturn && obj[this.defaultReturn] || obj;
   }
 };

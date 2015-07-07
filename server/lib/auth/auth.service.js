@@ -82,7 +82,6 @@ function isAuthenticated() {
     // load user model on demand
     var User = require('../../api/user/user.model').model;
 
-    // debug(req.user);
     // read the user id from the token information provided in req.user
     User.findOne({
       _id: req.user._id,
@@ -99,7 +98,6 @@ function isAuthenticated() {
 
       // set the requests userInfo object as the authenticated user
       req.userInfo = user;
-      //debug(req.userInfo);
       next();
     });
   });

@@ -98,7 +98,6 @@ var TestHelper = {
         jwt.verify(TestHelper.token, config.secrets.session, function (err, session) {
           if (err) return done(err);
           TestHelper.userId = session._id;
-          // debug('user._id', TestHelper.userId);
           done();
         });
       });
@@ -231,7 +230,6 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
             if (err) {
               return done(err);
             }
-            // debug()
             res.body.should.have.length(TestHelper.dataArray.length);
             done();
           });
@@ -262,7 +260,6 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
 
     it('As admin, Dave2 can get his own app details', function (done) {
       applicationModel.model(TestHelper.item).save(function (err, doc) {
-        debug(TestHelper.item.ownerId, doc);
         request(app)
           .get('/api/applications/' + doc._id)
           .set('Accept', 'application/json')
