@@ -95,7 +95,6 @@ var TestHelper = {
       })
       .end(function (err, res) {
         TestHelper.token = res.body.token; // Or something
-        debug('token', TestHelper.token);
         jwt.verify(TestHelper.token, config.secrets.session, function (err, session) {
           if (err) return done(err);
           TestHelper.userId = session._id;

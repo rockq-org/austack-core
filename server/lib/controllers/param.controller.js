@@ -81,7 +81,6 @@ ParamController.prototype = {
    * @returns {ServerResponse} A single document or NOT FOUND if no document has been found
    */
   show: function (req, res) {
-    debug('show in param controller', req[this.paramName]);
     if (req[this.paramName]) {
       return res.ok(this.getResponseObject(req[this.paramName]));
     }

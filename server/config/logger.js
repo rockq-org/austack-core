@@ -10,7 +10,7 @@ GLOBAL.logger = require('tracer').console({
 
 // useage
 // at any file or place
-if (true) {
+if (false) {
   logger.log('router');
   logger.trace('hello', 'world');
   logger.debug('hello %s', 'world', 123);

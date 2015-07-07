@@ -70,7 +70,6 @@ function isAuthenticated() {
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
       }
-      // debug(req.userInfo);
       validateJwt(req, res, next);
     })
 

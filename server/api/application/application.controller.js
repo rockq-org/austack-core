@@ -52,7 +52,6 @@ ApplicationController.prototype = {
 
   create: function (req, res) {
     var self = this;
-    debug('user', req.user);
     req.body['ownerId'] = req.user._id;
     req.body['clientId'] = this.model.generateRandomObjectId();
     req.body['clientSecret'] = this.model.generateRandomObjectId();
