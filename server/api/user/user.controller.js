@@ -11,6 +11,7 @@ var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
 var config = require('../../config');
 var Weimi = require('../../lib/weimi/index');
+var debug = require('debug')('dev');
 /**
  * The User model instance
  * @type {user:model~User}

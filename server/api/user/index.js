@@ -16,6 +16,7 @@ var router = require('express').Router();
 var contextService = require('request-context');
 var UserController = require('./user.controller');
 var auth = require('../../lib/auth/auth.service');
+var debug = require('debug')('dev');
 
 // Export the configured express router for the user api routes
 module.exports = router;
