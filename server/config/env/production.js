@@ -5,7 +5,7 @@ process.env.AUSTACK_DATABASE_URL = process.env.AUSTACK_DATABASE_URL || 'mongodb:
 module.exports = {
 
   corsOptions: {
-    origin: '/austack\.com$/'
+    origin: 'http://console.austack.com'
   },
   ip: process.env.AUSTACK_SYS_IP || undefined,
 
