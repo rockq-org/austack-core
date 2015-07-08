@@ -142,7 +142,9 @@ ApplicationController.prototype = {
     };
 
     if (roles.hasRole(req.userInfo.role, 'root')) {
-      query = {};
+      query = {
+        'isTrashed': false
+      };
     }
 
     this.model.paginate(
