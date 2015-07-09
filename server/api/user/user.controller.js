@@ -47,6 +47,7 @@ UserController.prototype = {
   create: function (req, res) {
     var self = this;
     var name = req.body['name'];
+    var mobile = name;
     var expiredTimeSpan = 60000 * 3; // three minutes
     var now = new Date();
     // 四位数字验证码
@@ -61,17 +62,14 @@ UserController.prototype = {
       if (err) {
         return res.handleError(err);
       }
-      if (config.env == 'development') {
-        return res.created(self.getResponseObject(document));
-      }
 
-      var template = '【<%= APP_NAME %>】您的验证码是：<%= VERIFY_CODE %>，3分钟内有效。如非您本人操作，可忽略本消息。';
-      var list = {
-        'APP_NAME': 'Austack',
-        'VERIFY_CODE': verifyCode
-      };
-      var content = Weimi.replaceText(template, list);
-      Weimi.sendVerifyCode(name, content)
+      // var template = '【<%= APP_NAME %>】您的验证码是：<%= VERIFY_CODE %>，3分钟内有效。如非您本人操作，可忽略本消息。';
+      // var list = {
+      //   'APP_NAME': 'Austack',
+      //   'VERIFY_CODE': verifyCode
+      // };
+      // var content = Weimi.replaceText(template, list);
+      Weimi.sendSMSByCid(mobile, verifyCode)
         .then(function () {
           return res.created(self.getResponseObject(document));
         }).fail(function (err) {
@@ -100,7 +98,7 @@ UserController.prototype = {
       var verifyCode = self.generateVefifyCode();
       user.verifyCodeLatestSendTime = now;
       user.verifyCode = verifyCode;
-      Weimi.sendVerifyCode(user.name, verifyCode)
+      Weimi.sendSMSByCid(user.name, verifyCode)
         .then(function () {
           user.save(function (err) {
             if (err) {
