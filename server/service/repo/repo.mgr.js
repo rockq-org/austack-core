@@ -9,7 +9,7 @@
 
 var mongoose = require('mongoose');
 var dbase = mongoose.connection;
-var Shape = require('./shape.mgr');
+var Shape = require('../shape');
 var u = require('util');
 var Q = require('q');
 
