@@ -341,6 +341,39 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
         });
     });
 
+    it.only('#95 dave can update smsTemplates fields ', function (done) {
+      request(app)
+        .post('/api/applications')
+        .set('Authorization', 'Bearer ' + TestHelper.token)
+        .set('Accept', 'application/json')
+        .send(TestHelper.item)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          var smsTemplates = {
+            "reg_sms": "APP_NAME 验证码 %P%，请在五分内注册账号。",
+            "reset_pwd_sms": "APP_NAME 验证码 %P%, 请在五分钟内重置密码。",
+            "notify_blocked_sms": "APP_NAME 因为XXX，您的账号被冻结，详情联系 XXX"
+          };
+          TestHelper.item.smsTemplates = smsTemplates;
+          request(app)
+            .put('/api/applications/' + res.body._id)
+            .set('Accept', 'application/json')
+            .set('Authorization', 'Bearer ' + TestHelper.token)
+            .send(TestHelper.item)
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function (err, res) {
+              if (err) {
+                return done(err);
+              }
+              res.body.should.be.an.Object.and.have.property('smsTemplates', smsTemplates);
+              done();
+            });
+        });
+    });
+
     it('Dave2 can not update dave1 app', function (done) {
       applicationModel.model(TestHelper.itemForDave1).save(function (err, doc) {
         TestHelper.itemForDave1.name = 'update from dave2';
@@ -379,7 +412,7 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
 
   });
 
-  describe.only('#70 enable DELETE /api/app/:id', function () {
+  describe('#70 enable DELETE /api/app/:id', function () {
 
     it('should return an error if attempting a delete without an id', function (done) {
       request(app)
