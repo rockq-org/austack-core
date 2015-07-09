@@ -341,6 +341,76 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
         });
     });
 
+    describe('#95 dave can update smsTemplates fields ', function (done) {
+      it('can update any template', function (done) {
+        request(app)
+          .post('/api/applications')
+          .set('Authorization', 'Bearer ' + TestHelper.token)
+          .set('Accept', 'application/json')
+          .send(TestHelper.item)
+          .end(function (err, res) {
+            if (err) {
+              return done(err);
+            }
+
+            var templateValue = {
+              "type": "reg_sms",
+              "content": '【<%= APP_NAME %>】您的验证码是：<%= VERIFY_CODE %>，3分钟内有效。如非您本人操作，可忽略本消息。'
+            };
+
+            request(app)
+              .put('/api/applications/' + res.body._id + '/update-sms-templates')
+              .set('Accept', 'application/json')
+              .set('Authorization', 'Bearer ' + TestHelper.token)
+              .send(templateValue)
+              .expect(200)
+              .expect('Content-Type', /json/)
+              .end(function (err, res) {
+                if (err) {
+                  return done(err);
+                }
+
+                res.body.should.have.property('smsTemplates');
+                res.body.smsTemplates.should.have.property('reg_sms', templateValue.content);
+                done();
+              });
+          });
+      });
+      it.only('can not update without VERIFY_CODE string', function (done) {
+        request(app)
+          .post('/api/applications')
+          .set('Authorization', 'Bearer ' + TestHelper.token)
+          .set('Accept', 'application/json')
+          .send(TestHelper.item)
+          .end(function (err, res) {
+            if (err) {
+              return done(err);
+            }
+
+            var templateValue = {
+              "type": "reg_sms",
+              "content": '【<%= APP_NAME %>】您的验证码是：，3分钟内有效。如非您本人操作，可忽略本消息。'
+            };
+
+            request(app)
+              .put('/api/applications/' + res.body._id + '/update-sms-templates')
+              .set('Accept', 'application/json')
+              .set('Authorization', 'Bearer ' + TestHelper.token)
+              .send(templateValue)
+              .expect(400)
+              .expect('Content-Type', /json/)
+              .end(function (err, res) {
+                if (err) {
+                  return done(err);
+                }
+
+                res.body.should.have.property('message');
+                done();
+              });
+          });
+      });
+    });
+
     it('Dave2 can not update dave1 app', function (done) {
       applicationModel.model(TestHelper.itemForDave1).save(function (err, doc) {
         TestHelper.itemForDave1.name = 'update from dave2';
@@ -379,7 +449,7 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
 
   });
 
-  describe.only('#70 enable DELETE /api/app/:id', function () {
+  describe('#70 enable DELETE /api/app/:id', function () {
 
     it('should return an error if attempting a delete without an id', function (done) {
       request(app)

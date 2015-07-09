@@ -53,3 +53,7 @@ router.route('/' + controller.paramString)
   .delete(controller.destroy)
   .put(controller.update)
   .patch(controller.update);
+
+// update-sms-templates
+router.route('/' + controller.paramString + '/update-sms-templates')
+  .put(controller.updateSmsTemplates);

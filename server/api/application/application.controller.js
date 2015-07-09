@@ -106,6 +106,34 @@ ApplicationController.prototype = {
       if (err) {
         return res.handleError(err);
       }
+      logger.log(updated);
+      req[this.paramName] = updated;
+      return res.ok(self.getResponseObject(updated));
+    });
+  },
+
+  updateSmsTemplates: function (req, res) {
+    var self = this;
+    if (req.body._id) {
+      delete req.body._id;
+    }
+    if (!this.hasPermission(req, res)) {
+      return res.unauthorized();
+    }
+    var reg = / VERIFY_CODE /i;
+    if (!req.body.type || !req.body.content || !reg.test(req.body.content)) {
+      return res.badRequest({
+        message: '必须包含"<% VERIFY_CODE %>"字段'
+      });
+    }
+
+    req[this.paramName].smsTemplates[req.body.type] = req.body.content;
+    var updated = req[this.paramName];
+
+    updated.save(function (err) {
+      if (err) {
+        return res.handleError(err);
+      }
 
       req[this.paramName] = updated;
       return res.ok(self.getResponseObject(updated));

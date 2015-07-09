@@ -9,6 +9,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
@@ -35,6 +36,10 @@ var ApplicationDefinition = {
   },
   callbackUrls: [String],
   corsDomains: [String],
+  smsTemplates: {
+    type: Schema.Types.Mixed,
+    default: {}
+  },
   isTrashed: {
     type: Boolean,
     default: false
