@@ -1,8 +1,8 @@
 {
   "Config": {
-    "API_URL": "http://austack-stg-server.arrking.com/api/",
-    "SERVER_URL": "http://austack-stg-server.arrking.com",
+    "API_URL": "http://api.austack.com/api/",
+    "SERVER_URL": "http://api.austack.com",
     "ICON_ROOT": "assets/svg-sprite/",
-    "TEMPLATE_PREFIX": "http://austack-stg-client.arrking.com/app/"
+    "TEMPLATE_PREFIX": "http://console.austack.com/app/"
   }
 }
