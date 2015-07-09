@@ -59,4 +59,4 @@ function _create(shape) {
 }
 
 exports.create = _create;
-exports.getModelByName = _getModelByName;
+exports.getModelByName = _getModel;

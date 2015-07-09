@@ -9,6 +9,9 @@ var mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var User = require('../api/user/user.model').model;
+var Q = require('q');
+var S = require('string');
+var _ = require('lodash');
 
 /*
 // Insert some data needed to bootstrap or init the application
@@ -54,16 +57,38 @@ exports.users = [{
 }];
 
 exports.seed = function (done) {
-  User.find({}).remove(function () {
-    User.create(exports.users, function (err) {
-      if (err) {
-        console.error('Error while populating users: %s', err);
-      } else {
-        console.log('finished populating users');
-      }
-      if (done) {
-        done();
-      }
+  _dropRepos().then(function () {
+    User.find({}).remove(function () {
+      User.create(exports.users, function (err) {
+        if (err) {
+          console.error('Error while populating users: %s', err);
+        } else {
+          console.log('finished populating users');
+        }
+        if (done) {
+          done();
+        }
+      });
     });
   });
+}
+
+function _dropRepos() {
+  var deferred = Q.defer();
+
+  // mongoose.db.collectionNames(function (err, names) {
+  //   _.each(names, function (x, index) {
+  //     if (S(x).startsWith('repo')) {
+  //       mongoose.collections[x].drop(function (err) {
+  //         console.log('collection ' + x + 'dropped');
+  //       });
+  //     }
+  //     if ((names.length - 1) == index) {
+  //       deferred.resolve();
+  //     }
+  //   });
+  // });
+  deferred.resolve();
+
+  return deferred.promise;
 }

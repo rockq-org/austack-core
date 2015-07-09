@@ -2,7 +2,7 @@ var Q = require('q');
 var weimiCfg = require('../../config/').weimi;
 var SuperAgent = require('superagent');
 var QueryString = require('querystring');
-var _ = require('underscore');
+var _ = require('lodash');
 
 module.exports = {
   sendSMSByCid: sendSMSByCid,
