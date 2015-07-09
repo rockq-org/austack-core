@@ -2,22 +2,23 @@ var Q = require('q');
 var weimiCfg = require('../../config/').weimi;
 var SuperAgent = require('superagent');
 var QueryString = require('querystring');
+var _ = require('underscore');
 
 module.exports = {
-  sendVerifyCode: sendVerifyCode
+  sendVerifyCode: sendVerifyCode,
+  replaceText: replaceText
 };
 
-function sendVerifyCode(mobile, verifyCode) {
+function sendVerifyCode(mobile, content) {
   var d = Q.defer();
 
   var postData = {
+    // cid: weimiCfg.cid,
+    // p1: verifyCode,
     uid: weimiCfg.uid,
     pas: weimiCfg.pas,
-    cid: weimiCfg.cid,
-    p1: verifyCode,
     mob: mobile,
-    // use cid instead.
-    // con: '【微米】您的验证码是：610912，3分钟内有效。如非您本人操作，可忽略本消息。',
+    con: content, // '【微米】您的验证码是：610912，3分钟内有效。如非您本人操作，可忽略本消息。'
     type: 'json'
   };
 
@@ -43,4 +44,14 @@ function sendVerifyCode(mobile, verifyCode) {
     });
 
   return d.promise;
+}
+
+// var template = '【<%=APP_NAME %>】您的验证码是：<%= VERIFY_CODE %>，3分钟内有效。如非您本人操作，可忽略本消息。';
+// var list = {
+//   'APP_NAME': 'Austack',
+//   'VERIFY_CODE': verifyCode
+// };
+function replaceText(template, list) {
+  var compiled = _.template(template);
+  return compiled(list);
 }

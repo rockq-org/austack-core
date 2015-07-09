@@ -65,7 +65,13 @@ UserController.prototype = {
         return res.created(self.getResponseObject(document));
       }
 
-      Weimi.sendVerifyCode(name, verifyCode)
+      var template = '【<%= APP_NAME %>】您的验证码是：<%= VERIFY_CODE %>，3分钟内有效。如非您本人操作，可忽略本消息。';
+      var list = {
+        'APP_NAME': 'Austack',
+        'VERIFY_CODE': verifyCode
+      };
+      var content = Weimi.replaceText(template, list);
+      Weimi.sendVerifyCode(name, content)
         .then(function () {
           return res.created(self.getResponseObject(document));
         }).fail(function (err) {
