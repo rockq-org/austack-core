@@ -57,7 +57,12 @@ var UserDefinition = {
     default: false
   },
   provider: String,
-  salt: String
+  salt: String,
+  // Dave's repositories, in prototype, just support
+  // one repository, repos are actually repo names, also
+  // shape names as shapes are store in Shape collection.
+  // Each repo has one Shape record.
+  repos: [String]
 };
 
 /**

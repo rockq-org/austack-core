@@ -8,9 +8,14 @@
 'use strict';
 
 var _ = require('lodash');
+var shortid = require('shortid');
 var ParamController = require('../../lib/controllers/param.controller');
 var config = require('../../config');
 var Weimi = require('../../lib/weimi/index');
+var Shape = require('../../service/shape.mgr');
+var Repo = require('../../service/repo.mgr');
+var util = require('util');
+
 /**
  * The User model instance
  * @type {user:model~User}
@@ -130,14 +135,45 @@ UserController.prototype = {
         });
       }
 
-      user.isVerified = true;
-      user.active = true;
-      user.save(function (err) {
-        if (err) {
-          return res.handleError(err);
-        }
-        return res.noContent();
-      });
+      // Create User Shape & Repo after account is activated.
+      // assume user is not active and not verified before.
+      if ((!user.active) && (!user.isVerified)) {
+        Shape.create({
+            name: util.format('repo_%s', shortid.generate()),
+            ownerId: user._id,
+            type: '_local_',
+            mSchema: {
+              uid: {
+                type: String,
+                unique: true,
+                required: true
+              },
+              mobilePhone: {
+                type: String,
+                required: true
+              }
+            }
+          })
+          .then(function (shape) {
+            return Repo.create(shape);
+          })
+          .then(function (name) {
+            user.isVerified = true;
+            user.active = true;
+            user.repos.push(name);
+            user.save(function (err) {
+              if (err) {
+                return res.handleError(err);
+              } else {
+                return res.noContent();
+              }
+            });
+          })
+          .fail(function (err) {
+            return res.handleError(err);
+          })
+      }
+
     });
   },
 
