@@ -10,7 +10,7 @@ module.exports = {
     uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
   },
 
-  logLevel: 'info',
+  logLevel: 'log',
 
   seedDB: true
 };

@@ -22,21 +22,21 @@ module.exports = connection;
 if (connection.state === 0 || connection.state === 3) {
   connection.open(function connectionReconnect(err) {
     if (err) {
-      console.error('Error while reinitializing the database connection: %s', err);
+      logger.error('Error while reinitializing the database connection: %s', err);
       throw err; // throw error to stop application launch
     }
-    console.log('Database Connection reopened');
+    logger.log('Database Connection reopened');
   });
 }
 
 // register global database error handler
 mongoose.connection.on('error', function connectionError(err) {
-  console.error('Database Error: ', err);
+  logger.error('Database Error: ', err);
 });
 
 // register the connection handler once only
 mongoose.connection.once('open', function connectionOpen() {
-  console.log('Database connection open');
+  logger.log('Database connection open');
   // Populate DB with sample data
   if (config.seedDB) {
     logger.debug('seed db ...');

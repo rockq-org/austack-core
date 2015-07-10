@@ -31,5 +31,5 @@ var isAuthenticated = auth.hasRole('admin');
 router.route('*').all(addRequestContext, isAuthenticated, addUserContext);
 
 // register application routes controller.paramString = shapeParam
-router.route('/' + controller.paramString)
+router.route('/:repoName')
   .get(controller.index);
