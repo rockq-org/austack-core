@@ -14,6 +14,17 @@ module.exports = {
   publicDir: 'public',
 
   mongo: {
-    uri: process.env.AUSTACK_DATABASE_URL
-  }
+    uri: process.env.AUSTACK_DATABASE_URL,
+    options: {
+      server: {
+        auto_reconnect: true,
+        poolSize: 4,
+        socketOptions: {
+          keepAlive: 1
+        }
+      }
+    }
+  },
+
+  seedDB: true
 };

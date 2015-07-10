@@ -64,7 +64,8 @@ var common = {
         }
       }
     }
-  }
+  },
+  logLevel: 'log'
 };
 
 module.exports = _.merge(

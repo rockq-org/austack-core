@@ -13,6 +13,8 @@ module.exports = {
 
   publicDir: 'public',
 
+  logLevel: 'log',
+
   mongo: {
     uri: process.env.AUSTACK_DATABASE_URL,
     options: {
@@ -24,5 +26,7 @@ module.exports = {
         }
       }
     }
-  }
+  },
+
+  seedDB: true
 };

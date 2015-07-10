@@ -1,5 +1,6 @@
 'use strict';
 
+var config = require('./index');
 // Usage
 // at any file or place
 // logger.log('router');
@@ -16,10 +17,9 @@
 // }, [1, 2, 3, 4], Object);
 
 // level = 'log', 'trace', 'debug', 'info', 'warn', 'error'
-var level = process.env.LOG_LEVEL || "log";
+var level = config.logLevel || "log";
 
 GLOBAL.logger = require('tracer').console({
   level: level,
   format: "{{timestamp}} {{path}}:{{line}} \n <{{title}}> {{message}}"
 });
-
