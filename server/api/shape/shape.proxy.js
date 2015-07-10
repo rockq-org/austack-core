@@ -1,5 +1,5 @@
 /**
- * Shape management
+ * Shape management reuseable utilities
  */
 
 var Shape = require('./shape.model');

@@ -8,15 +8,15 @@
 var mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var User = require('../api/user/user.model').model;
-var Application = require('../api/application/application.model').model;
 var Q = require('q');
 var S = require('string');
 var _ = require('lodash');
 var util = require('util');
 var shortid = require('shortid');
-var Shape = require('../service/shape');
-var Repo = require('../service/repo');
+var User = require('../api/user/user.model').model;
+var Application = require('../api/application/application.model').model;
+var Shape = require('../api/shape');
+var Repo = require('../api/repo');
 
 /*
 // Insert some data needed to bootstrap or init the application
@@ -138,7 +138,7 @@ function _createRepoAndShapes(users) {
 
   _.each(exports.users, function (user, index) {
     var d = Q.defer();
-    Shape.mgr.create({
+    Shape.proxy.create({
         name: util.format('repo_%s', shortid.generate()),
         ownerId: user._id,
         type: '_local_',
@@ -156,7 +156,7 @@ function _createRepoAndShapes(users) {
       })
       .then(function (shape) {
         logger.debug('>> database: create shape as seed %s for %s', shape.name, user.name);
-        return Repo.mgr.create(shape);
+        return Repo.proxy.create(shape);
       })
       .then(function (apps) {
         d.resolve();

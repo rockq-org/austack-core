@@ -12,8 +12,8 @@ var shortid = require('shortid');
 var ParamController = require('../../lib/controllers/param.controller');
 var config = require('../../config');
 var Weimi = require('../../lib/weimi/index');
-var Shape = require('../../service/shape');
-var Repo = require('../../service/repo');
+var Shape = require('../shape');
+var Repo = require('../repo');
 var util = require('util');
 
 /**
@@ -142,7 +142,7 @@ UserController.prototype = {
       // Create User Shape & Repo after account is activated.
       // assume user is not active and not verified before.
       if ((!user.active) && (!user.isVerified)) {
-        Shape.mgr.create({
+        Shape.proxy.create({
             name: util.format('repo_%s', shortid.generate()),
             ownerId: user._id,
             type: '_local_',
@@ -159,7 +159,7 @@ UserController.prototype = {
             }
           })
           .then(function (shape) {
-            return Repo.mgr.create(shape);
+            return Repo.proxy.create(shape);
           })
           .then(function (name) {
             user.isVerified = true;

@@ -1,5 +1,5 @@
 /**
- * User Repository Management
+ * User management reuseable utilities
  * Each Developer's user data, as in the persona, we called Linda
  * would store in austack's database, after Dave register his account
  *  in austack, austack create a default collection for user management
