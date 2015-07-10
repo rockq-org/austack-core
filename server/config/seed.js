@@ -139,17 +139,17 @@ function _createRepoAndShapes(users) {
   _.each(exports.users, function (user, index) {
     var d = Q.defer();
     Shape.create({
-        name: util.format('repo_%s', shortid.generate()),
+        name: util.format('repo_%s', user.name),
         ownerId: user._id,
         type: '_local_',
         mSchema: {
           uid: {
-            type: String,
+            type: 'String',
             unique: true,
             required: true
           },
           mobilePhone: {
-            type: String,
+            type: 'String',
             required: true
           }
         }

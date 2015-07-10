@@ -148,12 +148,12 @@ UserController.prototype = {
             type: '_local_',
             mSchema: {
               uid: {
-                type: String,
+                type: 'String',
                 unique: true,
                 required: true
               },
               mobilePhone: {
-                type: String,
+                type: 'String',
                 required: true
               }
             }

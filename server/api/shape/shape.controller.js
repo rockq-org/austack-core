@@ -6,6 +6,8 @@
  */
 'use strict';
 
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 module.exports = ShapeController;
 
 var _ = require('lodash');
@@ -46,8 +48,9 @@ ShapeController.prototype = {
    * @private
    */
   constructor: ShapeController,
+  hasPermission: _hasPermission,
   index: _index,
-  hasPermission: _hasPermission
+  put: _put
 }
 
 /**
@@ -105,4 +108,132 @@ function _index(req, res) {
         error: err
       });
     });
+}
+
+/**
+ * enable update shape with body
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
+function _put(req, res) {
+  Shape.findOne({
+      name: req.params['repoName']
+    })
+    .exec()
+    .then(function (doc) {
+      if (!doc) {
+        res.json({
+          rc: 2,
+          error: 'Can not find repo in this name.'
+        });
+      } else {
+        req.shape = doc;
+        if (_hasPermission(req, res)) {
+          _processShapeUpdate(req, res, doc);
+        } else {
+          res.unauthorized();
+        }
+      }
+    }, function (err) {
+      res.json({
+        rc: 0,
+        error: err
+      });
+    });
+}
+
+/**
+ * process shape update
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @param  {[type]} source target doc to be update in database.
+ * @return {[type]}     [description]
+ */
+function _processShapeUpdate(req, res, source) {
+  var desired = req.body;
+  if (desired.mSchema && _validateDesiredShape(desired.mSchema)) {
+    source.mSchema = desired.mSchema;
+    source.markModified('mSchema');
+    source.save()
+      .then(function (doc) {
+        // #TODO update model in repo
+        res.json({
+          rc: 1,
+          data: _.pick(doc, ['mSchema', 'type', 'name', 'modified', 'created'])
+        });
+      }, function (err) {
+        res.json({
+          rc: 4,
+          error: err
+        });
+      });
+  } else {
+    res.json({
+      rc: 3,
+      error: 'Illegal request body.'
+    });
+  }
+}
+
+/**
+ * validate properties to be updated.
+ * @param  {[type]} desired [description]
+ * @return {[type]}         [description]
+ * #prototype, only support update mSchema of a shape.
+ * mShema is something like this, it meets monogoose schema argument
+ * further, mSchema is passed into monogoose.Schema.
+ * "mSchema": {
+            "mobilePhone": {
+                "required": true
+            },
+            "uid": {
+                "required": true,
+                "unique": true
+            }
+        }
+  * Note, mobilePhone and uid are fixed. Other properties are only in String, Number, Date or Boolean.
+  * Mixed type are not supported.
+  * 
+ */
+function _validateDesiredShape(mSchema) {
+  var result = true;
+  // first, mobilePhone and uid are defined as unaltered.
+  if (mSchema.mobilePhone && typeof (mSchema.mobilePhone) === 'object' &&
+    mSchema.mobilePhone.required && mSchema.mobilePhone.type === 'String') {
+    result = true;
+  } else {
+    return false;
+  }
+
+  if (mSchema.uid && typeof (mSchema.uid) === 'object' &&
+    mSchema.uid.required && mSchema.uid.type === 'String' &&
+    mSchema.uid.unique === true) {
+    result = true;
+  } else {
+    return false
+  }
+
+  // second, check other properites in a try catch way
+  try {
+    new Schema(mSchema);
+  } catch (e) {
+    logger.error('_validateDesiredShape', e);
+    return false;
+  }
+
+  // at last, to limit store and complex, just support four types of data
+  // ['String', 'Boolean', 'Number', 'Date']
+  var keys = _.keys(mSchema);
+  _.each(keys, function (k, index) {
+    if (!mSchema[k].type) {
+      logger.warn('Can not get type for mSchema.');
+      result = false;
+    } else if (!_.includes(['String', 'Boolean', 'Number', 'Date'], mSchema[k].type)) {
+      logger.warn('Only allow "String", "Boolean", "Number" and "Date" for type.');
+      result = false;
+    }
+  });
+
+  return result;
 }

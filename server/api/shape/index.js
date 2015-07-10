@@ -32,4 +32,5 @@ router.route('*').all(addRequestContext, isAuthenticated, addUserContext);
 
 // register application routes controller.paramString = shapeParam
 router.route('/:repoName')
-  .get(controller.index);
+  .get(controller.index)
+  .put(controller.put);
