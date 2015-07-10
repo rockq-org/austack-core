@@ -166,7 +166,6 @@ function _createRepoAndShapes(users) {
           .exec()
           .then(function (u) {
             u.repos.push(repoName);
-            logger.debug('get user %j', u);
             u.markModified('repos');
             u.save();
             d.resolve();
