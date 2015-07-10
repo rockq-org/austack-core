@@ -401,8 +401,14 @@ function preSave(next) {
       // delete the role to prevent loosing the root status
       delete self.role;
 
+      if (!self.getContext) { // if no self.getContext - no root user check
+        return next();
+      }
+
+      // if req.user exists, self.getContext is imported with the logined user.
       // get the user role to check if a root user will perform the update
       var userRole = self.getContext('request:acl.user.role');
+
       if (!userRole) { // no user role - no root user check
         return next();
       }

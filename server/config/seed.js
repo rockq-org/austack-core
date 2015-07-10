@@ -15,8 +15,8 @@ var util = require('util');
 var shortid = require('shortid');
 var User = require('../api/user/user.model').model;
 var Application = require('../api/application/application.model').model;
-var Shape = require('../api/shape');
-var Repo = require('../api/repo');
+var Shape = require('../api/shape/shape.proxy');
+var Repo = require('../api/repo/repo.proxy');
 
 /*
 // Insert some data needed to bootstrap or init the application
@@ -138,7 +138,7 @@ function _createRepoAndShapes(users) {
 
   _.each(exports.users, function (user, index) {
     var d = Q.defer();
-    Shape.proxy.create({
+    Shape.create({
         name: util.format('repo_%s', shortid.generate()),
         ownerId: user._id,
         type: '_local_',
@@ -156,10 +156,23 @@ function _createRepoAndShapes(users) {
       })
       .then(function (shape) {
         logger.debug('>> database: create shape as seed %s for %s', shape.name, user.name);
-        return Repo.proxy.create(shape);
+        return Repo.create(shape);
       })
-      .then(function (apps) {
-        d.resolve();
+      .then(function (repoName) {
+        logger.debug('>> database: push repo name into user.repos');
+        User.findOne({
+            _id: user._id
+          })
+          .exec()
+          .then(function (u) {
+            u.repos.push(repoName);
+            logger.debug('get user %j', u);
+            u.markModified('repos');
+            u.save();
+            d.resolve();
+          }, function (err) {
+            d.reject(err);
+          });
       })
       .fail(function (err) {
         d.reject(err);
