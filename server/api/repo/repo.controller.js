@@ -45,21 +45,16 @@ RepoController.prototype = {
   index: function (req, res) {
     // {"_id":"5596b9bd30e816d8f84bba33","role":"admin","iat":1436510300,"exp":1436528300}
     // logger.debug('get req.user %j', req.user);
-    User.findOne({
-        _id: req.user._id
-      })
-      .exec()
-      .then(function (user) {
-        res.json({
-          rc: 1,
-          data: user.repos
-        });
-      }, function (err) {
-        logger.error(err);
-        res.json({
-          rc: 0,
-          error: 'Can not get user from database.'
-        });
+    if (req.userInfo.repos && req.userInfo.repos.length > 0) {
+      res.json({
+        rc: 1,
+        data: req.userInfo.repos
       });
+    } else {
+      res.json({
+        rc: 0,
+        data: 'User does not have any repo yet.'
+      });
+    }
   }
 }
