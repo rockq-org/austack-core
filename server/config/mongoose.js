@@ -39,6 +39,7 @@ mongoose.connection.once('open', function connectionOpen() {
   console.log('Database connection open');
   // Populate DB with sample data
   if (config.seedDB) {
+    logger.debug('seed db ...');
     require('./seed').seed();
   }
 });

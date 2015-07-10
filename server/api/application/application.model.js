@@ -83,7 +83,7 @@ var Application;
 if (mongoose.models.Application) {
   Application = mongoose.model('Application');
 } else {
-  Application = mongoose.model('Application', ApplicationSchema);
+  Application = mongoose.model('Application', ApplicationSchema, '_applications');
 }
 
 module.exports = {

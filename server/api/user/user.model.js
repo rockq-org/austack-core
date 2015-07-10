@@ -455,5 +455,5 @@ module.exports = {
    *  The registered mongoose model instance of the User model
    *  @type {User}
    */
-  model: mongoose.model('User', UserSchema)
+  model: mongoose.model('User', UserSchema, '_users')
 };

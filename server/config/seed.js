@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var User = require('../api/user/user.model').model;
+var Application = require('../api/application/application.model').model;
 var Q = require('q');
 var S = require('string');
 var _ = require('lodash');
@@ -60,20 +61,49 @@ exports.users = [{
   active: true
 }];
 
+exports.applications = [{
+  "_id": "559e96ff772008b47f035727",
+  "name": "Troy",
+  "ownerId": "5596b9bd30e816d8f84bba33",
+  "clientId": "7e37446147bc5224fa42072f",
+  "clientSecret": "e98e13bfbc6aa39da1693e13",
+  "modified": "2015-07-09T15:45:03.409Z",
+  "created": "2015-07-09T15:45:03.410Z",
+  "isTrashed": false,
+  "corsDomains": [],
+  "callbackUrls": [],
+  "jwtExpiration": 36000,
+}, {
+  "_id": "559e96ff772008b47f035728",
+  "name": "Troy",
+  "ownerId": "5596b9bd30e816d8f84bba34",
+  "clientId": "7e37446147bc5224fa420724",
+  "clientSecret": "e98e13bfbc6aa39da1693e19",
+  "modified": "2015-07-09T15:45:03.409Z",
+  "created": "2015-07-09T15:45:03.410Z",
+  "isTrashed": false,
+  "corsDomains": [],
+  "callbackUrls": [],
+  "jwtExpiration": 36000,
+}, {
+  "_id": "559e96ff772008b47f035729",
+  "name": "Troy",
+  "ownerId": "5596b9bd30e816d8f84bba35",
+  "clientId": "7e37446147bc5224fa420725",
+  "clientSecret": "e98e13bfbc6aa39da1693e1y",
+  "modified": "2015-07-09T15:45:03.409Z",
+  "created": "2015-07-09T15:45:03.410Z",
+  "isTrashed": false,
+  "corsDomains": [],
+  "callbackUrls": [],
+  "jwtExpiration": 36000,
+}];
+
 exports.seed = function () {
   var deferred = Q.defer();
   _dropReposAndShapesAndApplications().then(function () {
       logger.debug('>> database: remove all users.');
       return User.find({}).remove().exec();
-      // User.find({}).remove(function () {
-      //   User.create(exports.users, function (err) {
-      //     if (err) {
-      //       logger.error('>> database: Error while populating users: %s', err);
-      //     } else {
-      //       logger.debug('>> database: finished populating users');
-      //     }
-      //   });
-      // });
     })
     .then(function () {
       logger.debug('>> database: create seed users.');
@@ -83,11 +113,16 @@ exports.seed = function () {
       logger.debug('>> database: create seed repos and shapes.');
       return _createRepoAndShapes(docs);
     })
+    .then(function (name) {
+      logger.debug('>> database: create applications as seed.');
+      return _createApplications();
+    })
     .then(function () {
       logger.debug('>> database: seeds setup successfully.');
       deferred.resolve();
     })
     .fail(function (err) {
+      logger.error('Get error when inserting seeds.', err);
       deferred.reject(err);
     });
   return deferred.promise;
@@ -123,9 +158,8 @@ function _createRepoAndShapes(users) {
         logger.debug('>> database: create shape as seed %s for %s', shape.name, user.name);
         return Repo.mgr.create(shape);
       })
-      .then(function (name) {
-        logger.debug('>> database: create repo as seed %s for %s', name, user.name);
-        d.resolve(name);
+      .then(function (apps) {
+        d.resolve();
       })
       .fail(function (err) {
         d.reject(err);
@@ -135,6 +169,24 @@ function _createRepoAndShapes(users) {
   });
 
   return Q.allSettled(promises);
+}
+
+function _createApplications() {
+  var d = Q.defer();
+  Application.find({})
+    .remove()
+    .exec()
+    .then(function () {
+      return Application.create(exports.applications);
+    }, function (err) {
+      d.reject(err);
+    })
+    .then(function (apps) {
+      d.resolve(apps);
+    }, function (err) {
+      d.reject(err);
+    });
+  return d.promise;
 }
 
 /**
@@ -147,9 +199,12 @@ function _dropReposAndShapesAndApplications() {
   mongoose.connection.db.listCollections().toArray(function (err, cls) {
     if (err) {
       logger.error(err);
+    } else if (cls.length == 0) {
+      deferred.resolve();
     } else {
+
       _.each(cls, function (x, index) {
-        if (S(x.name).startsWith('repo') || x.name === 'shapes' || x.name === 'applications') {
+        if (S(x.name).startsWith('repo') || x.name === '_shapes' || x.name === '_applications') {
           mongoose.connection.db.dropCollection(x.name);
           logger.debug('>> database: collection %s dropped.', x.name);
         }
@@ -157,6 +212,7 @@ function _dropReposAndShapesAndApplications() {
           deferred.resolve();
         }
       });
+
     }
   });
 

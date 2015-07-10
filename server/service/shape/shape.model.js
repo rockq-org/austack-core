@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
 
 var ShapeDefinition = {
   // by default, in prototype phase, One Dave, One Shape, 
@@ -40,6 +41,12 @@ var ShapeDefinition = {
 }
 
 var ShapeSchema = new mongoose.Schema(ShapeDefinition);
-var Shape = mongoose.model('Shape', ShapeSchema);
+
+/**
+ * attache plugins
+ */
+ShapeSchema.plugin(createdModifiedPlugin);
+
+var Shape = mongoose.model('Shape', ShapeSchema, '_shapes');
 
 exports = module.exports = Shape;
