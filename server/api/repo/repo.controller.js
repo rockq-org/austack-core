@@ -7,9 +7,9 @@
 module.exports = RepoController;
 
 var _ = require('lodash');
-var ParamController = require('../../lib/controllers/param.controller');
 var roles = require('../../lib/auth/roles');
 var User = require('../user/user.model').model;
+var Shape = require('../shape/shape.model');
 
 /**
  * RepoController constructor
@@ -18,7 +18,6 @@ var User = require('../user/user.model').model;
  * Uses the 'repoId' parameter and the 'repoParam' request property
  * to operate with the [main repo API Model]{@link repo:model~Repo} model.
  * @constructor
- * @inherits ParamController
  * @see application:model~Repo
  */
 function RepoController(router) {
@@ -41,20 +40,76 @@ RepoController.prototype = {
    * @private
    */
   constructor: RepoController,
+  // Enable GET /api/repos
+  index: _index,
+  // Enable POST /api/repos/:repoName
+  post: _post,
+  // Enable GET /api/repos/:repoName
+  get: _get,
+  // Enable PUT /api/repos/:repoName/:uid
+  put: _put,
+  // Enable DELETE /api/repos/:repoName/:uid
+  delete: _delete
+}
 
-  index: function (req, res) {
-    // {"_id":"5596b9bd30e816d8f84bba33","role":"admin","iat":1436510300,"exp":1436528300}
-    // logger.debug('get req.user %j', req.user);
-    if (req.userInfo.repos && req.userInfo.repos.length > 0) {
-      res.json({
-        rc: 1,
-        data: req.userInfo.repos
-      });
-    } else {
-      res.json({
-        rc: 0,
-        data: 'User does not have any repo yet.'
-      });
-    }
+/**
+ * get dave's repo array
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
+function _index(req, res) {
+  // {"_id":"5596b9bd30e816d8f84bba33","role":"admin","iat":1436510300,"exp":1436528300}
+  // logger.debug('get req.user %j', req.user);
+  if (req.userInfo.repos && req.userInfo.repos.length > 0) {
+    res.json({
+      rc: 1,
+      data: req.userInfo.repos
+    });
+  } else {
+    res.json({
+      rc: 0,
+      data: 'User does not have any repo yet.'
+    });
   }
+}
+
+/**
+ * [_get description]
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
+function _get(req, res) {
+  res.send('ok');
+}
+
+/**
+ * [_get description]
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
+function _delete(req, res) {
+  res.send('ok');
+}
+
+/**
+ * [_get description]
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
+function _put(req, res) {
+  res.send('ok');
+}
+
+/**
+ * [_get description]
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
+function _post(req, res) {
+  res.send('ok');
 }

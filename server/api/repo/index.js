@@ -33,3 +33,15 @@ router.route('*').all(addRequestContext, isAuthenticated, addUserContext);
 // register application routes
 router.route('/')
   .get(controller.index);
+
+router.route('/:repoName')
+  // create new record in a specific repo by name
+  .post(controller.post)
+  // query records in a specific repo by name
+  .get(controller.get);
+
+router.route('/:repoName/:uid')
+  // update a record in a specific repo by uid
+  .put(controller.put)
+  // delete a record in a specific repo by uid
+  .delete(controller.delete);
