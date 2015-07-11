@@ -27,6 +27,7 @@ var ApplicationDefinition = {
     type: String,
     required: true
   },
+  description: String,
   ownerId: String,
   clientId: String,
   clientSecret: String,

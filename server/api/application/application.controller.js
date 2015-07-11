@@ -164,16 +164,13 @@ ApplicationController.prototype = {
   },
 
   index: function (req, res) {
-    var query = {
-      'ownerId': req.userInfo._id,
-      'isTrashed': false
-    };
+    var query = req.query || {};
 
-    if (roles.hasRole(req.userInfo.role, 'root')) {
-      query = {
-        'isTrashed': false
-      };
+    if (!roles.hasRole(req.userInfo.role, 'root')) {
+      query.ownerId = req.userInfo._id
+      query.isTrashed = false;
     }
+    console.log(query);
 
     this.model.paginate(
       query,
