@@ -11,7 +11,8 @@
     <md-list>
       <md-list-item ng-repeat="application in list.applications" ng-click="list.showInDetails(application)" ng-class="{'selected': list.isSelected(application)}">
         <list-image ng-if="!user.image" string="{{application.name}}"></list-image>
-        <p>{{application.name}}</p>
+        <p>{{::application.name}}</p>
+        <p hide-md hide-sm>{{::application.description}}</p>
         <md-button href="#" class="md-icon-button">
           <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
           <md-tooltip>教程</md-tooltip>
@@ -36,10 +37,9 @@
   <md-content ng-if="!list.applications.length">
     <md-card>
       <md-card-content>
-        <h2>No Applications found</h2>
         <p>
-          There are no Applications!
-          <a ng-click="index.create()">Create one!</a>
+          应用列表为空
+          <a ng-click="index.create()">现在创建</a>
         </p>
       </md-card-content>
     </md-card>
