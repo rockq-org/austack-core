@@ -51,6 +51,8 @@
     "_": false,
     // sinon
     "sinon": false,
+    // Jquery
+    "$": false,
     // Browser
     "document": false,
     "console": false
