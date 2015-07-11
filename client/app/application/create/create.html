@@ -1,13 +1,17 @@
 <md-dialog aria-label="Create a new application" id="application-create">
 
   <md-toolbar class="md-accent">
-    <h3 class="md-toolbar-tools">
-      新建应用
-    </h3>
+    <div class="md-toolbar-tools">
+      <h2>新建应用</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="create.close()" aria-label="Create a new application">
+        <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
+      </md-button>
+    </div>
   </md-toolbar>
 
-  <md-content layout-padding>
-    <section class="section slim" layout="column">
+  <md-dialog-content>
+    <section layout="column">
       <p>
         请输入一个友好的应用名称，稍后您可以其他设置。
       </p>
@@ -15,32 +19,27 @@
 
     <form name="createForm">
 
-      <section class="section" layout="column">
+      <section layout="column">
 
-        <span layout="row" layout-sm="column">
-          <md-input-container flex>
-            <label>应用名称</label>
-            <input name="name" ng-model="create.application.name" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="Application">
-            <div ng-messages="createForm.name.$error">
-              <div ng-message="required">应用名称不能为空</div>
-              <div ng-message="mongoose">此应用名称已经被使用</div>
-              <div ng-message="remote-unique">此应用名称已经被使用</div>
-            </div>
-          </md-input-container>
-        </span>
-
-        <span layout="row" layout-sm="column">
-          <md-input-container flex class="last">
-            <label>应用简介</label>
-            <textarea name="info" ng-model="create.application.info"></textarea>
-          </md-input-container>
-        </span>
+        <md-input-container flex>
+          <label>应用名称</label>
+          <input name="name" ng-model="create.application.name" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="Application">
+          <div ng-messages="createForm.name.$error">
+            <div ng-message="required">应用名称不能为空</div>
+            <div ng-message="mongoose">此应用名称已经被使用</div>
+            <div ng-message="remote-unique">此应用名称已经被使用</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex>
+          <label>应用简介</label>
+          <textarea name="description" ng-model="create.application.description"></textarea>
+        </md-input-container>
 
       </section>
 
     </form>
 
-  </md-content>
+  </md-dialog-content>
 
   <div class="md-actions" layout="row">
     <span flex></span>

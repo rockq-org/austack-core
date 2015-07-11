@@ -21,12 +21,12 @@
 
     vm.create = createApplication;
 
-    function createApplication() {
+    function createApplication(ev) {
       $mdDialog.show({
         controller: 'ApplicationCreateController',
         controllerAs: 'create',
         templateUrl: 'app/application/create/create.html',
-        clickOutsideToClose: false
+        targetEvent: ev
       });
     }
   }
