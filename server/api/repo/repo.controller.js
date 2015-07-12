@@ -104,11 +104,54 @@ function _delete(req, res) {
  * @return {[type]}     [description]
  */
 function _put(req, res) {
-  res.send('ok');
+  var repoName = req.params['repoName'];
+  var repoUId = req.params['uid'];
+  var repoBody = req.body;
+
+  logger.debug('%s %s update. %j', repoName, repoUId, repoBody);
+
+  var ep = new EventProxy();
+
+  ep.all('doc', function (doc) {
+    res.json({
+      rc: 0,
+      data: doc
+    });
+  });
+
+  ep.fail(function (err) {
+    logger.error(err);
+    res.json({
+      rc: 1,
+      error: err
+    });
+  });
+
+  if (!(repoName || repoUId || repoBody)) {
+    return ep.throw(new Error('Bad parameters.'));
+  }
+
+  Shape.findOne({
+    name: repoName
+  }).then(function (doc) {
+    if (!doc)
+      return ep.throw(new Error('Repo not exist.'));
+
+    if (_hasPermission(req, doc)) {
+      var M = Repo.getModel(doc);
+      _updateRepoRecord(ep, doc, M, repoUId, repoBody);
+    } else {
+      return ep.throw(new Error('Permission denied.'));
+    }
+  }, function (err) {
+    ep.throw(err);
+  });
+
 }
 
 /**
- * [_get description]
+ * Post new record into a repo.
+ * Note, uid is created, also support other properties in mSchema.
  * @param  {[type]} req [description]
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
@@ -201,10 +244,45 @@ function _hasPermission(req, resource) {
 }
 
 /**
- * get mongoose model by repo name.
- * @param  {[type]} name [description]
- * @return {[type]}      [description]
+ * update record in a repo by uid
+ * @param  {[type]} ep    ep.emit(doc) to return succ with res, ep.throw to send err with res.
+ * @param  {[type]} shape 
+ * @param  {[type]} model [description]
+ * @param  {[type]} uid   [description]
+ * @param  {[type]} data  desired data.
+ * @return {[type]}       [description]
  */
-function _getModelByRepoName(name) {
+function _updateRepoRecord(ep, shape, model, uid, data) {
 
+  logger.debug('uid %s', uid);
+  model.findOne({
+      uid: uid
+    })
+    .then(function (doc) {
+      if (!doc) {
+        logger.error(err);
+        return ep.throw(new Error('Can not find record with this uid.'));
+      }
+      delete data._id;
+      delete data.__v;
+      delete data.uid;
+
+      // #TODO delete disappeared keys
+      var target = _.merge(doc.toJSON(), data);
+      var keys = _.keys(target);
+      _.each(keys, function (k) {
+        doc[k] = target[k];
+      });
+      doc.save(function (err, result) {
+        if (err)
+          return ep.throw(err);
+        var resultJSON = result.toJSON();
+        delete resultJSON.__v;
+        delete resultJSON._id;
+        ep.emit('doc', resultJSON);
+      });
+    }, function (err) {
+      logger.error(err);
+      return ep.throw(new Error('DB error.'));
+    });
 }

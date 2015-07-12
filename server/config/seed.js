@@ -61,6 +61,39 @@ exports.users = [{
   active: true
 }];
 
+exports.repo_dave1 = [{
+  "mobilePhone": "1588888888",
+  "uid": "linda1"
+}, {
+  "mobilePhone": "1588888889",
+  "uid": "linda2"
+}, {
+  "mobilePhone": "1588888887",
+  "uid": "linda3"
+}];
+
+exports.repo_dave2 = [{
+  "mobilePhone": "1588888888",
+  "uid": "linda1"
+}, {
+  "mobilePhone": "1588888889",
+  "uid": "linda2"
+}, {
+  "mobilePhone": "1588888887",
+  "uid": "linda3"
+}];
+
+exports.repo_root = [{
+  "mobilePhone": "1588888888",
+  "uid": "linda1"
+}, {
+  "mobilePhone": "1588888889",
+  "uid": "linda2"
+}, {
+  "mobilePhone": "1588888887",
+  "uid": "linda3"
+}];
+
 exports.applications = [{
   "_id": "559e96ff772008b47f035727",
   "name": "Troy",
@@ -112,6 +145,18 @@ exports.seed = function () {
     .then(function (docs) {
       logger.debug('>> database: create seed repos and shapes.');
       return _createRepoAndShapes(docs);
+    })
+    .then(function () {
+      logger.debug('>> database: insert users into repo_dave1');
+      return Repo.import('repo_dave1', exports.repo_dave1);
+    })
+    .then(function () {
+      logger.debug('>> database: insert users into repo_dave2');
+      return Repo.import('repo_dave2', exports.repo_dave2);
+    })
+    .then(function () {
+      logger.debug('>> database: insert users into repo_root');
+      return Repo.import('repo_root', exports.repo_root);
     })
     .then(function (name) {
       logger.debug('>> database: create applications as seed.');

@@ -10,7 +10,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var dbase = mongoose.connection;
-var Shape = require('../shape');
+var Shape = require('../shape/shape.model');
 var u = require('util');
 var Q = require('q');
 
@@ -20,6 +20,12 @@ var Q = require('q');
  * @return {[type]}      [description]
  */
 function _getModel(shape) {
+  // seems mongoose gets a lot workloads here in the context.
+  // but it should be one in this way, all the models of repo 
+  // should not depend on global instance, since the mShema maybe 
+  // change in shape. So everytime, CRUD of repo happens, get a new 
+  // model for stability reason. It has negative impact for performance.
+  // Just add nodes. 
   delete mongoose.models[shape.name];
   delete mongoose.modelSchemas[shape.name];
   return mongoose.model(shape.name, new mongoose.Schema(shape.mSchema), shape.name);
@@ -49,6 +55,30 @@ function _create(shape) {
     }
   });
 
+  return deferred.promise;
+}
+
+/**
+ * import data by repo name and data
+ * @param  {[type]} repoName [description]
+ * @param  {[type]} data     [description]
+ * @return {[type]}          [description]
+ */
+exports.import = function (repoName, data) {
+  var deferred = Q.defer();
+  Shape.findOne({
+      name: repoName
+    })
+    .then(function (doc) {
+      if (doc) {
+        return _getModel(doc).create(data);
+      } else {
+        deferred.reject();
+      }
+    })
+    .then(function (docs) {
+      deferred.resolve(docs);
+    });
   return deferred.promise;
 }
 
