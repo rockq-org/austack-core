@@ -15,7 +15,8 @@
 
   function configBreadcrumb($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
-      includeAbstract: false
+      includeAbstract: false,
+      templateUrl: 'app/layout/header/breadcrumb.html'
     });
   }
 
