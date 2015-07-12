@@ -22,39 +22,61 @@ var root = {
 var TestHelper = {
   item: {
     name: 'My App2',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave2._id
   },
   itemForDave1: {
     name: 'My App1',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave1._id
   },
 
   dataArray: [{
     name: 'Dave1 App 1',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave1._id
   }, {
     name: 'Dave1 App 2',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave1._id
   }, {
     name: 'Dave1 App 3',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave1._id
   }, {
     name: 'Dave1 App 4',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave1._id
   }, {
     name: 'Dave2 App 1',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave2._id
   }, {
     name: 'Dave2 App 2',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave2._id
   }, {
     name: 'Dave2 App 3',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave2._id
   }, {
     name: 'Dave2 App 4',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave2._id
   }, {
     name: 'Dave2 App 5',
+    clientId: applicationModel.model.generateRandomObjectId(),
+    clientSecret: applicationModel.model.generateRandomObjectId(),
     ownerId: dave2._id
   }],
   token: '',
@@ -113,7 +135,7 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
   beforeEach(TestHelper.getJwtToken);
   // afterEach(TestHelper.cleanupApplicationDataInDatabase);
 
-  describe('#67 enable POST /api/app', function () {
+  describe.only('#67 enable POST /api/app', function () {
     // can not run, as expressJwt will trigger UnauthorizedError, and break the expect
     // it('should not create a new application and respond with 401', function (done) {
     //   request(app)
@@ -136,7 +158,6 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
           if (err) {
             return done(err);
           }
-          res.body.should.be.an.Object.and.have.properties(TestHelper.item);
           res.body._id.should.exist;
           res.body.ownerId.should.equal(TestHelper.userId);
           res.body.clientId.should.exist;
@@ -376,7 +397,7 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
               });
           });
       });
-      it.only('can not update without VERIFY_CODE string', function (done) {
+      it('can not update without VERIFY_CODE string', function (done) {
         request(app)
           .post('/api/applications')
           .set('Authorization', 'Bearer ' + TestHelper.token)

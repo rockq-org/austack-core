@@ -13,8 +13,25 @@ var roles = require('./roles');
 var config = require('../../config');
 var contextService = require('request-context');
 
+var secretCallback = function (req, payload, done) {
+  // config.secrets.session
+  var issuer = payload.iss;
+  logger.log(req, payload);
+  data.getTenantByIdentifier(issuer, function (err, tenant) {
+    if (err) {
+      return done(err);
+    }
+    if (!tenant) {
+      return done(new Error('missing_secret'));
+    }
+
+    var secret = utilities.decrypt(tenant.secret);
+    done(null, secret);
+  });
+};
+
 var validateJwt = expressJwt({
-  secret: config.secrets.session
+  secret: secretCallback
 });
 
 module.exports = {
@@ -43,6 +60,7 @@ module.exports = {
    * @see {auth:service~signToken}
    */
   signToken: signToken,
+  signTokenForApplication: signTokenForApplication,
 
   /**
    * Set a signed token cookie
@@ -81,6 +99,8 @@ function isAuthenticated() {
 
     // load user model on demand
     var User = require('../../api/user/user.model').model;
+
+    logger.log(req.user);
 
     // read the user id from the token information provided in req.user
     User.findOne({
@@ -134,6 +154,15 @@ function signToken(id, role) {
   return jwt.sign({
     _id: id,
     role: role
+  }, config.secrets.session, {
+    expiresInMinutes: 60 * 5
+  });
+}
+
+function signTokenForApplication(clientId, ownerId) {
+  return jwt.sign({
+    clientId: clientId,
+    ownerId: ownerId
   }, config.secrets.session, {
     expiresInMinutes: 60 * 5
   });
