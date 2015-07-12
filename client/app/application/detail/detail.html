@@ -1,42 +1,10 @@
-<md-content flex id="application-detail-content">
-  <md-tabs class="md-primary md-hue-1" md-dynamic-height md-border-bottom>
-    <md-tab label="快速开始">
-
-      <section class="md-padding" layout="column">
-
-        <p style="margin-top: 0;">Selected Avatar:
-          <span class="radioValue">{{ data.group3 }}</span>
-        </p>
-        <md-radio-group ng-model="data.group3">
-          <md-radio-button ng-repeat="it in avatarData" ng-value="it.value" aria-label="{{it.title}}">
-            <md-icon md-svg-icon="{{it.id}}"></md-icon>
-          </md-radio-button>
-        </md-radio-group>
-
-      </section>
-
-      <section class="section" layout="column">
-
-        <span class="section-title">Record Information</span>
-
-        <span layout="row" layout-sm="column" class="detail-info">
-          <span flex="45">Modified</span>
-          <span flex ng-show="detail.application.modified" class="subtitle">
-            <span am-time-ago="detail.application.modified"></span>
-            <md-tooltip>{{detail.application.modified | date:'dd. MMMM yyyy H:mm'}}</md-tooltip>
-            {{detail.application.modifiedBy && 'by ' + detail.application.modifiedBy}}
-          </span>
-        </span>
-
-        <span layout="row" layout-sm="column" class="detail-info">
-          <span flex="45">Created</span>
-          <span flex ng-show="detail.application.created" class="subtitle">{{detail.application.created | date:'dd. MMMM yyyy H:mm'}}</span>
-        </span>
-
-      </section>
-    </md-tab>
-    <md-tab label="设置"></md-tab>
-    <md-tab label="登入界面"></md-tab>
-    <md-tab label="短信"></md-tab>
-
-</md-content>
+<section flex id="application-loginpage-content">
+  <md-tabs md-selected="detail.tabIdx" class="md-primary md-hue-1" md-dynamic-height md-border-bottom>
+    <md-tab ui-sref="application.detail.quickstart" label="快速开始"></md-tab>
+    <md-tab ui-sref="application.detail.settings" label="设置"></md-tab>
+    <md-tab ui-sref="application.detail.loginpage" label="登入界面"></md-tab>
+    <md-tab ui-sref="application.detail.sms" label="短信"></md-tab>
+  </md-tabs>
+  <div ui-view layout="column" layout-fill flex>
+  </div>
+</section>

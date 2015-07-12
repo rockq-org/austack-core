@@ -10,18 +10,14 @@
    */
 
   angular
-    .module('austackApp.application.detail', [
+    .module('austackApp.application.detail.quickstart', [
       'ui.router',
-      'angularMoment',
-      'austackApp.application.detail.quickstart',
-      'austackApp.application.detail.settings',
-      'austackApp.application.detail.loginpage',
-      'austackApp.application.detail.sms'
+      'angularMoment'
     ])
-    .config(configureApplicationDetail);
+    .config(configureApplicationQuickstart);
 
   // inject configApplicationRoutes dependencies
-  configureApplicationDetail.$inject = ['$stateProvider', '$urlRouterProvider'];
+  configureApplicationQuickstart.$inject = ['$stateProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -33,25 +29,23 @@
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
    */
-  function configureApplicationDetail($stateProvider, $urlRouterProvider) {
+  function configureApplicationQuickstart($stateProvider) {
     // The detail state configuration
-    var detailState = {
-      name: 'application.detail',
-      parent: 'application',
-      //abstract: true,
-      url: '/:id',
+    var state = {
+      name: 'application.detail.quickstart',
+      parent: 'application.detail',
+      url: '/quickstart',
       authenticate: true,
       role: 'admin',
       views: {
         '': {
-          templateUrl: 'app/application/detail/detail.html',
+          templateUrl: 'app/application/detail/quickstart/quickstart.html',
           controller: 'ApplicationDetailController',
           controllerAs: 'detail'
         }
       },
       ncyBreadcrumb: {
-        label: '{{detail.application.name}}',
-        parent: 'application.list'
+        skip: true
       },
       resolve: {
         application: resolveApplicationFromArray
@@ -61,8 +55,7 @@
       }
     };
 
-    $urlRouterProvider.when('/applications/:id', '/applications/:id/quickstart');
-    $stateProvider.state(detailState);
+    $stateProvider.state(state);
   }
 
   // inject resolveApplicationFromArray dependencies
