@@ -31,7 +31,8 @@ var secretCallback = function (req, payload, done) {
 };
 
 var validateJwt = expressJwt({
-  secret: secretCallback
+  // secret: secretCallback
+  secret: config.secrets.session
 });
 
 module.exports = {
