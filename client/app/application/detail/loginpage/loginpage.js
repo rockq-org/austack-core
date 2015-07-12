@@ -10,18 +10,14 @@
    */
 
   angular
-    .module('austackApp.application.detail', [
+    .module('austackApp.application.detail.loginpage', [
       'ui.router',
-      'angularMoment',
-      'austackApp.application.detail.quickstart',
-      'austackApp.application.detail.settings',
-      'austackApp.application.detail.loginpage',
-      'austackApp.application.detail.sms'
+      'angularMoment'
     ])
-    .config(configureApplicationDetail);
+    .config(configureApplicationListDetail);
 
   // inject configApplicationRoutes dependencies
-  configureApplicationDetail.$inject = ['$stateProvider', '$urlRouterProvider'];
+  configureApplicationListDetail.$inject = ['$stateProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -33,36 +29,33 @@
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
    */
-  function configureApplicationDetail($stateProvider, $urlRouterProvider) {
+  function configureApplicationListDetail($stateProvider) {
     // The detail state configuration
-    var detailState = {
-      name: 'application.detail',
-      parent: 'application',
-      //abstract: true,
-      url: '/:id',
+    var state = {
+      name: 'application.detail.loginpage',
+      parent: 'application.detail',
+      url: '/loginpage',
       authenticate: true,
       role: 'admin',
       views: {
         '': {
-          templateUrl: 'app/application/detail/detail.html',
-          controller: 'ApplicationDetailController',
-          controllerAs: 'detail'
+          templateUrl: 'app/application/detail/loginpage/loginpage.html',
+          controller: 'ApplicationLoginpageController',
+          controllerAs: 'loginpage'
         }
       },
       ncyBreadcrumb: {
-        label: '{{detail.application.name}}',
-        parent: 'application.list'
+        skip: true
       },
       resolve: {
         application: resolveApplicationFromArray
       },
       data: {
-        tabIdx: 0
+        tabIdx: 2
       }
     };
 
-    $urlRouterProvider.when('/applications/:id', '/applications/:id/quickstart');
-    $stateProvider.state(detailState);
+    $stateProvider.state(state);
   }
 
   // inject resolveApplicationFromArray dependencies

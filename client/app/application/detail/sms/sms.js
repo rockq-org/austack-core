@@ -10,18 +10,14 @@
    */
 
   angular
-    .module('austackApp.application.detail', [
+    .module('austackApp.application.detail.sms', [
       'ui.router',
-      'angularMoment',
-      'austackApp.application.detail.quickstart',
-      'austackApp.application.detail.settings',
-      'austackApp.application.detail.loginpage',
-      'austackApp.application.detail.sms'
+      'angularMoment'
     ])
-    .config(configureApplicationDetail);
+    .config(configureApplicationSMS);
 
   // inject configApplicationRoutes dependencies
-  configureApplicationDetail.$inject = ['$stateProvider', '$urlRouterProvider'];
+  configureApplicationSMS.$inject = ['$stateProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -33,36 +29,33 @@
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
    */
-  function configureApplicationDetail($stateProvider, $urlRouterProvider) {
+  function configureApplicationSMS($stateProvider) {
     // The detail state configuration
-    var detailState = {
-      name: 'application.detail',
-      parent: 'application',
-      //abstract: true,
-      url: '/:id',
+    var state = {
+      name: 'application.detail.sms',
+      parent: 'application.detail',
+      url: '/sms',
       authenticate: true,
       role: 'admin',
       views: {
         '': {
-          templateUrl: 'app/application/detail/detail.html',
+          templateUrl: 'app/application/detail/sms/sms.html',
           controller: 'ApplicationDetailController',
           controllerAs: 'detail'
         }
       },
       ncyBreadcrumb: {
-        label: '{{detail.application.name}}',
-        parent: 'application.list'
+        skip: true
       },
       resolve: {
         application: resolveApplicationFromArray
       },
       data: {
-        tabIdx: 0
+        tabIdx: 3
       }
     };
 
-    $urlRouterProvider.when('/applications/:id', '/applications/:id/quickstart');
-    $stateProvider.state(detailState);
+    $stateProvider.state(state);
   }
 
   // inject resolveApplicationFromArray dependencies

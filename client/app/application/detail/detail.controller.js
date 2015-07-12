@@ -20,5 +20,6 @@
 
     // the current application to display
     vm.application = application;
+    vm.tabIdx = $state.current.data.tabIdx;
   }
 })();
