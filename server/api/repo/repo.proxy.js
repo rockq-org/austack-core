@@ -8,6 +8,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var dbase = mongoose.connection;
 var Shape = require('../shape');
 var u = require('util');
@@ -18,17 +19,10 @@ var Q = require('q');
  * @param  {[type]} name [description]
  * @return {[type]}      [description]
  */
-function _getModel(name) {
-  var deferred = Q.defer();
-  var m = mongoose.models[name];
-  // m does not exist.
-  if (m) {
-    deferred.resolve(m);
-  } else {
-    deferred.reject()
-  }
-
-  return deferred.promise;
+function _getModel(shape) {
+  delete mongoose.models[shape.name];
+  delete mongoose.modelSchemas[shape.name];
+  return mongoose.model(shape.name, new mongoose.Schema(shape.mSchema), shape.name);
 }
 
 /**
@@ -59,4 +53,4 @@ function _create(shape) {
 }
 
 exports.create = _create;
-exports.getModelByName = _getModel;
+exports.getModel = _getModel;
