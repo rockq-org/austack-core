@@ -12,27 +12,44 @@ var compose = require('composable-middleware');
 var roles = require('./roles');
 var config = require('../../config');
 var contextService = require('request-context');
+var Application = require('../../api/application/application.model').model;
 
 var secretCallback = function (req, payload, done) {
-  // config.secrets.session
-  var issuer = payload.iss;
-  logger.log(req, payload);
-  data.getTenantByIdentifier(issuer, function (err, tenant) {
-    if (err) {
-      return done(err);
-    }
-    if (!tenant) {
-      return done(new Error('missing_secret'));
-    }
+  if (payload._id) {
+    return done(null, config.secrets.session);
+  }
 
-    var secret = utilities.decrypt(tenant.secret);
-    done(null, secret);
-  });
+  // jwt for application: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGllbnRJZCI6IjdlMzc0NDYxNDdiYzUyMjRmYTQyMDcyNSIsIm93bmVySWQiOiI1NTk2YjliZDMwZTgxNmQ4Zjg0YmJhMzUiLCJpYXQiOjE0MzY3MjQzMTMsImV4cCI6MTQzNjc0MjMxM30.s8JjLhiCInZrjaEcS6veh-wv_jw8VHp0YJL7lO5ebMY
+  if (payload.clientId && payload.ownerId) {
+    //get clientSecret From application collection
+    Application.findOne({
+      clientId: payload.clientId,
+      ownerId: payload.ownerId
+    }, function (err, doc) {
+      if (err || !doc) {
+        return done(err);
+      }
+      var secret = doc.clientSecret;
+      done(null, secret);
+    });
+  }
+
+  // data.getTenantByIdentifier(issuer, function (err, tenant) {
+  //   if (err) {
+  //     return done(err);
+  //   }
+  //   if (!tenant) {
+  //     return done(new Error('missing_secret'));
+  //   }
+
+  //   var secret = utilities.decrypt(tenant.secret);
+  //   done(null, secret);
+  // });
 };
 
 var validateJwt = expressJwt({
-  // secret: secretCallback
-  secret: config.secrets.session
+  secret: secretCallback
+    // secret: config.secrets.session
 });
 
 module.exports = {
@@ -163,6 +180,7 @@ function signToken(id, role) {
 function signTokenForApplication(clientId, ownerId) {
   return jwt.sign({
     clientId: clientId,
+    // role: 'admin',
     ownerId: ownerId
   }, config.secrets.session, {
     expiresInMinutes: 60 * 5

@@ -37,7 +37,7 @@ var common = {
   },
 
   // List of user roles
-  userRoles: ['user', 'admin', 'root'],
+  userRoles: ['user', 'appAdmin', 'admin', 'root'],
   limit: 100, // paginate limit
   weimi: {
     uid: "lmf8FDhlAHHB",

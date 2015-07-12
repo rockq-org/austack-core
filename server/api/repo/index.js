@@ -25,7 +25,7 @@ var addRequestContext = contextService.middleware('request');
 var addUserContext = auth.addAuthContext('request:acl.user');
 
 // check if the request is made by an authenticated user with at least the admin role
-var isAuthenticated = auth.hasRole('admin');
+var isAuthenticated = auth.hasRole('appAdmin');
 
 // apply auth middleware to all routes
 router.route('*').all(addRequestContext, isAuthenticated, addUserContext);
