@@ -22,4 +22,3 @@ GLOBAL.logger = require('tracer').console({
   level: level,
   format: "{{timestamp}} {{path}}:{{line}} \n <{{title}}> {{message}}"
 });
-

@@ -13,7 +13,7 @@ module.exports = function (options) {
   });
 
   gulp.task('mocha', function () {
-    return gulp.src(options.server + '/**/*.spec.js', {
+    return gulp.src(options.server + '/**/*.js', {
         read: false
       })
       .pipe($.mocha({

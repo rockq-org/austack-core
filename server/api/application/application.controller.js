@@ -106,7 +106,7 @@ ApplicationController.prototype = {
       if (err) {
         return res.handleError(err);
       }
-      logger.log(updated);
+
       req[this.paramName] = updated;
       return res.ok(self.getResponseObject(updated));
     });
