@@ -310,6 +310,7 @@ function _post(req, res) {
       name: repoName
     })
     .then(function (doc) {
+      logger.log(repoName, doc);
       if (!doc) {
         throw new Error('Requested repo not exist.');
       } else {
@@ -368,10 +369,12 @@ function _hasPermission(req, resource) {
   if (req.userInfo.role == 'root') {
     return true;
   }
+
   // assign the requested resource into req before check.
   // http://stackoverflow.com/questions/11637353/comparing-mongoose-id-and-strings
   // _id and ownerId are object.
-  if (resource.ownerId.equals(req.userInfo._id)) {
+  // if (resource.ownerId.equals(req.userInfo._id)) {
+  if (resource.ownerId.equals(req.userInfo.ownerId)) {
     return true;
   }
 
@@ -381,7 +384,7 @@ function _hasPermission(req, resource) {
 /**
  * update record in a repo by uid
  * @param  {[type]} ep    ep.emit(doc) to return succ with res, ep.throw to send err with res.
- * @param  {[type]} shape 
+ * @param  {[type]} shape
  * @param  {[type]} model [description]
  * @param  {[type]} uid   [description]
  * @param  {[type]} data  desired data.
