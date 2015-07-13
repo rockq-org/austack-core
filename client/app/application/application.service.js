@@ -23,7 +23,11 @@
     // factory members
     var apiURL = Config.API_URL + 'applications';
     // public API
-    return $resource(apiURL + '/:id/:controller');
+    return $resource(apiURL + '/:id/:controller', {}, {
+      query: {
+        isArray: false
+      }
+    });
   }
 
   // add ApplicationService dependencies to inject
