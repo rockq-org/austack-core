@@ -26,5 +26,5 @@ require('./local/passport').setup(User, config);
 router.use('/local', require('./local/index'));
 
 // clientId, clientSecret in application
-require('./application/passport').setup(Application, config);
-router.use('/application', require('./application/index'));
+// require('./application/passport').setup(Application, config);
+// router.use('/application', require('./application/index'));
