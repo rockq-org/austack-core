@@ -20,5 +20,20 @@
 
     // the current application to display
     vm.application = application;
+
+    vm.download = {
+      backend: {
+        // https://github.com/arrking/austack-core/issues/109
+        nodejs: function (appId) {
+          console.log('download nodejs backend for ' + appId);
+        }
+      },
+      client: {
+        // https://github.com/arrking/austack-core/issues/110
+        ionic: function (appId) {
+          console.log('download ionic client for ' + appId);
+        }
+      }
+    }
   }
 })();

@@ -40,7 +40,7 @@
       views: {
         '': {
           templateUrl: 'app/application/detail/quickstart/quickstart.html',
-          controller: 'ApplicationDetailController',
+          controller: 'ApplicationQuickstartController',
           controllerAs: 'detail'
         }
       },
@@ -69,7 +69,7 @@
    * @returns {Object|null} The application whose value of the _id property equals $stateParams._id
    */
   function resolveApplicationFromArray(applications, $stateParams, _) {
-    return _.find(applications, {
+    return _.find(applications.data, {
       '_id': $stateParams.id
     });
   }
