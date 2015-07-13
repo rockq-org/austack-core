@@ -27,6 +27,7 @@ module.exports = function (app) {
   app.use('/api/users', require('./api/user'));
   app.use('/api/repos', require('./api/repo'));
   app.use('/api/shapes', require('./api/shape'));
+  app.use('/api/sampleapps', require('./api/sampleapp'));
   app.use('/api/auth', require('./lib/auth'));
 
   // All undefined asset or api routes should return a 404
