@@ -15,12 +15,16 @@ var contextService = require('request-context');
 var Application = require('../../api/application/application.model').model;
 
 var secretCallback = function (req, payload, done) {
+  // login by username, password
   if (payload._id) {
     return done(null, config.secrets.session);
   }
 
-  // jwt for application: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGllbnRJZCI6IjdlMzc0NDYxNDdiYzUyMjRmYTQyMDcyNSIsIm93bmVySWQiOiI1NTk2YjliZDMwZTgxNmQ4Zjg0YmJhMzUiLCJpYXQiOjE0MzY3MjQzMTMsImV4cCI6MTQzNjc0MjMxM30.s8JjLhiCInZrjaEcS6veh-wv_jw8VHp0YJL7lO5ebMY
+  // using clientId, clientSecret to get the jwt will have role: appAdmin
+  // req.userInfo = application
+  // req.userInfo.role = 'appAdmin'
   if (payload.clientId && payload.ownerId) {
+
     //get clientSecret From application collection
     Application.findOne({
       clientId: payload.clientId,
@@ -30,21 +34,12 @@ var secretCallback = function (req, payload, done) {
         return done(err);
       }
       var secret = doc.clientSecret;
+      req.userInfo = doc;
+      req.userInfo.role = 'appAdmin';
       done(null, secret);
     });
   }
 
-  // data.getTenantByIdentifier(issuer, function (err, tenant) {
-  //   if (err) {
-  //     return done(err);
-  //   }
-  //   if (!tenant) {
-  //     return done(new Error('missing_secret'));
-  //   }
-
-  //   var secret = utilities.decrypt(tenant.secret);
-  //   done(null, secret);
-  // });
 };
 
 var validateJwt = expressJwt({
@@ -114,13 +109,12 @@ function isAuthenticated() {
     if (req.hasOwnProperty('userInfo')) {
       return next();
     }
-
+    if (!req.user._id) {
+      return next();
+    }
     // load user model on demand
     var User = require('../../api/user/user.model').model;
 
-    logger.log(req.user);
-
-    // read the user id from the token information provided in req.user
     User.findOne({
       _id: req.user._id,
       active: true
@@ -177,12 +171,12 @@ function signToken(id, role) {
   });
 }
 
-function signTokenForApplication(clientId, ownerId) {
+function signTokenForApplication(clientId, ownerId, clientSecret) {
   return jwt.sign({
     clientId: clientId,
-    // role: 'admin',
+    role: 'appAdmin',
     ownerId: ownerId
-  }, config.secrets.session, {
+  }, clientSecret, {
     expiresInMinutes: 60 * 5
   });
 }

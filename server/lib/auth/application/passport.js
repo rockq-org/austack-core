@@ -29,7 +29,9 @@ var strategyConfig = {
  * @param {Object} [config] - The application configuration, may be passed to the service some day
  */
 exports.setup = function (AuthModel, config) {
-  passport.use(new LocalStrategy(strategyConfig, getAuthentication(AuthModel, config)));
+  var strategy = new LocalStrategy(strategyConfig, getAuthentication(AuthModel, config));
+  strategy.name = 'application';
+  passport.use(strategy);
 };
 
 /**

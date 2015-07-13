@@ -31,7 +31,7 @@ function authenticate(req, res, next) {
     req: req,
     res: res
   });
-  passport.authenticate('local', callback)(req, res, next)
+  passport.authenticate('application', callback)(req, res, next)
 }
 
 /**
@@ -55,7 +55,7 @@ function authCallback(err, user, info) {
     return this.res.notFound('Error, please try again.');
   }
 
-  var token = auth.signTokenForApplication(user.clientId, user.ownerId);
+  var token = auth.signTokenForApplication(user.clientId, user.ownerId, user.clientSecret);
   this.res.ok({
     token: token
   });
