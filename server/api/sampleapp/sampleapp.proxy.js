@@ -102,11 +102,11 @@ function _nodejs(res, app) {
     });
 
     res.setHeader('Content-disposition', 'attachment; filename=sampleapp-nodejs.zip');
-    res.setHeader('Content-type', 'binary');
+    res.setHeader('Content-type', 'application/octet-stream');
     archive.pipe(res);
     _zipDir(path.join(__dirname, '../../public/sampleapps/nodejs-backend'), archive, 'sampleapp-nodejs');
     archive.append(JSON.stringify(app, null, 4), {
-      name: '/troy-backend/app.json'
+      name: '/nodejs-backend/app.json'
     });
     archive.finalize();
   } catch (err) {
