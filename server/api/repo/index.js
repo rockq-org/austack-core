@@ -43,5 +43,6 @@ router.route('/:repoName')
 router.route('/:repoName/:uid')
   // update a record in a specific repo by uid
   .put(controller.put)
+  .get(controller.get)
   // delete a record in a specific repo by uid
   .delete(controller.delete);

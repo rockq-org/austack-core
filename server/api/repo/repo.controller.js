@@ -8,11 +8,13 @@ module.exports = RepoController;
 
 var _ = require('lodash');
 var shortid = require('shortid');
-var EventProxy = require('eventproxy');
 var roles = require('../../lib/auth/roles');
 var User = require('../user/user.model').model;
 var Shape = require('../shape/shape.model');
 var Repo = require('./repo.proxy');
+var Config = require('../../config');
+var Q = require('q');
+var mongooseUtil = require('../../lib/mongoose/mongoose-util');
 
 /**
  * RepoController constructor
@@ -84,7 +86,110 @@ function _index(req, res) {
  * @return {[type]}     [description]
  */
 function _get(req, res) {
-  res.send('oks');
+  var repoName = req.params['repoName'];
+  var repoUId = req.params['uid'];
+  logger.debug('Get %s uid %s', repoName, repoUId);
+
+  if (!repoName) {
+    res.json({
+      rc: 0,
+      error: 'Bad Parameters. :repoName needed.'
+    });
+  }
+
+  // just get one record by uid.
+  if (repoUId)
+    return _getByUId(req, res, repoName, repoUId);
+
+  // support GET with query
+  Shape.findOne({
+      name: repoName
+    }).then(function (shape) {
+      if (!shape)
+        throw new Error('Repo not exist.');
+
+      if (_hasPermission(req, shape)) {
+        var M = Repo.getModel(shape);
+        var query = req.query || {};
+        mongooseUtil.getQuery(req)
+          .then(function (mQuery) {
+            var options = mongooseUtil.getPaginateOptions(req);
+
+            M.paginate(
+              mQuery || {},
+              options,
+              function (err, results, pageNumber, pageCount, itemCount) {
+                if (err) {
+                  return res.handleError(err);
+                }
+                return res.ok({
+                  total: itemCount,
+                  total_page: pageCount,
+                  current_page: pageNumber,
+                  rc: 1,
+                  data: results
+                });
+              });
+          }, function (err) {
+            return res.json({
+              rc: 0,
+              error: err
+            });
+          })
+      } else {
+        throw new Error('Permission denied.');
+      }
+    }, function (err) {
+      throw err;
+    })
+    .then(undefined, function (err) {
+      logger.error(err);
+      res.json({
+        rc: 3,
+        error: err
+      });
+    });
+
+  function _getByUId(req, res, repoName, repoUId) {
+    return Shape.findOne({
+        name: repoName
+      }).then(function (shape) {
+        if (!shape)
+          throw new Error('Repo not exist.');
+
+        if (_hasPermission(req, shape)) {
+          var M = Repo.getModel(shape);
+          return M.findOne({
+            uid: repoUId
+          }).exec();
+        } else {
+          throw new Error('Permission denied.');
+        }
+      }, function (err) {
+        throw err;
+      })
+      .then(function (m) {
+        if (!m)
+          return res.json({
+            rc: 0,
+            error: 'Can not find record in repo by this uid.'
+          });
+
+        var rs = m.toJSON();
+        delete rs['__v'];
+        delete rs['_id'];
+
+        return res.json({
+          rc: 1,
+          data: rs
+        });
+      }, function (err) {
+        res.json({
+          rc: 2,
+          error: err
+        });
+      });
+  }
 }
 
 /**
@@ -94,7 +199,52 @@ function _get(req, res) {
  * @return {[type]}     [description]
  */
 function _delete(req, res) {
-  res.send('ok');
+  var repoName = req.params['repoName'];
+  var repoUId = req.params['uid'];
+  logger.debug('repoName ' + repoName);
+  logger.debug('repoUId ' + repoUId);
+
+  Shape.findOne({
+      name: repoName
+    }).then(function (shape) {
+      if (!shape)
+        throw new Error('Repo not exist.');
+
+      if (_hasPermission(req, shape)) {
+        var M = Repo.getModel(shape);
+        return M.findOne({
+          uid: repoUId
+        }).exec();
+      } else {
+        throw new Error('Permission denied.');
+      }
+    }, function (err) {
+      throw err;
+    })
+    .then(function (m) {
+      if (!m)
+        return res.json({
+          rc: 0,
+          error: 'Can not find record in repo by this uid.'
+        });
+      m.remove(function (err) {
+        if (err)
+          return res.json({
+            rc: 0,
+            error: 'Can not remove record in repo by this uid.'
+          });
+        res.json({
+          rc: 1,
+          data: 'Record removed.'
+        });
+      });
+    }, function (err) {
+      res.json({
+        rc: 2,
+        error: err
+      });
+    });
+
 }
 
 /**
@@ -110,43 +260,34 @@ function _put(req, res) {
 
   logger.debug('%s %s update. %j', repoName, repoUId, repoBody);
 
-  var ep = new EventProxy();
-
-  ep.all('doc', function (doc) {
-    res.json({
-      rc: 0,
-      data: doc
-    });
-  });
-
-  ep.fail(function (err) {
-    logger.error(err);
-    res.json({
-      rc: 1,
-      error: err
-    });
-  });
-
   if (!(repoName || repoUId || repoBody)) {
-    return ep.throw(new Error('Bad parameters.'));
+    return res.json({
+      rc: 0,
+      error: 'Bad parameters.'
+    });
   }
 
   Shape.findOne({
-    name: repoName
-  }).then(function (doc) {
-    if (!doc)
-      return ep.throw(new Error('Repo not exist.'));
+      name: repoName
+    }).then(function (shape) {
+      if (!shape)
+        throw new Error('Repo not exist.');
 
-    if (_hasPermission(req, doc)) {
-      var M = Repo.getModel(doc);
-      _updateRepoRecord(ep, doc, M, repoUId, repoBody);
-    } else {
-      return ep.throw(new Error('Permission denied.'));
-    }
-  }, function (err) {
-    ep.throw(err);
-  });
-
+      if (_hasPermission(req, shape)) {
+        var M = Repo.getModel(shape);
+        _updateRepoRecord(res, shape, M, repoUId, repoBody);
+      } else {
+        throw new Error('Permission denied.');
+      }
+    }, function (err) {
+      throw err;
+    })
+    .then(undefined, function (err) {
+      res.json({
+        rc: 2,
+        error: err
+      });
+    });
 }
 
 /**
@@ -159,28 +300,11 @@ function _put(req, res) {
 function _post(req, res) {
   var repoName = req.params['repoName'];
   var repoBody = req.body;
-
-  var ep = new EventProxy();
-
-  ep.all('doc', function (doc) {
-    logger.debug('%s new doc created. %j', repoName, doc);
-    res.json({
-      rc: 1,
-      data: doc
-    });
-  });
-
-  ep.fail(function (err) {
-    logger.error(err);
-    res.json({
+  if (!repoName)
+    return res.json({
       rc: 0,
-      error: err
-    })
-  });
-
-  if (!repoName) {
-    return ep.throw(new Error('Repo name is required.'));
-  }
+      error: 'Parameters required.'
+    });
 
   Shape.findOne({
       name: repoName
@@ -188,18 +312,17 @@ function _post(req, res) {
     .then(function (doc) {
       logger.log(repoName, doc);
       if (!doc) {
-        return new Error('Requested repo not exist.');
+        throw new Error('Requested repo not exist.');
       } else {
         return doc;
       }
     }, function (err) {
-      ep.throw(err);
+      throw err;
     })
-    .then(function (doc) {
-      logger.log(doc);
+    .then(function (shape) {
       // check permission
-      if (_hasPermission(req, doc)) {
-        var M = Repo.getModel(doc);
+      if (_hasPermission(req, shape)) {
+        var M = Repo.getModel(shape);
         var m = new M();
         var keys = _.keys(repoBody);
         _.each(keys, function (key) {
@@ -208,21 +331,32 @@ function _post(req, res) {
         m.uid = shortid.generate();
         m.save(function (err, result) {
           if (err) {
-            ep.throw(err);
+            res.json({
+              rc: 3,
+              error: err
+            });
           } else {
             var resultJSON = result.toJSON();
             delete resultJSON.__v;
             delete resultJSON._id;
-            ep.emit('doc', resultJSON);
+            res.json({
+              rc: 1,
+              data: resultJSON
+            });
           }
         });
       } else {
-        ep.throw(new Error('Permission deny.'));
+        res.json({
+          rc: 4,
+          error: 'Permission deny.'
+        });
       }
     }, function (err) {
-      ep.throw(err);
+      res.json({
+        rc: 2,
+        error: err
+      });
     });
-
 }
 
 /**
@@ -256,7 +390,7 @@ function _hasPermission(req, resource) {
  * @param  {[type]} data  desired data.
  * @return {[type]}       [description]
  */
-function _updateRepoRecord(ep, shape, model, uid, data) {
+function _updateRepoRecord(res, shape, model, uid, data) {
 
   logger.debug('uid %s', uid);
   model.findOne({
@@ -265,7 +399,10 @@ function _updateRepoRecord(ep, shape, model, uid, data) {
     .then(function (doc) {
       if (!doc) {
         logger.error(err);
-        return ep.throw(new Error('Can not find record with this uid.'));
+        return res.json({
+          rc: 4,
+          error: 'Can not find record with this uid.'
+        })
       }
       delete data._id;
       delete data.__v;
@@ -279,14 +416,23 @@ function _updateRepoRecord(ep, shape, model, uid, data) {
       });
       doc.save(function (err, result) {
         if (err)
-          return ep.throw(err);
+          return res.json({
+            rc: 5,
+            error: err
+          });
         var resultJSON = result.toJSON();
         delete resultJSON.__v;
         delete resultJSON._id;
-        ep.emit('doc', resultJSON);
+        res.json({
+          rc: 1,
+          data: resultJSON
+        });
       });
     }, function (err) {
       logger.error(err);
-      return ep.throw(new Error('DB error.'));
+      res.json({
+        rc: 3,
+        error: err
+      });
     });
 }

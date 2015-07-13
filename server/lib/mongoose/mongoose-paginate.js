@@ -9,6 +9,8 @@ var async = require('async');
 
 function paginate(q, options, callback) {
   /*jshint validthis:true */
+  logger.debug('mongoose paginate query', q);
+  logger.debug('mongoose paginate options', options);
   var model = this;
   var columns = options.columns || null;
   var sortBy = options.sortBy || null;
@@ -49,7 +51,7 @@ function paginate(q, options, callback) {
     if (error) {
       return callback(error);
     }
-    callback(null, data.results, Math.ceil(data.count / resultsPerPage) || 1, data.count);
+    callback(null, data.results, pageNumber, Math.ceil(data.count / resultsPerPage) || 1, data.count);
   });
 }
 

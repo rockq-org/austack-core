@@ -10,6 +10,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var dbase = mongoose.connection;
+var mongoosePaginatePlugin = require('../../lib/mongoose/mongoose-paginate');
 var Shape = require('../shape/shape.model');
 var u = require('util');
 var Q = require('q');
@@ -28,7 +29,11 @@ function _getModel(shape) {
   // Just add nodes. 
   delete mongoose.models[shape.name];
   delete mongoose.modelSchemas[shape.name];
-  return mongoose.model(shape.name, new mongoose.Schema(shape.mSchema), shape.name);
+
+  var schema = new mongoose.Schema(shape.mSchema);
+  schema.plugin(mongoosePaginatePlugin);
+  var model = mongoose.model(shape.name, schema, shape.name);
+  return model;
 }
 
 /**
