@@ -12,6 +12,9 @@ var roles = require('../../lib/auth/roles');
 var User = require('../user/user.model').model;
 var Shape = require('../shape/shape.model');
 var Repo = require('./repo.proxy');
+var Config = require('../../config');
+var Q = require('q');
+var mongooseUtil = require('../../lib/mongoose/mongoose-util');
 
 /**
  * RepoController constructor
@@ -94,8 +97,63 @@ function _get(req, res) {
     });
   }
 
-  if (repoUId) {
-    Shape.findOne({
+  // just get one record by uid.
+  if (repoUId)
+    return _getByUId(req, res, repoName, repoUId);
+
+  // support GET with query
+  Shape.findOne({
+      name: repoName
+    }).then(function (shape) {
+      if (!shape)
+        throw new Error('Repo not exist.');
+
+      if (_hasPermission(req, shape)) {
+        var M = Repo.getModel(shape);
+        var query = req.query || {};
+        mongooseUtil.getQuery(req)
+          .then(function (mQuery) {
+            logger.debug(' Ige ', mQuery);
+            var options = mongooseUtil.getPaginateOptions(req);
+
+            logger.debug('I get %s option %j', mQuery, options);
+            M.paginate(
+              mQuery || {},
+              options,
+              function (err, results, pageNumber, pageCount, itemCount) {
+                if (err) {
+                  return res.handleError(err);
+                }
+                return res.ok({
+                  total: itemCount,
+                  total_page: pageCount,
+                  current_page: pageNumber,
+                  rc: 1,
+                  data: results
+                });
+              });
+          }, function (err) {
+            return res.json({
+              rc: 0,
+              error: err
+            });
+          })
+      } else {
+        throw new Error('Permission denied.');
+      }
+    }, function (err) {
+      throw err;
+    })
+    .then(undefined, function (err) {
+      logger.error(err);
+      res.json({
+        rc: 3,
+        error: err
+      });
+    });
+
+  function _getByUId(req, res, repoName, repoUId) {
+    return Shape.findOne({
         name: repoName
       }).then(function (shape) {
         if (!shape)
@@ -133,10 +191,7 @@ function _get(req, res) {
           error: err
         });
       });
-  } else {
-    res.send('In progress.');
   }
-
 }
 
 /**
@@ -229,10 +284,7 @@ function _put(req, res) {
     }, function (err) {
       throw err;
     })
-    .then(function () {
-      // process res in _updateRepoRecord
-      // nothing to do here.
-    }, function (err) {
+    .then(undefined, function (err) {
       res.json({
         rc: 2,
         error: err

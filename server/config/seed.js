@@ -72,6 +72,13 @@ exports.repo_dave1 = [{
   "uid": "linda3"
 }];
 
+for (var i = 0; i < 1000; i++) {
+  exports.repo_dave1.push({
+    "mobilePhone": shortid.generate(),
+    "uid": shortid.generate()
+  });
+}
+
 exports.repo_dave2 = [{
   "mobilePhone": "1588888888",
   "uid": "linda1"
