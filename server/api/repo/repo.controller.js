@@ -93,7 +93,52 @@ function _get(req, res) {
  * @return {[type]}     [description]
  */
 function _delete(req, res) {
-  res.send('ok');
+  var repoName = req.params['repoName'];
+  var repoUId = req.params['uid'];
+  logger.debug('repoName ' + repoName);
+  logger.debug('repoUId ' + repoUId);
+
+  Shape.findOne({
+      name: repoName
+    }).then(function (shape) {
+      if (!shape)
+        throw new Error('Repo not exist.');
+
+      if (_hasPermission(req, shape)) {
+        var M = Repo.getModel(shape);
+        return M.findOne({
+          uid: repoUId
+        }).exec();
+      } else {
+        throw new Error('Permission denied.');
+      }
+    }, function (err) {
+      throw err;
+    })
+    .then(function (m) {
+      if (!m)
+        return res.json({
+          rc: 0,
+          error: 'Can not find record in repo by this uid.'
+        });
+      m.remove(function (err) {
+        if (err)
+          return res.json({
+            rc: 0,
+            error: 'Can not remove record in repo by this uid.'
+          });
+        res.json({
+          rc: 1,
+          data: 'Record removed.'
+        });
+      });
+    }, function (err) {
+      res.json({
+        rc: 2,
+        error: err
+      });
+    });
+
 }
 
 /**
