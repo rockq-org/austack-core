@@ -6,6 +6,7 @@ module.exports = {
   corsOptions: {
     origin: 'http://localhost:3000'
   },
+  publicDir: 'server/public',
   mongo: {
     uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
   },

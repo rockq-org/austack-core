@@ -25,7 +25,7 @@ var common = {
 
   root: path.normalize(__dirname + '/../..'),
 
-  publicDir: 'dist',
+  publicDir: 'server/public',
 
   ip: '0.0.0.0',
 

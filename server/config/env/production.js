@@ -11,7 +11,7 @@ module.exports = {
 
   port: process.env.AUSTACK_SYS_PORT || 9888,
 
-  publicDir: 'public',
+  publicDir: 'server/public',
 
   logLevel: 'log',
 
