@@ -83,7 +83,60 @@ function _index(req, res) {
  * @return {[type]}     [description]
  */
 function _get(req, res) {
-  res.send('oks');
+  var repoName = req.params['repoName'];
+  var repoUId = req.params['uid'];
+  logger.debug('Get %s uid %s', repoName, repoUId);
+
+  if (!repoName) {
+    res.json({
+      rc: 0,
+      error: 'Bad Parameters. :repoName needed.'
+    });
+  }
+
+  if (repoUId) {
+    Shape.findOne({
+        name: repoName
+      }).then(function (shape) {
+        if (!shape)
+          throw new Error('Repo not exist.');
+
+        if (_hasPermission(req, shape)) {
+          var M = Repo.getModel(shape);
+          return M.findOne({
+            uid: repoUId
+          }).exec();
+        } else {
+          throw new Error('Permission denied.');
+        }
+      }, function (err) {
+        throw err;
+      })
+      .then(function (m) {
+        if (!m)
+          return res.json({
+            rc: 0,
+            error: 'Can not find record in repo by this uid.'
+          });
+
+        var rs = m.toJSON();
+        delete rs['__v'];
+        delete rs['_id'];
+
+        return res.json({
+          rc: 1,
+          data: rs
+        });
+      }, function (err) {
+        res.json({
+          rc: 2,
+          error: err
+        });
+      });
+  } else {
+    res.send('In progress.');
+  }
+
 }
 
 /**
