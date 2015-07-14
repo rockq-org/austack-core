@@ -41,7 +41,7 @@
         '': {
           templateUrl: 'app/application/detail/quickstart/quickstart.html',
           controller: 'ApplicationQuickstartController',
-          controllerAs: 'detail'
+          controllerAs: 'vm'
         }
       },
       ncyBreadcrumb: {

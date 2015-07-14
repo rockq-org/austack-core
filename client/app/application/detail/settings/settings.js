@@ -41,7 +41,7 @@
         '': {
           templateUrl: 'app/application/detail/settings/settings.html',
           controller: 'ApplicationSettingsController',
-          controllerAs: 'detail'
+          controllerAs: 'vm'
         }
       },
       ncyBreadcrumb: {

@@ -45,7 +45,7 @@
         }
       },
       ncyBreadcrumb: {
-        label: '{{vm.application.name}}'
+        skip: true
       },
       data: {
         tabIdx: 2
