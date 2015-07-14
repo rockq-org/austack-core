@@ -163,7 +163,6 @@ function _zipDir(dir, zip, zipBaseDir, ignore, baseDir) {
   if (!baseDir) {
     baseDir = dir;
   }
-  console.log('sss' + __dirname);
   var files = fs.readdirSync(dir);
   for (var i in files) {
     if (!files.hasOwnProperty(i)) {
