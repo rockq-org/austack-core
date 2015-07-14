@@ -59,6 +59,9 @@ function _handleOnBehalf(res, app, type) {
   case 'nodejs':
     _nodejs(res, app);
     break;
+  case 'ionic':
+    _ionic(res, app);
+    break;
   default:
     res.send('In progress');
     break;
@@ -101,12 +104,43 @@ function _nodejs(res, app) {
       res.status(500).send('Error downloading zip')
     });
 
-    res.setHeader('Content-disposition', 'attachment; filename=sampleapp-nodejs.zip');
+    res.setHeader('Content-disposition', 'attachment; filename=nodejs-backend.zip');
     res.setHeader('Content-type', 'application/octet-stream');
     archive.pipe(res);
-    _zipDir(path.join(__dirname, '../../public/sampleapps/nodejs-backend'), archive, 'sampleapp-nodejs');
+    _zipDir(path.join(__dirname, '../../public/sampleapps/nodejs-backend'), archive, 'nodejs-backend');
     archive.append(JSON.stringify(app, null, 4), {
       name: '/nodejs-backend/app.json'
+    });
+    archive.finalize();
+  } catch (err) {
+    logger.error('Error generating zip: ' + err);
+    res.status(500).send('Error downloading zip')
+  }
+}
+
+/**
+ * download the ionic client
+ * @param  {[type]} appId [description]
+ * @return {[type]}       [description]
+ */
+function _ionic(res, app) {
+  // first, compress the sample app file
+  // creating archives
+  logger.debug('Download ionic sample app ...');
+
+  try {
+    var archive = archiver('zip');
+    archive.on('error', function (err) {
+      logger.error('Error building zip: ' + err);
+      res.status(500).send('Error downloading zip')
+    });
+
+    res.setHeader('Content-disposition', 'attachment; filename=ionic-client.zip');
+    res.setHeader('Content-type', 'application/octet-stream');
+    archive.pipe(res);
+    _zipDir(path.join(__dirname, '../../public/sampleapps/ionic-client'), archive, 'ionic-client');
+    archive.append(JSON.stringify(app, null, 4), {
+      name: '/ionic-client/app.json'
     });
     archive.finalize();
   } catch (err) {
