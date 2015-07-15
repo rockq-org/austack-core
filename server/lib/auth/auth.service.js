@@ -74,6 +74,7 @@ module.exports = {
    */
   signToken: signToken,
   signTokenForApplication: signTokenForApplication,
+  signTokenForApplicationUser: signTokenForApplicationUser,
 
   /**
    * Set a signed token cookie
@@ -178,6 +179,19 @@ function signTokenForApplication(clientId, ownerId, clientSecret) {
     ownerId: ownerId
   }, clientSecret, {
     expiresInMinutes: 60 * 5
+  });
+}
+
+function signTokenForApplicationUser(clientId, clientSecret, mobile) {
+  var OneDay = 60 * 24; // in minutes
+  var FourMonths = OneDay * 30 * 4;
+
+  return jwt.sign({
+    clientId: clientId,
+    role: 'user',
+    mobile: mobile
+  }, clientSecret, {
+    expiresInMinutes: FourMonths
   });
 }
 

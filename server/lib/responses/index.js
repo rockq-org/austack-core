@@ -15,7 +15,8 @@ var errors = require('./errors');
 
 // export all available reponse methods
 module.exports = _.assign({
-  sendData: sendData
+  sendData: sendData,
+  html: html
 }, ok, errors);
 
 /**
@@ -52,6 +53,23 @@ function sendData(data, options) {
         return res.json(data);
       }
       return res.send(result);
+    });
+  }
+
+  return res.json(data);
+}
+
+function html(viewFilePath, data) {
+  // jshint validthis: true
+  var req = this.req;
+  var res = this.res;
+  console.log('herererere');
+  if (viewFilePath && req.accepts('html')) {
+    res.render(viewFilePath, data, function (err, result) {
+      if (err) {
+        return res.json(data);
+      }
+      return res.send(result).end();
     });
   }
 

@@ -8,9 +8,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 require('./config/logger');
 
 var express = require('express');
-var socketio = require('socket.io');
+// var socketio = require('socket.io');
 var config = require('./config/index');
-var socketConfig = require('./config/socketio');
+// var socketConfig = require('./config/socketio');
 var db = require('./config/mongoose');
 var app = express();
 
@@ -40,12 +40,12 @@ process
  */
 function startServer() {
   var server = require('http').createServer(app);
-  var socket = socketio(server, {
-    serveClient: (config.env !== 'production'),
-    path: '/socket.io-client'
-  });
+  // var socket = socketio(server, {
+  //   serveClient: (config.env !== 'production'),
+  //   path: '/socket.io-client'
+  // });
   // Setup SocketIO
-  socketConfig(socket);
+  // socketConfig(socket);
   return server;
 }
 

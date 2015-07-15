@@ -15,7 +15,6 @@ var auth = require('../auth.service.js');
 // export the configured express router
 module.exports = router;
 
-// register auth routes
 router.post('/', authenticate);
 
 /**

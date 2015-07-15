@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>登录Austack</title>
+  <link rel=stylesheet href=/css/style.css>
+  <style type="text/css">
+
+
+  </style>
+</head>
+
+<body>
+  <div class="as-overlay">
+    <div class="vertical-middle">
+      <div class="container">
+        <div class="header">
+          <img src="/img/logo.png" />
+          <h1>应用名称</h1>
+        </div>
+        <div class="content">
+          <h1>
+            <%=msg %>
+          </h1>
+          <form method="POST">
+            <input type="hidden" name="action" value="send-verification-code" />
+            <input class="as-input as-input-small-left" type="text" name="mobile" placeholder="手机号" value="<%= mobile %>" />
+            <input class="as-btn as-btn-small-right" type="submit" value="获取验证码" />
+          </form>
+          <form method="POST">
+            <input type="hidden" name="action" value="verify-code" />
+            <input type="hidden" name="mobile" value="<%= mobile %>" />
+            <input class="as-input" type="text" name="verificationCode" placeholder="请输入短信中的验证码" />
+            <input class="as-btn" type="submit" value="验证并登录" />
+          </form>
+        </div>
+        <div class="footer">
+          <a href="http://austack.com" target="_blank">
+            <img src="/img/favicon.ico" />
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

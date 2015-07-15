@@ -56,7 +56,7 @@ UserController.prototype = {
     var expiredTimeSpan = 60000 * 3; // three minutes
     var now = new Date();
     // 四位数字验证码
-    var verifyCode = self.generateVefifyCode();
+    var verifyCode = Weimi.generateVerificationCode();
     req.body['verifyCode'] = verifyCode;
     req.body['verifyCodeExpiredAt'] = new Date(now.valueOf() + expiredTimeSpan);
     req.body['verifyCodeLatestSendTime'] = now;
@@ -100,7 +100,7 @@ UserController.prototype = {
           message: 'please resend after 60 seconds'
         });
       }
-      var verifyCode = self.generateVefifyCode();
+      var verifyCode = Weimi.generateVerificationCode();
       user.verifyCodeLatestSendTime = now;
       user.verifyCode = verifyCode;
       Weimi.sendSMSByCid(user.name, verifyCode)
@@ -294,11 +294,6 @@ UserController.prototype = {
    */
   authCallback: function (req, res) {
     res.redirect('/');
-  },
-
-  // 四位数字验证码
-  generateVefifyCode: function () {
-    return Math.floor(Math.random() * (9999 - 1000) + 1000);
   }
 };
 

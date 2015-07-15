@@ -7,8 +7,14 @@ var _ = require('lodash');
 module.exports = {
   sendSMSByCid: sendSMSByCid,
   sendSMSByContent: sendSMSByContent,
+  generateVerificationCode: generateVerificationCode,
   replaceText: replaceText
 };
+
+// 四位数字验证码
+function generateVerificationCode() {
+  return Math.floor(Math.random() * (9999 - 1000) + 1000);
+}
 
 function sendSMSByCid(mobile, verifyCode) {
   var d = Q.defer();

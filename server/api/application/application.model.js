@@ -14,7 +14,6 @@ var crypto = require('crypto');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
 var mongoosePaginatePlugin = require('../../lib/mongoose/mongoose-paginate');
-
 /**
  * The Application model definition
  * @type {Object}
@@ -76,6 +75,16 @@ ApplicationSchema.statics.generateRandomObjectId = function generateRandomObject
   return crypto.createHash('md5').update(Math.random().toString()).digest('hex').substring(0, 24);
 };
 
+ApplicationSchema.statics.findByClientId = function (clientId, cb) {
+  return this.find({
+    clientId: clientId
+  }, function (err, doc) {
+    if (err) {
+      return cb('can not find clientId for ' + clientId);
+    }
+    cb(null, doc);
+  });
+};
 /**
  *  The registered mongoose model instance of the Application model
  *  @type {Application}
