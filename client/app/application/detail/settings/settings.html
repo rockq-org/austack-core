@@ -1,1 +1,33 @@
-Settings {{vm.application.name}}
+<md-content layout-padding>
+  <form name="userForm">
+    <div layout layout-sm="column">
+      <md-input-container flex="70">
+        <label>APP ID</label>
+        <input ng-model="vm.application.clientId" disabled>
+      </md-input-container>
+      <div flex>
+        <md-button class="md-primary">拷贝</md-button>
+      </div>
+    </div>
+    <div layout layout-sm="column">
+      <md-input-container flex="70">
+        <label>APP secret</label>
+        <input ng-model="vm.application.clientSecret" disabled>
+      </md-input-container>
+      <div flex>
+        <md-button class="md-primary">刷新</md-button>
+        <md-button class="md-primary">拷贝</md-button>
+      </div>
+    </div>
+    <md-input-container flex>
+      <label>Callback URL</label>
+      <textarea ng-model="vm.application.callbackUrls" columns="1"></textarea>
+    </md-input-container>
+    <div layout layout-sm="column">
+      <md-input-container flex="40" md-no-float="true">
+        <label>Token 过期时间（秒）</label>
+        <input type="number" ng-model="vm.application.jwtExpiration">
+      </md-input-container>
+    </div>
+  </form>
+</md-content>
