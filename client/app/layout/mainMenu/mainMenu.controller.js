@@ -26,16 +26,23 @@
    * @returns {Service} {@link mainMenu.controller:SidebarController SidebarController}
    */
 
-  SidebarController.$inject = ['mainMenu', '$mdSidenav', '_', 'Auth'];
+  SidebarController.$inject = ['$state', 'mainMenu', '$mdSidenav', '_', 'Auth'];
 
-  function SidebarController(mainMenu, $mdSidenav, _, Auth) {
+  function SidebarController($state, mainMenu, $mdSidenav, _, Auth) {
     var vm = this;
 
     // view model bindings
+    vm.state = $state;
     vm.sidenavId = 'mainMenu';
     vm.items = _.sortBy(mainMenu.getMenu(), 'order');
     vm.close = close;
     vm.canAccess = canAccess;
+    vm.isActive = isActive;
+
+    function isActive(state) {
+      var root = state.split('.')[0];
+      return $state.includes(root)
+    }
 
     function close() {
       return $mdSidenav(vm.sidenavId).close();

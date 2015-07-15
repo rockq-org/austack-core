@@ -46,6 +46,20 @@
         // https://github.com/arrking/austack-core/issues/110
         ionic: function (appId) {
           console.log('download ionic client for ' + appId);
+          $http({
+              url: Config.API_URL + 'sampleapps/' + appId + '/ionic',
+              method: 'GET',
+              responseType: 'arraybuffer',
+              cache: false
+            })
+            .success(function (data, status) {
+              saveAs(new Blob([data], {
+                type: "application/octet-stream'"
+              }), 'ionic-client.zip');
+            })
+            .error(function (err, status) {
+              console.log(err);
+            });
         }
       }
     }

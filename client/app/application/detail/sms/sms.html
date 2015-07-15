@@ -1,1 +1,25 @@
-SMS
+<md-content layout-padding>
+  <form name="smsForm">
+    <md-card>
+      <md-card-content>
+        <h2>编辑短信模板</h2>
+        <md-input-container flex>
+          <label>注册</label>
+          <textarea ng-model="vm.smsTemplates.reg_sms" columns="1" md-maxlength="140"></textarea>
+        </md-input-container>
+        <md-input-container flex>
+          <label>忘记密码</label>
+          <textarea ng-model="vm.smsTemplates.reset_pwd_sms" columns="1" md-maxlength="140"></textarea>
+        </md-input-container>
+        <md-input-container flex>
+          <label>屏蔽通知</label>
+          <textarea ng-model="vm.smsTemplates.notify_blocked_sms" columns="1" md-maxlength="140"></textarea>
+        </md-input-container>
+      </md-card-content>
+      <div class="md-actions" layout="row" layout-align="end center">
+        <md-button ng-click="vm.reset()" class="md-primary">重置为默认</md-button>
+        <md-button ng-click="vm.save()" class="md-primary">保存模板</md-button>
+      </div>
+    </md-card>
+  </form>
+</md-content>

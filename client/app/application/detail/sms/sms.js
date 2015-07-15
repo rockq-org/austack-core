@@ -40,15 +40,12 @@
       views: {
         '': {
           templateUrl: 'app/application/detail/sms/sms.html',
-          controller: 'ApplicationDetailController',
-          controllerAs: 'detail'
+          controller: 'ApplicationSMSController',
+          controllerAs: 'vm'
         }
       },
       ncyBreadcrumb: {
         skip: true
-      },
-      resolve: {
-        application: resolveApplicationFromArray
       },
       data: {
         tabIdx: 3
@@ -56,22 +53,6 @@
     };
 
     $stateProvider.state(state);
-  }
-
-  // inject resolveApplicationFromArray dependencies
-  resolveApplicationFromArray.$inject = ['applications', '$stateParams', '_'];
-
-  /**
-   * Resolve dependencies for the application.detail state
-   *
-   * @params {Array} applications - The array of applications
-   * @params {Object} $stateParams - The $stateParams to read the application id from
-   * @returns {Object|null} The application whose value of the _id property equals $stateParams._id
-   */
-  function resolveApplicationFromArray(applications, $stateParams, _) {
-    return _.find(applications, {
-      '_id': $stateParams.id
-    });
   }
 
 })();

@@ -38,7 +38,7 @@
     var detailState = {
       name: 'application.detail',
       parent: 'application',
-      //abstract: true,
+      abstract: true,
       url: '/:id',
       authenticate: true,
       role: 'admin',
@@ -50,6 +50,7 @@
         }
       },
       ncyBreadcrumb: {
+        force: true,
         label: '{{detail.application.name}}',
         parent: 'application.list'
       },
@@ -76,7 +77,8 @@
    * @returns {Object|null} The application whose value of the _id property equals $stateParams._id
    */
   function resolveApplicationFromArray(applications, $stateParams, _) {
-    return _.find(applications, {
+    //console.log(detail.application.name);
+    return _.find(applications.data, {
       '_id': $stateParams.id
     });
   }

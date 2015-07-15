@@ -41,14 +41,11 @@
         '': {
           templateUrl: 'app/application/detail/loginpage/loginpage.html',
           controller: 'ApplicationLoginpageController',
-          controllerAs: 'loginpage'
+          controllerAs: 'vm'
         }
       },
       ncyBreadcrumb: {
         skip: true
-      },
-      resolve: {
-        application: resolveApplicationFromArray
       },
       data: {
         tabIdx: 2
@@ -56,22 +53,6 @@
     };
 
     $stateProvider.state(state);
-  }
-
-  // inject resolveApplicationFromArray dependencies
-  resolveApplicationFromArray.$inject = ['applications', '$stateParams', '_'];
-
-  /**
-   * Resolve dependencies for the application.detail state
-   *
-   * @params {Array} applications - The array of applications
-   * @params {Object} $stateParams - The $stateParams to read the application id from
-   * @returns {Object|null} The application whose value of the _id property equals $stateParams._id
-   */
-  function resolveApplicationFromArray(applications, $stateParams, _) {
-    return _.find(applications, {
-      '_id': $stateParams.id
-    });
   }
 
 })();
