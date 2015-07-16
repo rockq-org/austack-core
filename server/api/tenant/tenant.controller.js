@@ -59,24 +59,27 @@ TenantController.prototype = {
     return res.render('tenant/login', data);
   },
   loginPost: function (req, res) {
-    var data = {
-      mobile: req.body.mobile
-    };
-
     return compose()
-      .use(function (req, res, next) {
-        var clientId = req.query.clientId;
-        Application.findByClientId(clientId, function (err, application) {
-          if (err) {
-            data.msg = '该应用不存在';
-            return res.render('tenant/login', data);
-          }
-        });
-      })
+      .use(this.getApplication)
       .use(this.sendVerificationCode)
       .use(this.verifyCode);
   },
 
+  getApplication: function (req, res, next) {
+    var data = {
+      mobile: req.body.mobile
+    };
+    var clientId = req.query.clientId;
+    Application.findByClientId(clientId, function (err, application) {
+      if (err) {
+        data.msg = '该应用不存在';
+        return res.render('tenant/login', data);
+      }
+      req.application = application;
+      next();
+    });
+
+  },
   sendVerificationCode: function (req, res, next) {
     if (req.body.action != 'send-verification-code') {
       return next();
