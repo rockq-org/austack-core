@@ -111,12 +111,15 @@ TenantController.prototype = {
   },
   getShape: function (req,res,next) {
     var ownerId = req.application.ownerId;
+    User.getById(ownerId)
+    .then(function (user) {
+      var shapeName = 'shape_' + user.userId;
+      Shape.getShapeByName(shapeName)
+      .then(function (shape) {
+        req.shape = shape;
 
-    Shape.getShapeByName(shapeName)
-    .then(function (shape) {
-      req.shape = shape;
-
-      return next();
+        return next();
+      });
     });
   },
 
