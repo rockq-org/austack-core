@@ -129,19 +129,22 @@ TenantController.prototype = {
     req.verificationCode = verificationCode;
 
     return compose()
-    .use(this.findAppUser)
-    .use(this.insertAppUser)
-    .use(this.updateAppUser);
+    .use(this.findAppUserAndSave)
+    .use(this.insertAppUser);
   },
-  findAppUser: function (req, res, next) {
+  findAppUserAndSave: function (req, res, next) {
     var repoModel = req.repoModel;
     var mobile = req.body.mobile;
     repoModel.find({ mobile: mobile }, function (err, appUser) {
-      if(appUser){
-        req.appUser = appUser;
+      if(!appUser){
+        return next();
       }
+      req.appUser = appUser;
+      appUser.verificationCode = req.verificationCode;
+      appUser.save(function (err) {
 
-      return next();
+        return next();
+      })
     });
   },
   insertAppUser: function(req,res,next ){
@@ -156,12 +159,6 @@ TenantController.prototype = {
     repoModel.create( appUser, function (err) {
       return next();
     });
-  },
-  updateAppUser: function(req,res,next ){
-    if(!req.appUser){
-      return next();
-    }
-
   },
 
   sendSMS: function (req, res, next) {
