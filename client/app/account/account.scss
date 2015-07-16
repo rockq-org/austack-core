@@ -5,6 +5,10 @@
   }
   md-toolbar {
     background-color: #eee;
+    .md-toolbar-tools {
+      max-width: 900px;
+      margin: 0 auto;
+    }
     .md-button {
       color: rgba(0, 0, 0, 0.87);
       &.active {
