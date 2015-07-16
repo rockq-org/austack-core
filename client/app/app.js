@@ -18,6 +18,7 @@
       'ngMessages',
       'ngMaterial',
       'ui.router',
+      'ui.ace',
       'btford.socket-io',
       'angular-loading-bar',
       'austackApp.config',
