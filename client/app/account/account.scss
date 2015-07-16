@@ -3,6 +3,15 @@
   nav .logo {
     width: 280px;
   }
+  md-toolbar {
+    background-color: #eee;
+    .md-button {
+      color: rgba(0, 0, 0, 0.87);
+      &.active {
+        color: rgb(255, 64, 129)
+      }
+    }
+  }
   md-card {
     width: 100%;
     max-width: 360px;

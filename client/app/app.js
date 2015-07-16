@@ -72,6 +72,13 @@
           .accentPalette('pink')
           .backgroundPalette('grey-background');
     */
+
+    $mdThemingProvider
+      .theme('default')
+      .primaryPalette('indigo')
+      .accentPalette('pink')
+      .warnPalette('red');
+
     var spritePath = Config.ICON_ROOT;
     $mdIconProvider.iconSet('navigation', spritePath + 'svg-sprite-navigation.svg');
     $mdIconProvider.iconSet('action', spritePath + 'svg-sprite-action.svg');
