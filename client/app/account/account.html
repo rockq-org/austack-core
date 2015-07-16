@@ -2,16 +2,15 @@
   <nav>
     <md-toolbar ng-controller="HeaderController as vm">
       <div class="md-toolbar-tools" flex layout="row">
-        <img class="logo" src="assets/images/logo.png">
-        <span>Austack</span>
+        <img class="logo" src="assets/images/logo-full.png">
         <span flex></span>
-        <md-button ng-repeat="menu in vm.menus" ng-href="{{menu.url}}">{{menu.text}}</md-button>
+        <md-button ng-repeat="menu in vm.menus" ng-href="{{menu.url}}">{{menu.name}}</md-button>
         <md-button ng-href="/login">登录/注销</md-button>
       </div>
     </md-toolbar>
   </nav>
   <section flex layout="column" layout-fill layout-align="center center">
-    <img src="assets/images/logo.png">
+    <img src="assets/images/login-logo.png">
     <div ui-view layout-fill></div>
   </section>
 </div>

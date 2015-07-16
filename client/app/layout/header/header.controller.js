@@ -11,9 +11,6 @@
     var vm = this;
 
     vm.menus = [{
-      name: '升级账户',
-      url: '#'
-    }, {
       name: '支持和帮助',
       url: '#'
     }, {
