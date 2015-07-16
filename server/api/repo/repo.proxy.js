@@ -22,11 +22,11 @@ var Q = require('q');
  */
 function _getModel(shape) {
   // seems mongoose gets a lot workloads here in the context.
-  // but it should be one in this way, all the models of repo 
-  // should not depend on global instance, since the mShema maybe 
-  // change in shape. So everytime, CRUD of repo happens, get a new 
+  // but it should be one in this way, all the models of repo
+  // should not depend on global instance, since the mShema maybe
+  // change in shape. So everytime, CRUD of repo happens, get a new
   // model for stability reason. It has negative impact for performance.
-  // Just add nodes. 
+  // Just add nodes.
   delete mongoose.models[shape.name];
   delete mongoose.modelSchemas[shape.name];
 
@@ -87,5 +87,30 @@ exports.import = function (repoName, data) {
   return deferred.promise;
 }
 
+function insertOrUpdate (user, M) {
+  var m = new M();
+  var keys = _.keys(repoBody);
+  _.each(keys, function (key) {
+    m[key] = repoBody[key];
+  });
+  m.uid = shortid.generate();
+  m.save(function (err, result) {
+    if (err) {
+      res.json({
+        rc: 3,
+        error: err
+      });
+    } else {
+      var resultJSON = result.toJSON();
+      delete resultJSON.__v;
+      delete resultJSON._id;
+      res.json({
+        rc: 1,
+        data: resultJSON
+      });
+    }
+  });
+}
 exports.create = _create;
+exports.insertOrUpdate = insertOrUpdate;
 exports.getModel = _getModel;

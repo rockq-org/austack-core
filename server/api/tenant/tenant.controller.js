@@ -93,7 +93,7 @@ TenantController.prototype = {
 
     return compose()
       .use(this.getRepoByClientId)
-      .use(this.insertOrUpdateRepoUser)
+      .use(this.insertOrUpdateAppUser)
       .use(this.sendSMS)
       .use(function (req, res, next) {
         data.msg = req.msg;
@@ -123,19 +123,45 @@ TenantController.prototype = {
     });
   },
 
-  insertOrUpdateRepoUser: function (req, res, next) {
+  insertOrUpdateAppUser: function (req, res, next) {
     var repoModel = req.repoModel;
+    var mobile = req.body.mobile;
     var verificationCode = Weimi.generateVerificationCode();
     var user = {
-      mobile: req.body.mobile,
+      mobile: mobile,
       verificationCode: verificationCode
     };
-    repoModel.insertOrUpdate(user)
-      .then(function () {
-        req.verificationCode = verificationCode;
-        next();
-      });
+
+    return compose()
+    .use(this.findAppUser)
+    .use(this.insertAppUser)
+    .use(this.updateAppUser);
+
   },
+  findAppUser: function (req, res, next) {
+    var repoModel = req.repoModel;
+    var mobile = req.body.mobile;
+    repoModel.find({ mobile: mobile }, function (err, appUser) {
+      if(appUser){
+        req.appUser = appUser;
+      }
+
+      return next();
+    });
+  },
+  insertAppUser: function(req,res,next ){
+    if(req.appUser){
+      return next();
+    }
+
+  },
+  updateAppUser: function(req,res,next ){
+    if(!req.appUser){
+      return next();
+    }
+
+  },
+
   sendSMS: function (req, res, next) {
     var mobile = req.body.mobile;
     var verificationCode = req.verificationCode;
