@@ -182,6 +182,22 @@ UserSchema.statics.getRoot = function (cb) {
   }, cb);
 };
 
+UserSchema.statics.getById = function (id) {
+  var d = Q.defer();
+  this.findOne({
+    _id: id
+  }, function (err, user) {
+    if(err){
+      return d.reject(err);
+    }
+    d.resolve(user);
+  });
+
+  return d.promise;
+};
+
+
+
 /**
  * Attach pre hook plugins
  */
