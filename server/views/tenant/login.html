@@ -20,8 +20,9 @@
           <h1>应用名称</h1>
         </div>
         <div class="content">
-          <h1>
-          </h1>
+            <% if(locals.msg) { %>
+              <h1><%=msg %></h1>
+            <% } %>
           <form method="POST">
             <input type="hidden" name="action" value="send-verification-code" />
             <input class="as-input as-input-small-left" type="text" name="mobile" placeholder="手机号" value="<%= mobile %>" />

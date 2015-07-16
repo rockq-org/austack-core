@@ -56,6 +56,7 @@ TenantController.prototype = {
     var data = {
       mobile: 18959264502
     };
+
     return res.render('tenant/login', data);
   },
   loginPost: function (req, res) {
