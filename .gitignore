@@ -9,3 +9,4 @@ npm-debug.log
 *.swo
 client/app/config.js
 lyman/
+server/public/sampleapps/ionic-client/www/lib

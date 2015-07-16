@@ -12,6 +12,7 @@ var _ = require('lodash');
 var fs = require('fs');
 var archiver = require('archiver');
 var path = require('path');
+var minimatch = require("minimatch")
 
 exports.download = function (req, res) {
   var appId = req.params['appId'];
@@ -107,7 +108,10 @@ function _nodejs(res, app) {
     res.setHeader('Content-disposition', 'attachment; filename=nodejs-backend.zip');
     res.setHeader('Content-type', 'application/octet-stream');
     archive.pipe(res);
-    _zipDir(path.join(__dirname, '../../public/sampleapps/nodejs-backend'), archive, 'nodejs-backend');
+    _zipDir(path.join(__dirname, '../../public/sampleapps/nodejs-backend'),
+      archive,
+      'nodejs-backend',
+      path.join(__dirname, '../../public/sampleapps/nodejs-backend/node_modules') + '/*');
     archive.append(JSON.stringify(app, null, 4), {
       name: '/nodejs-backend/app.json'
     });
@@ -138,7 +142,10 @@ function _ionic(res, app) {
     res.setHeader('Content-disposition', 'attachment; filename=ionic-client.zip');
     res.setHeader('Content-type', 'application/octet-stream');
     archive.pipe(res);
-    _zipDir(path.join(__dirname, '../../public/sampleapps/ionic-client'), archive, 'ionic-client');
+    _zipDir(path.join(__dirname, '../../public/sampleapps/ionic-client'),
+      archive,
+      'ionic-client',
+      path.join(__dirname, '../../public/sampleapps/ionic-client/www/lib') + '/*');
     archive.append(JSON.stringify(app, null, 4), {
       name: '/ionic-client/app.json'
     });
@@ -154,7 +161,7 @@ function _ionic(res, app) {
  * @param  {[type]} dir        [description]
  * @param  {[type]} zip        [description]
  * @param  {[type]} zipBaseDir [description]
- * @param  {[type]} ignore     [description]
+ * @param  {[type]} ignore     A pattern for that should be ignored files
  * @param  {[type]} baseDir    [description]
  * @return {[type]}            [description]
  */
@@ -172,7 +179,7 @@ function _zipDir(dir, zip, zipBaseDir, ignore, baseDir) {
     if (fs.statSync(name).isDirectory()) {
       _zipDir(name, zip, zipBaseDir, ignore, baseDir);
     } else {
-      if (name != ignore) {
+      if (!minimatch(name, ignore)) {
         var zipLocation = zipBaseDir + name.substring(baseDir.length);
         zip.file(name, {
           name: zipLocation
