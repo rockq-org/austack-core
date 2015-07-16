@@ -125,18 +125,13 @@ TenantController.prototype = {
 
   insertOrUpdateAppUser: function (req, res, next) {
     var repoModel = req.repoModel;
-    var mobile = req.body.mobile;
     var verificationCode = Weimi.generateVerificationCode();
-    var user = {
-      mobile: mobile,
-      verificationCode: verificationCode
-    };
+    req.verificationCode = verificationCode;
 
     return compose()
     .use(this.findAppUser)
     .use(this.insertAppUser)
     .use(this.updateAppUser);
-
   },
   findAppUser: function (req, res, next) {
     var repoModel = req.repoModel;
@@ -153,7 +148,14 @@ TenantController.prototype = {
     if(req.appUser){
       return next();
     }
+    var repoModel = req.repoModel;
+    var mobile = req.body.mobile;
+    var verificationCode = req.verificationCode;
+    var appUser = { mobile: mobile, verificationCode: verificationCode };
 
+    repoModel.create( appUser, function (err) {
+      return next();
+    });
   },
   updateAppUser: function(req,res,next ){
     if(!req.appUser){
