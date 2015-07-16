@@ -18,7 +18,15 @@ var options = {
     };
   },
   wiredep: {
-    directory: 'bower_components'
+    directory: 'bower_components',
+    dependencies: {
+      'ace-builds': '1.2.0'
+    },
+    overrides: {
+      'ace-builds': {
+        main: 'src/ace.js'
+      }
+    }
   }
 };
 
