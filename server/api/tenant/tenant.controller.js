@@ -14,6 +14,7 @@ var Application = require('../application/application.model').model;
 var compose = require('composable-middleware');
 var Weimi = require('../../lib/weimi/index');
 var auth = require('../../lib/auth/auth.service.js');
+var Repo = require('../repo/repo.proxy');
 /**
  * The Tenant model instance
  * @type {tenant:model~Tenant}
@@ -101,15 +102,24 @@ TenantController.prototype = {
   },
 
   getRepoByClientId: function (req, res, next) {
-    //TODO: how to get the Repo?
-    var clientId = req.query.clientId;
-    // var Repo = ??;
-    Repo.getRepoByClientId(clientId)
-      .then(function (repoModel) {
-        req.repoModel = repoModel;
-        return next();
-      });
+    return compose()
+    .use(this.getShape)
+    .use(function getRepo(req, res, next) {
+      req.repoModel = Repo.getModel(req.shape);
+      next();
+    });
   },
+  getShape: function (req,res,next) {
+    var ownerId = req.application.ownerId;
+
+    Shape.getShapeByName(shapeName)
+    .then(function (shape) {
+      req.shape = shape;
+
+      return next();
+    });
+  },
+
   insertOrUpdateRepoUser: function (req, res, next) {
     var repoModel = req.repoModel;
     var verificationCode = Weimi.generateVerificationCode();
