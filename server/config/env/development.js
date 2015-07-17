@@ -13,5 +13,7 @@ module.exports = {
 
   logLevel: 'log',
 
+  apiBaseURL: 'http://localhost:9001/api',
+  
   seedDB: true
 };

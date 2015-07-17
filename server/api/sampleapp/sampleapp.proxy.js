@@ -12,7 +12,8 @@ var _ = require('lodash');
 var fs = require('fs');
 var archiver = require('archiver');
 var path = require('path');
-var minimatch = require("minimatch")
+var minimatch = require("minimatch");
+var Config = require('../../config');
 
 exports.download = function (req, res) {
   var appId = req.params['appId'];
@@ -112,9 +113,19 @@ function _nodejs(res, app) {
       archive,
       'nodejs-backend',
       path.join(__dirname, '../../public/sampleapps/nodejs-backend/node_modules') + '/*');
+
+    // delete some keys that should not expose to backend
+    delete app['_id'];
+    delete app['ownerId'];
+    delete app['isTrashed'];
+    delete app['__v'];
+
+    app.apiBaseURL = Config.apiBaseURL;
+
     archive.append(JSON.stringify(app, null, 4), {
       name: '/nodejs-backend/app.json'
     });
+
     archive.finalize();
   } catch (err) {
     logger.error('Error generating zip: ' + err);
@@ -146,6 +157,16 @@ function _ionic(res, app) {
       archive,
       'ionic-client',
       path.join(__dirname, '../../public/sampleapps/ionic-client/www/lib') + '/*');
+
+    // delete some keys that should not expose to backend
+    delete app['_id'];
+    delete app['ownerId'];
+    delete app['isTrashed'];
+    delete app['__v'];
+    delete app['clientSecret'];
+
+    app.apiBaseURL = Config.apiBaseURL;
+
     archive.append(JSON.stringify(app, null, 4), {
       name: '/ionic-client/app.json'
     });
