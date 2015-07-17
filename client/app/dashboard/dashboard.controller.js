@@ -28,47 +28,26 @@
   function DashboardController() {
     var vm = this;
 
-    var massive = [{
-      date: '2015-8-3',
-      value: '1'
-    }, {
-      date: '2015-8-4',
-      value: '2'
-    }, {
-      date: '2015-9-3',
-      value: '3'
-    }, {
-      date: '2015-10-14',
-      value: '2'
-    }, {
-      date: '2015-10-13',
-      value: '8'
-    }, {
-      date: '2015-7-3',
-      value: '1'
-    }, {
-      date: '2015-7-4',
-      value: '2'
-    }, {
-      date: '2015-7-7',
-      value: '3'
-    }, {
-      date: '2015-7-14',
-      value: '2'
-    }, {
-      date: '2015-6-3',
-      value: '1'
-    }, {
-      date: '2015-6-4',
-      value: '2'
-    }, {
-      date: '2015-6-5',
-      value: '3'
-    }, {
-      date: '2015-6-14',
-      value: '2'
-    }];
-    $('#js-glanceyear').glanceyear(massive);
+    vm.heatMapConfig = {
+      domain: "month",
+      subDomain: "x_day",
+      data: "datas-years.json",
+      start: new Date(2000, 0, 5),
+      cellSize: 15,
+      cellRadius: 3,
+      cellPadding: 5,
+      range: 5,
+      domainMargin: 20,
+      animationDuration: 800,
+      domainDynamicDimension: false,
+      previousSelector: "#example-h-PreviousDomain-selector",
+      nextSelector: "#example-h-NextDomain-selector",
+      label: {
+        position: "bottom",
+        width: 110
+      },
+      legend: [20, 40, 60, 80]
+    };
   }
 
 })();

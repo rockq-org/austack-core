@@ -41,7 +41,7 @@
 
     function isActive(state) {
       var root = state.split('.')[0];
-      return $state.includes(root)
+      return $state.includes(root);
     }
 
     function close() {

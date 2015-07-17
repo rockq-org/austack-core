@@ -19,6 +19,7 @@
       'ngMaterial',
       'ui.router',
       'ui.ace',
+      'calHeatmap',
       'btford.socket-io',
       'angular-loading-bar',
       'austackApp.config',
