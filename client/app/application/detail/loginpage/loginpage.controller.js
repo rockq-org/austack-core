@@ -20,6 +20,5 @@
 
     // the current application to display
     vm.application = application;
-    vm.tabIdx = 2;
   }
 })();

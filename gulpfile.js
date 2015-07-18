@@ -24,7 +24,7 @@ var options = {
     },
     overrides: {
       'ace-builds': {
-        main: 'src/ace.js'
+        main: ['src/ace.js','src/mode-html.js']
       }
     }
   }
