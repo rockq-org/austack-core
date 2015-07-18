@@ -25,6 +25,8 @@ module.exports = {
       }
     }
   },
+  
+  apiBaseURL: 'http://api.austack.com/api',
 
   seedDB: true
 };

@@ -18,6 +18,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
+    // # TODO read config service ?
+    // get the login url for this app
+    // open the url with inappbrowser 
+    // http://plugins.cordova.io/#/package/org.apache.cordova.inappbrowser
+    // 
   });
 })
 

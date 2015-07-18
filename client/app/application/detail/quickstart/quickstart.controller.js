@@ -34,7 +34,7 @@
             })
             .success(function (data, status) {
               saveAs(new Blob([data], {
-                type: "application/octet-stream'"
+                type: 'application/octet-stream'
               }), 'nodejs-backend.zip');
             })
             .error(function (err, status) {
@@ -54,7 +54,7 @@
             })
             .success(function (data, status) {
               saveAs(new Blob([data], {
-                type: "application/octet-stream'"
+                type: 'application/octet-stream'
               }), 'ionic-client.zip');
             })
             .error(function (err, status) {
@@ -62,6 +62,6 @@
             });
         }
       }
-    }
+    };
   }
 })();

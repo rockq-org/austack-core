@@ -7,5 +7,10 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <% if(token){ %>
+    	Token	<%= token %>
+    <% } else { %>
+    	Error <%= error %>
+    <% } %>
   </body>
 </html>

@@ -6,7 +6,8 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "ejs": "*",
     "express": "3.4.7",
-    "ejs": "*"
+    "superagent": "^1.2.0"
   }
 }
