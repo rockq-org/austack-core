@@ -1,5 +1,5 @@
 .md-button {
-  min-width: inherit;
+  //min-width: inherit;
   img {
     vertical-align: middle;
     height: 40px;
@@ -7,6 +7,10 @@
     border-radius: 50%;
     margin-right: 6px;
   }
+}
+
+.md-toolbar-tools .md-button {
+  min-width: inherit;
 }
 
 md-dialog {

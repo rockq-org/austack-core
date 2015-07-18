@@ -1,23 +1,28 @@
 <md-content layout-padding>
   <form name="userForm">
-    <div layout layout-sm="column">
-      <md-input-container flex="70">
+    <div layout="row">
+      <md-input-container flex>
         <label>APP ID</label>
         <input ng-model="vm.application.clientId" disabled>
       </md-input-container>
-      <div flex layout="row" layout-align="start center">
-        <md-button class="md-primary">拷贝</md-button>
-      </div>
+      <md-button class="md-fab md-mini md-primary">
+        <md-icon md-svg-icon="content:ic_content_copy_24px"></md-icon>
+        <md-tooltip>拷贝</md-tooltip>
+      </md-button>
     </div>
-    <div layout layout-sm="column">
-      <md-input-container flex="70">
+    <div layout="row">
+      <md-input-container flex>
         <label>APP secret</label>
         <input ng-model="vm.application.clientSecret" disabled>
       </md-input-container>
-      <div flex layout="row" layout-align="start center">
-        <md-button class="md-primary">刷新</md-button>
-        <md-button class="md-primary">拷贝</md-button>
-      </div>
+      <md-button class="md-fab md-mini md-accent">
+        <md-icon md-svg-icon="navigation:ic_refresh_24px"></md-icon>
+        <md-tooltip>刷新</md-tooltip>
+      </md-button>
+      <md-button class="md-fab md-mini md-primary">
+        <md-icon md-svg-icon="content:ic_content_copy_24px"></md-icon>
+        <md-tooltip>拷贝</md-tooltip>
+      </md-button>
     </div>
     <md-input-container flex>
       <label>回调链接</label>
@@ -27,12 +32,10 @@
       <label>注册短信模板</label>
       <textarea ng-model="vm.application.smsTemplate" columns="1"></textarea>
     </md-input-container>
-    <div layout layout-sm="column">
-      <md-input-container flex="40">
-        <label>令牌过期时间（秒）</label>
-        <input type="number" ng-model="vm.application.jwtExpiration">
-      </md-input-container>
-    </div>
+    <md-input-container flex="">
+      <label>令牌过期时间（秒）</label>
+      <input type="number" ng-model="vm.application.jwtExpiration">
+    </md-input-container>
     <div flex layout="row" layout-align="start center">
       <md-button ng-click="vm.save()" class="md-raised md-primary">保存</md-button>
       <md-button ng-click="vm.delete()">删除</md-button>
