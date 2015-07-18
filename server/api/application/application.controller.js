@@ -175,9 +175,9 @@ ApplicationController.prototype = {
     logger.debug(query);
 
     mongooseUtil.getQuery(req)
-      .then(function (mQuery) {
+      .then(function () {
         self.model.paginate(
-          mQuery,
+          query,
           mongooseUtil.getPaginateOptions(req),
           function (err, results, pageNumber, pageCount, itemCount) {
             if (err) {
