@@ -36,10 +36,7 @@ var ApplicationDefinition = {
   },
   callbackUrls: [String],
   corsDomains: [String],
-  smsTemplates: {
-    type: Schema.Types.Mixed,
-    default: {}
-  },
+  smsTemplate: String,
   isTrashed: {
     type: Boolean,
     default: false

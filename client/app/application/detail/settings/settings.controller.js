@@ -19,6 +19,7 @@
     var vm = this;
 
     // the current application to display
+    application.smsTemplate = application.smsTemplate || 'APP_NAME 验证码 %P%，请在五分内注册账号。';
     vm.application = application;
   }
 })();
