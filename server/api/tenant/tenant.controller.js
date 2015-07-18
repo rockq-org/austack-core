@@ -104,7 +104,7 @@ var Helper = {
         return d.promise;
       }
 
-      Helper.req.application = application[0];
+      Helper.req.application = application;
       d.resolve();
     });
 
@@ -112,17 +112,20 @@ var Helper = {
   },
   getRepoByClientId: function () {
     var ownerId = Helper.req.application.ownerId;
-
     return User.getById(ownerId)
       .then(function (user) {
+        var d = Q.defer();
         logger.log(user);
-        var shapeName = 'shape_' + user.userId;
+        var shapeName = 'repo_' + user.userId;
+        logger.log('shapeName', shapeName);
         ShapeProxy.getShapeByName(shapeName)
           .then(function (shape) {
             Helper.req.shape = shape;
-            Helper.req.repoModel = Repo.getModel(req.shape);
-            logger.log( Helper.req.repoModel );
+            Helper.req.repoModel = Repo.getModel(shape);
+            d.resolve();
           });
+
+        return d.promise;
       });
   },
   switchAction: function() {
@@ -156,79 +159,81 @@ var Helper = {
     var verificationCode = Weimi.generateVerificationCode();
     Helper.req.verificationCode = verificationCode;
   },
-  findAppUserAndSave: function (req, res, next) {
+  findAppUserAndSave: function () {
+    var d = Q.defer();
     var repoModel = Helper.req.repoModel;
     var mobile = Helper.req.body.mobile;
-    repoModel.find({ mobile: mobile }, function (err, appUser) {
+    repoModel.findOne({ mobile: mobile }, function (err, appUser) {
       if(!appUser){
-        return next();
+        return d.resolve();
       }
+
       Helper.req.appUser = appUser;
       appUser.verificationCode = Helper.req.verificationCode;
       appUser.save(function (err) {
-
-        return next();
-      })
+        return d.resolve(appUser);
+      });
     });
+
+    return d.promise;
   },
-  insertAppUser: function(req,res,next ){
-    if(req.appUser){
-      return next();
-    }
+  insertAppUser: function(appUser){
+    var d = Q.defer();
+    if (appUser) {
+      d.resolve();
+      return d.promise;
+    };
+
     var repoModel = Helper.req.repoModel;
     var mobile = Helper.req.body.mobile;
     var verificationCode = Helper.req.verificationCode;
     var appUser = { mobile: mobile, verificationCode: verificationCode };
 
     repoModel.create( appUser, function (err) {
-      return next();
+      return d.resolve();
     });
+
+    return d.promise;
   },
   //done func at above
 
-  sendSMS: function (req, res, next) {
+  sendSMS: function () {
     var mobile = Helper.req.body.mobile;
     var verificationCode = Helper.req.verificationCode;
     // for now we can only send by cid, can not send customize cotent yet
-    Weimi.sendSMSByCid(mobile, verificationCode)
+    return Weimi.sendSMSByCid(mobile, verificationCode)
       .then(function () {
-        Helper.req.msg = '发送短信成功';
+        Helper.msg = '发送短信成功';
       })
       .catch(function () {
-        Helper.req.msg = '发送短信失败';
-      })
-      .finally(function () {
-        next();
+        Helper.msg = '发送短信失败';
       });
   },
 
-
-  validateVerificationCode: function (req, res, next) {
+  validateVerificationCode: function () {
     var repoModel = Helper.req.repoModel;
     var verificationCode = Helper.req.body.verificationCode;
     var mobile = Helper.req.body.mobile;
-    repoModel.getByMobile(mobile)
+    return repoModel.getByMobile(mobile)
       .then(function (user) {
         if (user.verificationCode != verificationCode) {
-          Helper.req.msg = '验证码错误';
+          Helper.msg = '验证码错误';
         }
-
-        return next();
       });
   },
-  getUserJwt: function (req, res, next) {
+  getUserJwt: function () {
     //contain err, jump out of here
-    if (req.msg) {
-      return next();
+    if (Helper.msg) {
+      return;
     }
 
     var clientId = Helper.req.query.clientId;
-    Application.getClientSecretByClientId(clientId)
+    return Application.getClientSecretByClientId(clientId)
       .then(function (clientSecret) {
         var mobile = Helper.req.body.mobile;
         var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile);
         Helper.req.jwt = token;
-        return next();
+        logger.log('token');
       });
   }
 };

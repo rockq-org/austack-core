@@ -76,10 +76,10 @@ ApplicationSchema.statics.generateRandomObjectId = function generateRandomObject
 };
 
 ApplicationSchema.statics.findByClientId = function (clientId, cb) {
-  return this.find({
+  return this.findOne({
     clientId: clientId
   }, function (err, doc) {
-    if (err) {
+    if (err || doc == null) {
       return cb('can not find clientId for ' + clientId);
     }
     cb(null, doc);
