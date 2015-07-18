@@ -115,45 +115,46 @@ var Helper = {
 
     return User.getById(ownerId)
       .then(function (user) {
+        logger.log(user);
         var shapeName = 'shape_' + user.userId;
         ShapeProxy.getShapeByName(shapeName)
-        .then(function (shape) {
-          Helper.req.shape = shape;
-          Helper.req.repoModel = Repo.getModel(req.shape);
-        });
+          .then(function (shape) {
+            Helper.req.shape = shape;
+            Helper.req.repoModel = Repo.getModel(req.shape);
+            logger.log( Helper.req.repoModel );
+          });
       });
   },
   switchAction: function() {
     logger.log('switchAction');
-    switch(req.body.action){
+    switch(Helper.req.body.action){
       case 'send-verification-code':
-        return Helper.sendVerificationCode;
+        logger.log('case send-verification-code');
+        logger.log(Helper.sendVerificationCode);
+        return Q.fcall(Helper.sendVerificationCode);
         break;
       case 'verify-code':
-        return Helper.verifyCode;
+        logger.log('case verify-code');
+        return Q.fcall(Helper.verifyCode);
         break;
     }
   },
   sendVerificationCode: function () {
-    return Helper.insertOrUpdateAppUser()
+    logger.log('sendVerificationCode');
+    return Q.fcall(Helper.generateVerificationCode)
+      .then(Helper.findAppUserAndSave)
+      .then(Helper.insertAppUser)
       .then(Helper.sendSMS);
   },
   verifyCode: function () {
+    logger.log('verifyCode');
     return Helper.validateVerificationCode()
             .then(Helper.getUserJwt);
   },
-  //done func at above
 
-
-
-  insertOrUpdateAppUser: function (req, res, next) {
-    var repoModel = Helper.req.repoModel;
+  generateVerificationCode: function () {
     var verificationCode = Weimi.generateVerificationCode();
     Helper.req.verificationCode = verificationCode;
-
-    return compose()
-    .use(this.findAppUserAndSave)
-    .use(this.insertAppUser);
   },
   findAppUserAndSave: function (req, res, next) {
     var repoModel = Helper.req.repoModel;
@@ -183,6 +184,7 @@ var Helper = {
       return next();
     });
   },
+  //done func at above
 
   sendSMS: function (req, res, next) {
     var mobile = Helper.req.body.mobile;
