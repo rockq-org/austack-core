@@ -11,10 +11,14 @@ module.exports = TenantController;
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
 var Application = require('../application/application.model').model;
+var User = require('../user/user.model').model;
 var compose = require('composable-middleware');
+var ShapeProxy = require('../shape/shape.proxy');
 var Weimi = require('../../lib/weimi/index');
 var auth = require('../../lib/auth/auth.service.js');
 var Repo = require('../repo/repo.proxy');
+var Q = require('q');
+
 /**
  * The Tenant model instance
  * @type {tenant:model~Tenant}
@@ -60,87 +64,106 @@ TenantController.prototype = {
 
     return res.render('tenant/login', data);
   },
-  loginPost: function (req, res) {
-    return compose()
-      .use(this.getApplication)
-      .use(this.sendVerificationCode)
-      .use(this.verifyCode);
-  },
+  loginPost: function loginPost (req,res,next) {
+    Helper.req = req;
+    Helper.res = res;
+    Helper.next = next;
 
-  getApplication: function (req, res, next) {
+    Helper.getApplication()
+      .then(Helper.getRepoByClientId)
+      .then(Helper.switchAction)
+      .catch(function (msg) {
+        Helper.msg = msg;
+      })
+      .finally(function () {
+        var data = {
+          mobile: req.body.mobile,
+          msg: Helper.msg
+        };
+
+        return res.render('tenant/login', data);
+      });
+  }
+};
+
+// inherit from ParamController
+TenantController.prototype = _.create(ParamController.prototype, TenantController.prototype);
+
+var Helper = {
+  msg: '',
+  getApplication: function () {
+    var d = Q.defer();
     var data = {
-      mobile: req.body.mobile
+      mobile: Helper.req.body.mobile
     };
-    var clientId = req.query.clientId;
+    var clientId = Helper.req.query.clientId;
+
     Application.findByClientId(clientId, function (err, application) {
       if (err) {
-        data.msg = '该应用不存在';
-        return res.render('tenant/login', data);
+        d.reject('该应用不存在');
+        return d.promise;
       }
-      req.application = application;
-      next();
+
+      Helper.req.application = application[0];
+      d.resolve();
     });
 
+    return d.promise;
   },
-  sendVerificationCode: function (req, res, next) {
-    if (req.body.action != 'send-verification-code') {
-      return next();
+  getRepoByClientId: function () {
+    var ownerId = Helper.req.application.ownerId;
+
+    return User.getById(ownerId)
+      .then(function (user) {
+        var shapeName = 'shape_' + user.userId;
+        ShapeProxy.getShapeByName(shapeName)
+        .then(function (shape) {
+          Helper.req.shape = shape;
+          Helper.req.repoModel = Repo.getModel(req.shape);
+        });
+      });
+  },
+  switchAction: function() {
+    logger.log('switchAction');
+    switch(req.body.action){
+      case 'send-verification-code':
+        return Helper.sendVerificationCode;
+        break;
+      case 'verify-code':
+        return Helper.verifyCode;
+        break;
     }
-    var mobile = req.body.mobile;
-    var data = {
-      mobile: mobile
-    };
-
-    return compose()
-      .use(this.getRepoByClientId)
-      .use(this.insertOrUpdateAppUser)
-      .use(this.sendSMS)
-      .use(function (req, res, next) {
-        data.msg = req.msg;
-        return res.render('tenant/login', data);
-      });
   },
-
-  getRepoByClientId: function (req, res, next) {
-    return compose()
-    .use(this.getShape)
-    .use(function getRepo(req, res, next) {
-      req.repoModel = Repo.getModel(req.shape);
-      next();
-    });
+  sendVerificationCode: function () {
+    return Helper.insertOrUpdateAppUser()
+      .then(Helper.sendSMS);
   },
-  getShape: function (req,res,next) {
-    var ownerId = req.application.ownerId;
-    User.getById(ownerId)
-    .then(function (user) {
-      var shapeName = 'shape_' + user.userId;
-      Shape.getShapeByName(shapeName)
-      .then(function (shape) {
-        req.shape = shape;
-
-        return next();
-      });
-    });
+  verifyCode: function () {
+    return Helper.validateVerificationCode()
+            .then(Helper.getUserJwt);
   },
+  //done func at above
+
+
 
   insertOrUpdateAppUser: function (req, res, next) {
-    var repoModel = req.repoModel;
+    var repoModel = Helper.req.repoModel;
     var verificationCode = Weimi.generateVerificationCode();
-    req.verificationCode = verificationCode;
+    Helper.req.verificationCode = verificationCode;
 
     return compose()
     .use(this.findAppUserAndSave)
     .use(this.insertAppUser);
   },
   findAppUserAndSave: function (req, res, next) {
-    var repoModel = req.repoModel;
-    var mobile = req.body.mobile;
+    var repoModel = Helper.req.repoModel;
+    var mobile = Helper.req.body.mobile;
     repoModel.find({ mobile: mobile }, function (err, appUser) {
       if(!appUser){
         return next();
       }
-      req.appUser = appUser;
-      appUser.verificationCode = req.verificationCode;
+      Helper.req.appUser = appUser;
+      appUser.verificationCode = Helper.req.verificationCode;
       appUser.save(function (err) {
 
         return next();
@@ -151,9 +174,9 @@ TenantController.prototype = {
     if(req.appUser){
       return next();
     }
-    var repoModel = req.repoModel;
-    var mobile = req.body.mobile;
-    var verificationCode = req.verificationCode;
+    var repoModel = Helper.req.repoModel;
+    var mobile = Helper.req.body.mobile;
+    var verificationCode = Helper.req.verificationCode;
     var appUser = { mobile: mobile, verificationCode: verificationCode };
 
     repoModel.create( appUser, function (err) {
@@ -162,51 +185,30 @@ TenantController.prototype = {
   },
 
   sendSMS: function (req, res, next) {
-    var mobile = req.body.mobile;
-    var verificationCode = req.verificationCode;
+    var mobile = Helper.req.body.mobile;
+    var verificationCode = Helper.req.verificationCode;
     // for now we can only send by cid, can not send customize cotent yet
     Weimi.sendSMSByCid(mobile, verificationCode)
       .then(function () {
-        req.msg = '发送短信成功';
+        Helper.req.msg = '发送短信成功';
       })
       .catch(function () {
-        req.msg = '发送短信失败';
+        Helper.req.msg = '发送短信失败';
       })
       .finally(function () {
         next();
       });
   },
 
-  verifyCode: function (req, res, next) {
-    if (req.body.action != 'verify-code') {
-      return next();
-    }
 
-    var mobile = req.body.mobile;
-    var data = {
-      mobile: mobile
-    };
-
-    return compose()
-      .use(this.getRepoByClientId)
-      .use(this.validateVerificationCode)
-      .use(this.getUserJwt)
-      .use(function (req, res, next) {
-        data.msg = req.msg;
-        if (req.jwt) {
-          data.jwt = req.jwt;
-        }
-        return res.render('tenant/login', data);
-      });
-  },
   validateVerificationCode: function (req, res, next) {
-    var repoModel = req.repoModel;
-    var verificationCode = req.body.verificationCode;
-    var mobile = req.body.mobile;
+    var repoModel = Helper.req.repoModel;
+    var verificationCode = Helper.req.body.verificationCode;
+    var mobile = Helper.req.body.mobile;
     repoModel.getByMobile(mobile)
       .then(function (user) {
         if (user.verificationCode != verificationCode) {
-          req.msg = '验证码错误';
+          Helper.req.msg = '验证码错误';
         }
 
         return next();
@@ -218,16 +220,14 @@ TenantController.prototype = {
       return next();
     }
 
-    var clientId = req.query.clientId;
+    var clientId = Helper.req.query.clientId;
     Application.getClientSecretByClientId(clientId)
       .then(function (clientSecret) {
-        var mobile = req.body.mobile;
+        var mobile = Helper.req.body.mobile;
         var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile);
-        req.jwt = token;
+        Helper.req.jwt = token;
         return next();
       });
   }
 };
 
-// inherit from ParamController
-TenantController.prototype = _.create(ParamController.prototype, TenantController.prototype);

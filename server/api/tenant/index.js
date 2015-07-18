@@ -38,6 +38,7 @@ var controller = new TenantController(router);
 
 router.route('/login')
   .get(controller.loginForm)
+  // .get(controller.loginPost)
   .post(controller.loginPost);
 
 // router.route('/signup')
