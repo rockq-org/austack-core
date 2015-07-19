@@ -29,7 +29,11 @@ module.exports = initExpress;
  */
 function initExpress(app) {
   var env = app.get('env');
+  var distDir = path.join(config.root, config.distDir);
+  console.log(distDir);
   var publicDir = path.join(config.root, config.publicDir);
+
+  console.log(distDir, publicDir);
 
   app.set('ip', config.ip);
   app.set('port', config.port);
@@ -50,15 +54,17 @@ function initExpress(app) {
   // app.use(favicon(path.join(publicDir, 'favicon.ico')));
 
   if ('production' === env) {
+    app.use(express.static(distDir));
     app.use(express.static(publicDir));
     app.set('appPath', publicDir);
     app.use(morgan('tiny'));
   }
 
   if ('development' === env || 'test' === env) {
-    app.use(express.static(path.join(config.root, '.tmp')));
+    app.use(express.static(path.join(config.root, '.tmp/serve')));
+    app.use(express.static(path.join(config.root, 'client')));
+    app.use('/bower_components', express.static(path.join(config.root, 'bower_components')));
     app.use(express.static(publicDir));
-    //app.use('/bower_components', express.static(path.join(config.root, 'bower_components')));
     app.set('appPath', publicDir);
     app.use(morgan('dev'));
     // Error handler - has to be last

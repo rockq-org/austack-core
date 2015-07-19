@@ -15,8 +15,7 @@
       'angularMoment',
       'austackApp.application.detail.quickstart',
       'austackApp.application.detail.settings',
-      'austackApp.application.detail.loginpage',
-      'austackApp.application.detail.sms'
+      'austackApp.application.detail.loginpage'
     ])
     .config(configureApplicationDetail);
 

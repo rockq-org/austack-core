@@ -1,0 +1,25 @@
+<md-dialog>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>预览</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="close()" aria-label="关闭">
+          <md-icon md-svg-src="navigation:ic_close_24px"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      {{template}}
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+      <span flex></span>
+      <md-button ng-click="save()" class="md-primary" aria-label="保存">
+        保存
+      </md-button>
+      <md-button ng-click="close()" class="md-primary" aria-label="关闭">
+        关闭
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

@@ -8,7 +8,7 @@
     function link(scope, el) {
       var config = scope.config;
       var elemenent = el[0];
-      var cal = new CalHeatMap();
+      var cal = new window.CalHeatMap();
       config.itemSelector = elemenent;
       cal.init(config);
     }
