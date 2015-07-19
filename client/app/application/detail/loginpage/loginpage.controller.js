@@ -27,6 +27,7 @@
     vm.update = updateTemplate;
     vm.discard = discard;
     vm.setDefault = setDefault;
+    vm.aceLoaded = aceLoaded;
 
     function preview(ev) {
       var dialog = $mdDialog.show({
@@ -76,6 +77,10 @@
 
     function setDefault() {
       vm.template = template;
+    }
+
+    function aceLoaded(editor) {
+      editor.$blockScrolling = Infinity;
     }
   }
 })();
