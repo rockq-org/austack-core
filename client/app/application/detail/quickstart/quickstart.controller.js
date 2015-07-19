@@ -21,47 +21,43 @@
     // the current application to display
     vm.application = application;
 
-    vm.download = {
-      backend: {
-        // https://github.com/arrking/austack-core/issues/109
-        nodejs: function (appId) {
-          console.log('download nodejs backend for ' + appId);
-          $http({
-              url: Config.API_URL + 'sampleapps/' + appId + '/nodejs',
-              method: 'GET',
-              responseType: 'arraybuffer',
-              cache: false
-            })
-            .success(function (data, status) {
-              saveAs(new Blob([data], {
-                type: 'application/octet-stream'
-              }), 'nodejs-backend.zip');
-            })
-            .error(function (err, status) {
-              console.log(err);
-            });
-        }
-      },
-      client: {
-        // https://github.com/arrking/austack-core/issues/110
-        ionic: function (appId) {
-          console.log('download ionic client for ' + appId);
-          $http({
-              url: Config.API_URL + 'sampleapps/' + appId + '/ionic',
-              method: 'GET',
-              responseType: 'arraybuffer',
-              cache: false
-            })
-            .success(function (data, status) {
-              saveAs(new Blob([data], {
-                type: 'application/octet-stream'
-              }), 'ionic-client.zip');
-            })
-            .error(function (err, status) {
-              console.log(err);
-            });
-        }
-      }
-    };
+    vm.downloadBackend = downloadBackend;
+    vm.downloadClient = downloadClient;
+
+    function downloadBackend() {
+      var appId = vm.application._id;
+      $http({
+          url: Config.API_URL + 'sampleapps/' + appId + '/nodejs',
+          method: 'GET',
+          responseType: 'arraybuffer',
+          cache: false
+        })
+        .success(function (data, status) {
+          saveAs(new Blob([data], {
+            type: 'application/octet-stream'
+          }), 'nodejs-backend.zip');
+        })
+        .error(function (err, status) {
+          console.log(err);
+        });
+    }
+
+    function downloadClient() {
+      var appId = vm.application._id;
+      $http({
+          url: Config.API_URL + 'sampleapps/' + appId + '/ionic',
+          method: 'GET',
+          responseType: 'arraybuffer',
+          cache: false
+        })
+        .success(function (data, status) {
+          saveAs(new Blob([data], {
+            type: 'application/octet-stream'
+          }), 'ionic-client.zip');
+        })
+        .error(function (err, status) {
+          console.log(err);
+        });
+    }
   }
 })();
