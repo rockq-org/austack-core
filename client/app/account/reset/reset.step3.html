@@ -1,0 +1,17 @@
+<form class="card" name="userDetailForm" layout="column" layout-fill layout-align="space-between" ng-submit="reset.submitUserDetail(userDetailForm)">
+  <md-input-container>
+    <label>设置新密码</label>
+    <input name="userId" ng-model="reset.user.userId" required/>
+    <div ng-messages="userDetailForm.userId.$error" ng-if="userDetailForm.userId.$dirty">
+      <div ng-message="required">请输入您的新密码！</div>
+    </div>
+  </md-input-container>
+  <md-input-container>
+    <label>确认新密码</label>
+    <input name="password" type="password" ng-model="reset.user.password" required/>
+    <div ng-messages="userDetailForm.password.$error" ng-if="userDetailForm.password.$dirty">
+      <div ng-message="required">请输入您的新密码！</div>
+    </div>
+  </md-input-container>
+  <md-button class="md-primary md-raised" ng-disabled="!userDetailForm.$valid" type="submit">确定</md-button>
+</form>

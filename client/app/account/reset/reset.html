@@ -1,0 +1,29 @@
+<section id="reset-content" layout="column" layout-fill layout-align="center center">
+
+  <ol class="step">
+    <li class="md-accent" ng-class="reset.step=='step1'&&'active'">1. 确认账号</li>
+    <li class="md-accent" ng-class="reset.step=='step2'&&'active'">2. 安全验证</li>
+    <li class="md-accent" ng-class="reset.step=='step3'&&'active'">3. 重置密码</li>
+    <li class="md-accent" ng-class="reset.step=='step4'&&'active'">4. 重置成功</li>
+  </ol>
+  <md-card>
+    <md-card-content ng-switch on="reset.step">
+      <div ng-switch-when="loading" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        <p>{{reset.pendingMsg}}</p>
+      </div>
+      <div ng-switch-when="step1">
+        <ng-include src="'app/account/reset/reset.step1.html'"></ng-include>
+      </div>
+      <div ng-switch-when="step2">
+        <ng-include src="'app/account/reset/reset.step2.html'"></ng-include>
+      </div>
+      <div ng-switch-when="step3">
+        <ng-include src="'app/account/reset/reset.step3.html'"></ng-include>
+      </div>
+      <div ng-switch-when="step4">
+        <ng-include src="'app/account/reset/reset.step4.html'"></ng-include>
+      </div>
+    </md-card-content>
+  </md-card>
+</section>
