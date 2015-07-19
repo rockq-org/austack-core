@@ -37,6 +37,7 @@ var ApplicationDefinition = {
   callbackUrls: [String],
   corsDomains: [String],
   smsTemplate: String,
+  loginTemplate: String,
   isTrashed: {
     type: Boolean,
     default: false

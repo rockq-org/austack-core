@@ -1,45 +1,27 @@
 <md-content layout="column" flex layout-padding id="application-loginpage-content">
-  <div flex ui-ace="{useWrapMode: true, showGutter: true, mode: 'html', onLoad: vm.aceLoaded, onChange: vm.aceChanged}">'use strict';
-
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var wrench = require('wrench');
-
-var options = {
-  src: 'client',
-  dist: 'dist',
-  gulp: 'gulp',
-  server: 'server',
-  tmp: '.tmp',
-  e2e: 'e2e',
-  errorHandler: function (title) {
-    return function (err) {
-      gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
-      this.emit('end');
-    };
-  },
-  wiredep: {
-    directory: 'bower_components',
-    dependencies: {
-      'ace-builds': '1.2.0'
-    },
-    overrides: {
-      'ace-builds': {
-        main: 'src/ace.js'
-      }
-    }
-  }
-};
-
-wrench.readdirSyncRecursive('./gulp').filter(function (file) {
-  return (/\.(js|coffee)$/i).test(file);
-}).map(function (file) {
-  require('./gulp/' + file)(options);
-});
-
-gulp.task('default', ['clean'], function () {
-  gulp.start('build');
-});
-
+  <div flex ng-model="vm.template" ui-ace="{useWrapMode: true, showGutter: true, mode: 'html', onLoad: vm.aceLoaded, onChange: vm.aceChanged}">
   </div>
+  <md-fab-speed-dial md-open="demo.isOpen" md-direction="up" class="md-fling">
+    <md-fab-trigger>
+      <md-button ng-click="vm.preview($event)" aria-label="预览" class="md-fab md-accent">
+        <md-icon md-svg-icon="action:ic_visibility_24px">
+        </md-icon>
+        <md-tooltip md-direction="left">预览</md-tooltip>
+      </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+      <md-button ng-click="vm.update()" aria-label="保存" class="md-fab md-raised md-primary md-mini">
+        <md-icon md-svg-icon="action:ic_done_24px"></md-icon>
+        <md-tooltip md-direction="left">保存</md-tooltip>
+      </md-button>
+      <md-button ng-click="vm.discard()" aria-label="重置" class="md-fab md-warn md-mini">
+        <md-icon md-svg-icon="action:ic_cached_24px"></md-icon>
+        <md-tooltip md-direction="left">丢弃修改</md-tooltip>
+      </md-button>
+      <md-button ng-click="vm.setDefault()" aria-label="重置" class="md-fab md-warn md-hue-1 md-mini">
+        <md-icon md-svg-icon="action:ic_receipt_24px"></md-icon>
+        <md-tooltip md-direction="left">重置为默认</md-tooltip>
+      </md-button>
+    </md-fab-actions>
+  </md-fab-speed-dial>
 </md-content>
