@@ -1,13 +1,15 @@
 <md-content layout="column" flex layout-padding id="application-loginpage-content">
   <div flex ng-model="vm.template" ui-ace="{useWrapMode: true, showGutter: true, mode: 'html', onLoad: vm.aceLoaded, onChange: vm.aceChanged}">
   </div>
-  <md-fab-speed-dial md-open="demo.isOpen" md-direction="up" class="md-fling">
+  <md-fab-speed-dial md-open="true" md-direction="up" class="md-fling">
     <md-fab-trigger>
-      <md-button ng-click="vm.preview($event)" aria-label="预览" class="md-fab md-accent">
-        <md-icon md-svg-icon="action:ic_visibility_24px">
-        </md-icon>
-        <md-tooltip md-direction="left">预览</md-tooltip>
-      </md-button>
+      <div>
+        <md-button ng-click="vm.preview($event)" aria-label="预览" class="md-fab md-accent">
+          <md-icon md-svg-icon="action:ic_visibility_24px">
+          </md-icon>
+          <md-tooltip md-direction="left">预览</md-tooltip>
+        </md-button>
+      </div>
     </md-fab-trigger>
     <md-fab-actions>
       <md-button ng-click="vm.update()" aria-label="保存" class="md-fab md-raised md-primary md-mini">
