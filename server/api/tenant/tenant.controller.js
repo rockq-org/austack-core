@@ -175,6 +175,7 @@ var Helper = {
     var repoModel = Helper.req.repoModel;
     var mobile = Helper.req.body.mobile;
     var verificationCode = Helper.req.verificationCode;
+    // TODO: Need to figure out how to make the two fields and rename mobilePhone to mobile?
     var appUser = {
       mobile: mobile,
       verificationCode: verificationCode
@@ -203,29 +204,37 @@ var Helper = {
   },
 
   validateVerificationCode: function () {
+    var d = Q.defer();
     var repoModel = Helper.req.repoModel;
     var verificationCode = Helper.req.body.verificationCode;
     var mobile = Helper.req.body.mobile;
-    return repoModel.getByMobile(mobile)
-      .then(function (user) {
-        if (user.verificationCode != verificationCode) {
-          Helper.msg = '验证码错误';
-        }
-      });
+
+    repoModel.findOne({
+      mobile: mobile
+    }, function (err, user) {
+      if (err || user == null ||
+        user.verificationCode != verificationCode
+      ) {
+        logger.log(err, user, verificationCode);
+        Helper.msg = '验证码错误';
+      }
+      d.resolve();
+    });
+
+    return d.promise;
   },
-  getUserJwt: function () {
+  getUserJwt: Q.fbind(function () {
     //contain err, jump out of here
     if (Helper.msg) {
       return;
     }
 
-    var clientId = Helper.req.query.clientId;
-    return Application.getClientSecretByClientId(clientId)
-      .then(function (clientSecret) {
-        var mobile = Helper.req.body.mobile;
-        var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile);
-        Helper.req.jwt = token;
-        logger.log('getUserJwt', token);
-      });
-  }
+    var clientId = Helper.req.application.clientId;
+    var clientSecret = Helper.req.application.clientSecret;
+    var mobile = Helper.req.body.mobile;
+    var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile);
+    Helper.req.jwt = token;
+
+    Helper.msg = token;
+  })
 };
