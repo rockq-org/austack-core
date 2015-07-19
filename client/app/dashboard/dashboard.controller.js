@@ -29,9 +29,9 @@
     var vm = this;
 
     vm.heatMapConfig = {
-      domain: "month",
-      subDomain: "x_day",
-      data: "datas-years.json",
+      domain: 'month',
+      subDomain: 'x_day',
+      data: 'datas-years.json',
       start: new Date(2000, 0, 5),
       cellSize: 15,
       cellRadius: 3,
@@ -40,10 +40,10 @@
       domainMargin: 20,
       animationDuration: 800,
       domainDynamicDimension: false,
-      previousSelector: "#example-h-PreviousDomain-selector",
-      nextSelector: "#example-h-NextDomain-selector",
+      previousSelector: '#example-h-PreviousDomain-selector',
+      nextSelector: '#example-h-NextDomain-selector',
       label: {
-        position: "bottom",
+        position: 'bottom',
         width: 110
       },
       legend: [20, 40, 60, 80]

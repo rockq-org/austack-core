@@ -55,7 +55,8 @@
     "$": false,
     // Browser
     "document": false,
-    "console": false
+    "console": false,
+    "window": false
   },
   //relaxing options
   "globalstrict": true,

@@ -65,7 +65,6 @@ function initExpress(app) {
     app.use(express.static(path.join(config.root, 'client')));
     app.use('/bower_components', express.static(path.join(config.root, 'bower_components')));
     app.use(express.static(publicDir));
-    //app.use('/bower_components', express.static(path.join(config.root, 'bower_components')));
     app.set('appPath', publicDir);
     app.use(morgan('dev'));
     // Error handler - has to be last
