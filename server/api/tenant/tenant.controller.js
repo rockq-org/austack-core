@@ -175,7 +175,7 @@ var Helper = {
     var repoModel = Helper.req.repoModel;
     var mobile = Helper.req.body.mobile;
     var verificationCode = Helper.req.verificationCode;
-    // TODO: Need to figure out how to make the two fields and rename mobilePhone to mobile?
+    // TODO: Need to figure out how to make the two fields and rename mobile to mobile?
     var appUser = {
       mobile: mobile,
       verificationCode: verificationCode

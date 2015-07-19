@@ -184,7 +184,7 @@ function _processShapeUpdate(req, res, source) {
  * mShema is something like this, it meets monogoose schema argument
  * further, mSchema is passed into monogoose.Schema.
  * "mSchema": {
-            "mobilePhone": {
+            "mobile": {
                 "required": true
             },
             "uid": {
@@ -192,15 +192,15 @@ function _processShapeUpdate(req, res, source) {
                 "unique": true
             }
         }
-  * Note, mobilePhone and uid are fixed. Other properties are only in String, Number, Date or Boolean.
+  * Note, mobile and uid are fixed. Other properties are only in String, Number, Date or Boolean.
   * Mixed type are not supported.
-  * 
+  *
  */
 function _validateDesiredShape(mSchema) {
   var result = true;
-  // first, mobilePhone and uid are defined as unaltered.
-  if (mSchema.mobilePhone && typeof (mSchema.mobilePhone) === 'object' &&
-    mSchema.mobilePhone.required && mSchema.mobilePhone.type === 'String') {
+  // first, mobile and uid are defined as unaltered.
+  if (mSchema.mobile && typeof (mSchema.mobile) === 'object' &&
+    mSchema.mobile.required && mSchema.mobile.type === 'String') {
     result = true;
   } else {
     return false;

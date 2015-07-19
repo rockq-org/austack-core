@@ -8,7 +8,7 @@ var Schema = mongoose.Schema;
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
 
 var ShapeDefinition = {
-  // by default, in prototype phase, One Dave, One Shape, 
+  // by default, in prototype phase, One Dave, One Shape,
   // one Repo, so the shape's is generated with dave_id_short_id
   // name is also the repo's name.
   name: {
@@ -22,13 +22,13 @@ var ShapeDefinition = {
   },
   // local or remote
   // for local type, repo is created inside austack database,
-  // but a remote repo is created with the developer inputted 
+  // but a remote repo is created with the developer inputted
   // db url.
   type: {
     type: String,
     require: true
   },
-  // by default, all repo has uid as user id, and mobilePhone
+  // by default, all repo has uid as user id, and mobile
   // mobile phone number.
   mSchema: {
     type: Schema.Types.Mixed,

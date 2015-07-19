@@ -152,7 +152,7 @@ UserController.prototype = {
                 unique: true,
                 required: true
               },
-              mobilePhone: {
+              mobile: {
                 type: 'String',
                 required: true
               }

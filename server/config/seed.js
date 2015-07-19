@@ -62,42 +62,42 @@ exports.users = [{
 }];
 
 exports.repo_dave1 = [{
-  "mobilePhone": "1588888888",
+  "mobile": "1588888888",
   "uid": "linda1"
 }, {
-  "mobilePhone": "1588888889",
+  "mobile": "1588888889",
   "uid": "linda2"
 }, {
-  "mobilePhone": "1588888887",
+  "mobile": "1588888887",
   "uid": "linda3"
 }];
 
 for (var i = 0; i < 1000; i++) {
   exports.repo_dave1.push({
-    "mobilePhone": shortid.generate(),
+    "mobile": shortid.generate(),
     "uid": shortid.generate()
   });
 }
 
 exports.repo_dave2 = [{
-  "mobilePhone": "1588888888",
+  "mobile": "1588888888",
   "uid": "linda1"
 }, {
-  "mobilePhone": "1588888889",
+  "mobile": "1588888889",
   "uid": "linda2"
 }, {
-  "mobilePhone": "1588888887",
+  "mobile": "1588888887",
   "uid": "linda3"
 }];
 
 exports.repo_root = [{
-  "mobilePhone": "1588888888",
+  "mobile": "1588888888",
   "uid": "linda1"
 }, {
-  "mobilePhone": "1588888889",
+  "mobile": "1588888889",
   "uid": "linda2"
 }, {
-  "mobilePhone": "1588888887",
+  "mobile": "1588888887",
   "uid": "linda3"
 }];
 
@@ -200,7 +200,7 @@ function _createRepoAndShapes(users) {
             unique: true,
             required: true
           },
-          mobilePhone: {
+          mobile: {
             type: 'String',
             required: true
           }
