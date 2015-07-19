@@ -64,14 +64,24 @@ TenantController.prototype = {
 
     return res.render('tenant/login', data);
   },
-  loginPost: function loginPost (req,res,next) {
+  loginPost: function loginPost(req, res, next) {
     Helper.req = req;
     Helper.res = res;
     Helper.next = next;
 
     Helper.getApplication()
       .then(Helper.getRepoByClientId)
-      .then(Helper.switchAction)
+      .then(function () {
+        if (Helper.req.body.action == 'send-verification-code') {
+          return Helper.generateVerificationCode()
+            .then(Helper.findAppUserAndSave)
+            .then(Helper.insertAppUser)
+            .then(Helper.sendSMS);
+        }
+
+        return Helper.validateVerificationCode()
+          .then(Helper.getUserJwt);
+      })
       .catch(function (msg) {
         Helper.msg = msg;
       })
@@ -115,7 +125,6 @@ var Helper = {
     return User.getById(ownerId)
       .then(function (user) {
         var d = Q.defer();
-        logger.log(user);
         var shapeName = 'repo_' + user.userId;
         logger.log('shapeName', shapeName);
         ShapeProxy.getShapeByName(shapeName)
@@ -128,56 +137,35 @@ var Helper = {
         return d.promise;
       });
   },
-  switchAction: function() {
-    logger.log('switchAction');
-    switch(Helper.req.body.action){
-      case 'send-verification-code':
-        logger.log('case send-verification-code');
-        logger.log(Helper.sendVerificationCode);
-        return Q.fcall(Helper.sendVerificationCode);
-        break;
-      case 'verify-code':
-        logger.log('case verify-code');
-        return Q.fcall(Helper.verifyCode);
-        break;
-    }
-  },
-  sendVerificationCode: function () {
-    logger.log('sendVerificationCode');
-    return Q.fcall(Helper.generateVerificationCode)
-      .then(Helper.findAppUserAndSave)
-      .then(Helper.insertAppUser)
-      .then(Helper.sendSMS);
-  },
-  verifyCode: function () {
-    logger.log('verifyCode');
-    return Helper.validateVerificationCode()
-            .then(Helper.getUserJwt);
-  },
 
   generateVerificationCode: function () {
+    var d = Q.defer();
     var verificationCode = Weimi.generateVerificationCode();
     Helper.req.verificationCode = verificationCode;
+    d.resolve();
+    return d.promise;
   },
   findAppUserAndSave: function () {
     var d = Q.defer();
     var repoModel = Helper.req.repoModel;
     var mobile = Helper.req.body.mobile;
-    repoModel.findOne({ mobile: mobile }, function (err, appUser) {
-      if(!appUser){
+    repoModel.findOne({
+      mobile: mobile
+    }, function (err, appUser) {
+      if (!appUser) {
         return d.resolve();
       }
 
       Helper.req.appUser = appUser;
       appUser.verificationCode = Helper.req.verificationCode;
       appUser.save(function (err) {
+        logger.log('findAppUserAndSave', appUser);
         return d.resolve(appUser);
       });
     });
-
     return d.promise;
   },
-  insertAppUser: function(appUser){
+  insertAppUser: function (appUser) {
     var d = Q.defer();
     if (appUser) {
       d.resolve();
@@ -187,10 +175,15 @@ var Helper = {
     var repoModel = Helper.req.repoModel;
     var mobile = Helper.req.body.mobile;
     var verificationCode = Helper.req.verificationCode;
-    var appUser = { mobile: mobile, verificationCode: verificationCode };
+    // TODO: Need to figure out how to make the two fields and rename mobilePhone to mobile?
+    var appUser = {
+      mobile: mobile,
+      verificationCode: verificationCode
+    };
 
-    repoModel.create( appUser, function (err) {
-      return d.resolve();
+    repoModel.create(appUser, function (err) {
+      logger.log('insertAppUser', appUser);
+      return d.resolve(appUser);
     });
 
     return d.promise;
@@ -211,30 +204,37 @@ var Helper = {
   },
 
   validateVerificationCode: function () {
+    var d = Q.defer();
     var repoModel = Helper.req.repoModel;
     var verificationCode = Helper.req.body.verificationCode;
     var mobile = Helper.req.body.mobile;
-    return repoModel.getByMobile(mobile)
-      .then(function (user) {
-        if (user.verificationCode != verificationCode) {
-          Helper.msg = '验证码错误';
-        }
-      });
+
+    repoModel.findOne({
+      mobile: mobile
+    }, function (err, user) {
+      if (err || user == null ||
+        user.verificationCode != verificationCode
+      ) {
+        logger.log(err, user, verificationCode);
+        Helper.msg = '验证码错误';
+      }
+      d.resolve();
+    });
+
+    return d.promise;
   },
-  getUserJwt: function () {
+  getUserJwt: Q.fbind(function () {
     //contain err, jump out of here
     if (Helper.msg) {
       return;
     }
 
-    var clientId = Helper.req.query.clientId;
-    return Application.getClientSecretByClientId(clientId)
-      .then(function (clientSecret) {
-        var mobile = Helper.req.body.mobile;
-        var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile);
-        Helper.req.jwt = token;
-        logger.log('token');
-      });
-  }
-};
+    var clientId = Helper.req.application.clientId;
+    var clientSecret = Helper.req.application.clientSecret;
+    var mobile = Helper.req.body.mobile;
+    var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile);
+    Helper.req.jwt = token;
 
+    Helper.msg = token;
+  })
+};
