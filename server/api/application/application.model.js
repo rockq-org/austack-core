@@ -38,6 +38,7 @@ var ApplicationDefinition = {
   corsDomains: [String],
   smsTemplate: String,
   loginTemplate: String,
+  loginTemplatePreview: String,
   isTrashed: {
     type: Boolean,
     default: false

@@ -30,12 +30,24 @@
     vm.aceLoaded = aceLoaded;
 
     function preview(ev) {
-      var dialog = $mdDialog.show({
-        controller: DialogController,
-        templateUrl: 'app/Application/detail/loginpage/preview.html',
-        parent: angular.element(document.body),
-        targetEvent: ev
-      });
+      vm.application.loginTemplatePreview = vm.template;
+      ApplicationService.update(vm.application)
+        .then(function () {
+          var dialog = $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'app/Application/detail/loginpage/preview.html',
+            parent: angular.element(document.body),
+            targetEvent: ev
+          });
+        })
+        .catch(function () {
+          $mdToast.show(
+            $mdToast.simple()
+            .content('预览失败')
+            .position('top right')
+            .hideDelay(500)
+          );
+        });
     }
 
     function DialogController($scope) {
