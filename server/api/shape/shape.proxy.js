@@ -18,6 +18,7 @@ exports.create = function (params) {
   s.ownerId = params.ownerId;
   s.type = params.type;
   s.mSchema = params.mSchema;
+  logger.log(params.mSchema);
   s.description = params.description;
   s.save(function (err, doc) {
     if (err) {

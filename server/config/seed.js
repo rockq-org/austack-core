@@ -4,7 +4,7 @@
  */
 
 'use strict';
-
+logger.log('seeding');
 var mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
 var ObjectId = mongoose.Schema.Types.ObjectId;
@@ -92,12 +92,15 @@ exports.repo_dave2 = [{
 
 exports.repo_root = [{
   "mobile": "1588888888",
+  "verificationCode": "1234",
   "uid": "linda1"
 }, {
   "mobile": "1588888889",
+  "verificationCode": "1234",
   "uid": "linda2"
 }, {
   "mobile": "1588888887",
+  "verificationCode": "1234",
   "uid": "linda3"
 }];
 
@@ -203,6 +206,9 @@ function _createRepoAndShapes(users) {
           mobile: {
             type: 'String',
             required: true
+          },
+          verificationCode: {
+            type: 'String'
           }
         }
       })
@@ -226,6 +232,7 @@ function _createRepoAndShapes(users) {
           });
       })
       .fail(function (err) {
+        logger.log('seed fail while _createRepoAndShapes', err);
         d.reject(err);
       });
 

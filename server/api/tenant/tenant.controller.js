@@ -74,12 +74,14 @@ TenantController.prototype = {
       .then(Helper.getRepoByClientId)
       .then(function () {
         if (Helper.req.body.action == 'send-verification-code') {
+          logger.log('send-verification-code');
           return Helper.generateVerificationCode()
             .then(Helper.findAppUserAndSave)
             .then(Helper.insertAppUser)
             .then(Helper.sendSMS);
         }
 
+        logger.log('validateVerificationCode');
         return Helper.validateVerificationCode()
           .then(Helper.getUserJwt);
       })
@@ -221,10 +223,12 @@ var Helper = {
       if (err || user == null ||
         user.verificationCode != verificationCode
       ) {
-        logger.log(err, user, verificationCode);
         Helper.msg = '验证码错误';
+      } else {
+        Helper.msg = '';
       }
       d.resolve();
+      logger.log(err, user, mobile, verificationCode, Helper.msg);
     });
 
     return d.promise;
@@ -234,7 +238,6 @@ var Helper = {
     if (Helper.msg) {
       return;
     }
-
     var clientId = Helper.req.application.clientId;
     var clientSecret = Helper.req.application.clientSecret;
     var mobile = Helper.req.body.mobile;
@@ -242,5 +245,6 @@ var Helper = {
     Helper.req.jwt = token;
 
     Helper.msg = token;
+    logger.log(token);
   })
 };

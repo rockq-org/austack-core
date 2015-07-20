@@ -34,6 +34,7 @@ function _getModel(shape) {
   var schema = new mongoose.Schema(shape.mSchema);
   schema.plugin(mongoosePaginatePlugin);
   var model = mongoose.model(shape.name, schema, shape.name);
+  logger.log(shape.name, shape.mSchema);
   return model;
 }
 
@@ -76,6 +77,9 @@ exports.import = function (repoName, data) {
       name: repoName
     })
     .then(function (doc) {
+      if (repoName == 'repo_root') {
+        logger.log(repoName, data);
+      };
       if (doc) {
         return _getModel(doc).create(data);
       } else {

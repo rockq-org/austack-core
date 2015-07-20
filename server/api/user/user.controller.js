@@ -156,7 +156,9 @@ UserController.prototype = {
                 type: 'String',
                 required: true
               },
-              verificationCode: String
+              verificationCode: {
+                type: 'String'
+              }
             }
           })
           .then(function (shape) {
