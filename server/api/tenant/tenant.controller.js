@@ -125,7 +125,8 @@ var Helper = {
     return User.getById(ownerId)
       .then(function (user) {
         var d = Q.defer();
-        var shapeName = 'repo_' + user.userId;
+        // var shapeName = 'repo_' + user.userId;
+        var shapeName = user.repos[0];
         logger.log('shapeName', shapeName);
         ShapeProxy.getShapeByName(shapeName)
           .then(function (shape) {
