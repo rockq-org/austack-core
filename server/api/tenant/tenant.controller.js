@@ -18,6 +18,7 @@ var Weimi = require('../../lib/weimi/index');
 var auth = require('../../lib/auth/auth.service.js');
 var Repo = require('../repo/repo.proxy');
 var Q = require('q');
+var shortid = require('shortid');
 
 /**
  * The Tenant model instance
@@ -178,12 +179,16 @@ var Helper = {
     var verificationCode = Helper.req.verificationCode;
     // TODO: Need to figure out how to make the two fields and rename mobile to mobile?
     var appUser = {
+      uid: shortid.generate(),
       mobile: mobile,
       verificationCode: verificationCode
     };
 
-    repoModel.create(appUser, function (err) {
-      logger.log('insertAppUser', appUser);
+    repoModel.create(appUser, function (err, _appUser) {
+      if (err) {
+        return d.reject(err);
+      }
+      logger.log('insertAppUser', err, appUser, _appUser, repoModel);
       return d.resolve(appUser);
     });
 

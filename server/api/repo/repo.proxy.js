@@ -14,6 +14,7 @@ var mongoosePaginatePlugin = require('../../lib/mongoose/mongoose-paginate');
 var Shape = require('../shape/shape.model');
 var u = require('util');
 var Q = require('q');
+var shortid = require('shortid');
 
 /**
  * get repo's model by collection name or shape name.
@@ -87,7 +88,7 @@ exports.import = function (repoName, data) {
   return deferred.promise;
 }
 
-function insertOrUpdate (user, M) {
+function insertOrUpdate(user, M) {
   var m = new M();
   var keys = _.keys(repoBody);
   _.each(keys, function (key) {
