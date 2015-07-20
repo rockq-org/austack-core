@@ -155,7 +155,8 @@ UserController.prototype = {
               mobile: {
                 type: 'String',
                 required: true
-              }
+              },
+              verificationCode: String
             }
           })
           .then(function (shape) {
