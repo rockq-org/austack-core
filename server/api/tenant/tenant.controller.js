@@ -69,6 +69,7 @@ TenantController.prototype = {
     Helper.req = req;
     Helper.res = res;
     Helper.next = next;
+    Helper.msg = '';
 
     Helper.getApplication()
       .then(Helper.getRepoByClientId)
@@ -86,7 +87,9 @@ TenantController.prototype = {
           .then(Helper.getUserJwt);
       })
       .catch(function (msg) {
-        Helper.msg = msg;
+        if (!Helper.msg) {
+          Helper.msg = msg;
+        }
       })
       .finally(function () {
         var data = {
@@ -160,6 +163,15 @@ var Helper = {
         return d.resolve();
       }
 
+      var now = new Date();
+      var timeSpan = now - appUser.verificationCodeLatestSendTime;
+      var SIXTY_SECONDS = (+60) * 1000;
+      logger.log('timeSpan ', timeSpan, now, appUser.verificationCodeLatestSendTime);
+      if (timeSpan < SIXTY_SECONDS) {
+        Helper.msg = '请60秒后再重发验证码';
+        logger.log('timeSpan < SIXTY_SECONDS');
+        return d.reject('请60秒后再重发验证码');
+      }
       Helper.req.appUser = appUser;
       appUser.verificationCode = Helper.req.verificationCode;
       appUser.save(function (err) {
@@ -178,11 +190,20 @@ var Helper = {
 
     var repoModel = Helper.req.repoModel;
     var mobile = Helper.req.body.mobile;
+    var verificationCodeLatestSendTime = new Date();
+
+    // verificationCodeExpiredAt
+    var expiredTimeSpan = 60000 * 3; // three minutes
+    var now = new Date();
+    var verificationCodeExpiredAt = new Date(now.valueOf() + expiredTimeSpan);
+
     var verificationCode = Helper.req.verificationCode;
-    // TODO: Need to figure out how to make the two fields and rename mobile to mobile?
+
     var appUser = {
       uid: shortid.generate(),
       mobile: mobile,
+      verificationCodeLatestSendTime: verificationCodeLatestSendTime,
+      verificationCodeExpiredAt: verificationCodeExpiredAt,
       verificationCode: verificationCode
     };
 
@@ -220,15 +241,23 @@ var Helper = {
     repoModel.findOne({
       mobile: mobile
     }, function (err, user) {
-      if (err || user == null ||
-        user.verificationCode != verificationCode
-      ) {
-        Helper.msg = '验证码错误';
-      } else {
-        Helper.msg = '';
-      }
       d.resolve();
-      logger.log(err, user, mobile, verificationCode, Helper.msg);
+      if (err || user == null) {
+        Helper.msg = '用户不存在';
+        return;
+      }
+
+      if (user.verificationCode != verificationCode) {
+        Helper.msg = '验证码错误';
+        return;
+      }
+
+      var now = new Date();
+      if (user.verificationCodeExpiredAt < now) {
+        Helper.msg = '验证码已过期';
+        return;
+      }
+
     });
 
     return d.promise;

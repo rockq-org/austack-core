@@ -95,7 +95,7 @@ UserController.prototype = {
     }, function (err, user) {
       var now = new Date();
       var timeSpan = now - user.verifyCodeLatestSendTime;
-      if (timeSpan < (+1) * 1000) {
+      if (timeSpan < (+60) * 1000) {
         return res.forbidden({
           message: 'please resend after 60 seconds'
         });
@@ -155,6 +155,12 @@ UserController.prototype = {
               mobile: {
                 type: 'String',
                 required: true
+              },
+              verificationCodeExpiredAt: {
+                type: 'Date'
+              },
+              verificationCodeLatestSendTime: {
+                type: 'Date'
               },
               verificationCode: {
                 type: 'String'

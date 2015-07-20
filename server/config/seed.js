@@ -207,6 +207,12 @@ function _createRepoAndShapes(users) {
             type: 'String',
             required: true
           },
+          verificationCodeExpiredAt: {
+            type: 'Date'
+          },
+          verificationCodeLatestSendTime: {
+            type: 'Date'
+          },
           verificationCode: {
             type: 'String'
           }
