@@ -40,7 +40,7 @@
    *
    * @param {Service} $http The http service to use
    * @param {Service} $cookies The cookies service to use
-   * @param {Service} $location The location service to use
+   * @param {Service} $state The state service to use
    * @param {Service} _ The lodash service to use
    * @param {Service} User The User service to use
    * @param {Service} $cookieStore The cookieStore service to use
@@ -50,7 +50,7 @@
    * @returns {Service} {@link auth.service:Auth Auth-service}
    */
 
-  function Auth($http, $cookieStore, $cookies, $location, $q, $templateCache, _, User, userRoles, Config) {
+  function Auth($http, $cookieStore, $cookies, $state, $q, $templateCache, _, User, userRoles, Config) {
     var currentUser = {};
 
     if ($cookieStore.get('token')) {
@@ -121,7 +121,7 @@
       $cookieStore.remove('token');
       currentUser = {};
       $templateCache.removeAll();
-      $location.path('/login');
+      $state.go('account.login');
     }
 
     /**

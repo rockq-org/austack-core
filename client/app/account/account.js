@@ -26,7 +26,6 @@
   function configAccountRoute($stateProvider) {
     var accountState = {
       name: 'account',
-      url: '',
       abstract: true,
       templateUrl: 'app/account/account.html',
       controller: 'AccountController',
