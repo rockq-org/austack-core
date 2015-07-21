@@ -1,8 +1,8 @@
 /**
  * Sample App
- * Each Application has a quick-getstarted panel to download 
+ * Each Application has a quick-getstarted panel to download
  * sample applications for backend and client. The source codes
- * are stored in server/public. When the downloading happens, 
+ * are stored in server/public. When the downloading happens,
  * the credentials are injected into the source codes and compress
  * into zip format.
  */
@@ -166,7 +166,7 @@ function _ionic(res, app) {
     delete app['clientSecret'];
 
     app.apiBaseURL = Config.apiBaseURL;
-
+    logger.log(app);
     archive.append(JSON.stringify(app, null, 4), {
       name: '/ionic-client/app.json'
     });

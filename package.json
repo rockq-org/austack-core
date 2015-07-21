@@ -64,7 +64,7 @@
     "chalk": "~0.5.1",
     "concat-stream": "~1.4.7",
     "del": "~1.1.1",
-    "gulp": "~3.8.10",
+    "gulp": "*",
     "gulp-angular-filesort": "~1.0.4",
     "gulp-angular-templatecache": "~1.5.0",
     "gulp-autoprefixer": "~2.1.0",
