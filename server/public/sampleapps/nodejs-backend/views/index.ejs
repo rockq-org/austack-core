@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title><%= locals.title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <% if(token){ %>
-    	Token	<%= token %>
-    <% } else { %>
-    	Error <%= error %>
-    <% } %>
+    <h1><%= locals.title %></h1>
+    <p>Welcome to <%= locals.title %></p>
+    <p>Token  <%= locals.token %></p>
+    <p>Error <%= locals.err %></p>
   </body>
 </html>

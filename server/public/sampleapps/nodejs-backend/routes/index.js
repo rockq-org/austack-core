@@ -13,7 +13,7 @@ var clientSecret = appJSON.clientSecret;
  * @return {[type]}            [description]
  */
 function _getToken(callback) {
-  request.get(apiBaseURL + '/auth/application')
+  request.post(apiBaseURL + '/auth/application')
     .set('Content-Type', 'application/json')
     .set('Accept', 'application/json')
     .send({
@@ -21,8 +21,9 @@ function _getToken(callback) {
       clientSecret: clientSecret
     })
     .end(function (err, res) {
-      if (err)
+      if (err) {
         return callback(err);
+      }
       callback(null, res.body);
     });
 }
