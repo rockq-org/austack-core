@@ -115,10 +115,10 @@ function _nodejs(res, app) {
       path.join(__dirname, '../../public/sampleapps/nodejs-backend/node_modules') + '/*');
 
     // delete some keys that should not expose to backend
-    delete app['_id'];
-    delete app['ownerId'];
-    delete app['isTrashed'];
-    delete app['__v'];
+    app['_id'] = '';
+    app['ownerId'] = '';
+    app['isTrashed'] = '';
+    app['__v'] = '';
 
     app.apiBaseURL = Config.apiBaseURL;
 
