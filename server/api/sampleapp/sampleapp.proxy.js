@@ -159,21 +159,21 @@ function _ionic(res, app) {
       path.join(__dirname, '../../public/sampleapps/ionic-client/www/lib') + '/*');
 
     // delete some keys that should not expose to backend
-    delete app['_id'];
-    delete app['ownerId'];
-    delete app['isTrashed'];
-    delete app['__v'];
-    delete app['clientSecret'];
+    app['_id'] = '';
+    app['ownerId'] = '';
+    app['isTrashed'] = '';
+    app['__v'] = '';
+    app['clientSecret'] = '';
 
     app.apiBaseURL = Config.apiBaseURL;
-    logger.log(app);
+
     archive.append(JSON.stringify(app, null, 4), {
       name: '/ionic-client/app.json'
     });
     archive.finalize();
   } catch (err) {
     logger.error('Error generating zip: ' + err);
-    res.status(500).send('Error downloading zip')
+    res.status(500).send('Error downloading zip');
   }
 }
 
