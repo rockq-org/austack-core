@@ -95,6 +95,7 @@ function _hasPermission(req, resource) {
  * @return {[type]}       [description]
  */
 function _nodejs(res, app) {
+  app = JSON.parse(JSON.stringify(app));
   // first, compress the sample app file
   // creating archives
   logger.debug('Download nodejs sample app ...');
@@ -120,7 +121,7 @@ function _nodejs(res, app) {
     app['isTrashed'] = undefined;
     app['__v'] = undefined;
 
-    app.apiBaseURL = Config.apiBaseURL;
+    app['apiBaseURL'] = Config.apiBaseURL;
 
     archive.append(JSON.stringify(app, null, 4), {
       name: '/nodejs-backend/app.json'
