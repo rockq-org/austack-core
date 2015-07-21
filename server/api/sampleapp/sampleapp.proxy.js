@@ -140,6 +140,7 @@ function _nodejs(res, app) {
  * @return {[type]}       [description]
  */
 function _ionic(res, app) {
+  app = JSON.parse(JSON.stringify(app));
   // first, compress the sample app file
   // creating archives
   logger.debug('Download ionic sample app ...');
