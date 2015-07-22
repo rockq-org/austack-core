@@ -33,7 +33,7 @@
       controller: 'AccountLoginController',
       controllerAs: 'login',
       ncyBreadcrumb: {
-        label: 'Login'
+        skip: true
       }
     };
 
