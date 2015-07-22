@@ -1,8 +1,8 @@
 {
   "Config": {
-    "API_URL": "http://localhost:9001/api/",
-    "SERVER_URL": "http://localhost:9001",
+    "API_URL": "http://api.austack.com/api/",
+    "SERVER_URL": "http://api.austack.com",
     "ICON_ROOT": "assets/svg-sprite/",
-    "TEMPLATE_PREFIX": "http://localhost:3000/app/"
+    "TEMPLATE_PREFIX": "http://console.austack.com/app/"
   }
 }
