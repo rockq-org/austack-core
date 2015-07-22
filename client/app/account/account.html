@@ -5,7 +5,7 @@
         <img class="logo" src="assets/images/logo-full.png">
         <span flex></span>
         <md-button ng-repeat="menu in vm.menus" ng-href="{{menu.url}}">{{menu.name}}</md-button>
-        <md-button class="active" ng-href="/login">登录/注销</md-button>
+        <md-button class="active" ui-sref="login">登录/注销</md-button>
       </div>
     </md-toolbar>
   </nav>

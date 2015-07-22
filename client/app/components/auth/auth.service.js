@@ -120,7 +120,7 @@
     function logout() {
       $cookieStore.remove('token');
       currentUser = {};
-      $templateCache.removeAll();
+      //$templateCache.removeAll();
       $state.go('account.login');
     }
 
