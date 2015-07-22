@@ -57,3 +57,7 @@ router.route('/' + controller.paramString)
 // update-sms-templates
 router.route('/' + controller.paramString + '/update-sms-templates')
   .put(controller.updateSmsTemplates);
+
+// update-sms-templates
+router.route('/' + controller.paramString + '/refresh-secret-token')
+  .put(controller.refreshSecretToken);

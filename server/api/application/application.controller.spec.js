@@ -127,15 +127,15 @@ var TestHelper = {
 };
 
 describe('#42 As a developer, Dave can access application with RESt API', function () {
-  before(function (done) {
-    seed.seed(done);
-  });
+  // before(function (done) {
+  //   seed.seed(done);
+  // });
   beforeEach(TestHelper.cleanupApplicationDataInDatabase);
   beforeEach(TestHelper.initListDataInDatabase);
   beforeEach(TestHelper.getJwtToken);
   // afterEach(TestHelper.cleanupApplicationDataInDatabase);
 
-  describe.only('#67 enable POST /api/app', function () {
+  describe('#67 enable POST /api/app', function () {
     // can not run, as expressJwt will trigger UnauthorizedError, and break the expect
     // it('should not create a new application and respond with 401', function (done) {
     //   request(app)
@@ -223,7 +223,6 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
       });
     });
 
-    // it.only('should support query');
     it('for admin, dave can only retrieve his own apps', function (done) {
       request(app)
         .get('/api/applications?page=1&limit=1000')
@@ -357,6 +356,36 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
                 return done(err);
               }
               res.body.should.be.an.Object.and.have.property('name', TestHelper.item.name);
+              done();
+            });
+        });
+    });
+
+    it.only('#144 can refresh app secret token ', function (done) {
+      request(app)
+        .post('/api/applications')
+        .set('Authorization', 'Bearer ' + TestHelper.token)
+        .set('Accept', 'application/json')
+        .send(TestHelper.item)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+
+          var oldSecret = res.body.clientSecret;
+          request(app)
+            .put('/api/applications/' + res.body._id + '/refresh-secret-token')
+            .set('Accept', 'application/json')
+            .set('Authorization', 'Bearer ' + TestHelper.token)
+            .send()
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function (err, res) {
+              if (err) {
+                return done(err);
+              }
+
+              res.body.should.have.property('clientSecret');
               done();
             });
         });

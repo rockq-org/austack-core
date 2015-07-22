@@ -141,6 +141,29 @@ ApplicationController.prototype = {
     });
   },
 
+  refreshSecretToken: function (req, res) {
+    var self = this;
+    if (req.body._id) {
+      delete req.body._id;
+    }
+    if (!this.hasPermission(req, res)) {
+      return res.unauthorized();
+    }
+
+    logger.log(req[this.paramName].clientSecret);
+    req[this.paramName].clientSecret = this.model.generateRandomObjectId();
+    var updated = req[this.paramName];
+    logger.log(req[this.paramName].clientSecret);
+    updated.save(function (err) {
+      if (err) {
+        return res.handleError(err);
+      }
+
+      req[this.paramName] = updated;
+      return res.ok(self.getResponseObject(updated));
+    });
+  },
+
   /**
    * Deletes an document from the DB using the request
    * property named {@link ParamController#paramName}.
