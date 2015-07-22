@@ -13,21 +13,19 @@ module.exports = function (options) {
   function browserSyncInit(baseDir, browser) {
     browser = browser === undefined ? 'default' : browser;
 
-    var routes = null;
+    var server = {
+      baseDir: baseDir
+    };
     if (baseDir === options.src || (util.isArray(baseDir) && baseDir.indexOf(options.src) !== -1)) {
-      routes = {
-        '/bower_components': 'bower_components'
+      server.routes = {
+        '/bower_components': 'bower_components',
+        '/assets/svg-sprite': 'bower_components/material-design-icons/sprites/svg-sprite'
       };
 
       if (middleware.length > 0) {
         server.middleware = middleware;
       }
     }
-
-    var server = {
-      baseDir: baseDir,
-      routes: routes
-    };
 
     browserSync.instance = browserSync.init({
       startPath: '/',

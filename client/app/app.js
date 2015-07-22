@@ -80,7 +80,7 @@
       .accentPalette('orange')
       .warnPalette('deep-orange');
 
-    var spritePath = Config.ICON_ROOT;
+    var spritePath = 'assets/svg-sprite/';
     $mdIconProvider.iconSet('navigation', spritePath + 'svg-sprite-navigation.svg');
     $mdIconProvider.iconSet('action', spritePath + 'svg-sprite-action.svg');
     $mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');
