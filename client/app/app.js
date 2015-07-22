@@ -76,9 +76,9 @@
 
     $mdThemingProvider
       .theme('default')
-      .primaryPalette('indigo')
-      .accentPalette('pink')
-      .warnPalette('red');
+      .primaryPalette('blue')
+      .accentPalette('orange')
+      .warnPalette('deep-orange');
 
     var spritePath = Config.ICON_ROOT;
     $mdIconProvider.iconSet('navigation', spritePath + 'svg-sprite-navigation.svg');
