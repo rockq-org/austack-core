@@ -1,34 +1,22 @@
 'use strict';
 
-process.env.AUSTACK_DATABASE_URL = process.env.AUSTACK_DATABASE_URL || 'mongodb://localhost:27017/austackdb';
+process.env.DATABASE_NAME = process.env.DATABASE_NAME || 'austack-dev';
 
 module.exports = {
 
   corsOptions: {
-    origin: 'http://console.austack.com'
+    origin: 'http://localhost:3000'
   },
-  ip: process.env.AUSTACK_SYS_IP || undefined,
-
-  port: process.env.AUSTACK_SYS_PORT || 9888,
 
   publicDir: 'server/public',
 
   logLevel: 'log',
 
   mongo: {
-    uri: process.env.AUSTACK_DATABASE_URL,
-    options: {
-      server: {
-        auto_reconnect: true,
-        poolSize: 4,
-        socketOptions: {
-          keepAlive: 1
-        }
-      }
-    }
+    uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
   },
 
-  apiBaseURL: 'http://api.austack.com/api',
+  apiBaseURL: 'http://localhost:9001/api',
 
   seedDB: true
 };

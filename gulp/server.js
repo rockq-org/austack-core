@@ -14,20 +14,20 @@ module.exports = function (options) {
     browser = browser === undefined ? 'default' : browser;
 
     var routes = null;
-    //if (baseDir === options.src || (util.isArray(baseDir) && baseDir.indexOf(options.src) !== -1)) {
-    routes = {
-      '/bower_components': 'bower_components'
-    };
-    //}
+    if (baseDir === options.src || (util.isArray(baseDir) && baseDir.indexOf(options.src) !== -1)) {
+      routes = {
+        '/bower_components': 'bower_components'
+      };
+
+      if (middleware.length > 0) {
+        server.middleware = middleware;
+      }
+    }
 
     var server = {
       baseDir: baseDir,
       routes: routes
     };
-
-    if (middleware.length > 0) {
-      server.middleware = middleware;
-    }
 
     browserSync.instance = browserSync.init({
       startPath: '/',
