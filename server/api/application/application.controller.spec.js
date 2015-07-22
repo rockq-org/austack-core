@@ -384,7 +384,8 @@ describe('#42 As a developer, Dave can access application with RESt API', functi
               if (err) {
                 return done(err);
               }
-
+              console.log('oldSecret', oldSecret);
+              console.log(res.body);
               res.body.should.have.property('clientSecret');
               done();
             });
