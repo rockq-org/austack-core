@@ -29,25 +29,10 @@
         auth.signin = function (options, successCallback, errorCallback) {
           options = options || {};
 
-          var signinMethod = getInnerLibraryMethod('signin', libName);
-          var successFn = !successCallback ? null : function (profile, idToken, accessToken, state, refreshToken) {
-            onSigninOk(idToken, accessToken, state, refreshToken, profile).then(function (profile) {
-              if (successCallback) {
-                successCallback(profile, idToken, accessToken, state, refreshToken);
-              }
-            });
-          };
-
-          var errorFn = !errorCallback ? null : function (err) {
-            callHandler('loginFailure', {
-              error: err
-            });
-            if (errorCallback) {
-              errorCallback(err);
-            }
-          };
-          // TODO: do the signin job here!
-          signinCall(successFn, errorFn);
+          //1. do the login job
+          //2. detect result
+          //3.1 success: call successCallback
+          //3.2 error: call errorCallback
         };
 
         auth.authenticate = function (profile, token) {
