@@ -17,7 +17,7 @@
         this.domain = options.domain;
       };
 
-      this.$get = function ($rootScope, $q, $injector, $window, $location) {
+      this.$get = function ($rootScope, $q, $injector, $window, $location, $ionicPlatform) {
         var auth = {
           isAuthenticated: false
         };
@@ -27,17 +27,40 @@
         };
 
         auth.signin = function (options, successCallback, errorCallback) {
-          options = options || {};
+          $ionicPlatform.ready(function () {
+            options = options || {}; //placeHolder, do not use it yet
 
-          //1. do the login job
-          //2. detect result
-          //3.1 success: call successCallback
-          //3.2 error: call errorCallback
+            var url = AUSTACK_DOMAIN;
+            var target = '_blank';
+            var options = 'location=yes';
+            // maybe do not use the $window variable? that maybe not the inAppBrower
+            var ref = window.open(url, target, options);
+
+            var myCallback = function (event) {
+              if (event.url == url) {
+                return;
+              }
+              var urlWithPostFix = url + '#id_token=';
+              var idToken = event.url.replace(urlWithPostFix, '');
+              if (idToken) {
+                console.log('get idToken', idToken);
+                var result = {
+                  idToken: idToken
+                };
+                successCallback(result);
+                ref.close();
+              }
+            }
+
+            ref.addEventListener('loadstart', myCallback);
+            //TODO: maybe do some clearup job such as removeEventListener if we get memorry leak
+          });
         };
 
         auth.authenticate = function (profile, token) {
 
         };
+
         auth.refreshIdToken = function (refreshToken, callback) {
           var idToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhbXBsZXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTA0NzE1MzA4ODIwMTQzMzMyMDE1IiwiYXVkIjoiQlVJSlNXOXg2MHNJSEJ3OEtkOUVtQ2JqOGVESUZ4REMiLCJleHAiOjE0MzY1ODY1MTYsImlhdCI6MTQzNjU1MDUxNn0.GQUI29qgwP7pKAxI-YF6r-h4Kjnkn-1hPAbsI6wXpFY';
           // maybe do some http request?

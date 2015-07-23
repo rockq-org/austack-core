@@ -1,10 +1,13 @@
 angular.module('starter.controllers', [])
   .controller('LoginCtrl', function ($scope, austack, $state, $window) {
+    console.log('start LoginCtrl');
+
     function doAuth() {
-      austack.signin({}, function (profile, idToken, accessToken, state, refreshToken) {
-        $window.localStorage.setItem('profile', profile);
-        $window.localStorage.setItem('token', idToken);
-        $window.localStorage.setItem('refreshToken', refreshToken);
+      console.log('start doing signin');
+      austack.signin({}, function (result) {
+        // $window.localStorage.setItem('profile', result.profile);
+        // $window.localStorage.setItem('refreshToken', result.refreshToken);
+        $window.localStorage.setItem('token', result.idToken);
         $state.go('tab.dash');
       }, function (error) {
         console.log("There was an error logging in", error);

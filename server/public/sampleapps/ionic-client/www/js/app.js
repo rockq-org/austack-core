@@ -18,32 +18,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         // org.apache.cordova.statusbar required
         StatusBar.styleLightContent();
       }
-
-      // # TODO read config service ?
-      // get the login url for this app
-      // open the url with inappbrowser
-      // http://plugins.cordova.io/#/package/org.apache.cordova.inappbrowser
-      //
-      // window.open = cordova.InAppBrowser.open;
-      console.dir(window.open);
-      var url = AUSTACK_DOMAIN;
-      var target = '_blank';
-      var options = 'location=yes';
-      var ref = window.open(url, target, options);
-
-      var myCallback = function (event) {
-        if (event.url == url) {
-          return;
-        }
-        var urlWithPostFix = url + '#id_token=';
-        var idToken = event.url.replace(urlWithPostFix, '');
-        if (idToken) {
-          console.log('get idToken', idToken);
-          ref.close();
-        }
-      }
-
-      ref.addEventListener('loadstart', myCallback);
     });
 
   })
@@ -138,12 +112,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     $httpProvider.interceptors.push('jwtInterceptor');
   })
   // austack run
-  .run(function austackRun($rootScope, austack, $window) {
+  .run(function austackRun($rootScope, austack, $window, $location, jwtHelper) {
     $rootScope.$on('$locationChangeStart', function () {
       if (!austack.isAuthenticated) {
         var token = $window.localStorage.getItem('token');
         if (token) {
-          austack.authenticate($window.localStorage.getItem('profile'), token);
+          if (!jwtHelper.isTokenExpired(token)) {
+            console.log('not expired');
+            austack.authenticate($window.localStorage.getItem('profile'), token);
+          } else {
+            console.log('expired go to login');
+            $location.path('/login');
+          }
+        } else {
+          $location.path('/login');
+
         }
       }
 
