@@ -17,7 +17,7 @@
         this.domain = options.domain;
       };
 
-      this.$get = function ($rootScope, $q, $injector, $window, $location, authUtils) {
+      this.$get = function ($rootScope, $q, $injector, $window, $location) {
         var auth = {
           isAuthenticated: false
         };
@@ -43,9 +43,8 @@
             }
           };
 
-          var signinCall = authUtils.callbackify(signinMethod, successFn, errorFn, innerAuth0libraryConfiguration[libName || config.lib].library());
-
-          signinCall(options);
+          // TODO: do the signin job here!
+          signinCall(successFn, errorFn);
         };
         return auth;
       };
