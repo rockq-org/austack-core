@@ -2,7 +2,7 @@
   <form name="updateForm">
     <div layout="row">
       <md-input-container flex>
-        <label>APP ID</label>
+        <label>应用 ID</label>
         <input ng-model="vm.application.clientId" disabled>
       </md-input-container>
       <md-button hide class="md-fab md-mini md-primary">
@@ -12,10 +12,10 @@
     </div>
     <div layout="row">
       <md-input-container flex>
-        <label>APP secret</label>
+        <label>应用令牌</label>
         <input ng-model="vm.application.clientSecret" disabled>
       </md-input-container>
-      <md-button class="md-fab md-mini md-accent">
+      <md-button ng-click="vm.refreshSecret()" class="md-fab md-mini md-accent">
         <md-icon md-svg-icon="navigation:ic_refresh_24px"></md-icon>
         <md-tooltip>刷新</md-tooltip>
       </md-button>

@@ -60,4 +60,4 @@ router.route('/' + controller.paramString)
 
 // update-sms-templates
 router.route('/' + controller.paramString + '/refresh-secret-token')
-  .put(controller.refreshSecretToken);
+  .get(controller.refreshSecretToken);

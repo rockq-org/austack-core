@@ -45,7 +45,8 @@
     return {
       create: create,
       update: update,
-      remove: remove
+      remove: remove,
+      refreshSecret: refreshSecret
     };
 
     /**
@@ -99,6 +100,28 @@
       var cb = callback || angular.noop;
 
       return Application.update(application,
+        function (application) {
+          return cb(application);
+        },
+        function (err) {
+          return cb(err);
+        }).$promise;
+    }
+
+    /**
+     * Refresh Secret Token
+     *
+     * @param  {Object}   application - applicationData
+     * @param  {Function} callback - optional
+     * @return {Promise}
+     */
+    function refreshSecret(application, callback) {
+      var cb = callback || angular.noop;
+
+      return Application.get({
+          id: application._id,
+          controller: 'refresh-secret-token'
+        },
         function (application) {
           return cb(application);
         },
