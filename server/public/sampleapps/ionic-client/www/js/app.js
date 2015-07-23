@@ -8,39 +8,37 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'austack', 'angular-jwt'])
 
 .run(function ($ionicPlatform) {
-  $ionicPlatform.ready(function () {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleLightContent();
-    }
+    $ionicPlatform.ready(function () {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleLightContent();
+      }
 
-    // # TODO read config service ?
-    // get the login url for this app
-    // open the url with inappbrowser
-    // http://plugins.cordova.io/#/package/org.apache.cordova.inappbrowser
-    //
-  });
+      // # TODO read config service ?
+      // get the login url for this app
+      // open the url with inappbrowser
+      // http://plugins.cordova.io/#/package/org.apache.cordova.inappbrowser
+      //
+      // window.open = cordova.InAppBrowser.open;
+    });
 
-  // just for task #110, that open the url only and for ionic serve test only
-  var url = AUSTACK_DOMAIN;
-  var target = '_blank';
-  var options = 'location=no';
-  window.open(url, target, options);
-})
-
-.config(function ($stateProvider, $urlRouterProvider) {
+    var url = AUSTACK_DOMAIN;
+    var target = '_blank';
+    var options = 'location=no';
+    window.open(url, target, options);
+  })
+  .config(function ($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
     // Each state's controller can be found in controllers.js
     $stateProvider
-
     // setup an abstract state for the tabs directive
       .state('tab', {
       url: "/tab",
@@ -78,16 +76,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           }
         }
       })
-
-    .state('tab.account', {
-      url: '/account',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/tab-account.html',
-          controller: 'AccountCtrl'
+      .state('tab.account', {
+        url: '/account',
+        views: {
+          'tab-account': {
+            templateUrl: 'templates/tab-account.html',
+            controller: 'AccountCtrl'
+          }
         }
-      }
-    });
+      });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/dash');
@@ -107,16 +104,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       clientId: AUSTACK_CLIENT_ID,
       loginState: 'login'
     });
-
-    jwtInterceptorProvider.tokenGetter = function (store, jwtHelper, auth) {
-      var idToken = store.get('token');
-      var refreshToken = store.get('refreshToken');
+    jwtInterceptorProvider.tokenGetter = function ($window, jwtHelper, auth) {
+      var idToken = $window.localStorage.getItem('token');
+      var refreshToken = $window.localStorage.getItem('refreshToken');
       if (!idToken || !refreshToken) {
         return null;
       }
       if (jwtHelper.isTokenExpired(idToken)) {
         return auth.refreshIdToken(refreshToken).then(function (idToken) {
-          store.set('token', idToken);
+          $window.localStorage.setItem('token', idToken);
           return idToken;
         });
       } else {
@@ -127,12 +123,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     $httpProvider.interceptors.push('jwtInterceptor');
   })
   // austack run
-  .run(function austackRun($rootScope, austack, store) {
+  .run(function austackRun($rootScope, austack, $window) {
     $rootScope.$on('$locationChangeStart', function () {
       if (!austack.isAuthenticated) {
-        var token = store.get('token');
+        var token = $window.localStorage.getItem('token');
         if (token) {
-          austack.authenticate(store.get('profile'), token);
+          austack.authenticate($window.localStorage.getItem('profile'), token);
         }
       }
 
