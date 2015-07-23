@@ -1,5 +1,5 @@
 <md-content layout="column" flex layout-padding id="application-loginpage-content">
-  <div flex ng-model="vm.template" ui-ace="{mode:'html', packaged: true, useWrapMode: true, showGutter: true, onLoad: vm.aceLoaded, onChange: vm.aceChanged}">
+  <div flex ng-model="vm.template" ui-ace="{mode:'html', useWorker: false, useWrapMode: true, showGutter: true, onLoad: vm.aceLoaded, onChange: vm.aceChanged}">
   </div>
   <md-fab-speed-dial md-direction="up" class="md-fling ng-animate">
     <md-fab-trigger>
