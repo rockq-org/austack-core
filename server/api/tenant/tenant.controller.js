@@ -16,6 +16,7 @@ var compose = require('composable-middleware');
 var ShapeProxy = require('../shape/shape.proxy');
 var Weimi = require('../../lib/weimi/index');
 var auth = require('../../lib/auth/auth.service.js');
+var Config = require('../../config/index.js');
 var Repo = require('../repo/repo.proxy');
 var Q = require('q');
 var shortid = require('shortid');
@@ -61,13 +62,17 @@ TenantController.prototype = {
   loginForm: function (req, res) {
     var data = {
       mobile: 18959264502,
-      msg: '登录成功！',
-      success: true
     };
 
     return res.render('tenant/login', data);
   },
   loginPost: function loginPost(req, res, next) {
+
+    Helper.jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhbXBsZXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTA0NzE1MzA4ODIwMTQzMzMyMDE1IiwiYXVkIjoiQlVJSlNXOXg2MHNJSEJ3OEtkOUVtQ2JqOGVESUZ4REMiLCJleHAiOjE0MzY1ODY1MTYsImlhdCI6MTQzNjU1MDUxNn0.GQUI29qgwP7pKAxI-YF6r-h4Kjnkn-1hPAbsI6wXpFY';
+    var host = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
+    var url = host + 'tenant' + req.url + '#id_token=' + Helper.jwt;
+    return res.redirect(302, url);
+
     Helper.req = req;
     Helper.res = res;
     Helper.next = next;
@@ -98,6 +103,12 @@ TenantController.prototype = {
           mobile: req.body.mobile,
           msg: Helper.msg
         };
+        if (Helper.jwt) {
+          // TODO: should be have bug later while we use tenant domain
+          var host = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
+          var url = host + 'tenant' + req.url + '#id_token=' + Helper.jwt;
+          return res.redirect(200, url);
+        }
 
         return res.render('tenant/login', data);
       });
@@ -275,7 +286,8 @@ var Helper = {
     var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile);
     Helper.req.jwt = token;
 
-    Helper.msg = token;
+    Helper.msg = '登录成功！';
+    Helper.jwt = token;
     logger.log(token);
   })
 };
