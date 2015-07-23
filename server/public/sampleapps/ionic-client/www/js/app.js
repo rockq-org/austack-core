@@ -29,8 +29,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     var url = AUSTACK_DOMAIN;
     var target = '_blank';
-    var options = 'location=no';
-    window.open(url, target, options);
+    var options = 'location=yes';
+    var ref = window.open(url, target, options);
+
+    var myCallback = function (event) {
+      console.log(event);
+    }
+
+    ref.addEventListener('loadstart', myCallback);
+    ref.addEventListener('loadstop', myCallback);
+    ref.addEventListener('loaderror', myCallback);
+    ref.addEventListener('exit', myCallback);
+
   })
   .config(function ($stateProvider, $urlRouterProvider) {
 
