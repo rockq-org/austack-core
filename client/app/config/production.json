@@ -1,8 +1,6 @@
 {
   "Config": {
     "API_URL": "http://api.austack.com/api/",
-    "SERVER_URL": "http://api.austack.com",
-    "ICON_ROOT": "assets/svg-sprite/",
-    "TEMPLATE_PREFIX": "http://console.austack.com/app/"
+    "SERVER_URL": "http://api.austack.com"
   }
 }

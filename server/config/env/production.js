@@ -7,6 +7,7 @@ module.exports = {
   corsOptions: {
     origin: 'http://console.austack.com'
   },
+
   ip: process.env.AUSTACK_SYS_IP || undefined,
 
   port: process.env.AUSTACK_SYS_PORT || 9888,
