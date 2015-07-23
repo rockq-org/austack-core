@@ -32,13 +32,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       var ref = window.open(url, target, options);
 
       var myCallback = function (event) {
-        console.dir(event);
+        if (event.url == url) {
+          return;
+        }
+        var urlWithPostFix = url + '#id_token=';
+        var idToken = event.url.replace(urlWithPostFix, '');
+        if (idToken) {
+          console.log('get idToken', idToken);
+          ref.close();
+        }
       }
 
       ref.addEventListener('loadstart', myCallback);
-      ref.addEventListener('loadstop', myCallback);
-      ref.addEventListener('loaderror', myCallback);
-      ref.addEventListener('exit', myCallback);
     });
 
   })
