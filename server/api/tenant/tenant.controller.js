@@ -60,7 +60,9 @@ TenantController.prototype = {
 
   loginForm: function (req, res) {
     var data = {
-      mobile: 18959264502
+      mobile: 18959264502,
+      msg: '登录成功！',
+      success: true
     };
 
     return res.render('tenant/login', data);

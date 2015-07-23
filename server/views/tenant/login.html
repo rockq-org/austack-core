@@ -19,25 +19,34 @@
           <h1>应用名称</h1>
         </div>
         <div class="content">
-          <% if(locals.msg) { %>
-            <h1>
-              <%=msg %>
-            </h1>
+          <% if(locals.success) { %>
+            <script type="text/javascript">
+              console.log(location.href);
+              console.log(location.hash);
+              setTimeout(function() {
+                location.href = location.href + '#id_token=abcdefg';
+              }, 3000);
+            </script>
             <% } %>
-              <form method="POST">
-                <input type="hidden" name="action" value="send-verification-code" />
-                <input class="as-input as-input-small-left" type="text" name="mobile" placeholder="手机号" value="<%= mobile %>" />
-                <input class="as-btn as-btn-small-right" type="submit" value="获取验证码" />
-              </form>
-
-              <% if(locals.mobile) { %>
-                <form method="POST">
-                  <input type="hidden" name="action" value="verify-code" />
-                  <input type="hidden" name="mobile" value="<%= mobile %>" />
-                  <input class="as-input" type="text" name="verificationCode" placeholder="请输入短信中的验证码" />
-                  <input class="as-btn" type="submit" value="验证并登录" />
-                </form>
+              <% if(locals.msg) { %>
+                <h1>
+                  <%=msg %>
+                </h1>
                 <% } %>
+                  <form method="POST">
+                    <input type="hidden" name="action" value="send-verification-code" />
+                    <input class="as-input as-input-small-left" type="text" name="mobile" placeholder="手机号" value="<%= mobile %>" />
+                    <input class="as-btn as-btn-small-right" type="submit" value="获取验证码" />
+                  </form>
+
+                  <% if(locals.mobile) { %>
+                    <form method="POST">
+                      <input type="hidden" name="action" value="verify-code" />
+                      <input type="hidden" name="mobile" value="<%= mobile %>" />
+                      <input class="as-input" type="text" name="verificationCode" placeholder="请输入短信中的验证码" />
+                      <input class="as-btn" type="submit" value="验证并登录" />
+                    </form>
+                    <% } %>
         </div>
         <div class="footer">
           <a href="http://austack.com" target="_blank">
