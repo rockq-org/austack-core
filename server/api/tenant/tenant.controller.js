@@ -68,10 +68,10 @@ TenantController.prototype = {
   },
   loginPost: function loginPost(req, res, next) {
 
-    Helper.jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhbXBsZXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTA0NzE1MzA4ODIwMTQzMzMyMDE1IiwiYXVkIjoiQlVJSlNXOXg2MHNJSEJ3OEtkOUVtQ2JqOGVESUZ4REMiLCJleHAiOjE0MzY1ODY1MTYsImlhdCI6MTQzNjU1MDUxNn0.GQUI29qgwP7pKAxI-YF6r-h4Kjnkn-1hPAbsI6wXpFY';
-    var host = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
-    var url = host + 'tenant' + req.url + '#id_token=' + Helper.jwt;
-    return res.redirect(302, url);
+    // Helper.jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhbXBsZXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTA0NzE1MzA4ODIwMTQzMzMyMDE1IiwiYXVkIjoiQlVJSlNXOXg2MHNJSEJ3OEtkOUVtQ2JqOGVESUZ4REMiLCJleHAiOjE0MzY1ODY1MTYsImlhdCI6MTQzNjU1MDUxNn0.GQUI29qgwP7pKAxI-YF6r-h4Kjnkn-1hPAbsI6wXpFY';
+    // var host = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
+    // var url = host + 'tenant' + req.url + '#id_token=' + Helper.jwt;
+    // return res.redirect(302, url);
 
     Helper.req = req;
     Helper.res = res;
@@ -107,7 +107,8 @@ TenantController.prototype = {
           // TODO: should be have bug later while we use tenant domain
           var host = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
           var url = host + 'tenant' + req.url + '#id_token=' + Helper.jwt;
-          return res.redirect(200, url);
+          logger.log(Helper.jwt);
+          return res.redirect(302, url);
         }
 
         return res.render('tenant/login', data);

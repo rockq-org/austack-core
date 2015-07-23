@@ -8,9 +8,10 @@ angular.module('starter.controllers', [])
         // $window.localStorage.setItem('profile', result.profile);
         // $window.localStorage.setItem('refreshToken', result.refreshToken);
         $window.localStorage.setItem('token', result.idToken);
+        alert(result.idToken);
         $state.go('tab.dash');
       }, function (error) {
-        console.log("There was an error logging in", error);
+        console.log(error);
       });
     }
 

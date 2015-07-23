@@ -126,7 +126,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           }
         } else {
           $location.path('/login');
-
         }
       }
 

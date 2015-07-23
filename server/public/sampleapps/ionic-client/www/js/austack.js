@@ -11,10 +11,9 @@
         if (!options) {
           throw new Error('You must set options when calling init');
         }
-        this.loginUrl = options.loginUrl;
-        this.loginState = options.loginState;
-        this.clientId = options.clientId;
         this.domain = options.domain;
+        this.clientId = options.clientId;
+        this.loginState = options.loginState;
       };
 
       this.$get = function ($rootScope, $q, $injector, $window, $location, $ionicPlatform) {
@@ -36,7 +35,7 @@
             // maybe do not use the $window variable? that maybe not the inAppBrower
             var ref = window.open(url, target, options);
 
-            var myCallback = function (event) {
+            ref.addEventListener('loadstart', function (event) {
               if (event.url == url) {
                 return;
               }
@@ -49,10 +48,10 @@
                 };
                 successCallback(result);
                 ref.close();
+              } else {
+                errorCallback('do not get idToken');
               }
-            }
-
-            ref.addEventListener('loadstart', myCallback);
+            });
             //TODO: maybe do some clearup job such as removeEventListener if we get memorry leak
           });
         };
