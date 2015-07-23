@@ -49,6 +49,14 @@
           // TODO: do the signin job here!
           signinCall(successFn, errorFn);
         };
+
+        auth.authenticate = function (profile, token) {
+
+        };
+        auth.refreshIdToken = function (refreshToken) {
+          // return promise;
+        };
+
         return auth;
       };
 
