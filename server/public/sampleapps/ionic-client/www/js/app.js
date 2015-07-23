@@ -25,21 +25,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // http://plugins.cordova.io/#/package/org.apache.cordova.inappbrowser
       //
       // window.open = cordova.InAppBrowser.open;
+      console.dir(window.open);
+      var url = AUSTACK_DOMAIN;
+      var target = '_blank';
+      var options = 'location=yes';
+      var ref = window.open(url, target, options);
+
+      var myCallback = function (event) {
+        console.dir(event);
+      }
+
+      ref.addEventListener('loadstart', myCallback);
+      ref.addEventListener('loadstop', myCallback);
+      ref.addEventListener('loaderror', myCallback);
+      ref.addEventListener('exit', myCallback);
     });
-
-    var url = AUSTACK_DOMAIN;
-    var target = '_blank';
-    var options = 'location=yes';
-    var ref = window.open(url, target, options);
-
-    var myCallback = function (event) {
-      console.log(event);
-    }
-
-    ref.addEventListener('loadstart', myCallback);
-    ref.addEventListener('loadstop', myCallback);
-    ref.addEventListener('loaderror', myCallback);
-    ref.addEventListener('exit', myCallback);
 
   })
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -114,14 +114,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       clientId: AUSTACK_CLIENT_ID,
       loginState: 'login'
     });
-    jwtInterceptorProvider.tokenGetter = function ($window, jwtHelper, auth) {
+    jwtInterceptorProvider.tokenGetter = function ($window, jwtHelper, austack) {
       var idToken = $window.localStorage.getItem('token');
       var refreshToken = $window.localStorage.getItem('refreshToken');
       if (!idToken || !refreshToken) {
         return null;
       }
       if (jwtHelper.isTokenExpired(idToken)) {
-        return auth.refreshIdToken(refreshToken).then(function (idToken) {
+        return austack.refreshIdToken(refreshToken, function (idToken) {
           $window.localStorage.setItem('token', idToken);
           return idToken;
         });

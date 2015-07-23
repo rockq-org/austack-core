@@ -38,8 +38,10 @@
         auth.authenticate = function (profile, token) {
 
         };
-        auth.refreshIdToken = function (refreshToken) {
-          // return promise;
+        auth.refreshIdToken = function (refreshToken, callback) {
+          var idToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhbXBsZXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTA0NzE1MzA4ODIwMTQzMzMyMDE1IiwiYXVkIjoiQlVJSlNXOXg2MHNJSEJ3OEtkOUVtQ2JqOGVESUZ4REMiLCJleHAiOjE0MzY1ODY1MTYsImlhdCI6MTQzNjU1MDUxNn0.GQUI29qgwP7pKAxI-YF6r-h4Kjnkn-1hPAbsI6wXpFY';
+          // maybe do some http request?
+          callback(idToken);
         };
 
         return auth;
