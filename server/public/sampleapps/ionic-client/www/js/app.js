@@ -125,4 +125,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
 
     $httpProvider.interceptors.push('jwtInterceptor');
+  })
+  // austack run
+  .run(function austackRun($rootScope, austack, store) {
+    $rootScope.$on('$locationChangeStart', function () {
+      if (!austack.isAuthenticated) {
+        var token = store.get('token');
+        if (token) {
+          austack.authenticate(store.get('profile'), token);
+        }
+      }
+
+    });
   });
