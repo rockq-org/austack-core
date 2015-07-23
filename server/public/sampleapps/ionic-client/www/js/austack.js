@@ -1,5 +1,5 @@
 (function () {
-
+  // maybe make this to be a bower package later on
   angular.module('austack', ['austack.service'])
     .run(function (austack) {
       austack.hookEvents();
@@ -22,6 +22,10 @@
           isAuthenticated: false
         };
 
+        auth.hookEvents = function (argument) {
+          // hookEvents function that maybe do some hooked event job later
+        };
+
         auth.signin = function (options, successCallback, errorCallback) {
           options = options || {};
 
@@ -42,7 +46,6 @@
               errorCallback(err);
             }
           };
-
           // TODO: do the signin job here!
           signinCall(successFn, errorFn);
         };
