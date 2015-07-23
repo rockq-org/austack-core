@@ -7,8 +7,8 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+.run(function ($ionicPlatform) {
+  $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -21,13 +21,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     // # TODO read config service ?
     // get the login url for this app
-    // open the url with inappbrowser 
+    // open the url with inappbrowser
     // http://plugins.cordova.io/#/package/org.apache.cordova.inappbrowser
-    // 
+    //
   });
+
+  // just for task #110, that open the url only and for ionic serve test only
+  var url = AUSTACK_DOMAIN;
+  var target = '_blank';
+  var options = 'location=no';
+  window.open(url, target, options);
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router

@@ -160,17 +160,16 @@ function _ionic(res, app) {
       'ionic-client',
       path.join(__dirname, '../../public/sampleapps/ionic-client/www/lib') + '/*');
 
-    // delete some keys that should not expose to backend
-    app['_id'] = undefined;
-    app['ownerId'] = undefined;
-    app['isTrashed'] = undefined;
-    app['__v'] = undefined;
-    app['clientSecret'] = undefined;
+    var serverUrl = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
+    var domain = serverUrl + 'tenant/login?clientId=' + app.clientId;
+    var austackVariables = [
+      "var AUSTACK_CLIENT_ID = '" + app.clientId + "';",
+      "var AUSTACK_DOMAIN = '" + domain + "';",
+      "var AUSTACK_CALLBACK_URL = location.href;"
+    ].join('\n');
 
-    app.apiBaseURL = Config.apiBaseURL;
-
-    archive.append(JSON.stringify(app, null, 4), {
-      name: '/ionic-client/app.json'
+    archive.append(austackVariables, {
+      name: '/ionic-client/www/js/austack-variables.js'
     });
     archive.finalize();
   } catch (err) {
