@@ -43,8 +43,34 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function ($scope) {
+.controller('AccountCtrl', function ($scope, austack, $window, $location) {
+
   $scope.settings = {
     enableFriends: true
   };
+
+  $scope.token = $window.localStorage.getItem('token');
+  $scope.callApi = function () {
+    //do not work yet!
+    // Just call the API as you'd do using $http
+    $http({
+      url: 'http://localhost:3001/secured/ping', //TODO: replace with config
+      method: 'GET'
+    }).then(function () {
+      alert("We got the secured data successfully");
+    }, function (response) {
+      if (response.status == 0) {
+        alert("Please download the API seed so that you can call it.");
+      } else {
+        alert(response.data);
+      }
+    });
+  }
+
+  $scope.logout = function () {
+    austack.signout();
+    $window.localStorage.removeItem('profile');
+    $window.localStorage.removeItem('token');
+    $location.path('/login');
+  }
 });
