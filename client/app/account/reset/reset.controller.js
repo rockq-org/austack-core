@@ -25,7 +25,7 @@
     vm.errorMsg = '';
     vm.getVerifyCode = getVerifyCode;
     vm.submitVerifyCode = submitVerifyCode;
-    vm.submitUserDetail = submitUserDetail;
+    vm.setNewPassword = setNewPassword;
     vm.resendVerifyCode = resendVerifyCode;
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
@@ -102,6 +102,7 @@
       loadNameFromCookieStoreIfNotExist();
       User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
+        $cookieStore.put('token', data.token);
         msg('验证成功！');
       }).catch(function (err) {
         msg('验证码错误或验证码已过期！');
