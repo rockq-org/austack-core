@@ -20,9 +20,15 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
  * @property {Boolean} active - Flag indicating this loginRecord is active
  */
 var LoginRecordDefinition = {
-	name: {type: String, required: true},
-	info: String,
-	active: Boolean
+  loginTime: {
+    type: Date,
+    default: Date.now
+  },
+  mobile: String,
+  appUserId: String,
+  clientId: String,
+  actionType: String,
+  ownerId: String
 };
 
 /**
@@ -37,16 +43,16 @@ var LoginRecordSchema = new mongoose.Schema(LoginRecordDefinition);
 LoginRecordSchema.plugin(createdModifiedPlugin);
 
 LoginRecordSchema.plugin(requestContext, {
-	propertyName: 'modifiedBy',
-	contextPath: 'request:acl.user.name'
+  propertyName: 'modifiedBy',
+  contextPath: 'request:acl.user.name'
 });
 
 /**
  * Validations
  */
-LoginRecordSchema
-	.path('name')
-	.validate(validateUniqueName, 'The specified name is already in use.');
+// LoginRecordSchema
+//   .path('name')
+//   .validate(validateUniqueName, 'The specified name is already in use.');
 
 /**
  *  The registered mongoose model instance of the LoginRecord model
@@ -56,25 +62,25 @@ var LoginRecord = mongoose.model('LoginRecord', LoginRecordSchema);
 
 module.exports = {
 
-	/**
-	 * The LoginRecord model definition object
-	 * @type {Object}
-	 * @see loginRecord:LoginRecordModel~LoginRecordDefinition
-	 */
-	definition: LoginRecordDefinition,
+  /**
+   * The LoginRecord model definition object
+   * @type {Object}
+   * @see loginRecord:LoginRecordModel~LoginRecordDefinition
+   */
+  definition: LoginRecordDefinition,
 
-	/**
-	 * The LoginRecord model schema
-	 * @type {MongooseSchema}
-	 * @see loginRecord:model~LoginRecordSchema
-	 */
-	schema: LoginRecordSchema,
+  /**
+   * The LoginRecord model schema
+   * @type {MongooseSchema}
+   * @see loginRecord:model~LoginRecordSchema
+   */
+  schema: LoginRecordSchema,
 
-	/**
-	 * The LoginRecord model instance
-	 * @type {loginRecord:model~LoginRecord}
-	 */
-	model: LoginRecord
+  /**
+   * The LoginRecord model instance
+   * @type {loginRecord:model~LoginRecord}
+   */
+  model: LoginRecord
 
 };
 
@@ -85,21 +91,23 @@ module.exports = {
  * @param {String} value - The username to check for uniqueness
  * @param {Function} respond - The callback function
  */
-function validateUniqueName(value, respond) {
-	// jshint validthis: true
-	var self = this;
+// function validateUniqueName(value, respond) {
+  //   // jshint validthis: true
+  //   var self = this;
 
-	// check for uniqueness of user name
-	this.constructor.findOne({name: value}, function (err, loginRecord) {
-		if (err) {
-			throw err;
-		}
+  //   // check for uniqueness of user name
+  //   this.constructor.findOne({
+  //     name: value
+  //   }, function (err, loginRecord) {
+  //     if (err) {
+  //       throw err;
+  //     }
 
-		if (loginRecord) {
-			// the searched name is my name or a duplicate
-			return respond(self.id === loginRecord.id);
-		}
+  //     if (loginRecord) {
+  //       // the searched name is my name or a duplicate
+  //       return respond(self.id === loginRecord.id);
+  //     }
 
-		respond(true);
-	});
-}
+  //     respond(true);
+  //   });
+  // }
