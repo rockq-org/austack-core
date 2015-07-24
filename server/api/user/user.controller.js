@@ -217,7 +217,7 @@ UserController.prototype = {
       });
     }
 
-    if (_id != req.userInfo._id) {
+    if (_id != String(req.userInfo._id)) {
       return res.forbidden({
         message: "permission deny, you are not the user " + _id
       });
