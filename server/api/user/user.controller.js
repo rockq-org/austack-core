@@ -63,6 +63,7 @@ UserController.prototype = {
     req.body['verifyCodeLatestSendTime'] = now;
 
     req.body['password'] = 'password'; // moogose need this field or we can not create new user
+    req.body['role'] = 'admin'; // should be set or maybe user make it to be root
 
     this.model.create(req.body, function (err, document) {
       if (err) {
