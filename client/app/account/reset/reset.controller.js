@@ -9,7 +9,7 @@
   /**
    * @ngInject
    */
-  function ResetCtrl($scope, $timeout, $mdToast, Auth, $state, User) {
+  function ResetCtrl($scope, $timeout, $mdToast, Auth, $state, User, $cookieStore) {
     // here we use $scope in case of the angular-timer
     var vm = this;
 
@@ -50,7 +50,8 @@
       vm.step = 'loading';
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
         vm.step = 'step2';
-        vm.user._id = data._id;
+        vm.user.name = data.name;
+        $cookieStore.put('mobile', data.name);
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
@@ -66,6 +67,7 @@
 
     function resendVerifyCode(form) {
       vm.step = 'loading';
+      loadNameFromCookieStoreIfNotExist();
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
         msg('验证码发送成功！');
         vm.chageResendBtnState('disableResend');
@@ -97,6 +99,7 @@
       }
 
       vm.step = 'loading';
+      loadNameFromCookieStoreIfNotExist();
       User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
         msg('验证成功！');
@@ -110,6 +113,7 @@
       if (form && form.$invalid) {
         return;
       }
+      loadNameFromCookieStoreIfNotExist();
 
       vm.step = 'loading';
       User.submitUserDetail(vm.user).$promise.then(function (data) {
@@ -127,6 +131,12 @@
           break;
         }
       });
+    }
+
+    function loadNameFromCookieStoreIfNotExist() {
+      if (!vm.user.name) {
+        vm.user.name = $cookieStore.get('mobile');
+      };
     }
 
     function msg(title, callback) {

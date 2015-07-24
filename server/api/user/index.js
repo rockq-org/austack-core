@@ -55,7 +55,7 @@ router.route('*')
   .all(addRequestContext, isAuthenticated, addUserContext);
 
 // submitUserDetail
-router.route('/' + controller.paramString + '/submitUserDetail')
+router.route('/submitUserDetail')
   .put(isAdmin, controller.submitUserDetail);
 
 // register user routes

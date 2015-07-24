@@ -200,10 +200,7 @@ UserController.prototype = {
   },
 
   submitUserDetail: function (req, res) {
-    if (!req[this.paramName]._id) {
-      return res.badRequest();
-    }
-    var _id = req[this.paramName]._id;
+    var name = String(req.body.name);
     var userId = String(req.body.userId);
     var password = String(req.body.password);
 
@@ -216,14 +213,14 @@ UserController.prototype = {
       });
     }
 
-    if (_id != String(req.userInfo._id)) {
+    if (name != String(req.userInfo.name)) {
       return res.forbidden({
-        message: "permission deny, you are not the user " + _id
+        message: "permission deny, you are not the user " + name
       });
     }
 
     this.model.findOne({
-      '_id': _id
+      'name': name
     }, function (err, user) {
       if (err) {
         return res.handleError(err);
