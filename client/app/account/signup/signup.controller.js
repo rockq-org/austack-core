@@ -32,15 +32,15 @@
 
     vm.step = 'step2';
 
-    function _demoData() {
-      return {
-        // _id: '558a6edff7a49124d6edc764',
-        name: '18959264502',
-        verifyCode: '5168',
-        userId: 'lymanlai-',
-        password: 'laijinyue'
-      };
-    }
+    // function _demoData() {
+    //   return {
+    //     // _id: '558a6edff7a49124d6edc764',
+    //     name: '18959264502',
+    //     verifyCode: '5168',
+    //     userId: 'lymanlai-',
+    //     password: 'laijinyue'
+    //   };
+    // }
 
     function getVerifyCode(form) {
       if (form && form.$invalid) {
@@ -106,7 +106,7 @@
       User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
         $cookieStore.put('token', data.token); //make the jwt to be saved
-        console.log(data.token);
+        // console.log(data.token);
         msg('验证成功！');
       }).catch(function (err) {
         msg('验证码错误或验证码已过期！');

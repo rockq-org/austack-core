@@ -238,7 +238,6 @@ UserController.prototype = {
   },
 
   setNewPassword: function (req, res) {
-    console.log(req.body);
     var name = String(req.body.name);
     var password = String(req.body.password);
 
