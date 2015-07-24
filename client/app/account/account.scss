@@ -1,23 +1,17 @@
 #account-content {
-  background-color: #eee;
-  nav .logo {
-    width: 240px;
-  }
-  md-toolbar {
-    background-color: #eee;
-    .md-toolbar-tools {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .md-button {
-      color: rgba(0, 0, 0, 0.87);
-      &.active {
-        color: rgb(255, 64, 129)
-      }
-    }
+  background-color: rgb(33, 150, 243);
+  padding-top: 10%;
+  padding-bottom: 5%;
+  margin-bottom: 10%;
+  .text-center {
+    color: #fff;
   }
   md-card {
     width: 100%;
     max-width: 360px;
+    border-radius: 16px;
+    .md-button {
+      min-width: inherit;
+    }
   }
 }
