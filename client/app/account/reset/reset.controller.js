@@ -30,7 +30,7 @@
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
 
-    // vm.step = 'step2';
+    vm.step = 'step3';
 
     function _demoData() {
       return {
@@ -48,16 +48,13 @@
       }
 
       vm.step = 'loading';
-      User.create({
-        name: vm.user.name,
-        role: 'admin' // for tenant's role
-      }).$promise.then(function (data) {
+      User.resendVerifyCode(vm.user).$promise.then(function (data) {
         vm.step = 'step2';
         vm.user._id = data._id;
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
-        msg('手机号不合法或者已经被注册');
+        msg('手机号未注册或验证码发送失败！');
       });
     }
 
@@ -116,7 +113,7 @@
 
       vm.step = 'loading';
       User.submitUserDetail(vm.user).$promise.then(function (data) {
-        msg('注册成功！', function () {
+        msg('重置密码成功！', function () {
           $state.go('account.login');
         });
       }).catch(function (err) {

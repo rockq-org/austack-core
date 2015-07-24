@@ -9,7 +9,7 @@
   /**
    * @ngInject
    */
-  function SignupCtrl($scope, $timeout, $mdToast, Auth, $state, User) {
+  function SignupCtrl($scope, $timeout, $mdToast, Auth, $state, User, $cookieStore) {
     // here we use $scope in case of the angular-timer
     var vm = this;
 
@@ -102,6 +102,7 @@
       vm.step = 'loading';
       User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
+        $cookieStore.put('token', data.token); //make the jwt to be saved
         msg('验证成功！');
       }).catch(function (err) {
         msg('验证码错误或验证码已过期！');
@@ -117,6 +118,7 @@
       vm.step = 'loading';
       User.submitUserDetail(vm.user).$promise.then(function (data) {
         msg('注册成功！', function () {
+          $cookieStore.remove('token'); // remove token, so user can go to login state
           $state.go('account.login');
         });
       }).catch(function (err) {
