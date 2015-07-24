@@ -10,7 +10,7 @@ module.exports = TenantController;
 
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
-var LoginRecordController = require('../LoginRecord/LoginRecord.Controller');
+var LoginRecordController = require('../loginRecord/loginRecord.Controller');
 var Application = require('../application/application.model').model;
 var User = require('../user/user.model').model;
 var compose = require('composable-middleware');
