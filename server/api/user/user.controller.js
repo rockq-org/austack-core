@@ -217,6 +217,12 @@ UserController.prototype = {
       });
     }
 
+    if (_id != req.userInfo._id) {
+      return res.forbidden({
+        message: "permission deny, you are not the user " + _id
+      });
+    }
+
     this.model.findOne({
       '_id': _id
     }, function (err, user) {
