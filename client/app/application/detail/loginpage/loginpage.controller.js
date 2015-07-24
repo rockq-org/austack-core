@@ -94,6 +94,7 @@
 
     function aceLoaded(editor) {
       editor.$blockScrolling = Infinity;
+      editor.getSession().setUseWorker(false);
     }
   }
 })();
