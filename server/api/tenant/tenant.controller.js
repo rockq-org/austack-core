@@ -10,7 +10,7 @@ module.exports = TenantController;
 
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
-var LoginRecordModel = require('../LoginRecord/LoginRecord.model');
+var LoginRecordModel = require('../LoginRecord/LoginRecord.model').model;
 var Application = require('../application/application.model').model;
 var User = require('../user/user.model').model;
 var compose = require('composable-middleware');
@@ -301,12 +301,12 @@ var Helper = {
 
     var recordData = {
       mobile: Helper.req.body.mobile,
-      appUserId: Helper.req.appUser._id,
+      appUserId: String(Helper.req.appUser._id),
       clientId: Helper.req.query.clientId,
       actionType: 'login',
-      ownerId: Helper.req.application.ownerId
+      ownerId: String(Helper.req.application.ownerId)
     };
-    logger.log('addLoginRecord now');
+    logger.log('addLoginRecord now', recordData);
     LoginRecordModel.create(recordData, function (err, doc) {
       logger.log(err, doc);
     });

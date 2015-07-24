@@ -62,7 +62,7 @@ var LoginRecord;
 if (mongoose.models.LoginRecord) {
   LoginRecord = mongoose.model('LoginRecord');
 } else {
-  LoginRecord = mongoose.model('LoginRecord', LoginRecordSchema);
+  LoginRecord = mongoose.model('LoginRecord', LoginRecordSchema, 'login_records');
 }
 
 module.exports = {
