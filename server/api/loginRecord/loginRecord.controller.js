@@ -46,16 +46,7 @@ LoginRecordController.prototype = {
    * Set our own constructor property for instanceof checks
    * @private
    */
-  constructor: LoginRecordController,
-
-  addRecord: function (data) {
-    this.model.create(data, function (err, document) {
-      if (err) {
-        logger.log(err);
-      }
-    });
-  }
-
+  constructor: LoginRecordController
 };
 
 // inherit from ParamController
