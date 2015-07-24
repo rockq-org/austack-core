@@ -1,1 +1,9 @@
-#application-detail-content {}
+#application-detail-content {
+  .icon-large {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    border: 5px solid;
+  }
+}
