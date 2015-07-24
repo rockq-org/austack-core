@@ -118,6 +118,7 @@
       vm.step = 'loading';
       User.submitUserDetail(vm.user).$promise.then(function (data) {
         msg('注册成功！', function () {
+          $cookieStore.remove('token'); // remove token, so user can go to login state
           $state.go('account.login');
         });
       }).catch(function (err) {
