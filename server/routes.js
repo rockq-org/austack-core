@@ -23,6 +23,7 @@ module.exports = function (app) {
     .post(middleware.removeReservedSchemaKeywords);
 
   // Insert routes below
+app.use('/api/loginRecords', require('./api/loginRecord'));
   app.use('/tenant', require('./api/tenant'));
   app.use('/api/applications', require('./api/application'));
   app.use('/api/users', require('./api/user'));
