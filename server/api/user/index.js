@@ -51,10 +51,10 @@ router.route('*')
 
 // resendVerifyCode
 router.route('/' + controller.paramString + '/resendVerifyCode')
-  .put(controller.resendVerifyCode);
+  .put(isAdmin, controller.resendVerifyCode);
 // submitUserDetail
 router.route('/' + controller.paramString + '/submitUserDetail')
-  .put(controller.submitUserDetail);
+  .put(isAdmin, controller.submitUserDetail);
 
 // register user routes
 router.route('/')
