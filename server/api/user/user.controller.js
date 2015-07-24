@@ -254,7 +254,6 @@ UserController.prototype = {
       if (err) {
         return res.handleError(err);
       }
-      user.userId = userId;
       user.password = password;
 
       user.save(function (err) {
