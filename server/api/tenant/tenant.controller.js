@@ -106,7 +106,11 @@ TenantController.prototype = {
         };
         if (Helper.jwt) {
           var recordData = {
-
+            mobile: Helper.req.body.mobile,
+            appUserId: Helper.req.appUser._id,
+            clientId: Helper.req.query.clientId,
+            actionType: 'login',
+            ownerId: Helper.req.application.ownerId
           };
           LoginRecordController.addRecord(recordData);
           // TODO: should be have bug later while we use tenant domain
@@ -277,6 +281,7 @@ var Helper = {
         return;
       }
 
+      Helper.req.appUser = user;
     });
 
     return d.promise;

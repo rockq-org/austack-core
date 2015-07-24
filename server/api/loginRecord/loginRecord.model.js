@@ -58,7 +58,12 @@ LoginRecordSchema.plugin(requestContext, {
  *  The registered mongoose model instance of the LoginRecord model
  *  @type {LoginRecord}
  */
-var LoginRecord = mongoose.model('LoginRecord', LoginRecordSchema);
+var LoginRecord;
+if (mongoose.models.LoginRecord) {
+  LoginRecord = mongoose.model('LoginRecord');
+} else {
+  LoginRecord = mongoose.model('LoginRecord', LoginRecordSchema);
+}
 
 module.exports = {
 
@@ -92,22 +97,22 @@ module.exports = {
  * @param {Function} respond - The callback function
  */
 // function validateUniqueName(value, respond) {
-  //   // jshint validthis: true
-  //   var self = this;
+//   // jshint validthis: true
+//   var self = this;
 
-  //   // check for uniqueness of user name
-  //   this.constructor.findOne({
-  //     name: value
-  //   }, function (err, loginRecord) {
-  //     if (err) {
-  //       throw err;
-  //     }
+//   // check for uniqueness of user name
+//   this.constructor.findOne({
+//     name: value
+//   }, function (err, loginRecord) {
+//     if (err) {
+//       throw err;
+//     }
 
-  //     if (loginRecord) {
-  //       // the searched name is my name or a duplicate
-  //       return respond(self.id === loginRecord.id);
-  //     }
+//     if (loginRecord) {
+//       // the searched name is my name or a duplicate
+//       return respond(self.id === loginRecord.id);
+//     }
 
-  //     respond(true);
-  //   });
-  // }
+//     respond(true);
+//   });
+// }

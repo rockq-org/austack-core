@@ -49,7 +49,11 @@ LoginRecordController.prototype = {
   constructor: LoginRecordController,
 
   addRecord: function (data) {
-
+    this.model.create(data, function (err, document) {
+      if (err) {
+        logger.log(err);
+      }
+    });
   }
 
 };
