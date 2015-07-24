@@ -27,29 +27,32 @@ var LoginRecord = require('./loginRecord.model').model;
  * @see loginRecord:model~LoginRecord
  */
 function LoginRecordController(router) {
-	ParamController.call(this, LoginRecord,  router);
+  ParamController.call(this, LoginRecord, router);
 
-	// modify select only properties
-	// this.select = ['-__v'];
+  // modify select only properties
+  // this.select = ['-__v'];
 
-	// omit properties on update
-	// this.omit = ['hashedPassword'];
+  // omit properties on update
+  // this.omit = ['hashedPassword'];
 
-	// property to return (maybe a virtual getter of the model)
-	// this.defaultReturn = 'profile';
+  // property to return (maybe a virtual getter of the model)
+  // this.defaultReturn = 'profile';
 }
 
 // define properties for the LoginRecordController here
 LoginRecordController.prototype = {
 
-	/**
-	 * Set our own constructor property for instanceof checks
-	 * @private
-	 */
-	constructor: LoginRecordController
+  /**
+   * Set our own constructor property for instanceof checks
+   * @private
+   */
+  constructor: LoginRecordController,
+
+  addRecord: function (data) {
+
+  }
 
 };
 
 // inherit from ParamController
 LoginRecordController.prototype = Object.create(ParamController.prototype);
-
