@@ -237,7 +237,7 @@ UserController.prototype = {
     });
   },
 
-setNewPassword: function (req, res) {
+  setNewPassword: function (req, res) {
     var name = String(req.body.name);
     var password = String(req.body.password);
 
@@ -253,6 +253,7 @@ setNewPassword: function (req, res) {
       if (err) {
         return res.handleError(err);
       }
+      user.userId = userId;
       user.password = password;
 
       user.save(function (err) {
