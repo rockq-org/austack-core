@@ -16,7 +16,7 @@
     // view model bindings
     vm.title = 'reset';
     vm.user = {};
-    vm.user = _demoData();
+    // vm.user = _demoData();
     vm.step = 'step1';
     vm.disableResendVerifyCodeBtn = false;
     vm.disableResendVerifyCodeBtn = true;
@@ -30,7 +30,7 @@
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
 
-    // vm.step = 'step3';
+    vm.step = 'step3';
 
     function _demoData() {
       return {

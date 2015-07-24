@@ -43,11 +43,11 @@ router.route('/')
   .post(controller.create);
 
 // resendVerifyCode
-router.route('/' + controller.paramString + '/resendVerifyCode')
+router.route('/resendVerifyCode')
   .put(controller.resendVerifyCode);
 
 // verifyMobile
-router.route('/' + controller.paramString + '/verifyMobile')
+router.route('/verifyMobile')
   .put(controller.verifyMobile);
 
 // wrap in domain, check authentication and attach userInfo object, set user request context

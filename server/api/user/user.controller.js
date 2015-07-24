@@ -86,15 +86,15 @@ UserController.prototype = {
   },
 
   resendVerifyCode: function (req, res) {
-    if (!req[this.paramName]._id) {
+    var self = this;
+    if (!req.body.name) {
       return res.badRequest();
     }
-    var _id = req[this.paramName]._id;
-    var self = this;
+    var params = {
+      'name': req.body.name
+    };
 
-    this.model.findOne({
-      '_id': _id
-    }, function (err, user) {
+    this.model.findOne(params, function (err, user) {
       var now = new Date();
       var timeSpan = now - user.verifyCodeLatestSendTime;
       if (timeSpan < (+60) * 1000) {
@@ -120,14 +120,13 @@ UserController.prototype = {
   },
 
   verifyMobile: function (req, res) {
-    if (!req[this.paramName]._id) {
+    if (!req.body.name) {
       return res.badRequest();
     }
-    var _id = req[this.paramName]._id;
     var verifyCode = String(req.body.verifyCode);
 
     this.model.findOne({
-      '_id': _id
+      'name': req.body.name
     }, function (err, user) {
       if (user.verifyCode !== verifyCode) {
         return res.forbidden({
