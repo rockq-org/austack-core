@@ -1,24 +1,22 @@
 md-sidenav[md-component-id="mainMenu"] {
-  md-toolbar {
-    list-image div {
-      margin: 0 16px 0 0;
-    }
+  $sidenavWidth: 260px;
+  width: $sidenavWidth;
+  min-width: $sidenavWidth;
+  max-width: $sidenavWidth;
+  &.md-locked-open {
+    width: $sidenavWidth;
+    min-width: $sidenavWidth;
+    max-width: $sidenavWidth;
   }
   md-divider {
     margin: 10px;
   }
   md-toolbar .logo {
     img {
-      width: 280px
+      width: 240px
     }
     span {
       font-size: 32px;
-    }
-  }
-  md-menu-item.active {
-    color: rgb(255, 64, 129);
-    md-icon {
-      color: rgb(255, 64, 129);
     }
   }
 }

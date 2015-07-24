@@ -19,7 +19,7 @@
     }];
 
     vm.user = Auth.getCurrentUser();
-    vm.user.avatar = 'assets/images/profile.jpg';
+    vm.user.avatar = 'assets/images/profile.png';
 
     vm.profile = profile;
     vm.setting = setting;
