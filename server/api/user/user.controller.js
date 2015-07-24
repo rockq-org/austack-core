@@ -15,6 +15,7 @@ var Weimi = require('../../lib/weimi/index');
 var Shape = require('../shape/shape.proxy');
 var Repo = require('../repo/repo.proxy');
 var util = require('util');
+var auth = require('../../lib/auth/auth.service');
 
 /**
  * The User model instance
@@ -139,6 +140,8 @@ UserController.prototype = {
         });
       }
 
+      var token = auth.signToken(user._id, 'admin');
+
       // Create User Shape & Repo after account is activated.
       // assume user is not active and not verified before.
       if ((!user.active) && (!user.isVerified)) {
@@ -178,13 +181,19 @@ UserController.prototype = {
               if (err) {
                 return res.handleError(err);
               } else {
-                return res.noContent();
+                return res.ok({
+                  token: token
+                });
               }
             });
           })
           .fail(function (err) {
             return res.handleError(err);
           })
+      } else {
+        return res.ok({
+          token: token
+        });
       }
 
     });
