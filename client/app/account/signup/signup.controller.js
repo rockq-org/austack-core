@@ -16,7 +16,7 @@
     // view model bindings
     vm.title = 'signup';
     vm.user = {};
-    vm.user = _demoData();
+    // vm.user = _demoData();
     vm.step = 'step1';
     vm.disableResendVerifyCodeBtn = false;
     vm.disableResendVerifyCodeBtn = true;
@@ -30,17 +30,17 @@
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
 
-    // vm.step = 'step2';
+    vm.step = 'step2';
 
-    function _demoData() {
-      return {
-        _id: '558a6edff7a49124d6edc764',
-        name: '18959264502',
-        verifyCode: '5168',
-        userId: 'lymanlai-',
-        password: 'laijinyue'
-      };
-    }
+    // function _demoData() {
+    //   return {
+    //     // _id: '558a6edff7a49124d6edc764',
+    //     name: '18959264502',
+    //     verifyCode: '5168',
+    //     userId: 'lymanlai-',
+    //     password: 'laijinyue'
+    //   };
+    // }
 
     function getVerifyCode(form) {
       if (form && form.$invalid) {
@@ -54,6 +54,7 @@
       }).$promise.then(function (data) {
         vm.step = 'step2';
         vm.user._id = data._id;
+        $cookieStore.put('mobile', vm.user.name);
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
@@ -69,6 +70,7 @@
 
     function resendVerifyCode(form) {
       vm.step = 'loading';
+      loadNameFromCookieStoreIfNotExist();
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
         msg('验证码发送成功！');
         vm.chageResendBtnState('disableResend');
@@ -100,9 +102,11 @@
       }
 
       vm.step = 'loading';
+      loadNameFromCookieStoreIfNotExist();
       User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
         $cookieStore.put('token', data.token); //make the jwt to be saved
+        // console.log(data.token);
         msg('验证成功！');
       }).catch(function (err) {
         msg('验证码错误或验证码已过期！');
@@ -116,6 +120,7 @@
       }
 
       vm.step = 'loading';
+      loadNameFromCookieStoreIfNotExist();
       User.submitUserDetail(vm.user).$promise.then(function (data) {
         msg('注册成功！', function () {
           $cookieStore.remove('token'); // remove token, so user can go to login state
@@ -132,6 +137,12 @@
           break;
         }
       });
+    }
+
+    function loadNameFromCookieStoreIfNotExist() {
+      if (!vm.user.name) {
+        vm.user.name = $cookieStore.get('mobile');
+      };
     }
 
     function msg(title, callback) {

@@ -66,6 +66,13 @@
           controller: 'submitUserDetail'
         }
       },
+      setNewPassword: {
+        method: 'PUT',
+        params: {
+          controller: 'setNewPassword'
+        }
+      },
+
       changePassword: {
         method: 'PUT',
         params: {

@@ -86,15 +86,15 @@ UserController.prototype = {
   },
 
   resendVerifyCode: function (req, res) {
-    if (!req[this.paramName]._id) {
+    var self = this;
+    if (!req.body.name) {
       return res.badRequest();
     }
-    var _id = req[this.paramName]._id;
-    var self = this;
+    var params = {
+      'name': req.body.name
+    };
 
-    this.model.findOne({
-      '_id': _id
-    }, function (err, user) {
+    this.model.findOne(params, function (err, user) {
       var now = new Date();
       var timeSpan = now - user.verifyCodeLatestSendTime;
       if (timeSpan < (+60) * 1000) {
@@ -120,14 +120,13 @@ UserController.prototype = {
   },
 
   verifyMobile: function (req, res) {
-    if (!req[this.paramName]._id) {
+    if (!req.body.name) {
       return res.badRequest();
     }
-    var _id = req[this.paramName]._id;
     var verifyCode = String(req.body.verifyCode);
 
     this.model.findOne({
-      '_id': _id
+      'name': req.body.name
     }, function (err, user) {
       if (user.verifyCode !== verifyCode) {
         return res.forbidden({
@@ -201,10 +200,7 @@ UserController.prototype = {
   },
 
   submitUserDetail: function (req, res) {
-    if (!req[this.paramName]._id) {
-      return res.badRequest();
-    }
-    var _id = req[this.paramName]._id;
+    var name = String(req.body.name);
     var userId = String(req.body.userId);
     var password = String(req.body.password);
 
@@ -217,13 +213,46 @@ UserController.prototype = {
       });
     }
 
+    if (name != String(req.userInfo.name)) {
+      return res.forbidden({
+        message: "permission deny, you are not the user " + name
+      });
+    }
+
     this.model.findOne({
-      '_id': _id
+      'name': name
     }, function (err, user) {
       if (err) {
         return res.handleError(err);
       }
       user.userId = userId;
+      user.password = password;
+
+      user.save(function (err) {
+        if (err) {
+          return res.handleError(err);
+        }
+        return res.noContent();
+      });
+    });
+  },
+
+  setNewPassword: function (req, res) {
+    var name = String(req.body.name);
+    var password = String(req.body.password);
+
+    if (name != String(req.userInfo.name)) {
+      return res.forbidden({
+        message: "permission deny, you are not the user " + name
+      });
+    }
+
+    this.model.findOne({
+      'name': name
+    }, function (err, user) {
+      if (err) {
+        return res.handleError(err);
+      }
       user.password = password;
 
       user.save(function (err) {

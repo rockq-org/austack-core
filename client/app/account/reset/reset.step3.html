@@ -1,16 +1,17 @@
-<form class="card" name="userDetailForm" layout="column" layout-fill layout-align="space-between" ng-submit="reset.submitUserDetail(userDetailForm)">
+<form class="card" name="userDetailForm" layout="column" layout-fill layout-align="space-between" ng-submit="reset.setNewPassword(userDetailForm)">
   <md-input-container>
     <label>设置新密码</label>
-    <input name="userId" ng-model="reset.user.userId" required/>
-    <div ng-messages="userDetailForm.userId.$error" ng-if="userDetailForm.userId.$dirty">
+    <input name="password" type="password" ng-model="reset.user.password" required/>
+    <div ng-messages="userDetailForm.password.$error" ng-if="userDetailForm.password.$dirty">
       <div ng-message="required">请输入您的新密码！</div>
     </div>
   </md-input-container>
   <md-input-container>
     <label>确认新密码</label>
-    <input name="password" type="password" ng-model="reset.user.password" required/>
-    <div ng-messages="userDetailForm.password.$error" ng-if="userDetailForm.password.$dirty">
-      <div ng-message="required">请输入您的新密码！</div>
+    <input name="verify" type="password" ng-model="verify" repeat-input="reset.user.password" required/>
+    <div ng-messages="userDetailForm.verify.$error" ng-if="userDetailForm.verify.$dirty">
+      <div ng-message="required">请重复输入上面的密码！</div>
+      <div ng-message="repeat-input">两次密码不同！</div>
     </div>
   </md-input-container>
   <md-button class="md-primary md-raised" ng-disabled="!userDetailForm.$valid" type="submit">确定</md-button>
