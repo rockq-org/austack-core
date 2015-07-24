@@ -237,6 +237,33 @@ UserController.prototype = {
     });
   },
 
+setNewPassword: function (req, res) {
+    var name = String(req.body.name);
+    var password = String(req.body.password);
+
+    if (name != String(req.userInfo.name)) {
+      return res.forbidden({
+        message: "permission deny, you are not the user " + name
+      });
+    }
+
+    this.model.findOne({
+      'name': name
+    }, function (err, user) {
+      if (err) {
+        return res.handleError(err);
+      }
+      user.password = password;
+
+      user.save(function (err) {
+        if (err) {
+          return res.handleError(err);
+        }
+        return res.noContent();
+      });
+    });
+  },
+
   /**README
    * Replaces an existing user password in the DB using the request body
    * property named 'password'. Should be an admin only route.

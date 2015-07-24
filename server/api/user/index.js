@@ -58,6 +58,10 @@ router.route('*')
 router.route('/submitUserDetail')
   .put(isAdmin, controller.submitUserDetail);
 
+// setNewPassword
+router.route('/setNewPassword')
+  .put(isAdmin, controller.setNewPassword);
+
 // register user routes
 router.route('/')
   .get(isAdmin, controller.index);

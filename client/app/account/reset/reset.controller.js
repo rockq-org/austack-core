@@ -109,14 +109,14 @@
       });
     }
 
-    function submitUserDetail(form) {
+    function setNewPassword(form) {
       if (form && form.$invalid) {
         return;
       }
       loadNameFromCookieStoreIfNotExist();
 
       vm.step = 'loading';
-      User.submitUserDetail(vm.user).$promise.then(function (data) {
+      User.setNewPassword(vm.user).$promise.then(function (data) {
         msg('重置密码成功！', function () {
           $state.go('account.login');
         });
