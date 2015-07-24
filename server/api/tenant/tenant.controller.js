@@ -10,7 +10,7 @@ module.exports = TenantController;
 
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
-var LoginRecordController = require('../loginRecord/loginRecord.Controller');
+var LoginRecordModel = require('../loginRecord/loginRecord.model').model;
 var Application = require('../application/application.model').model;
 var User = require('../user/user.model').model;
 var compose = require('composable-middleware');
@@ -92,7 +92,8 @@ TenantController.prototype = {
 
         logger.log('validateVerificationCode');
         return Helper.validateVerificationCode()
-          .then(Helper.getUserJwt);
+          .then(Helper.getUserJwt)
+          .then(Helper.addLoginRecord);
       })
       .catch(function (msg) {
         if (!Helper.msg) {
@@ -105,14 +106,6 @@ TenantController.prototype = {
           msg: Helper.msg
         };
         if (Helper.jwt) {
-          var recordData = {
-            mobile: Helper.req.body.mobile,
-            appUserId: Helper.req.appUser._id,
-            clientId: Helper.req.query.clientId,
-            actionType: 'login',
-            ownerId: Helper.req.application.ownerId
-          };
-          LoginRecordController.addRecord(recordData);
           // TODO: should be have bug later while we use tenant domain
           var host = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
           var url = host + 'tenant' + req.url + '#id_token=' + Helper.jwt;
@@ -300,5 +293,22 @@ var Helper = {
     Helper.msg = '登录成功！';
     Helper.jwt = token;
     logger.log(token);
+  }),
+  addLoginRecord: Q.fbind(function () {
+    if (!Helper.jwt) {
+      return;
+    }
+
+    var recordData = {
+      mobile: Helper.req.body.mobile,
+      appUserId: String(Helper.req.appUser._id),
+      clientId: Helper.req.query.clientId,
+      actionType: 'login',
+      ownerId: String(Helper.req.application.ownerId)
+    };
+    logger.log('addLoginRecord now', recordData);
+    LoginRecordModel.create(recordData, function (err, doc) {
+      logger.log(err, doc);
+    });
   })
 };
