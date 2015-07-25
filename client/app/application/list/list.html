@@ -3,7 +3,7 @@
   <md-content ng-if="list.applications.data.length" id="application-items-content" flex>
 
     <md-list>
-      <md-list-item ng-repeat="application in list.applications.data" ng-class="{'selected': list.isSelected(application)}">
+      <md-list-item ng-click="list.showInDetails(application)" ng-repeat="application in list.applications.data" ng-class="{'selected': list.isSelected(application)}">
         <list-image ng-if="!user.image" string="{{application.name}}"></list-image>
         <p>{{::application.name}}</p>
         <p hide-md hide-sm>{{::application.description}}</p>

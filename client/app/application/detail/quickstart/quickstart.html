@@ -4,24 +4,36 @@
       <span>应用包含两部分：移动客户端和服务客户端。移动客户端可以借助austack提供的服务直接支持用户的注册，登录等功能。服务客户端可以使用austack提供的API管理用户。</span>
     </md-card-content>
   </md-card>
-  <div layout="row" layout-sm="column" layout-align="center start">
-    <md-card flex layout="column">
-      <h1 class="text-center">服务器端（NodeJS）</h1>
-      <md-icon class="icon-large md-primary" md-svg-icon="action:ic_language_24px"></md-icon>
-      <md-button class="md-primary md-raised" ng-click="vm.downloadBackend()"> 下载示例代码 </md-button>
-
-      <md-card-content>
-        <p>Sed porttitor lectus nibh. Nulla porttitor accumsan tincidunt. Donec rutrum congue leo eget malesuada. Pellentesque in ipsum id orci porta dapibus. Sed porttitor lectus nibh. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Nulla porttitor accumsan tincidunt. Curabitur aliquet quam id dui posuere blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus. Cras ultricies ligula sed magna dictum porta. Curabitur aliquet quam id dui posuere blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec sollicitudin molestie malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Nulla porttitor accumsan tincidunt. Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Nulla porttitor accumsan tincidunt. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Pellentesque in ipsum id orci porta dapibus. Donec sollicitudin molestie malesuada.</p>
-      </md-card-content>
-    </md-card>
-    <md-card flex layout="column">
-      <h1 class="text-center">客户端（Ionic）</h1>
-      <md-icon class="icon-large md-accent" md-svg-icon="action:ic_polymer_24px"></md-icon>
-      <md-button class="md-primary md-raised" ng-click="vm.downloadClient()"> 下载示例代码 </md-button>
-
-      <md-card-content>
-        <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vivamus suscipit tortor eget felis porttitor volutpat. Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Donec sollicitudin molestie malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Quisque velit nisi, pretium ut lacinia in, elementum id enim.</p>
-      </md-card-content>
-    </md-card>
+  <div layout="row" layout-md="column" layout-sm="column">
+    <md-content flex>
+      <md-card layout="column">
+        <h1 class="text-center">服务器端（NodeJS）</h1>
+        <md-icon class="icon-large md-primary" md-svg-icon="action:ic_language_24px"></md-icon>
+        <md-card-content>
+          <div class="md-actions" layout="row" layout-align="space-between center">
+            <md-button class="md-primary" ng-click="vm.showServerTutorial =! vm.showServerTutorial"> 示例说明 </md-button>
+            <md-button class="md-primary md-raised" ng-click="vm.downloadBackend()"> 下载示例代码 </md-button>
+          </div>
+          <div ng-show="vm.showServerTutorial">
+            <p>Sed porttitor lectus nibh. Nulla porttitor accumsan tincidunt. Donec rutrum congue leo eget malesuada. Pellentesque in ipsum id orci porta dapibus. Sed porttitor lectus nibh. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Nulla porttitor accumsan tincidunt. Curabitur aliquet quam id dui posuere blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus. Cras ultricies ligula sed magna dictum porta. Curabitur aliquet quam id dui posuere blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec sollicitudin molestie malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Nulla porttitor accumsan tincidunt. Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Nulla porttitor accumsan tincidunt. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Pellentesque in ipsum id orci porta dapibus. Donec sollicitudin molestie malesuada.</p>
+          </div>
+        </md-card-content>
+      </md-card>
+    </md-content>
+    <md-content flex>
+      <md-card layout="column">
+        <h1 class="text-center">客户端（Ionic）</h1>
+        <md-icon class="icon-large md-accent" md-svg-icon="action:ic_polymer_24px"></md-icon>
+        <md-card-content>
+          <div class="md-actions" layout="row" layout-align="space-between center">
+            <md-button class="md-primary" ng-click="vm.showClientTutorial =! vm.showClientTutorial"> 示例说明 </md-button>
+            <md-button class="md-primary md-raised" ng-click="vm.downloadClient()"> 下载示例代码 </md-button>
+          </div>
+          <div ng-show="vm.showClientTutorial">
+            <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vivamus suscipit tortor eget felis porttitor volutpat. Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Donec sollicitudin molestie malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Quisque velit nisi, pretium ut lacinia in, elementum id enim.</p>
+          </div>
+        </md-card-content>
+      </md-card>
+    </md-content>
   </div>
 </md-content>

@@ -61,7 +61,7 @@
      */
     function showInDetails(application) {
       curApplicationId = application._id;
-      $state.go('application.detail', {
+      $state.go('application.detail.settings', {
         'id': curApplicationId
       });
     }
