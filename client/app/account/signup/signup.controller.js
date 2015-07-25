@@ -30,7 +30,7 @@
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
 
-    vm.step = 'step2';
+    //vm.step = 'step2';
 
     // function _demoData() {
     //   return {

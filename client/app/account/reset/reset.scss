@@ -14,16 +14,16 @@
     //background-color: #f5f5f5;
     //border-radius: 4px;
     li {
-      color: #888;
+      color: #fff;
       display: inline-block;
     }
     li + li:before {
       padding: 0 6px;
-      color: #ccc;
+      color: $as-accent;
       content: "/\00a0";
     }
     .active {
-      color: rgb(255, 64, 129);
+      color: $as-warn;
     }
   }
 }

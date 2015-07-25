@@ -1,5 +1,5 @@
 #account-content {
-  background-color: rgb(33, 150, 243);
+  background-color: $as-primary;
   padding-top: 10%;
   padding-bottom: 5%;
   margin-bottom: 10%;
@@ -9,7 +9,7 @@
   md-card {
     width: 100%;
     max-width: 360px;
-    border-radius: 16px;
+    border-radius: 8px;
     .md-button {
       min-width: inherit;
     }
