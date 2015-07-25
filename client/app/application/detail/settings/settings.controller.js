@@ -10,12 +10,12 @@
     .controller('ApplicationSettingsController', ApplicationSettingsController);
 
   // add ApplicationSettingsController dependencies to inject
-  ApplicationSettingsController.$inject = ['$state', '$mdToast', 'application', 'ApplicationService'];
+  ApplicationSettingsController.$inject = ['$state', 'Toast', 'application', 'ApplicationService'];
 
   /**
    * ApplicationSettingsController constructor
    */
-  function ApplicationSettingsController($state, $mdToast, application, ApplicationService) {
+  function ApplicationSettingsController($state, Toast, application, ApplicationService) {
     var vm = this;
 
     // the current application to display
@@ -30,20 +30,10 @@
       ApplicationService.refreshSecret(vm.application)
         .then(function (data) {
           vm.application = data;
-          $mdToast.show(
-            $mdToast.simple()
-            .content('更新令牌成功')
-            .position('top right')
-            .hideDelay(500)
-          );
+          Toast.show('更新令牌成功');
         })
         .catch(function () {
-          $mdToast.show(
-            $mdToast.simple()
-            .content('更新令牌失败')
-            .position('top right')
-            .hideDelay(500)
-          );
+          Toast.show('更新令牌失败');
         });
     }
 
@@ -51,40 +41,20 @@
       vm.application.name = vm.name;
       ApplicationService.update(vm.application)
         .then(function () {
-          $mdToast.show(
-            $mdToast.simple()
-            .content('应用设置保存成功')
-            .position('top right')
-            .hideDelay(500)
-          );
+          Toast.show('应用设置保存成功');
         })
         .catch(function () {
-          $mdToast.show(
-            $mdToast.simple()
-            .content('应用设置保存失败')
-            .position('top right')
-            .hideDelay(500)
-          );
+          Toast.show('应用设置保存失败');
         });
     }
 
     function deleteApplication() {
       ApplicationService.remove(vm.application)
         .then(function () {
-          $mdToast.show(
-            $mdToast.simple()
-            .content('删除应用成功')
-            .position('top right')
-            .hideDelay(500)
-          );
+          Toast.show('删除应用成功');
         })
         .catch(function () {
-          $mdToast.show(
-            $mdToast.simple()
-            .content('删除应用失败')
-            .position('top right')
-            .hideDelay(500)
-          );
+          Toast.show('删除应用失败');
         });
     }
   }
