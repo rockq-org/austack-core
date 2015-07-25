@@ -15,7 +15,7 @@
       .state('account.signup', {
         url: '/signup',
         templateUrl: 'app/account/signup/signup.html',
-        controller: 'SignupCtrl',
+        controller: 'SignupController',
         controllerAs: 'signup'
       });
   }

@@ -24,7 +24,7 @@
    * @returns {Service} {@link austackApp.account.controller:AccountLogoutController AccountLogoutController}
    */
 
-  AccountLogoutController.$inject('Auth');
+  AccountLogoutController.$inject = 'Auth';
   /** @ngInject */
   function AccountLogoutController(Auth) {
     Auth.logout();

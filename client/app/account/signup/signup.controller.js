@@ -1,15 +1,17 @@
 (function () {
   'use strict';
 
-  // register the controller as SignupCtrl
+  // register the controller as SignupController
   angular
     .module('austackApp.account')
-    .controller('SignupCtrl', SignupCtrl);
+    .controller('SignupController', SignupController);
 
   /**
    * @ngInject
    */
-  function SignupCtrl($scope, $timeout, $mdToast, Auth, $state, User, $cookieStore) {
+  SignupController.$inject = ['$scope', '$timeout', 'Toast', 'Auth', '$state', 'User', '$cookieStore'];
+
+  function SignupController($scope, $timeout, Toast, Auth, $state, User, $cookieStore) {
     // here we use $scope in case of the angular-timer
     var vm = this;
 
@@ -58,7 +60,7 @@
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
-        msg('手机号不合法或者已经被注册');
+        Toast.show('手机号不合法或者已经被注册');
       });
     }
 
@@ -72,10 +74,10 @@
       vm.step = 'loading';
       loadNameFromCookieStoreIfNotExist();
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
-        msg('验证码发送成功！');
+        Toast.show('验证码发送成功！');
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
-        msg('验证码发送失败！请60秒后再重试！');
+        Toast.show('验证码发送失败！请60秒后再重试！');
         vm.chageResendBtnState('enableResend');
       });
     }
@@ -107,9 +109,9 @@
         vm.step = 'step3';
         $cookieStore.put('token', data.token); //make the jwt to be saved
         // console.log(data.token);
-        msg('验证成功！');
+        Toast.show('验证成功！');
       }).catch(function (err) {
-        msg('验证码错误或验证码已过期！');
+        Toast.show('验证码错误或验证码已过期！');
         vm.chageResendBtnState('enableResend');
       });
     }
@@ -122,7 +124,7 @@
       vm.step = 'loading';
       loadNameFromCookieStoreIfNotExist();
       User.submitUserDetail(vm.user).$promise.then(function (data) {
-        msg('注册成功！', function () {
+        Toast.show('注册成功！', function () {
           $cookieStore.remove('token'); // remove token, so user can go to login state
           $state.go('account.login');
         });
@@ -130,10 +132,10 @@
         vm.step = 'step3';
         switch (err.data.type) {
         case 'formatInvalidate':
-          msg('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
+          Toast.show('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
           break;
         case 'inuse':
-          msg('该用户ID已被使用');
+          Toast.show('该用户ID已被使用');
           break;
         }
       });
@@ -142,17 +144,6 @@
     function loadNameFromCookieStoreIfNotExist() {
       if (!vm.user.name) {
         vm.user.name = $cookieStore.get('mobile');
-      };
-    }
-
-    function msg(title, callback) {
-      var toast = $mdToast.simple()
-        .content(title)
-        .position('top right');
-
-      $mdToast.show(toast);
-      if (callback) {
-        $timeout(callback, 3000);
       }
     }
 

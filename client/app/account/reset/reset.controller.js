@@ -9,7 +9,7 @@
   /**
    * @ngInject
    */
-  ResetController.$inject = []
+  ResetController.$inject = ['$scope', '$timeout', 'Toast', 'Auth', '$state', 'User', '$cookieStore'];
 
   function ResetController($scope, $timeout, Toast, Auth, $state, User, $cookieStore) {
     // here we use $scope in case of the angular-timer
@@ -139,7 +139,7 @@
     function loadNameFromCookieStoreIfNotExist() {
       if (!vm.user.name) {
         vm.user.name = $cookieStore.get('mobile');
-      };
+      }
     }
 
   }
