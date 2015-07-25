@@ -32,7 +32,9 @@
     // check if this item is selected
     vm.isSelected = isSelected;
     // switch to the detail state
-    vm.showInDetails = showInDetails;
+    vm.showSettings = showSettings;
+    vm.showQuickstart = showQuickstart;
+    vm.showLoginpage = showLoginpage;
 
     vm.create = createApplication;
 
@@ -59,9 +61,23 @@
      *
      * @param {Object} application - The application to edit
      */
-    function showInDetails(application) {
+    function showSettings(application) {
       curApplicationId = application._id;
       $state.go('application.detail.settings', {
+        'id': curApplicationId
+      });
+    }
+
+    function showQuickstart(application) {
+      curApplicationId = application._id;
+      $state.go('application.detail.quickstart', {
+        'id': curApplicationId
+      });
+    }
+
+    function showLoginpage(application) {
+      curApplicationId = application._id;
+      $state.go('application.detail.loginpage', {
         'id': curApplicationId
       });
     }
