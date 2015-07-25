@@ -1,8 +1,7 @@
 <section id="login-content" layout="column" layout-fill layout-align="center center">
-  <h1 class="text-center">登入 Austack 账户</h1>
+  <h1 class="text-center">登入 Austack</h1>
   <md-card>
     <md-card-content>
-      <p ng-show="login.error" class="md-warn">{{login.error.message}}</p>
       <form class="card" name="loginForm" layout="column" layout-fill layout-align="space-between" ng-submit="login.login(loginForm)">
         <md-input-container md-is-error="loginForm.name.$error.required && loginForm.name.$dirty">
           <label>用户ID / 手机号</label>
