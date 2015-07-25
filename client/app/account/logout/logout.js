@@ -26,7 +26,7 @@
     // The logout state configuration
     var logoutState = {
       name: 'account.logout',
-      url: '^/logout',
+      url: '/logout',
       authenticate: false,
       role: 'user',
       templateUrl: 'app/account/logout/logout.html',

@@ -13,7 +13,6 @@
     .module('austackApp.account')
     .controller('AccountLogoutController', AccountLogoutController);
 
-
   /**
    * @ngdoc function
    * @name austackApp.account.provider:AccountLogoutController
@@ -25,6 +24,7 @@
    * @returns {Service} {@link austackApp.account.controller:AccountLogoutController AccountLogoutController}
    */
 
+  AccountLogoutController.$inject('Auth');
   /** @ngInject */
   function AccountLogoutController(Auth) {
     Auth.logout();
