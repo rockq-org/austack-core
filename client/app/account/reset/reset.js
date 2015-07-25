@@ -15,7 +15,7 @@
       .state('account.reset', {
         url: '/reset',
         templateUrl: 'app/account/reset/reset.html',
-        controller: 'ResetCtrl',
+        controller: 'ResetController',
         controllerAs: 'reset'
       });
   }

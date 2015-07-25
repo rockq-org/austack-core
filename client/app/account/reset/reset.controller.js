@@ -1,15 +1,17 @@
 (function () {
   'use strict';
 
-  // register the controller as ResetCtrl
+  // register the controller as ResetController
   angular
     .module('austackApp.account')
-    .controller('ResetCtrl', ResetCtrl);
+    .controller('ResetController', ResetController);
 
   /**
    * @ngInject
    */
-  function ResetCtrl($scope, $timeout, $mdToast, Auth, $state, User, $cookieStore) {
+  ResetController.$inject = []
+
+  function ResetController($scope, $timeout, Toast, Auth, $state, User, $cookieStore) {
     // here we use $scope in case of the angular-timer
     var vm = this;
 
@@ -55,7 +57,7 @@
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
-        msg('手机号未注册或验证码发送失败！');
+        Toast.show('手机号未注册或验证码发送失败！');
       });
     }
 
@@ -69,10 +71,10 @@
       vm.step = 'loading';
       loadNameFromCookieStoreIfNotExist();
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
-        msg('验证码发送成功！');
+        Toast.show('验证码发送成功！');
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
-        msg('验证码发送失败！请60秒后再重试！');
+        Toast.show('验证码发送失败！请60秒后再重试！');
         vm.chageResendBtnState('enableResend');
       });
     }
@@ -103,9 +105,9 @@
       User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
         $cookieStore.put('token', data.token);
-        msg('验证成功！');
+        Toast.show('验证成功！');
       }).catch(function (err) {
-        msg('验证码错误或验证码已过期！');
+        Toast.show('验证码错误或验证码已过期！');
         vm.chageResendBtnState('enableResend');
       });
     }
@@ -118,17 +120,17 @@
 
       vm.step = 'loading';
       User.setNewPassword(vm.user).$promise.then(function (data) {
-        msg('重置密码成功！', function () {
+        Toast.show('重置密码成功！', function () {
           $state.go('account.login');
         });
       }).catch(function (err) {
         vm.step = 'step3';
         switch (err.data.type) {
         case 'formatInvalidate':
-          msg('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
+          Toast.show('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
           break;
         case 'inuse':
-          msg('该用户ID已被使用');
+          Toast.show('该用户ID已被使用');
           break;
         }
       });
@@ -138,17 +140,6 @@
       if (!vm.user.name) {
         vm.user.name = $cookieStore.get('mobile');
       };
-    }
-
-    function msg(title, callback) {
-      var toast = $mdToast.simple()
-        .content(title)
-        .position('top right');
-
-      $mdToast.show(toast);
-      if (callback) {
-        $timeout(callback, 3000);
-      }
     }
 
   }
