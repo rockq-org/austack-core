@@ -17,14 +17,16 @@ exports.me = function (req, res) {
   Austack.validateUserJwt(userJwt)
     .then(function () {
       var profile = {
-        clientId: clientId
-          // maybe other user data dave want to insert
+        clientId: clientId,
+        userOtherInfo: 'some other userInfo dave want to add'
       };
+      console.log('success', profile);
       res.status(200).json(profile);
     })
     .fail(function () {
+      console.log('not validate');
       res.status(401).json({
-        msg: 'user force logout'
+        message: 'user force logout'
       });
     });
 };

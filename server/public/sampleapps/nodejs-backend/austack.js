@@ -16,6 +16,7 @@ function validateUserJwt(userJwt) {
 
   Austack.getApplicationJwt()
     .then(function (applicationJwt) {
+      console.log('start validateUserJwt applicationJwt', applicationJwt);
       request.post(apiBaseURL + '/loginRecords/validateJwt')
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
