@@ -8,6 +8,7 @@
 
 module.exports = LoginRecordController;
 
+var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
 
 /**
@@ -46,8 +47,12 @@ LoginRecordController.prototype = {
    * Set our own constructor property for instanceof checks
    * @private
    */
-  constructor: LoginRecordController
+  constructor: LoginRecordController,
+
+  validateJwt: function (req, res, next) {
+    logger.log(req.body);
+  }
 };
 
 // inherit from ParamController
-LoginRecordController.prototype = Object.create(ParamController.prototype);
+LoginRecordController.prototype = _.create(ParamController.prototype, LoginRecordController.prototype);

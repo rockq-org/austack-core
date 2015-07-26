@@ -14,13 +14,12 @@ module.exports = Austack;
 function validateUserJwt(userJwt) {
   var d = Q.defer();
 
-  var applicationJwt = '';
   Austack.getApplicationJwt()
     .then(function (applicationJwt) {
       request.post(apiBaseURL + '/loginRecords/validateJwt')
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
-        .set('Authorization', 'Bearer' + applicationJwt)
+        .set('Authorization', 'Bearer ' + applicationJwt)
         .send({
           userJwt: userJwt
         })
