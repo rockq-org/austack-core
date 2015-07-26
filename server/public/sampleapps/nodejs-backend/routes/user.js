@@ -12,17 +12,18 @@ exports.list = function (req, res) {
 };
 
 exports.me = function (req, res) {
-  console.log(req.headers);
-  var profile = {
-    clientId: clientId
-  };
-  return res.status(200).json(profile);
-
-  var token = req.headers.authorization;
-  austack.validateJwt(token)
-    .then(function (argument) {
-      res.status(200).json({
-        token: token
+  var userJwt = req.headers.authorization;
+  austack.validateUserJwt(userJwt)
+    .then(function () {
+      var profile = {
+        clientId: clientId
+          // maybe other user data dave want to insert
+      };
+      res.status(200).json(profile);
+    })
+    .fail(function () {
+      res.status(401).json({
+        msg: 'user force logout'
       });
     });
 };
