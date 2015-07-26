@@ -5,6 +5,7 @@
  */
 'use strict';
 
+var _ = require('lodash');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
@@ -13,17 +14,36 @@ var roles = require('./roles');
 var config = require('../../config');
 var contextService = require('request-context');
 var Application = require('../../api/application/application.model').model;
+var Q = require('q');
 
 var secretCallback = function (req, payload, done) {
-  // login by username, password
-  if (payload._id) {
-    return done(null, config.secrets.session);
+  logger.log(payload, done);
+
+  if (!payload.role) {
+    logger.log('payload do not have role data', req, payload);
+    return;
   }
 
-  // using clientId, clientSecret to get the jwt will have role: appAdmin
-  // req.userInfo = application
-  // req.userInfo.role = 'appAdmin'
-  if (payload.clientId && payload.ownerId) {
+  switch (payload.role) {
+  case 'root':
+  case 'admin':
+    done(null, config.secrets.session);
+    break;
+  case 'appAdmin':
+    appAdminCallback(req, payload, done);
+    break;
+  case 'user':
+    logger.log(payload);
+    break;
+  default:
+    logger.log('role not validate ', payload.role);
+  }
+
+  function appAdminCallback(req, payload, done) {
+    if (!payload.clientId || !payload.ownerId) {
+      logger.log('missing clientId and ownerId in payload', payload);
+      return;
+    }
 
     //get clientSecret From application collection
     Application.findOne({
@@ -39,12 +59,10 @@ var secretCallback = function (req, payload, done) {
       done(null, secret);
     });
   }
-
 };
 
 var validateJwt = expressJwt({
   secret: secretCallback
-    // secret: config.secrets.session
 });
 
 module.exports = {
@@ -76,6 +94,7 @@ module.exports = {
   signTokenForApplication: signTokenForApplication,
   signTokenForApplicationUser: signTokenForApplicationUser,
 
+  validateUserJwt: validateUserJwt,
   /**
    * Set a signed token cookie
    * @see {auth:service~setTokenCookie}
@@ -193,6 +212,28 @@ function signTokenForApplicationUser(clientId, clientSecret, mobile) {
   }, clientSecret, {
     expiresInMinutes: FourMonths
   });
+}
+
+function validateUserJwt(userJwt) {
+  logger.log('auth.validateUserJwt', userJwt);
+  var d = Q.defer();
+  var req = {
+    headers: {
+      authorization: userJwt
+    }
+  };
+  var res = {};
+
+  validateJwt(req, res, function (err) {
+    if (err) {
+      logger.log('err', err);
+      return d.reject(err);
+    }
+    logger.log('success');
+    d.resolve();
+  });
+
+  return d.promise;
 }
 
 /**

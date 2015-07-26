@@ -10,6 +10,7 @@ module.exports = LoginRecordController;
 
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
+var auth = require('../../lib/auth/auth.service');
 
 /**
  * The LoginRecord model instance
@@ -50,7 +51,26 @@ LoginRecordController.prototype = {
   constructor: LoginRecordController,
 
   validateJwt: function (req, res, next) {
-    logger.log(req.body);
+    if (!req.body || !req.body.userJwt) {
+      return res.forbidden({
+        message: "Do not have userJwt in req.body"
+      });
+    }
+    var userJwt = req.body.userJwt;
+    logger.log('userJwt', userJwt);
+    auth.validateUserJwt(userJwt)
+      .then(function () {
+        logger.log('success');
+        res.ok({
+          message: 'userJwt validate'
+        });
+      })
+      .fail(function (err) {
+        logger.log('err');
+        res.forbidden({
+          message: "userJwt not validate"
+        });
+      })
   }
 };
 
