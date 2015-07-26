@@ -7,6 +7,7 @@
 
   angular.module('austack.service', [])
     .provider('austack', function () {
+      var self = this;
       this.init = function (options) {
         if (!options) {
           throw new Error('You must set options when calling init');
@@ -16,9 +17,11 @@
         this.loginState = options.loginState;
       };
 
-      this.$get = function ($rootScope, $q, $injector, $window, $location, $ionicPlatform) {
+      this.$get = function ($rootScope, $q, $injector, $window, $location, $ionicPlatform, $http) {
         var auth = {
-          isAuthenticated: false
+          isAuthenticated: false,
+          gettingUserInfo: false,
+          userInfoUrl: 'http://localhost:3000/me'
         };
 
         auth.hookEvents = function (argument) {
@@ -46,6 +49,7 @@
                 var result = {
                   idToken: idToken
                 };
+                self.isAuthenticated = true;
                 successCallback(result);
                 ref.close();
               } else {
@@ -56,8 +60,32 @@
           });
         };
 
-        auth.authenticate = function (profile, token) {
+        auth.getUserInfo = function (token) {
+          if (auth.gettingUserInfo) {
+            return;
+          }
+          console.log('gettingUserInfo', token);
+          var req = {
+            method: 'GET',
+            url: auth.userInfoUrl,
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            }
+          };
 
+          auth.gettingUserInfo = true;
+          $http(req)
+            .success(function (data, status) {
+              console.log('success get userInfo', data, status);
+              auth.gettingUserInfo = false;
+            })
+            .error(function (data, status) {
+              console.log('error get userInfo', data, status);
+              console.dir(arguments);
+              auth.gettingUserInfo = false;
+            });
         };
 
         auth.signout = function () {
