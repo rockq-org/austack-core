@@ -26,6 +26,8 @@ var secretCallback = function (req, payload, done) {
 
   switch (payload.role) {
   case 'root':
+    done(null, config.secrets.session);
+    break;
   case 'admin':
     done(null, config.secrets.session);
     break;
@@ -37,6 +39,7 @@ var secretCallback = function (req, payload, done) {
     break;
   default:
     logger.log('role not validate ', payload.role);
+    break;
   }
 
   function appAdminCallback(req, payload, done) {
@@ -72,6 +75,15 @@ var secretCallback = function (req, payload, done) {
     }, function (err, doc) {
       if (err || !doc) {
         return done(err);
+      }
+
+      //for loginRecord
+      req.validateUserJwtForLoginRecord = {
+        mobile: payload.mobile,
+        appUserId: payload.appUserId,
+        clientId: payload.clientId,
+        actionType: 'validateUserJwt',
+        ownerId: doc.ownerId
       }
 
       var secret = doc.clientSecret;
@@ -220,12 +232,13 @@ function signTokenForApplication(clientId, ownerId, clientSecret) {
   });
 }
 
-function signTokenForApplicationUser(clientId, clientSecret, mobile) {
+function signTokenForApplicationUser(clientId, clientSecret, mobile, appUserId) {
   var OneDay = 60 * 24; // in minutes
   var FourMonths = OneDay * 30 * 4;
 
   return jwt.sign({
     clientId: clientId,
+    appUserId: appUserId,
     role: 'user',
     mobile: mobile
   }, clientSecret, {
@@ -233,17 +246,11 @@ function signTokenForApplicationUser(clientId, clientSecret, mobile) {
   });
 }
 
-function validateUserJwt(userJwt) {
-  logger.log('auth.validateUserJwt', userJwt);
+function validateUserJwt(customReq) {
   var d = Q.defer();
-  var req = {
-    headers: {
-      authorization: userJwt
-    }
-  };
-  var res = {};
 
-  validateJwt(req, res, function (err) {
+  var res = {};
+  validateJwt(customReq, res, function (err) {
     if (err) {
       logger.log('err', err);
       return d.reject(err);

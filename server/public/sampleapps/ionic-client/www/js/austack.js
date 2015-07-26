@@ -78,7 +78,8 @@
           auth.gettingUserInfo = true;
           $http(req)
             .success(function (data, status) {
-              console.log('success get userInfo', data, status);
+              console.log('success get userInfo', status);
+              console.dir(data);
               auth.gettingUserInfo = false;
             })
             .error(function (data, status) {

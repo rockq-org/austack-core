@@ -287,7 +287,8 @@ var Helper = {
     var clientId = Helper.req.application.clientId;
     var clientSecret = Helper.req.application.clientSecret;
     var mobile = Helper.req.body.mobile;
-    var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile);
+    var appUserId = String(Helper.req.appUser._id);
+    var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile, appUserId);
     Helper.req.jwt = token;
 
     Helper.msg = '登录成功！';

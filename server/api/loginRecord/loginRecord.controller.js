@@ -56,9 +56,15 @@ LoginRecordController.prototype = {
         message: "Do not have userJwt in req.body"
       });
     }
+
     var userJwt = req.body.userJwt;
     logger.log('userJwt', userJwt);
-    auth.validateUserJwt(userJwt)
+    var customReq = {
+      headers: {
+        authorization: userJwt
+      }
+    };
+    auth.validateUserJwt(customReq)
       .then(function () {
         logger.log('success');
         res.ok({
@@ -71,6 +77,14 @@ LoginRecordController.prototype = {
           message: "userJwt not validate"
         });
       })
+      .finally(function () {
+        LoginRecord.create(customReq.validateUserJwtForLoginRecord, function (err, document) {
+          if (err) {
+            logger.log('loginRecord save failed');
+          }
+          logger.log('loginRecord success', customReq.validateUserJwtForLoginRecord);
+        });
+      });
   }
 };
 
