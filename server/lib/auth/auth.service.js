@@ -33,7 +33,7 @@ var secretCallback = function (req, payload, done) {
     appAdminCallback(req, payload, done);
     break;
   case 'user':
-    logger.log(payload);
+    userCallback(req, payload, done);
     break;
   default:
     logger.log('role not validate ', payload.role);
@@ -56,6 +56,25 @@ var secretCallback = function (req, payload, done) {
       var secret = doc.clientSecret;
       req.userInfo = doc;
       req.userInfo.role = 'appAdmin';
+      done(null, secret);
+    });
+  }
+
+  function userCallback(req, payload, done) {
+    if (!payload.clientId || !payload.mobile) {
+      logger.log('missing clientId and mobile in payload', payload);
+      return;
+    }
+
+    //get clientSecret From application collection
+    Application.findOne({
+      clientId: payload.clientId
+    }, function (err, doc) {
+      if (err || !doc) {
+        return done(err);
+      }
+
+      var secret = doc.clientSecret;
       done(null, secret);
     });
   }
