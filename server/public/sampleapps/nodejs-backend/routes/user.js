@@ -2,6 +2,7 @@
  * GET users listing.
  */
 var appJSON = require('../app.json');
+var Austack = require('../austack');
 var request = require('superagent');
 var apiBaseURL = appJSON.apiBaseURL;
 var clientId = appJSON.clientId;
@@ -13,7 +14,7 @@ exports.list = function (req, res) {
 
 exports.me = function (req, res) {
   var userJwt = req.headers.authorization;
-  austack.validateUserJwt(userJwt)
+  Austack.validateUserJwt(userJwt)
     .then(function () {
       var profile = {
         clientId: clientId
