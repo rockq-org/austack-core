@@ -133,7 +133,18 @@ LoginRecordController.prototype = {
         logger.log(err, docs);
         res.json(docs);
       });
+  },
+  statistics: function (req, res) {
+    var data = {
+      allUserCount: 52,
+      currentMonthActively: 40,
+      currentWeekLoginTimes: 298,
+      currentWeekNewUser: 30
+    };
+
+    res.json(data);
   }
+
 };
 
 // inherit from ParamController

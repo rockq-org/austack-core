@@ -50,6 +50,9 @@ router.route('*').all(addRequestContext, isAuthenticated, addUserContext);
 // register loginRecord routes
 router.route('/')
   .get(controller.index);
+router.route('/statistics')
+  .get(controller.statistics);
+
 // .post(controller.create);
 // router.route('/' + controller.paramString)
 //   .get(controller.show)
