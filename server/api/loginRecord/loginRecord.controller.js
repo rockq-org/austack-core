@@ -11,6 +11,7 @@ module.exports = LoginRecordController;
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
 var auth = require('../../lib/auth/auth.service');
+var Q = require('q');
 
 /**
  * The LoginRecord model instance
@@ -18,6 +19,7 @@ var auth = require('../../lib/auth/auth.service');
  */
 var LoginRecord = require('./loginRecord.model').model;
 var LoginRecordDailyCount = require('./loginRecordDailyCount.model').model;
+var RepoProxy = require('../repo/repo.proxy');
 
 /**
  * LoginRecordController constructor
@@ -135,16 +137,48 @@ LoginRecordController.prototype = {
       });
   },
   statistics: function (req, res) {
-    var data = {
-      allUserCount: 520,
-      currentMonthActively: 40,
-      currentWeekLoginTimes: 298,
-      currentWeekNewUser: 30
-    };
 
-    res.json(data);
+    // get all user from dave's repo
+
+    logger.log(req.userInfo);
+    var repoModel = RepoProxy.getModel();
+
+    Helper.getAllUserCount()
+      .then(Helper.getCurrentMonthActively)
+      .then(Helper.getCurrentWeekLoginTimes)
+      .then(Helper.getCurrentWeekNewUser)
+      .then(function () {
+        res.json(Helper.data);
+      })
+      .fail(function (err) {
+        logger.log(err);
+        var data = {
+          allUserCount: 0,
+          currentMonthActively: 0,
+          currentWeekLoginTimes: 0,
+          currentWeekNewUser: 0,
+          message: 'error while get data from server'
+        };
+
+        res.json(data);
+      });
   }
+};
 
+var Helper = {
+  data: {},
+  getAllUserCount: function () {
+
+  },
+  getCurrentMonthActively: function () {
+
+  },
+  getCurrentWeekLoginTimes: function () {
+
+  },
+  getCurrentWeekNewUser: function () {
+
+  }
 };
 
 // inherit from ParamController
