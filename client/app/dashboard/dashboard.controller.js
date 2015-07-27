@@ -23,17 +23,17 @@
    * @param {Service} $http The http service to use
    */
 
-  DashboardController.$inject = [];
-
-  function DashboardController() {
+  /* @ngInject */
+  function DashboardController(Config) {
     var vm = this;
+    var dataUrl = Config.API_URL + "loginRecords/?start={{d:start}}&stop={{d:end}}";
 
     vm.heatMapConfig = {
       domain: 'month',
       subDomain: 'x_day',
-      data: 'datas-years.json',
-      start: new Date(2000, 0, 5),
-      cellSize: 15,
+      data: dataUrl,
+      start: new Date(2015, 0, 1),
+      cellSize: 20,
       cellRadius: 3,
       cellPadding: 5,
       range: 5,
