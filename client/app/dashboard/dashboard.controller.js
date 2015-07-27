@@ -24,9 +24,11 @@
    */
 
   /* @ngInject */
-  function DashboardController(Config) {
+  function DashboardController(Config, $cookieStore) {
     var vm = this;
-    var dataUrl = Config.API_URL + "loginRecords/?start={{d:start}}&stop={{d:end}}";
+    var token = $cookieStore.get('token');
+    console.log(token);
+    var dataUrl = Config.API_URL + "loginRecords/?access_token=" + token + "&start={{d:start}}&stop={{d:end}}";
 
     vm.heatMapConfig = {
       domain: 'month',
