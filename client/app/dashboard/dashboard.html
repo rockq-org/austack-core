@@ -1,31 +1,31 @@
 <md-content flex id="dashboard-content" layout-padding>
   <md-grid-list layout-margin md-cols="2" md-cols-gt-md="4" md-row-height-gt-md="3:2" md-row-height="3:2" md-gutter="12px" md-gutter-gt-sm="8px">
     <md-grid-tile class="green">
-      <span>50</span>
+      <span>{{dashboard.statisticsData.allUserCount}}</span>
       <md-grid-tile-footer>
         <h3>全部用户</h3>
       </md-grid-tile-footer>
     </md-grid-tile>
     <md-grid-tile class="purple">
-      <span>20</span>
+      <span>{{dashboard.statisticsData.currentMonthActively}}</span>
       <md-grid-tile-footer>
         <h3>本月活跃用户</h3>
       </md-grid-tile-footer>
     </md-grid-tile>
     <md-grid-tile class="blue">
-      <span>200</span>
+      <span>{{dashboard.statisticsData.currentWeekLoginTimes}}</span>
       <md-grid-tile-footer>
         <h3>本周登录次数</h3>
       </md-grid-tile-footer>
     </md-grid-tile>
     <md-grid-tile class="red">
-      <span>15</span>
+      <span>{{dashboard.statisticsData.currentWeekNewUser}}</span>
       <md-grid-tile-footer>
         <h3>本周新用户</h3>
       </md-grid-tile-footer>
     </md-grid-tile>
   </md-grid-list>
   <md-content layout-padding>
-    <cal-heatmap config="vm.heatMapConfig"></cal-heatmap>
+    <cal-heatmap config="dashboard.heatMapConfig"></cal-heatmap>
   </md-content>
 </md-content>

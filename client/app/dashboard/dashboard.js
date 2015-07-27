@@ -18,7 +18,17 @@
       authenticate: true,
       templateUrl: 'app/dashboard/dashboard.html',
       controller: 'DashboardController',
-      controllerAs: 'vm',
+      controllerAs: 'dashboard',
+      resolve: {
+        statisticsData: function () {
+          return {
+            allUserCount: 52,
+            currentMonthActively: 40,
+            currentWeekLoginTimes: 298,
+            currentWeekNewUser: 30
+          };
+        }
+      },
       ncyBreadcrumb: {
         label: '仪表盘'
       }
