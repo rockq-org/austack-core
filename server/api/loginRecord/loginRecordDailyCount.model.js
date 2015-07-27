@@ -22,7 +22,7 @@ var Q = require('q');
  * @property {Boolean} active - Flag indicating this loginRecordDailyCount is active
  */
 var LoginRecordDailyCountDefinition = {
-  clientId: String,
+  // clientId: String,
   count: Number,
   ownerId: String,
   day: String
@@ -60,7 +60,8 @@ LoginRecordDailyCountSchema.statics.increaseTodayCount = function (data) {
   var today = moment().format('YYYY-MM-DD');
   data.day = today;
   this.findOne({
-    clientId: data.clientId,
+    // clientId: data.clientId,
+    ownerId: data.ownerId,
     day: today
   }, function (err, doc) {
     if (err) {
@@ -92,7 +93,6 @@ LoginRecordDailyCountSchema.statics.increaseTodayCount = function (data) {
 
   function insertNewOne(data, d) {
     self.create({
-      clientId: data.clientId,
       count: 1,
       ownerId: data.ownerId,
       day: data.day

@@ -102,6 +102,36 @@ LoginRecordController.prototype = {
             logger.log('loginRecordDailyCount failed');
           });
       });
+  },
+
+  index: function (req, res) {
+    var query = req.query || {};
+    var self = this;
+
+    logger.log(req.query, req.userInfo);
+
+    var start = req.query.start.substr(0, 10);
+    var stop = req.query.stop.substr(0, 10);
+    var query = {
+      day: {
+        $gt: start,
+        $lt: stop
+      },
+      ownerId: String(req.userInfo._id)
+    };
+    logger.log(query);
+    LoginRecordDailyCount
+      .find(query)
+      .limit(1000)
+      .sort({
+        day: 1
+      }).select({
+        day: 1,
+        count: 1
+      })
+      .exec(function (err, docs) {
+        logger.log(err, docs);
+      });
   }
 };
 

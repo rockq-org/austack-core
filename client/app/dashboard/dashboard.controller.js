@@ -34,7 +34,7 @@
       domain: 'month',
       subDomain: 'x_day',
       data: dataUrl,
-      start: new Date(2015, 0, 1),
+      start: new Date(2015, 5, 1),
       cellSize: 20,
       cellRadius: 3,
       cellPadding: 5,
