@@ -24,7 +24,7 @@
    */
 
   /* @ngInject */
-  function DashboardController(Config, $cookieStore) {
+  function DashboardController(Config, $cookieStore, moment) {
     var vm = this;
     var token = $cookieStore.get('token');
     console.log(token);
@@ -42,13 +42,20 @@
       domainMargin: 20,
       animationDuration: 800,
       domainDynamicDimension: false,
+      afterLoadData: function (data) {
+        var i, total, results = {};
+        for (i = 0, total = data.length; i < total; i++) {
+          results[moment(data[i].day, "YYYY-MM-DD").unix()] = data[i].count;
+        }
+        return results;
+      },
       previousSelector: '#example-h-PreviousDomain-selector',
       nextSelector: '#example-h-NextDomain-selector',
       label: {
         position: 'bottom',
         width: 110
       },
-      legend: [20, 40, 60, 80]
+      legend: [0, 40, 60, 80]
     };
   }
 

@@ -131,6 +131,7 @@ LoginRecordController.prototype = {
       })
       .exec(function (err, docs) {
         logger.log(err, docs);
+        res.json(docs);
       });
   }
 };
