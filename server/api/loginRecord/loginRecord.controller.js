@@ -17,6 +17,7 @@ var auth = require('../../lib/auth/auth.service');
  * @type {loginRecord:model~LoginRecord}
  */
 var LoginRecord = require('./loginRecord.model').model;
+var LoginRecordDailyCount = require('./loginRecordDailyCount.model').model;
 
 /**
  * LoginRecordController constructor
@@ -78,12 +79,27 @@ LoginRecordController.prototype = {
         });
       })
       .finally(function () {
+        //   req.validateUserJwtForLoginRecord = {
+        //   mobile: payload.mobile,
+        //   appUserId: payload.appUserId,
+        //   clientId: payload.clientId,
+        //   actionType: 'validateUserJwt',
+        //   ownerId: doc.ownerId
+        // }
         LoginRecord.create(customReq.validateUserJwtForLoginRecord, function (err, document) {
           if (err) {
             logger.log('loginRecord save failed');
           }
           logger.log('loginRecord success', customReq.validateUserJwtForLoginRecord);
         });
+
+        LoginRecordDailyCount.increaseTodayCount(req.validateUserJwtForLoginRecord)
+          .then(function () {
+            logger.log('loginRecordDailyCount success', customReq.validateUserJwtForLoginRecord);
+          })
+          .fail(function () {
+            logger.log('loginRecordDailyCount failed');
+          });
       });
   }
 };

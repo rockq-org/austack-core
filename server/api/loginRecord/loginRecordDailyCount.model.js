@@ -11,6 +11,7 @@
 var mongoose = require('mongoose');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
+var Q = require('q');
 
 /**
  * The LoginRecordDailyCount model definition
@@ -41,6 +42,18 @@ LoginRecordDailyCountSchema.plugin(requestContext, {
   propertyName: 'modifiedBy',
   contextPath: 'request:acl.user.name'
 });
+
+LoginRecordDailyCountSchema.statics.increaseTodayCount = function (data) {
+  var d = Q.defer();
+  if (!data.clientId) {
+    d.reject('do not provide clientId for LoginRecordDailyCountSchema.statics.increaseTodayCount');
+    return d.promise;
+  }
+
+  // find one
+  // increase it
+  return d.promise;
+};
 
 /**
  * Validations
