@@ -136,7 +136,7 @@ LoginRecordController.prototype = {
   },
   statistics: function (req, res) {
     var data = {
-      allUserCount: 52,
+      allUserCount: 520,
       currentMonthActively: 40,
       currentWeekLoginTimes: 298,
       currentWeekNewUser: 30

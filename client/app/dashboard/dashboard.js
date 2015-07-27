@@ -3,7 +3,7 @@
 
   // register the route config on the application
   angular
-    .module('austackApp.dashboard', ['ui.router', 'austackApp.layout'])
+    .module('austackApp.dashboard', ['ui.router', 'austackApp.layout', 'austackApp.loginRecord.service'])
     .config(configMainRoute);
 
   // inject configMainRoute dependencies
@@ -20,13 +20,8 @@
       controller: 'DashboardController',
       controllerAs: 'dashboard',
       resolve: {
-        statisticsData: function () {
-          return {
-            allUserCount: 52,
-            currentMonthActively: 40,
-            currentWeekLoginTimes: 298,
-            currentWeekNewUser: 30
-          };
+        statisticsData: function (LoginRecord) {
+          return LoginRecord.getStatisticsData();
         }
       },
       ncyBreadcrumb: {
