@@ -27,7 +27,6 @@
   function DashboardController(Config, $cookieStore, moment) {
     var vm = this;
     var token = $cookieStore.get('token');
-    console.log(token);
     var dataUrl = Config.API_URL + "loginRecords/?access_token=" + token + "&start={{d:start}}&stop={{d:end}}";
 
     vm.heatMapConfig = {
