@@ -19,7 +19,7 @@ var Q = require('q');
 var secretCallback = function (req, payload, done) {
   logger.log(payload, done);
 
-  if (!payload.role) {
+  if (payload == undefined || !payload.role) {
     logger.log('payload do not have role data', req, payload);
     return;
   }
