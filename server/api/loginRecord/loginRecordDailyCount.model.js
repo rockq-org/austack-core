@@ -9,6 +9,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var moment = require('moment');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
 var Q = require('q');
@@ -44,15 +45,60 @@ LoginRecordDailyCountSchema.plugin(requestContext, {
 });
 
 LoginRecordDailyCountSchema.statics.increaseTodayCount = function (data) {
+  var self = this;
   var d = Q.defer();
   if (!data.clientId) {
     d.reject('do not provide clientId for LoginRecordDailyCountSchema.statics.increaseTodayCount');
     return d.promise;
   }
 
-  // find one
-  // increase it
+  var today = moment().format('YYYY MM DD');
+  this.findOne({
+    clientId: data.clientId,
+    day: today
+  }, function (err, doc) {
+    if (err) {
+      return d.reject(err);
+    }
+
+    if (doc) { //increate the count only
+      return increaseIt(doc, d);
+    }
+
+    return insertNewOne(data, d);
+  });
+
   return d.promise;
+
+  function increaseIt(doc, d) {
+    doc.count = doc.count + 1;
+    doc.save(function (err) {
+      if (err) {
+        logger.log(err);
+        return d.reject('can not increaseIt');
+      }
+
+      return d.resolve(doc);
+    });
+
+  }
+
+  function insertNewOne(data, d) {
+    self.create({
+      clientId: data.clientId,
+      count: 1,
+      ownerId: data.ownerId,
+      day: data.day
+    }, function (err, doc) {
+      if (err) {
+        logger.log(err);
+        return d.reject('can not insertNewOne in increaseTodayCount');
+      }
+
+      return d.resolve(doc);
+    })
+  }
+
 };
 
 /**
