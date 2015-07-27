@@ -45,19 +45,26 @@ LoginRecordDailyCountSchema.plugin(requestContext, {
 });
 
 LoginRecordDailyCountSchema.statics.increaseTodayCount = function (data) {
+  data = data || {};
+  logger.log('start increaseTodayCount');
   var self = this;
   var d = Q.defer();
   if (!data.clientId) {
-    d.reject('do not provide clientId for LoginRecordDailyCountSchema.statics.increaseTodayCount');
+    var msg = 'do not provide clientId for LoginRecordDailyCountSchema.statics.increaseTodayCount';
+    logger.log(msg);
+    d.reject(msg);
     return d.promise;
   }
+  logger.log(data);
 
-  var today = moment().format('YYYY MM DD');
+  var today = moment().format('YYYY-MM-DD');
+  data.day = today;
   this.findOne({
     clientId: data.clientId,
     day: today
   }, function (err, doc) {
     if (err) {
+      logger.log(err);
       return d.reject(err);
     }
 
@@ -77,7 +84,7 @@ LoginRecordDailyCountSchema.statics.increaseTodayCount = function (data) {
         logger.log(err);
         return d.reject('can not increaseIt');
       }
-
+      logger.log('increate success', doc);
       return d.resolve(doc);
     });
 
@@ -94,7 +101,7 @@ LoginRecordDailyCountSchema.statics.increaseTodayCount = function (data) {
         logger.log(err);
         return d.reject('can not insertNewOne in increaseTodayCount');
       }
-
+      logger.log('insert new one success', doc);
       return d.resolve(doc);
     })
   }
@@ -116,7 +123,7 @@ var LoginRecordDailyCount;
 if (mongoose.models.LoginRecordDailyCount) {
   LoginRecordDailyCount = mongoose.model('LoginRecordDailyCount');
 } else {
-  LoginRecordDailyCount = mongoose.model('LoginRecordDailyCount', LoginRecordDailyCountSchema, 'login_records');
+  LoginRecordDailyCount = mongoose.model('LoginRecordDailyCount', LoginRecordDailyCountSchema, 'login_record_daily_counts');
 }
 
 module.exports = {

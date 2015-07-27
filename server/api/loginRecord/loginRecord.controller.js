@@ -86,6 +86,7 @@ LoginRecordController.prototype = {
         //   actionType: 'validateUserJwt',
         //   ownerId: doc.ownerId
         // }
+        logger.log('finally');
         LoginRecord.create(customReq.validateUserJwtForLoginRecord, function (err, document) {
           if (err) {
             logger.log('loginRecord save failed');
@@ -93,7 +94,7 @@ LoginRecordController.prototype = {
           logger.log('loginRecord success', customReq.validateUserJwtForLoginRecord);
         });
 
-        LoginRecordDailyCount.increaseTodayCount(req.validateUserJwtForLoginRecord)
+        LoginRecordDailyCount.increaseTodayCount(customReq.validateUserJwtForLoginRecord)
           .then(function () {
             logger.log('loginRecordDailyCount success', customReq.validateUserJwtForLoginRecord);
           })
