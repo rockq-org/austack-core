@@ -1,0 +1,42 @@
+<section id="shape-list-content" layout="column" layout-fill flex>
+  <!-- for shapes data structure, look into https://github.com/arrking/austack-core/issues/126 -->
+  <md-content ng-if="list.shapes.data.length" id="shape-items-content" flex>
+
+    <md-list>
+      <md-list-item ng-click="list.showSettings(shape)" ng-repeat="shape in list.shapes.data" ng-class="{'selected': list.isSelected(shape)}">
+        <list-image ng-if="!user.image" string="{{shape.name}}"></list-image>
+        <p>{{::shape.name}}</p>
+        <p hide-md hide-sm>{{::shape.description}}</p>
+        <md-button ng-click="list.showQuickstart(shape)" class="md-icon-button">
+          <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
+          <md-tooltip>快速开始</md-tooltip>
+        </md-button>
+        <md-button ng-click="list.showSettings(shape)" class="md-icon-button">
+          <md-icon md-svg-icon="action:ic_settings_24px"></md-icon>
+          <md-tooltip>设置</md-tooltip>
+        </md-button>
+        <md-button ng-click="list.showLoginpage(shape)" class="md-icon-button">
+          <md-icon md-svg-icon="action:ic_extension_24px"></md-icon>
+          <md-tooltip>登入界面</md-tooltip>
+        </md-button>
+      </md-list-item>
+    </md-list>
+
+  </md-content>
+
+  <md-content ng-if="!list.shapes.data.length">
+    <md-card>
+      <md-card-content>
+        <p>
+          应用列表为空
+          <a ng-click="index.create()">现在创建</a>
+        </p>
+      </md-card-content>
+    </md-card>
+  </md-content>
+
+  <md-button ng-click="index.create($event)" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new shape">
+    <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+  </md-button>
+
+</section>
