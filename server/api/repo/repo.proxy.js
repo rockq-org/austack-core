@@ -12,6 +12,9 @@ var Schema = mongoose.Schema;
 var dbase = mongoose.connection;
 var mongoosePaginatePlugin = require('../../lib/mongoose/mongoose-paginate');
 var Shape = require('../shape/shape.model');
+var ShapeProxy = require('../shape/shape.proxy');
+var RepoProxy = require('../repo/repo.proxy');
+var User = require('../user/user.model').model;
 var u = require('util');
 var Q = require('q');
 var shortid = require('shortid');
@@ -116,6 +119,25 @@ function insertOrUpdate(user, M) {
     }
   });
 }
+
+function getRepoByOwnerId(ownerId) {
+  logger.log(ownerId);
+  return User.getById(ownerId)
+    .then(function (user) {
+      var d = Q.defer();
+      // var shapeName = 'repo_' + user.userId;
+      var shapeName = user.repos[0];
+      logger.log('shapename', shapeName);
+      ShapeProxy.getShapeByName(shapeName)
+        .then(function (shape) {
+          d.resolve(RepoProxy.getModel(shape));
+        });
+
+      return d.promise;
+    });
+};
+
 exports.create = _create;
 exports.insertOrUpdate = insertOrUpdate;
 exports.getModel = _getModel;
+exports.getRepoByOwnerId = getRepoByOwnerId;

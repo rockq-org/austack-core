@@ -18,7 +18,7 @@ var ShapeProxy = require('../shape/shape.proxy');
 var Weimi = require('../../lib/weimi/index');
 var auth = require('../../lib/auth/auth.service.js');
 var Config = require('../../config/index.js');
-var Repo = require('../repo/repo.proxy');
+var RepoProxy = require('../repo/repo.proxy');
 var Q = require('q');
 var shortid = require('shortid');
 
@@ -144,23 +144,12 @@ var Helper = {
   },
   getRepoByOwnerId: function () {
     var ownerId = Helper.req.application.ownerId;
-    return User.getById(ownerId)
-      .then(function (user) {
-        var d = Q.defer();
-        // var shapeName = 'repo_' + user.userId;
-        var shapeName = user.repos[0];
-        logger.log('shapeName', shapeName);
-        ShapeProxy.getShapeByName(shapeName)
-          .then(function (shape) {
-            Helper.req.shape = shape;
-            Helper.req.repoModel = Repo.getModel(shape);
-            d.resolve();
-          });
-
-        return d.promise;
+    return RepoProxy.getRepoByOwnerId(ownerId)
+      .then(function (repoModel) {
+        logger.log('get repoModel', repoModel);
+        Helper.req.repoModel = repoModel;
       });
   },
-
   generateVerificationCode: function () {
     var d = Q.defer();
     var verificationCode = Weimi.generateVerificationCode();
