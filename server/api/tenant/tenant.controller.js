@@ -80,7 +80,7 @@ TenantController.prototype = {
     Helper.msg = '';
 
     Helper.getApplication()
-      .then(Helper.getRepoByClientId)
+      .then(Helper.getRepoByOwnerId)
       .then(function () {
         if (Helper.req.body.action == 'send-verification-code') {
           logger.log('send-verification-code');
@@ -142,7 +142,7 @@ var Helper = {
 
     return d.promise;
   },
-  getRepoByClientId: function () {
+  getRepoByOwnerId: function () {
     var ownerId = Helper.req.application.ownerId;
     return User.getById(ownerId)
       .then(function (user) {

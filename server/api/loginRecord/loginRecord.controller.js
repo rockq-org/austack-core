@@ -137,54 +137,58 @@ LoginRecordController.prototype = {
       });
   },
   statistics: function (req, res) {
+    Helper.req = req;
+    Helper.res = res;
+
+    logger.log(req.userInfo);
+    var repoModel = RepoProxy.getModel();
     var data = {
-      allUserCount: 10,
-      currentMonthActively: 11,
-      currentWeekLoginTimes: 20,
-      currentWeekNewUser: 30
+      allUserCount: 0,
+      currentMonthActively: 0,
+      currentWeekLoginTimes: 0,
+      currentWeekNewUser: 0,
+      message: 'error while get data from server'
     };
 
     res.json(data);
-    // get all user from dave's repo
 
-    //   logger.log(req.userInfo);
-    //   var repoModel = RepoProxy.getModel();
+    // Helper.getAllUserCount()
+    //   .then(Helper.getCurrentMonthActively)
+    //   .then(Helper.getCurrentWeekLoginTimes)
+    //   .then(Helper.getCurrentWeekNewUser)
+    //   .then(function () {
+    //     res.json(Helper.data);
+    //   })
+    //   .fail(function (err) {
+    //     logger.log(err);
+    //     var data = {
+    //       allUserCount: 0,
+    //       currentMonthActively: 0,
+    //       currentWeekLoginTimes: 0,
+    //       currentWeekNewUser: 0,
+    //       message: 'error while get data from server'
+    //     };
 
-    //   Helper.getAllUserCount()
-    //     .then(Helper.getCurrentMonthActively)
-    //     .then(Helper.getCurrentWeekLoginTimes)
-    //     .then(Helper.getCurrentWeekNewUser)
-    //     .then(function () {
-    //       res.json(Helper.data);
-    //     })
-    //     .fail(function (err) {
-    //       logger.log(err);
-    //       var data = {
-    //         allUserCount: 0,
-    //         currentMonthActively: 0,
-    //         currentWeekLoginTimes: 0,
-    //         currentWeekNewUser: 0,
-    //         message: 'error while get data from server'
-    //       };
-
-    //       res.json(data);
-    //     });
+    //     res.json(data);
+    //   });
   }
 };
 
 var Helper = {
   data: {},
   getAllUserCount: function () {
-
+    logger.log(req.userInfo);
+    var repoModel = RepoProxy.getModel();
+    Helper.data.allUserCount = 100;
   },
   getCurrentMonthActively: function () {
-
+    Helper.data.currentMonthActively = 10;
   },
   getCurrentWeekLoginTimes: function () {
-
+    Helper.data.currentWeekLoginTimes = 10;
   },
   getCurrentWeekNewUser: function () {
-
+    Helper.data.currentWeekNewUser = 10;
   }
 };
 
