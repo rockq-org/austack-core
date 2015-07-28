@@ -60,7 +60,7 @@ TenantController.prototype = {
    */
   constructor: TenantController,
 
-  loginForm: function (req, res) {
+  loginForm: function (req, res, next) {
     Helper.req = req;
     Helper.res = res;
     Helper.next = next;
@@ -134,8 +134,12 @@ var Helper = {
     if (!Helper.req.application) {
       return Helper.res.notFound();
     }
+    var template = Helper.req.application.template;
+    if (!template) {
+      return Helper.res.render('tenant/login', Helper.data);
+    }
 
-    var template = Helper.res.application.template;
+    logger.log(template);
     var htmlContent = 'not done yet';
     //TODO: procress by ejs with data injected
     Helper.res.send(htmlContent);
