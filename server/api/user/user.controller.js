@@ -159,6 +159,10 @@ UserController.prototype = {
                 type: 'String',
                 required: true
               },
+              latestActive: {
+                type: 'Date',
+                default: Date.now
+              },
               verificationCodeExpiredAt: {
                 type: 'Date'
               },

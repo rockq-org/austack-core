@@ -103,6 +103,14 @@ LoginRecordController.prototype = {
           .fail(function () {
             logger.log('loginRecordDailyCount failed');
           });
+
+        Helper.updateAppUserLatestActive(customReq.validateUserJwtForLoginRecord)
+          .then(function () {
+            logger.log('success update appUser latestActive event');
+          })
+          .fail(function () {
+            logger.log('failed update appUser latestActive event');
+          })
       });
   },
 
@@ -165,10 +173,10 @@ LoginRecordController.prototype = {
 
 var Helper = {
   data: {},
-  getRepoByOwnerId: function () {
+  getRepoByOwnerId: function (ownerId) {
     var d = Q.defer();
 
-    var ownerId = String(Helper.req.userInfo._id);
+    ownerId = ownerId || String(Helper.req.userInfo._id);
     RepoProxy.getRepoByOwnerId(ownerId)
       .then(function (repoModel) {
         logger.log('get repoModel', repoModel);
@@ -194,6 +202,28 @@ var Helper = {
   },
   getCurrentWeekNewUser: function () {
     Helper.data.currentWeekNewUser = 10;
+  },
+  updateAppUserLatestActive: function (data) {
+    var d = Q.defer();
+    var ownerId = data.ownerId;
+    var appUserId = data.appUserId;
+    Helper.getRepoByOwnerId(ownerId)
+      .then(function (repoModel) {
+        var condition = {
+          _id: appUserId
+        };
+        var doc = {
+          latestActive: new Date()
+        };
+        repoModel.update(condition, doc, function (err, result) {
+          if (err) {
+            return d.reject(err);
+          }
+          d.resolve();
+        });
+      });
+
+    return d.promise;
   }
 };
 
