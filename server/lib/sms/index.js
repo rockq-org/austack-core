@@ -13,7 +13,7 @@ case 'weimi':
   break;
 case 'qiji':
   logger.debug('Initialize SMS Service with qiji %j', config.sms.qiji);
-  smsProvider = require('./qiji')(config.sms.qiji);
+  smsProvider = require('./qiji');
   break;
 default:
   throw new Error('Invalid Configuration for SMS Provider.');

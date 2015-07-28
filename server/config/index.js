@@ -41,11 +41,6 @@ var common = {
   // List of user roles
   userRoles: ['user', 'appAdmin', 'admin', 'root'],
   limit: 100, // paginate limit
-  weimi: {
-    uid: "lmf8FDhlAHHB",
-    pas: "r2z36xbh",
-    cid: "Zh07NWBGgr1r"
-  },
 
   // options passed to create mongo connections
   mongo: {
