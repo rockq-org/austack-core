@@ -34,11 +34,8 @@ function getPasswordDigest() {
     nonce: nonceGen(),
     created: util.format('%s-%s-%sT%s:%s:%sZ', d.format('yyyy'), d.format('mm'), d.format('dd'), d.format('HH'), d.format('MM'), d.format('ss'))
   };
-
-  console.log('res1 ' + JSON.stringify(result));
   var digest = sha1sum(result.nonce + result.created + cfg.password);
   result.passwordDigest = digest;
-  console.log('res2 ' + JSON.stringify(result));
   return result;
 }
 
@@ -59,10 +56,8 @@ function getPasswordDigest() {
 function sendVerificationCode(mobile, appName, verifyCode, period) {
   var d = Q.defer();
 
-  logger.debug('111')
   var pwdDigest = getPasswordDigest();
 
-  logger.debug('222')
   var xwsse = util.format('UsernameToken Username="%s", PasswordDigest="%s", Nonce="%s", Created="%s"', cfg.username, pwdDigest.passwordDigest, pwdDigest.nonce, pwdDigest.created);
 
   // API Docs
