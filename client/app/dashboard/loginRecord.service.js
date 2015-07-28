@@ -9,11 +9,10 @@
    * @requires {austackApp.resource}
    */
   angular
-    .module('austackApp.loginRecord.service', ['austackApp.resource'])
+    .module('austackApp.dashboard')
     .factory('LoginRecord', LoginRecord)
 
-  LoginRecord.$inject = ['$resource', 'Config', '$q', '$http'];
-
+  /* @ngInject */
   function LoginRecord($resource, Config, $q, $http) {
     // factory members
     var apiURL = Config.API_URL + 'loginRecords';

@@ -3,7 +3,7 @@
 
   // register the route config on the application
   angular
-    .module('austackApp.dashboard', ['ui.router', 'austackApp.layout', 'austackApp.loginRecord.service'])
+    .module('austackApp.dashboard', ['ui.router', 'austackApp.layout'])
     .config(configMainRoute);
 
   // inject configMainRoute dependencies
