@@ -223,11 +223,17 @@ var Helper = {
 
     return d.promise;
   },
+  getMonday: function (d) {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  },
   getCurrentWeekLoginTimes: function () {
     var d = Q.defer();
 
     var today = new Date();
-    var firstDayOfCurrentWeek = getMonday(today);
+    var firstDayOfCurrentWeek = Helper.getMonday(today);
 
     var condition = {
       day: {
@@ -248,16 +254,26 @@ var Helper = {
       });
 
     return d.promise;
-
-    function getMonday(d) {
-      d = new Date(d);
-      var day = d.getDay(),
-        diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-      return new Date(d.setDate(diff));
-    }
   },
   getCurrentWeekNewUser: function () {
-    Helper.data.currentWeekNewUser = 10;
+    var d = Q.defer();
+
+    var today = new Date();
+    var firstDayOfCurrentWeek = Helper.getMonday(today);
+    var condition = {
+      createDate: {
+        $gt: firstDayOfCurrentWeek,
+        $lt: today
+      }
+    };
+    logger.log(condition);
+    Helper.req.repoModel.count(condition, function (err, count) {
+      Helper.data.currentWeekNewUser = count;
+      logger.log(count);
+      d.resolve(count);
+    });
+
+    return d.promise;
   },
   updateAppUserLatestActive: function (data) {
     logger.log('herethere');
