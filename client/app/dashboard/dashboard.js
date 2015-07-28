@@ -20,6 +20,7 @@
       controller: 'DashboardController',
       controllerAs: 'dashboard',
       resolve: {
+        /* @ngInject */
         statisticsData: function (LoginRecord) {
           return LoginRecord.getStatisticsData();
         }
