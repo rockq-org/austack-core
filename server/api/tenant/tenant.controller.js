@@ -20,6 +20,7 @@ var auth = require('../../lib/auth/auth.service.js');
 var Config = require('../../config/index.js');
 var RepoProxy = require('../repo/repo.proxy');
 var Q = require('q');
+var ejs = require('ejs');
 var shortid = require('shortid');
 
 /**
@@ -134,14 +135,12 @@ var Helper = {
     if (!Helper.req.application) {
       return Helper.res.notFound();
     }
-    var template = Helper.req.application.template;
-    if (!template) {
+    var loginTemplate = Helper.req.application.loginTemplate;
+    if (!loginTemplate) {
       return Helper.res.render('tenant/login', Helper.data);
     }
 
-    logger.log(template);
-    var htmlContent = 'not done yet';
-    //TODO: procress by ejs with data injected
+    var htmlContent = ejs.render(loginTemplate, Helper.data);
     Helper.res.send(htmlContent);
   },
   getApplication: function () {
