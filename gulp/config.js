@@ -9,6 +9,7 @@ var ngConstant = require('gulp-ng-constant');
 module.exports = function (options) {
   gulp.task('config', function () {
     var env = process.env.NODE_ENV || 'production';
+    console.log('config with env ' + env);
     gulp.src(options.src + '/app/config/' + env + '.json')
       .pipe($.ngConstant({
         name: 'austackApp.config',
