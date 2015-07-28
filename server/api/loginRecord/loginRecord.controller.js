@@ -140,46 +140,41 @@ LoginRecordController.prototype = {
     Helper.req = req;
     Helper.res = res;
 
-    logger.log(req.userInfo);
-    var repoModel = RepoProxy.getModel();
-    var data = {
-      allUserCount: 0,
-      currentMonthActively: 0,
-      currentWeekLoginTimes: 0,
-      currentWeekNewUser: 0,
-      message: 'error while get data from server'
-    };
+    Helper.getAllUserCount()
+      .then(Helper.getCurrentMonthActively)
+      .then(Helper.getCurrentWeekLoginTimes)
+      .then(Helper.getCurrentWeekNewUser)
+      .then(function () {
+        res.json(Helper.data);
+      })
+      .fail(function (err) {
+        logger.log(err);
+        var data = {
+          allUserCount: 0,
+          currentMonthActively: 0,
+          currentWeekLoginTimes: 0,
+          currentWeekNewUser: 0,
+          message: 'error while get data from server'
+        };
 
-    res.json(data);
-
-    // Helper.getAllUserCount()
-    //   .then(Helper.getCurrentMonthActively)
-    //   .then(Helper.getCurrentWeekLoginTimes)
-    //   .then(Helper.getCurrentWeekNewUser)
-    //   .then(function () {
-    //     res.json(Helper.data);
-    //   })
-    //   .fail(function (err) {
-    //     logger.log(err);
-    //     var data = {
-    //       allUserCount: 0,
-    //       currentMonthActively: 0,
-    //       currentWeekLoginTimes: 0,
-    //       currentWeekNewUser: 0,
-    //       message: 'error while get data from server'
-    //     };
-
-    //     res.json(data);
-    //   });
+        res.json(data);
+      });
   }
 };
 
 var Helper = {
   data: {},
   getAllUserCount: function () {
-    logger.log(req.userInfo);
-    var repoModel = RepoProxy.getModel();
-    Helper.data.allUserCount = 100;
+    var ownerId = String(Helper.req.userInfo._id);
+    return RepoProxy.getRepoByOwnerId(ownerId)
+      .then(function (repoModel) {
+        logger.log('get repoModel', repoModel);
+        Helper.req.repoModel = repoModel;
+        repoModel.count({}, function (err, count) {
+          Helper.data.allUserCount = count;
+          logger.log(count);
+        });
+      });
   },
   getCurrentMonthActively: function () {
     Helper.data.currentMonthActively = 10;
