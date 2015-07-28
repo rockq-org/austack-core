@@ -110,7 +110,7 @@ LoginRecordController.prototype = {
           })
           .fail(function () {
             logger.log('failed update appUser latestActive event');
-          })
+          });
       });
   },
 
@@ -172,17 +172,25 @@ LoginRecordController.prototype = {
 };
 
 var Helper = {
+  req: {},
+  res: {},
   data: {},
   getRepoByOwnerId: function (ownerId) {
     var d = Q.defer();
 
     ownerId = ownerId || String(Helper.req.userInfo._id);
-    RepoProxy.getRepoByOwnerId(ownerId)
+    var data = {
+      ownerId: ownerId
+    };
+    logger.log(data);
+    RepoProxy.getRepo(data)
       .then(function (repoModel) {
-        logger.log('get repoModel', repoModel);
-        Helper.req.repoModel = repoModel;
+        logger.log('get repoModel at Helper.getRepoByOwnerId', repoModel);
+
+        // Helper.req.repoModel = repoModel;
         d.resolve(repoModel);
       });
+
     return d.promise;
   },
   getAllUserCount: function () {
@@ -192,6 +200,7 @@ var Helper = {
       logger.log(count);
       d.resolve(count);
     });
+
     return d.promise;
   },
   getCurrentMonthActively: function () {
@@ -204,23 +213,38 @@ var Helper = {
     Helper.data.currentWeekNewUser = 10;
   },
   updateAppUserLatestActive: function (data) {
+    logger.log('herethere');
+    logger.log(data);
     var d = Q.defer();
     var ownerId = data.ownerId;
     var appUserId = data.appUserId;
+    logger.log('updateAppUserLatestActive start');
+
     Helper.getRepoByOwnerId(ownerId)
       .then(function (repoModel) {
+        logger.log('get repoModel at updateAppUserLatestActive', repoModel);
         var condition = {
           _id: appUserId
         };
-        var doc = {
-          latestActive: new Date()
-        };
-        repoModel.update(condition, doc, function (err, result) {
-          if (err) {
+        logger.log(condition, repoModel);
+
+        repoModel.findOne(condition, function (err, doc) {
+          logger.log(err, doc);
+          if (err || doc == null) {
             return d.reject(err);
           }
-          d.resolve();
+          var now = new Date();
+          logger.log(doc, now);
+          doc.latestActive = now;
+          doc.save(function (err) {
+            if (err) {
+              return d.reject(err);
+            }
+            logger.log('updateAppUserLatestActive success');
+            d.resolve();
+          });
         });
+
       });
 
     return d.promise;

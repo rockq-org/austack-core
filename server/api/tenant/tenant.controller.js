@@ -144,7 +144,11 @@ var Helper = {
   },
   getRepoByOwnerId: function () {
     var ownerId = Helper.req.application.ownerId;
-    return RepoProxy.getRepoByOwnerId(ownerId)
+    var data = {
+      ownerId: ownerId
+    };
+
+    return RepoProxy.getRepo(data)
       .then(function (repoModel) {
         logger.log('get repoModel', repoModel);
         Helper.req.repoModel = repoModel;

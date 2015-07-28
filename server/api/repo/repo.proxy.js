@@ -120,24 +120,28 @@ function insertOrUpdate(user, M) {
   });
 }
 
-function getRepoByOwnerId(ownerId) {
-  logger.log(ownerId);
-  return User.getById(ownerId)
+function getRepo(data) {
+  var d = Q.defer();
+  var ownerId = data.ownerId;
+  logger.log(data);
+
+  User.getById(ownerId)
     .then(function (user) {
-      var d = Q.defer();
       // var shapeName = 'repo_' + user.userId;
       var shapeName = user.repos[0];
       logger.log('shapename', shapeName);
       ShapeProxy.getShapeByName(shapeName)
         .then(function (shape) {
-          d.resolve(RepoProxy.getModel(shape));
+          var repoModel = _getModel(shape);
+          logger.log(shape.name, shape.mSchema, repoModel);
+          d.resolve(repoModel);
         });
-
-      return d.promise;
     });
+
+  return d.promise;
 };
 
 exports.create = _create;
 exports.insertOrUpdate = insertOrUpdate;
 exports.getModel = _getModel;
-exports.getRepoByOwnerId = getRepoByOwnerId;
+exports.getRepo = getRepo;
