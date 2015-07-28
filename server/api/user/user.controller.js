@@ -159,6 +159,10 @@ UserController.prototype = {
                 type: 'String',
                 required: true
               },
+              createDate: {
+                type: 'Date',
+                default: Date.now
+              },
               latestActive: {
                 type: 'Date',
                 default: Date.now
