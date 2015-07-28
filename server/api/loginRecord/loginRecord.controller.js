@@ -224,7 +224,37 @@ var Helper = {
     return d.promise;
   },
   getCurrentWeekLoginTimes: function () {
-    Helper.data.currentWeekLoginTimes = 10;
+    var d = Q.defer();
+
+    var today = new Date();
+    var firstDayOfCurrentWeek = getMonday(today);
+
+    var condition = {
+      day: {
+        $gt: firstDayOfCurrentWeek,
+        $lt: today
+      }
+    };
+    logger.log(condition);
+    LoginRecordDailyCount
+      .find(condition)
+      .exec(function (err, docs) {
+        var count = 0;
+        for (var i = 0, total = docs.lenth; i < total; i++) {
+          count += docs[i].count;
+        }
+        Helper.data.currentWeekLoginTimes = count;
+        d.resolve(count);
+      });
+
+    return d.promise;
+
+    function getMonday(d) {
+      d = new Date(d);
+      var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+      return new Date(d.setDate(diff));
+    }
   },
   getCurrentWeekNewUser: function () {
     Helper.data.currentWeekNewUser = 10;
