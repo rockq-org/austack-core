@@ -11,7 +11,7 @@ var _ = require('lodash');
 var shortid = require('shortid');
 var ParamController = require('../../lib/controllers/param.controller');
 var config = require('../../config');
-var Weimi = require('../../lib/weimi/index');
+var SMS = require('../../lib/sms/index');
 var Shape = require('../shape/shape.proxy');
 var Repo = require('../repo/repo.proxy');
 var util = require('util');
@@ -57,7 +57,7 @@ UserController.prototype = {
     var expiredTimeSpan = 60000 * 3; // three minutes
     var now = new Date();
     // 四位数字验证码
-    var verifyCode = Weimi.generateVerificationCode();
+    var verifyCode = SMS.generateVerificationCode();
     req.body['verifyCode'] = verifyCode;
     req.body['verifyCodeExpiredAt'] = new Date(now.valueOf() + expiredTimeSpan);
     req.body['verifyCodeLatestSendTime'] = now;
@@ -75,8 +75,8 @@ UserController.prototype = {
       //   'APP_NAME': 'Austack',
       //   'VERIFY_CODE': verifyCode
       // };
-      // var content = Weimi.replaceText(template, list);
-      Weimi.sendSMSByCid(mobile, verifyCode)
+      // var content = SMS.replaceText(template, list);
+      SMS.sendVerificationCode(mobile, /*appName*/ '', verifyCode, 3)
         .then(function () {
           return res.created(self.getResponseObject(document));
         }).fail(function (err) {
@@ -102,10 +102,10 @@ UserController.prototype = {
           message: 'please resend after 60 seconds'
         });
       }
-      var verifyCode = Weimi.generateVerificationCode();
+      var verifyCode = SMS.generateVerificationCode();
       user.verifyCodeLatestSendTime = now;
       user.verifyCode = verifyCode;
-      Weimi.sendSMSByCid(user.name, verifyCode)
+      SMS.sendVerificationCode(user.name, /*appName*/ '', verifyCode, '3')
         .then(function () {
           user.save(function (err) {
             if (err) {

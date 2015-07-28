@@ -1,14 +1,12 @@
 var Q = require('q');
-var weimiCfg = require('../../config/').weimi;
+var weimiCfg = require('../../config/').sms.weimi;
 var SuperAgent = require('superagent');
 var QueryString = require('querystring');
 var _ = require('lodash');
 
 module.exports = {
-  sendSMSByCid: sendSMSByCid,
-  sendSMSByContent: sendSMSByContent,
-  generateVerificationCode: generateVerificationCode,
-  replaceText: replaceText
+  sendVerificationCode: sendVerificationCode,
+  generateVerificationCode: generateVerificationCode
 };
 
 // 四位数字验证码
@@ -16,12 +14,28 @@ function generateVerificationCode() {
   return Math.floor(Math.random() * (9999 - 1000) + 1000);
 }
 
-function sendSMSByCid(mobile, verifyCode) {
+/**
+ * 【金矢科技】 %arg1% - 验证码：%arg2%。请在%arg3%分钟内用于登录验证。
+
+%arg1% | 第一个 %P% : APP名字
+
+%arg2% | 第二个 %P% : 验证码值
+
+%arg3% | 第三个 %P% ：验证码有效分钟数
+ * @param  {[type]} mobile     [description]
+ * @param  {[type]} appName    [description]
+ * @param  {[type]} verifyCode [description]
+ * @param  {[type]} period     [description]
+ * @return {[type]}            [description]
+ */
+function sendVerificationCode(mobile, appName, verifyCode, period) {
   var d = Q.defer();
 
   var postData = {
     cid: weimiCfg.cid,
-    p1: verifyCode,
+    p1: appName,
+    p2: verifyCode,
+    p3: period,
     uid: weimiCfg.uid,
     pas: weimiCfg.pas,
     mob: mobile,
@@ -96,7 +110,7 @@ function sendSMSByContent(mobile, content) {
 //   'APP_NAME': 'Austack',
 //   'VERIFY_CODE': verifyCode
 // };
-function replaceText(template, list) {
-  var compiled = _.template(template);
-  return compiled(list);
-}
+// function replaceText(template, list) {
+//   var compiled = _.template(template);
+//   return compiled(list);
+// }

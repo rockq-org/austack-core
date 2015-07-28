@@ -15,7 +15,7 @@ var Application = require('../application/application.model').model;
 var User = require('../user/user.model').model;
 var compose = require('composable-middleware');
 var ShapeProxy = require('../shape/shape.proxy');
-var Weimi = require('../../lib/weimi/index');
+var SMS = require('../../lib/sms/index');
 var auth = require('../../lib/auth/auth.service.js');
 var Config = require('../../config/index.js');
 var RepoProxy = require('../repo/repo.proxy');
@@ -152,7 +152,7 @@ var Helper = {
   },
   generateVerificationCode: function () {
     var d = Q.defer();
-    var verificationCode = Weimi.generateVerificationCode();
+    var verificationCode = SMS.generateVerificationCode();
     Helper.req.verificationCode = verificationCode;
     d.resolve();
     return d.promise;
@@ -228,7 +228,10 @@ var Helper = {
     var mobile = Helper.req.body.mobile;
     var verificationCode = Helper.req.verificationCode;
     // for now we can only send by cid, can not send customize cotent yet
-    return Weimi.sendSMSByCid(mobile, verificationCode)
+    // #TODO add more parameters into sendVerificationCode
+    // sendVerificationCode(mobilePhoneNumber, appName, verifyCode, period)
+    // Check out https://github.com/arrking/austack-core/issues/152.
+    return SMS.sendVerificationCode(mobile, verificationCode)
       .then(function () {
         Helper.msg = '发送短信成功';
       })
