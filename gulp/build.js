@@ -104,5 +104,5 @@ module.exports = function (options) {
     $.del([options.dist + '/', options.tmp + '/'], done);
   });
 
-  gulp.task('build', ['html', 'fonts', 'icons', 'other', 'socket']);
+  gulp.task('build', ['config', 'html', 'fonts', 'icons', 'other', 'socket']);
 };
