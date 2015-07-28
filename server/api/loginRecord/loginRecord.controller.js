@@ -154,6 +154,7 @@ LoginRecordController.prototype = {
       .then(Helper.getCurrentWeekLoginTimes)
       .then(Helper.getCurrentWeekNewUser)
       .then(function () {
+        logger.log('success get statistics ', Helper.data);
         res.json(Helper.data);
       })
       .fail(function (err) {
