@@ -20,6 +20,7 @@ var auth = require('../../lib/auth/auth.service.js');
 var Config = require('../../config/index.js');
 var RepoProxy = require('../repo/repo.proxy');
 var Q = require('q');
+var ejs = require('ejs');
 var shortid = require('shortid');
 
 /**
@@ -60,12 +61,18 @@ TenantController.prototype = {
    */
   constructor: TenantController,
 
-  loginForm: function (req, res) {
+  loginForm: function (req, res, next) {
+    Helper.req = req;
+    Helper.res = res;
+    Helper.next = next;
+    Helper.msg = '';
+
     var data = {
       mobile: 18959264502,
     };
-
-    return res.render('tenant/login', data);
+    Helper.data = data;
+    Helper.getApplication()
+      .then(Helper.render);
   },
   loginPost: function loginPost(req, res, next) {
 
@@ -113,7 +120,8 @@ TenantController.prototype = {
           return res.redirect(302, url);
         }
 
-        return res.render('tenant/login', data);
+        Helper.data = data;
+        Helper.render();
       });
   }
 };
@@ -123,6 +131,18 @@ TenantController.prototype = _.create(ParamController.prototype, TenantControlle
 
 var Helper = {
   msg: '',
+  render: function (data) {
+    if (!Helper.req.application) {
+      return Helper.res.notFound();
+    }
+    var loginTemplate = Helper.req.application.loginTemplate;
+    if (!loginTemplate) {
+      return Helper.res.render('tenant/login', Helper.data);
+    }
+
+    var htmlContent = ejs.render(loginTemplate, Helper.data);
+    Helper.res.send(htmlContent);
+  },
   getApplication: function () {
     var d = Q.defer();
     var data = {
@@ -144,7 +164,11 @@ var Helper = {
   },
   getRepoByOwnerId: function () {
     var ownerId = Helper.req.application.ownerId;
-    return RepoProxy.getRepoByOwnerId(ownerId)
+    var data = {
+      ownerId: ownerId
+    };
+
+    return RepoProxy.getRepo(data)
       .then(function (repoModel) {
         logger.log('get repoModel', repoModel);
         Helper.req.repoModel = repoModel;

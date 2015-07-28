@@ -187,7 +187,8 @@ UserSchema.statics.getById = function (id) {
   this.findOne({
     _id: id
   }, function (err, user) {
-    if(err){
+    logger.log(id, err, user);
+    if (err) {
       return d.reject(err);
     }
     d.resolve(user);
@@ -195,8 +196,6 @@ UserSchema.statics.getById = function (id) {
 
   return d.promise;
 };
-
-
 
 /**
  * Attach pre hook plugins

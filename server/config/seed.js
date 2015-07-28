@@ -217,6 +217,10 @@ function _createRepoAndShapes(users) {
             type: 'String',
             required: true
           },
+          createDate: {
+            type: 'Date',
+            default: Date.now
+          },
           latestActive: {
             type: 'Date',
             default: Date.now

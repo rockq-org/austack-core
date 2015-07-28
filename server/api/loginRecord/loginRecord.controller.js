@@ -110,7 +110,7 @@ LoginRecordController.prototype = {
           })
           .fail(function () {
             logger.log('failed update appUser latestActive event');
-          })
+          });
       });
   },
 
@@ -154,6 +154,7 @@ LoginRecordController.prototype = {
       .then(Helper.getCurrentWeekLoginTimes)
       .then(Helper.getCurrentWeekNewUser)
       .then(function () {
+        logger.log('success get statistics ', Helper.data);
         res.json(Helper.data);
       })
       .fail(function (err) {
@@ -172,17 +173,25 @@ LoginRecordController.prototype = {
 };
 
 var Helper = {
+  req: {},
+  res: {},
   data: {},
   getRepoByOwnerId: function (ownerId) {
     var d = Q.defer();
 
     ownerId = ownerId || String(Helper.req.userInfo._id);
-    RepoProxy.getRepoByOwnerId(ownerId)
+    var data = {
+      ownerId: ownerId
+    };
+    logger.log(data);
+    RepoProxy.getRepo(data)
       .then(function (repoModel) {
-        logger.log('get repoModel', repoModel);
+        logger.log('get repoModel at Helper.getRepoByOwnerId', repoModel);
+
         Helper.req.repoModel = repoModel;
         d.resolve(repoModel);
       });
+
     return d.promise;
   },
   getAllUserCount: function () {
@@ -192,35 +201,114 @@ var Helper = {
       logger.log(count);
       d.resolve(count);
     });
+
     return d.promise;
   },
   getCurrentMonthActively: function () {
-    Helper.data.currentMonthActively = 10;
+    var d = Q.defer();
+
+    var today = new Date();
+    var firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    var condition = {
+      latestActive: {
+        $gt: firstDayOfCurrentMonth,
+        $lt: today
+      }
+    };
+    logger.log(condition);
+    Helper.req.repoModel.count(condition, function (err, count) {
+      Helper.data.currentMonthActively = count;
+      logger.log(count);
+      d.resolve(count);
+    });
+
+    return d.promise;
+  },
+  getMonday: function (d) {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
   },
   getCurrentWeekLoginTimes: function () {
-    Helper.data.currentWeekLoginTimes = 10;
+    var d = Q.defer();
+
+    var today = new Date();
+    var firstDayOfCurrentWeek = Helper.getMonday(today);
+
+    var condition = {
+      day: {
+        $gt: firstDayOfCurrentWeek,
+        $lt: today
+      }
+    };
+    logger.log(condition);
+    LoginRecordDailyCount
+      .find(condition)
+      .exec(function (err, docs) {
+        var count = 0;
+        for (var i = 0, total = docs.lenth; i < total; i++) {
+          count += docs[i].count;
+        }
+        Helper.data.currentWeekLoginTimes = count;
+        d.resolve(count);
+      });
+
+    return d.promise;
   },
   getCurrentWeekNewUser: function () {
-    Helper.data.currentWeekNewUser = 10;
+    var d = Q.defer();
+
+    var today = new Date();
+    var firstDayOfCurrentWeek = Helper.getMonday(today);
+    var condition = {
+      createDate: {
+        $gt: firstDayOfCurrentWeek,
+        $lt: today
+      }
+    };
+    logger.log(condition);
+    Helper.req.repoModel.count(condition, function (err, count) {
+      Helper.data.currentWeekNewUser = count;
+      logger.log(count);
+      d.resolve(count);
+    });
+
+    return d.promise;
   },
   updateAppUserLatestActive: function (data) {
+    logger.log('herethere');
+    logger.log(data);
     var d = Q.defer();
     var ownerId = data.ownerId;
     var appUserId = data.appUserId;
+    logger.log('updateAppUserLatestActive start');
+
     Helper.getRepoByOwnerId(ownerId)
       .then(function (repoModel) {
+        logger.log('get repoModel at updateAppUserLatestActive', repoModel);
         var condition = {
           _id: appUserId
         };
-        var doc = {
-          latestActive: new Date()
-        };
-        repoModel.update(condition, doc, function (err, result) {
-          if (err) {
+        logger.log(condition, repoModel);
+
+        repoModel.findOne(condition, function (err, doc) {
+          logger.log(err, doc);
+          if (err || doc == null) {
             return d.reject(err);
           }
-          d.resolve();
+          var now = new Date();
+          logger.log(doc, now);
+          doc.latestActive = now;
+          doc.save(function (err) {
+            if (err) {
+              return d.reject(err);
+            }
+            logger.log('updateAppUserLatestActive success');
+            d.resolve();
+          });
         });
+
       });
 
     return d.promise;
