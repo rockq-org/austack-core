@@ -61,11 +61,17 @@ TenantController.prototype = {
   constructor: TenantController,
 
   loginForm: function (req, res) {
+    Helper.req = req;
+    Helper.res = res;
+    Helper.next = next;
+    Helper.msg = '';
+
     var data = {
       mobile: 18959264502,
     };
-
-    return res.render('tenant/login', data);
+    Helper.data = data;
+    Helper.getApplication()
+      .then(Helper.render);
   },
   loginPost: function loginPost(req, res, next) {
 
@@ -113,7 +119,8 @@ TenantController.prototype = {
           return res.redirect(302, url);
         }
 
-        return res.render('tenant/login', data);
+        Helper.data = data;
+        Helper.render();
       });
   }
 };
@@ -123,6 +130,16 @@ TenantController.prototype = _.create(ParamController.prototype, TenantControlle
 
 var Helper = {
   msg: '',
+  render: function (data) {
+    if (!Helper.req.application) {
+      return Helper.res.notFound();
+    }
+
+    var template = Helper.res.application.template;
+    var htmlContent = 'not done yet';
+    //TODO: procress by ejs with data injected
+    Helper.res.send(htmlContent);
+  },
   getApplication: function () {
     var d = Q.defer();
     var data = {
