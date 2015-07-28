@@ -34,7 +34,7 @@ module.exports = {
   seedDB: true,
 
   sms: {
-    provider: 'weimi',
+    provider: 'qiji',
     weimi: {
       uid: "lmf8FDhlAHHB",
       pas: "r2z36xbh",
