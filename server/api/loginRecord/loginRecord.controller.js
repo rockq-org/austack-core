@@ -187,7 +187,7 @@ var Helper = {
       .then(function (repoModel) {
         logger.log('get repoModel at Helper.getRepoByOwnerId', repoModel);
 
-        // Helper.req.repoModel = repoModel;
+        Helper.req.repoModel = repoModel;
         d.resolve(repoModel);
       });
 
@@ -204,7 +204,24 @@ var Helper = {
     return d.promise;
   },
   getCurrentMonthActively: function () {
-    Helper.data.currentMonthActively = 10;
+    var d = Q.defer();
+
+    var today = new Date();
+    var firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    var condition = {
+      latestActive: {
+        $gt: firstDayOfCurrentMonth,
+        $lt: today
+      }
+    };
+    logger.log(condition);
+    Helper.req.repoModel.count(condition, function (err, count) {
+      Helper.data.currentMonthActively = count;
+      logger.log(count);
+      d.resolve(count);
+    });
+
+    return d.promise;
   },
   getCurrentWeekLoginTimes: function () {
     Helper.data.currentWeekLoginTimes = 10;
