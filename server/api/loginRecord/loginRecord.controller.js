@@ -140,7 +140,8 @@ LoginRecordController.prototype = {
     Helper.req = req;
     Helper.res = res;
 
-    Helper.getAllUserCount()
+    Helper.getRepoByOwnerId()
+      .then(Helper.getAllUserCount)
       .then(Helper.getCurrentMonthActively)
       .then(Helper.getCurrentWeekLoginTimes)
       .then(Helper.getCurrentWeekNewUser)
@@ -164,17 +165,26 @@ LoginRecordController.prototype = {
 
 var Helper = {
   data: {},
-  getAllUserCount: function () {
+  getRepoByOwnerId: function () {
+    var d = Q.defer();
+
     var ownerId = String(Helper.req.userInfo._id);
-    return RepoProxy.getRepoByOwnerId(ownerId)
+    RepoProxy.getRepoByOwnerId(ownerId)
       .then(function (repoModel) {
         logger.log('get repoModel', repoModel);
         Helper.req.repoModel = repoModel;
-        repoModel.count({}, function (err, count) {
-          Helper.data.allUserCount = count;
-          logger.log(count);
-        });
+        d.resolve(repoModel);
       });
+    return d.promise;
+  },
+  getAllUserCount: function () {
+    var d = Q.defer();
+    Helper.req.repoModel.count({}, function (err, count) {
+      Helper.data.allUserCount = count;
+      logger.log(count);
+      d.resolve(count);
+    });
+    return d.promise;
   },
   getCurrentMonthActively: function () {
     Helper.data.currentMonthActively = 10;
