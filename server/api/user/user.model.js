@@ -44,7 +44,10 @@ var UserDefinition = {
     default: false
   },
   hashedPassword: String,
-  userId: String,
+  userId: {
+    type: String,
+    match: /^[a-zA-Z0-9\-]{1,}[a-zA-Z0-9]$/ //字母数字及“-”并以字母数字结尾
+  },
   signupAt: {
     type: Date,
     default: Date.now

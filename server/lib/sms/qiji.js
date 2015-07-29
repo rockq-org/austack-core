@@ -75,7 +75,7 @@ function sendVerificationCode(mobile, appName, verifyCode, period) {
       "args": [appName, verifyCode, period]
     })
     .end(function (err, res) {
-      logger.log(err, res);
+      logger.log(cfg.api, xwsse, mobile, cfg.templateSmsId, [appName, verifyCode, period], err, res);
       if (err) {
         d.reject();
       } else {
