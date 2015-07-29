@@ -25,12 +25,12 @@
     vm.setting = setting;
     vm.logout = logout;
 
-    function profile() {
-      ProfileService.show();
+    function profile(ev) {
+      ProfileService.show(ev);
     }
 
-    function setting() {
-      SettingsService.show();
+    function setting(ev) {
+      SettingsService.show(ev);
     }
 
     function logout() {
