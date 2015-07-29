@@ -125,13 +125,15 @@
         });
       }).catch(function (err) {
         vm.step = 'step3';
-        switch (err.data.type) {
-        case 'formatInvalidate':
+        switch (err.data.errors.userId.kind) {
+        case 'regexp':
           Toast.show('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
           break;
-        case 'inuse':
+        case 'user defined':
           Toast.show('该用户ID已被使用');
           break;
+        default:
+          Toast.show('未知错误');
         }
       });
     }
