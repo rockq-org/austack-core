@@ -62,7 +62,22 @@ var common = {
       }
     }
   },
-  logLevel: 'log'
+  logLevel: 'log',
+  sms: {
+    provider: 'qiji',
+    weimi: {
+      uid: "lmf8FDhlAHHB",
+      pas: "r2z36xbh",
+      cid: "Zh07NWBGgr1r"
+    },
+    qiji: {
+      api: 'http://111.206.169.91:8180/templatesms/mysms',
+      srcId: '0005',
+      templateSmsId: '6',
+      username: 'austack90-d46a-486d-abc0-1586d0001',
+      password: 'IrcUgyug'
+    }
+  }
 };
 
 module.exports = _.merge(
