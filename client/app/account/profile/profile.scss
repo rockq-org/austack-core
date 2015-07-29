@@ -1,1 +1,20 @@
-
+#profile-content {
+  md-dialog-content {
+    padding: 0;
+    padding-bottom: 20px;
+    text-align: center;
+    color: $as-primary;
+    .header {
+      color: #fff;
+      background-color: $as-primary;
+      padding: 10px 0;
+      img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 5px solid $as-accent;
+      }
+    }
+  }
+}

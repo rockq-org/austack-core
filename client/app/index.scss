@@ -7,3 +7,32 @@ html,
 body {
   font-family: 'Microsoft YaHei', RobotoDraft, Roboto, 'Helvetica Neue', sans-serif
 }
+
+md-dialog {
+  max-width: 450px;
+  min-width: 360px;
+  md-toolbar {
+    height: 48px !important;
+    min-height: 48px;
+  }
+}
+
+.md-toolbar-tools .md-button {
+  min-width: inherit;
+}
+
+md-menu-item > .md-button {
+  display: -moz-box;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
