@@ -55,7 +55,7 @@
         role: 'admin' // for tenant's role
       }).$promise.then(function (data) {
         vm.step = 'step2';
-        vm.user._id = data._id;
+        vm.user.name = data.name;
         $cookieStore.put('mobile', vm.user.name);
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {

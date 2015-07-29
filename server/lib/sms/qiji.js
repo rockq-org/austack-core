@@ -59,9 +59,9 @@ function sendVerificationCode(mobile, appName, verifyCode, period) {
   var pwdDigest = getPasswordDigest();
 
   var xwsse = util.format('UsernameToken Username="%s", PasswordDigest="%s", Nonce="%s", Created="%s"', cfg.username, pwdDigest.passwordDigest, pwdDigest.nonce, pwdDigest.created);
-
+  logger.log('sendVerificationCode start');
   // API Docs
-  // https://github.com/arrking/austack-docs/blob/master/SMS/%E6%A8%A1%E6%9D%BF%E7%9F%AD%E4%BF%A1%E5%8D%8F%E8%AE%AE.doc   
+  // https://github.com/arrking/austack-docs/blob/master/SMS/%E6%A8%A1%E6%9D%BF%E7%9F%AD%E4%BF%A1%E5%8D%8F%E8%AE%AE.doc
   SuperAgent.post(cfg.api)
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
@@ -75,6 +75,7 @@ function sendVerificationCode(mobile, appName, verifyCode, period) {
       "args": [appName, verifyCode, period]
     })
     .end(function (err, res) {
+      logger.log(err, res);
       if (err) {
         d.reject();
       } else {

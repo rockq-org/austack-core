@@ -17,7 +17,7 @@ var Application = require('../../api/application/application.model').model;
 var Q = require('q');
 
 var secretCallback = function (req, payload, done) {
-  logger.log(payload, done);
+  logger.log('payload', payload);
 
   if (payload == undefined || !payload.role) {
     logger.log('payload do not have role data', req, payload);
@@ -152,6 +152,10 @@ function isAuthenticated() {
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
       }
+      if (!req.headers.authorization) {
+        return next();
+      }
+
       validateJwt(req, res, next);
     })
 
@@ -160,7 +164,7 @@ function isAuthenticated() {
     if (req.hasOwnProperty('userInfo')) {
       return next();
     }
-    if (!req.user._id) {
+    if (!req.user || !req.user._id) {
       return next();
     }
     // load user model on demand
@@ -200,7 +204,7 @@ function hasRole(roleRequired) {
   return compose()
     .use(isAuthenticated())
     .use(function meetsRequirements(req, res, next) {
-      if (roles.hasRole(req.userInfo.role, roleRequired)) {
+      if (req.userInfo && roles.hasRole(req.userInfo.role, roleRequired)) {
         next();
       } else {
         res.forbidden();

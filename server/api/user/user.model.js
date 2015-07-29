@@ -339,6 +339,7 @@ function validateUniqueUserId(value, respond) {
   this.constructor.findOne({
     userId: value
   }, function (err, user) {
+    logger.log(err);
     if (err) {
       throw err;
     }

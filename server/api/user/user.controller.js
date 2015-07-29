@@ -76,6 +76,7 @@ UserController.prototype = {
       //   'VERIFY_CODE': verifyCode
       // };
       // var content = SMS.replaceText(template, list);
+      logger.log(mobile, verifyCode, document);
       SMS.sendVerificationCode(mobile, /*appName*/ '', verifyCode, 3)
         .then(function () {
           return res.created(self.getResponseObject(document));
@@ -237,6 +238,7 @@ UserController.prototype = {
       user.password = password;
 
       user.save(function (err) {
+        logger.log(err, user);
         if (err) {
           return res.handleError(err);
         }
