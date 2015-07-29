@@ -54,6 +54,12 @@ function getPasswordDigest() {
  * @return {[type]}            [description]
  */
 function sendVerificationCode(mobile, appName, verifyCode, period) {
+  mobile = String(mobile);
+  appName = String(appName);
+  verifyCode = String(verifyCode);
+  period = String(period);
+
+  logger.log(mobile, appName, verifyCode, period);
   var d = Q.defer();
 
   var pwdDigest = getPasswordDigest();
@@ -75,7 +81,6 @@ function sendVerificationCode(mobile, appName, verifyCode, period) {
       "args": [appName, verifyCode, period]
     })
     .end(function (err, res) {
-      logger.log(cfg.api, xwsse, mobile, cfg.templateSmsId, [appName, verifyCode, period], err, res);
       if (err) {
         d.reject();
       } else {
@@ -85,3 +90,6 @@ function sendVerificationCode(mobile, appName, verifyCode, period) {
 
   return d.promise;
 }
+
+// logger.debug('send sms ..')
+// sendVerificationCode('18959264502', 'troy', '2222', '3');

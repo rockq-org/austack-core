@@ -64,7 +64,7 @@ var common = {
   },
   logLevel: 'log',
   sms: {
-    provider: 'weimi',
+    provider: 'qiji',
     weimi: {
       uid: "lmf8FDhlAHHB",
       pas: "r2z36xbh",

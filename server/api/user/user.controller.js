@@ -76,8 +76,10 @@ UserController.prototype = {
       //   'VERIFY_CODE': verifyCode
       // };
       // var content = SMS.replaceText(template, list);
-      logger.log(mobile, verifyCode, document);
-      SMS.sendVerificationCode(mobile, /*appName*/ '', verifyCode, 3)
+      var appName = '开发者注册';
+
+      SMS.sendVerificationCode(mobile, appName, verifyCode, 3)
+        // SMS.sendVerificationCode('18959264502', 'troy', '2222', '3')
         .then(function () {
           return res.created(self.getResponseObject(document));
         }).fail(function (err) {
@@ -215,12 +217,12 @@ UserController.prototype = {
 
     // var userIdReg = /^[a-zA-Z0-9\-]{1,}[a-zA-Z0-9]$/; //字母数字及“-”并以字母数字结尾
 
-// if (!userIdReg.test(userId)) {
-//   return res.badRequest({
-//     type: 'formatInvalidate',
-//     message: 'userId format is invalidate'
-//   });
-// }
+    // if (!userIdReg.test(userId)) {
+    //   return res.badRequest({
+    //     type: 'formatInvalidate',
+    //     message: 'userId format is invalidate'
+    //   });
+    // }
 
     if (name != String(req.userInfo.name)) {
       return res.forbidden({
