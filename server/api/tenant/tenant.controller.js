@@ -241,6 +241,7 @@ var Helper = {
         return d.reject(err);
       }
       logger.log('insertAppUser', err, appUser, _appUser, repoModel);
+      Helper.req.appUser = _appUser;
       return d.resolve(appUser);
     });
 
@@ -253,8 +254,15 @@ var Helper = {
     var appName = Helper.req.application.name;
     var verifyCode = Helper.req.verificationCode;
     var period = 3;
-    // mobile, appName, verifyCode, period
-    return SMS.sendVerificationCode(mobile, appName, verifyCode, period)
+    var logData = {
+      type: 'app',
+      mobile: mobile,
+      clientId: String(Helper.req.application.clientId),
+      appUserId: String(Helper.req.appUser._id),
+      ownerId: String(Helper.req.application.ownerId)
+    };
+
+    return SMS.sendVerificationCode(mobile, appName, verifyCode, period, logData)
       .then(function () {
         Helper.msg = '发送短信成功';
       })

@@ -53,7 +53,7 @@ function getPasswordDigest() {
  * @param  {[type]} period     [description]
  * @return {[type]}            [description]
  */
-function sendVerificationCode(mobile, appName, verifyCode, period) {
+function sendVerificationCode(mobile, appName, verifyCode, period, logData) {
   mobile = String(mobile);
   appName = String(appName);
   verifyCode = String(verifyCode);
@@ -89,6 +89,18 @@ function sendVerificationCode(mobile, appName, verifyCode, period) {
     });
 
   return d.promise;
+
+  function insertSmsRecord (data) {
+    // {
+ //   content: String, // sms content
+ //   type: String, // system(dave), app(linda)
+ //   mobile: String,
+ //   clientId: String,
+ //   appUserId: String,
+ //   ownerId: String,
+ //   status: String // success, failed
+ // };
+  }
 }
 
 // logger.debug('send sms ..')
