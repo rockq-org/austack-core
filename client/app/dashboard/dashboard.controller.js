@@ -51,8 +51,8 @@
         }
         return results;
       },
-      previousSelector: '#example-h-PreviousDomain-selector',
-      nextSelector: '#example-h-NextDomain-selector',
+      previousSelector: '#prev-month',
+      nextSelector: '#next-month',
       label: {
         position: 'bottom',
         width: 110
