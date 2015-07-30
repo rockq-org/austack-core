@@ -53,7 +53,6 @@
       }
     };
 
-    $urlRouterProvider.when('/shapes/:id', '/shapes/:id/quickstart');
     $stateProvider.state(detailState);
   }
 

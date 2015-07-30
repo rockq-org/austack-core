@@ -48,6 +48,7 @@ exports.users = [{
   password: 'dave1',
   role: 'admin',
   isVerified: true,
+  repos: ['repo_dave1'],
   active: true
 }, {
   provider: 'local',
@@ -58,6 +59,7 @@ exports.users = [{
   password: 'dave2',
   isVerified: true,
   userId: 'dave2',
+  repos: ['repo_dave2'],
   active: true
 }, {
   provider: 'local',

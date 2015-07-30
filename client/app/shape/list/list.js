@@ -39,7 +39,7 @@
     var listState = {
       name: 'shape.list',
       parent: 'shape',
-      url: '',
+      url: '/:repoName',
       ncyBreadcrumb: {
         label: '数据定义'
       },
@@ -51,17 +51,30 @@
           controller: 'ShapeListController',
           controllerAs: 'list'
         }
+      },
+      resolve: {
+        shape: resolveShapeFromArray
       }
     };
 
     $stateProvider.state(listState);
+  }
 
-    mainMenuProvider.addSubMenuItem('user.list', {
-      name: '数据定义',
-      state: listState.name,
-      icon: 'action:ic_account_box_24px',
-      order: 1
-    });
+  // inject resolveShapeFromArray dependencies
+  resolveShapeFromArray.$inject = ['Shape', '$stateParams'];
+
+  /**
+   * Resolve dependencies for the shape.detail state
+   *
+   * @params {Array} shapes - The array of shapes
+   * @params {Object} $stateParams - The $stateParams to read the shape id from
+   * @returns {Object|null} The shape whose value of the _id property equals $stateParams._id
+   */
+  function resolveShapeFromArray(Shape, $stateParams) {
+    return Shape.query({
+      id: $stateParams.repoName,
+      isArray: false
+    }).$promise;
   }
 
 })();
