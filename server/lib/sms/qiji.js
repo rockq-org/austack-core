@@ -11,6 +11,7 @@ var QueryString = require('querystring');
 var nonceGen = require('nonce')();
 var util = require('util');
 var S = require('string');
+var SmsRecordModel = require('./SmsRecord.model.js').model;
 
 module.exports = {
   sendVerificationCode: sendVerificationCode,
@@ -92,6 +93,8 @@ function sendVerificationCode(sendData, logData) {
         logData.status = 'success'; // add success status for logData
         d.resolve();
       }
+
+      insertSmsRecord(logData);
     });
 
   return d.promise;
@@ -106,7 +109,13 @@ function sendVerificationCode(sendData, logData) {
   //   status: String // success, failed
   // };
   function insertSmsRecord(data) {
+    SmsRecordModel.create(data, function (err, doc) {
+      if (err) {
+        return logger.log(err, doc);
+      }
 
+      logger.log('insertSmsRecord success', doc);
+    });
   }
 }
 
