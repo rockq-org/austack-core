@@ -33,18 +33,18 @@
     md-grid-tile {
       span {
         color: #fff;
-        font-size: 2em;
+        margin-bottom: 25%;
       }
       md-grid-tile-footer {
-        background: rgba(0, 0, 0, 0.3);
-        height: 36px;
+        background: #fff;
+        height: 35%;
         figcaption {
           width: 100%;
           h3 {
             margin: 0;
-            font-weight: 700;
             width: 100%;
             text-align: center;
+            color: rgba(0, 0, 0, 0.87);
           }
         }
       }
