@@ -56,7 +56,7 @@ SmsRecordSchema.plugin(requestContext, {
 //   ownerId: String,
 //   status: String // success, failed
 // };
-SmsRecordSchema.static.insertSmsRecord = function (data) {
+SmsRecordSchema.statics.insertSmsRecord = function (data) {
   var d = Q.defer();
   this.create(data, function (err, doc) {
     if (err) {

@@ -11,7 +11,7 @@ var QueryString = require('querystring');
 var nonceGen = require('nonce')();
 var util = require('util');
 var S = require('string');
-var SmsRecordModel = require('./SmsRecord.model.js').model;
+var SmsRecordModel = require('./smsRecord.model.js').model;
 
 module.exports = {
   sendVerificationCode: sendVerificationCode,
