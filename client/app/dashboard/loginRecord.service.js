@@ -10,7 +10,7 @@
    */
   angular
     .module('austackApp.dashboard')
-    .factory('LoginRecord', LoginRecord)
+    .factory('LoginRecord', LoginRecord);
 
   /* @ngInject */
   function LoginRecord($resource, Config, $q, $http) {

@@ -29,7 +29,7 @@
 
     vm.statisticsData = statisticsData;
     var token = $cookieStore.get('token');
-    var dataUrl = Config.API_URL + "loginRecords/?access_token=" + token + "&start={{d:start}}&stop={{d:end}}";
+    var dataUrl = Config.API_URL + 'loginRecords/?access_token=' + token + '&start={{d:start}}&stop={{d:end}}';
 
     vm.heatMapConfig = {
       domain: 'month',
@@ -45,8 +45,9 @@
       domainDynamicDimension: false,
       afterLoadData: function (data) {
         var i, total, results = {};
-        for (i = 0, total = data.length; i < total; i++) {
-          results[moment(data[i].day, "YYYY-MM-DD").unix()] = data[i].count;
+        total = data.length;
+        for (i = 0; i < total; i++) {
+          results[moment(data[i].day, 'YYYY-MM-DD').unix()] = data[i].count;
         }
         return results;
       },

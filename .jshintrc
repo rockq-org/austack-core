@@ -40,6 +40,8 @@
     // JASMINE
     "describe": false,
     "it": false,
+    "saveAs": false,
+    "Blob": false,
     "before": false,
     "beforeEach": false,
     "after": false,
