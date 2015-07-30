@@ -70,6 +70,7 @@ SmsRecordSchema.statics.insertSmsRecord = function (data) {
 
   return d.promise;
 };
+
 /**
  * Validations
  */

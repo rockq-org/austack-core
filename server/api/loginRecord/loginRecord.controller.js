@@ -20,7 +20,7 @@ var Q = require('q');
 var LoginRecord = require('./loginRecord.model').model;
 var LoginRecordDailyCount = require('./loginRecordDailyCount.model').model;
 var RepoProxy = require('../repo/repo.proxy');
-
+var SmsRecordModel = require('../../lib/sms/smsRecord.model.js').model;
 /**
  * LoginRecordController constructor
  * @classdesc Controller that handles /api/loginRecords route requests
@@ -150,6 +150,7 @@ LoginRecordController.prototype = {
 
     Helper.getRepoByOwnerId()
       .then(Helper.getAllUserCount)
+      .then(Helper.getAllSmsCount)
       .then(Helper.getCurrentMonthActively)
       .then(Helper.getCurrentWeekLoginTimes)
       .then(Helper.getCurrentWeekNewUser)
@@ -161,6 +162,7 @@ LoginRecordController.prototype = {
         logger.log(err);
         var data = {
           allUserCount: 0,
+          allSmsCount: 0,
           currentMonthActively: 0,
           currentWeekLoginTimes: 0,
           currentWeekNewUser: 0,
@@ -198,8 +200,27 @@ var Helper = {
     var d = Q.defer();
     Helper.req.repoModel.count({}, function (err, count) {
       Helper.data.allUserCount = count;
-      logger.log(count);
+      logger.log('getAllUserCount', count);
       d.resolve(count);
+    });
+
+    return d.promise;
+  },
+  getAllSmsCount: function () {
+    var d = Q.defer();
+    var query = {
+      ownerId: String(Helper.req.userInfo._id)
+    };
+
+    SmsRecordModel.count(query, function (err, count) {
+      if (err) {
+        logger.log(err, count);
+        return d.reject(err);
+      }
+
+      Helper.data.allSmsCount = count;
+      logger.log('getAllSmsCount', count);
+      return d.resolve(count);
     });
 
     return d.promise;
