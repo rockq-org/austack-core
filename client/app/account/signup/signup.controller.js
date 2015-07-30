@@ -31,6 +31,7 @@
     vm.resendVerifyCode = resendVerifyCode;
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
+    vm.gotoLogin = gotoLogin;
 
     // vm.step = 'step3';
 
@@ -49,7 +50,7 @@
         return;
       }
 
-      vm.step = 'loading';
+      //vm.step = 'loading';
       User.create({
         name: vm.user.name,
         role: 'admin' // for tenant's role
@@ -71,7 +72,7 @@
     }
 
     function resendVerifyCode(form) {
-      vm.step = 'loading';
+      //vm.step = 'loading';
       loadNameFromCookieStoreIfNotExist();
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
         Toast.show('验证码发送成功！');
@@ -103,7 +104,7 @@
         return;
       }
 
-      vm.step = 'loading';
+      //vm.step = 'loading';
       loadNameFromCookieStoreIfNotExist();
       User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
@@ -121,14 +122,13 @@
         return;
       }
 
-      vm.step = 'loading';
+      //vm.step = 'loading';
       loadNameFromCookieStoreIfNotExist();
       User.submitUserDetail(vm.user).$promise.then(function (data) {
-        Toast.show('注册成功！', function () {
-          $cookieStore.remove('token'); // remove token, so user can go to login state
-          $state.go('account.login');
-        });
+        Toast.show('注册成功！');
+        vm.step = 'step4';
       }).catch(function (err) {
+        console.log('注册失败！');
         vm.step = 'step3';
         switch (err.data.errors.userId.kind) {
         case 'regexp':
@@ -141,6 +141,11 @@
           Toast.show('未知错误');
         }
       });
+    }
+
+    function gotoLogin() {
+      $cookieStore.remove('token'); // remove token, so user can go to login state
+      $state.go('account.login');
     }
 
     function loadNameFromCookieStoreIfNotExist() {
