@@ -63,7 +63,6 @@
       createUser: createUser,
       changePassword: changePassword,
       getCurrentUser: getCurrentUser,
-      getCurrentRepo: getCurrentRepo,
       isLoggedIn: isLoggedIn,
       isLoggedInAsync: isLoggedInAsync,
       isAdmin: isAdmin,
@@ -187,10 +186,6 @@
      */
     function getCurrentUser() {
       return currentUser;
-    }
-
-    function getCurrentRepo() {
-      return currentUser.repos[0];
     }
 
     /**
