@@ -70,16 +70,24 @@ UserController.prototype = {
         return res.handleError(err);
       }
 
-      // var template = '【<%= APP_NAME %>】您的验证码是：<%= VERIFY_CODE %>，3分钟内有效。如非您本人操作，可忽略本消息。';
-      // var list = {
-      //   'APP_NAME': 'Austack',
-      //   'VERIFY_CODE': verifyCode
-      // };
-      // var content = SMS.replaceText(template, list);
-      var appName = '开发者注册';
+      var sendData = {
+        mobile: mobile,
+        appName: '开发者注册',
+        verifyCode: verifyCode,
+        period: 3
+      };
 
-      SMS.sendVerificationCode(mobile, appName, verifyCode, 3)
-        // SMS.sendVerificationCode('18959264502', 'troy', '2222', '3')
+      var logData = {
+        content: '', //only get this in the sms send
+        status: '', // only get this valude after sms send
+        type: 'system',
+        mobile: sendData.mobile,
+        clientId: 'system',
+        appUserId: document._id,
+        ownerId: 'system'
+      };
+
+      SMS.sendVerificationCode(sendData, logData)
         .then(function () {
           return res.created(self.getResponseObject(document));
         }).fail(function (err) {
