@@ -106,6 +106,13 @@ UserController.prototype = {
     };
 
     this.model.findOne(params, function (err, user) {
+      logger.log(err, user);
+      if (err || user == null) {
+        return res.forbidden({
+          message: 'user do not exist'
+        });
+      }
+
       var now = new Date();
       var timeSpan = now - user.verifyCodeLatestSendTime;
       if (timeSpan < (+60) * 1000) {
@@ -116,7 +123,24 @@ UserController.prototype = {
       var verifyCode = SMS.generateVerificationCode();
       user.verifyCodeLatestSendTime = now;
       user.verifyCode = verifyCode;
-      SMS.sendVerificationCode(user.name, /*appName*/ '', verifyCode, '3')
+
+      var sendData = {
+        mobile: user.name,
+        appName: '开发者注册',
+        verifyCode: verifyCode,
+        period: 3
+      };
+
+      var logData = {
+        content: '', //only get this in the sms send
+        status: '', // only get this valude after sms send
+        type: 'system-resend',
+        mobile: sendData.mobile,
+        clientId: 'system',
+        appUserId: user._id,
+        ownerId: 'system'
+      };
+      SMS.sendVerificationCode(sendData, logData)
         .then(function () {
           user.save(function (err) {
             if (err) {
