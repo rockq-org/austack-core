@@ -250,19 +250,25 @@ var Helper = {
   //done func at above
 
   sendSMS: function () {
-    var mobile = Helper.req.body.mobile;
-    var appName = Helper.req.application.name;
-    var verifyCode = Helper.req.verificationCode;
-    var period = 3;
-    var logData = {
-      type: 'app',
-      mobile: mobile,
-      clientId: String(Helper.req.application.clientId),
-      appUserId: String(Helper.req.appUser._id),
-      ownerId: String(Helper.req.application.ownerId)
+
+    var sendData = {
+      mobile: Helper.req.body.mobile,
+      appName: Helper.req.application.name,
+      verifyCode: Helper.req.verificationCode,
+      period: 3
     };
 
-    return SMS.sendVerificationCode(mobile, appName, verifyCode, period, logData)
+    var logData = {
+      content: '', //only get this in the sms send
+      type: 'app',
+      mobile: sendData.mobile,
+      clientId: String(Helper.req.application.clientId),
+      appUserId: String(Helper.req.appUser._id),
+      ownerId: String(Helper.req.application.ownerId),
+      status: '' // only get this valude after sms send
+    };
+
+    return SMS.sendVerificationCode(sendData, logData)
       .then(function () {
         Helper.msg = '发送短信成功';
       })

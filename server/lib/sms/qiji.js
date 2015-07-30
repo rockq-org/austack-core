@@ -10,6 +10,7 @@ var SuperAgent = require('superagent');
 var QueryString = require('querystring');
 var nonceGen = require('nonce')();
 var util = require('util');
+var S = require('string');
 
 module.exports = {
   sendVerificationCode: sendVerificationCode,
@@ -53,11 +54,11 @@ function getPasswordDigest() {
  * @param  {[type]} period     [description]
  * @return {[type]}            [description]
  */
-function sendVerificationCode(mobile, appName, verifyCode, period, logData) {
-  mobile = String(mobile);
-  appName = String(appName);
-  verifyCode = String(verifyCode);
-  period = String(period);
+function sendVerificationCode(sendData, logData) {
+  mobile = String(sendData.mobile);
+  appName = String(sendData.appName);
+  verifyCode = String(sendData.verifyCode);
+  period = String(sendData.period);
 
   logger.log(mobile, appName, verifyCode, period);
   var d = Q.defer();
@@ -81,25 +82,31 @@ function sendVerificationCode(mobile, appName, verifyCode, period, logData) {
       "args": [appName, verifyCode, period]
     })
     .end(function (err, res) {
+      var str = "【金矢科技】 {{appName}} - 验证码：{{verifyCode}}。请在{{period}}分钟内用于登录验证。"
+
+      logData.content = S(str).template(sendData).s; // add content for logData
       if (err) {
+        logData.status = 'failed'; // add failed status for logData
         d.reject();
       } else {
+        logData.status = 'success'; // add success status for logData
         d.resolve();
       }
     });
 
   return d.promise;
 
-  function insertSmsRecord (data) {
-    // {
- //   content: String, // sms content
- //   type: String, // system(dave), app(linda)
- //   mobile: String,
- //   clientId: String,
- //   appUserId: String,
- //   ownerId: String,
- //   status: String // success, failed
- // };
+  // {
+  //   content: String, // sms content
+  //   type: String, // system(dave), app(linda)
+  //   mobile: String,
+  //   clientId: String,
+  //   appUserId: String,
+  //   ownerId: String,
+  //   status: String // success, failed
+  // };
+  function insertSmsRecord(data) {
+
   }
 }
 
