@@ -250,12 +250,11 @@ var Helper = {
 
   sendSMS: function () {
     var mobile = Helper.req.body.mobile;
-    var verificationCode = Helper.req.verificationCode;
-    // for now we can only send by cid, can not send customize cotent yet
-    // #TODO add more parameters into sendVerificationCode
-    // sendVerificationCode(mobilePhoneNumber, appName, verifyCode, period)
-    // Check out https://github.com/arrking/austack-core/issues/152.
-    return SMS.sendVerificationCode(mobile, verificationCode)
+    var appName = Helper.req.application.name;
+    var verifyCode = Helper.req.verificationCode;
+    var period = 3;
+    // mobile, appName, verifyCode, period
+    return SMS.sendVerificationCode(mobile, appName, verifyCode, period)
       .then(function () {
         Helper.msg = '发送短信成功';
       })
