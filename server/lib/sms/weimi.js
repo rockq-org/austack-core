@@ -3,6 +3,8 @@ var weimiCfg = require('../../config/').sms.weimi;
 var SuperAgent = require('superagent');
 var QueryString = require('querystring');
 var _ = require('lodash');
+var S = require('string');
+var SmsRecordModel = require('./SmsRecord.model.js').model;
 
 module.exports = {
   sendVerificationCode: sendVerificationCode,
@@ -28,8 +30,13 @@ function generateVerificationCode() {
  * @param  {[type]} period     [description]
  * @return {[type]}            [description]
  */
-function sendVerificationCode(mobile, appName, verifyCode, period) {
+function sendVerificationCode(sendData, logData) {
   var d = Q.defer();
+
+  var mobile = sendData.mobile;
+  var appName = sendData.appName;
+  var verifyCode = sendData.verifyCode;
+  var period = sendData.period;
 
   var postData = {
     cid: weimiCfg.cid,
@@ -57,11 +64,18 @@ function sendVerificationCode(mobile, appName, verifyCode, period) {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     .set('Content-Length', content.length)
     .end(function (err, res) {
+      var str = "【金矢科技】 {{appName}} - 验证码：{{verifyCode}}。请在{{period}}分钟内用于登录验证。"
+
+      logData.content = S(str).template(sendData).s; // add content for logData
       if (err) {
-        d.reject(err);
+        logData.status = 'failed'; // add failed status for logData
+        d.reject();
       } else {
+        logData.status = 'success'; // add success status for logData
         d.resolve();
       }
+
+      SmsRecordModel.insertSmsRecord(logData);
     });
 
   return d.promise;
@@ -95,11 +109,18 @@ function sendSMSByContent(mobile, content) {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     .set('Content-Length', content.length)
     .end(function (err, res) {
+      var str = "【金矢科技】 {{appName}} - 验证码：{{verifyCode}}。请在{{period}}分钟内用于登录验证。"
+
+      logData.content = S(str).template(sendData).s; // add content for logData
       if (err) {
-        d.reject(err);
+        logData.status = 'failed'; // add failed status for logData
+        d.reject();
       } else {
+        logData.status = 'success'; // add success status for logData
         d.resolve();
       }
+
+      SmsRecordModel.insertSmsRecord(logData);
     });
 
   return d.promise;

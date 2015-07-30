@@ -94,29 +94,10 @@ function sendVerificationCode(sendData, logData) {
         d.resolve();
       }
 
-      insertSmsRecord(logData);
+      SmsRecordModel.insertSmsRecord(logData);
     });
 
   return d.promise;
-
-  // {
-  //   content: String, // sms content
-  //   type: String, // system(dave), app(linda)
-  //   mobile: String,
-  //   clientId: String,
-  //   appUserId: String,
-  //   ownerId: String,
-  //   status: String // success, failed
-  // };
-  function insertSmsRecord(data) {
-    SmsRecordModel.create(data, function (err, doc) {
-      if (err) {
-        return logger.log(err, doc);
-      }
-
-      logger.log('insertSmsRecord success', doc);
-    });
-  }
 }
 
 // logger.debug('send sms ..')

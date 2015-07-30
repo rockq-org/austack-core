@@ -11,6 +11,7 @@
 var mongoose = require('mongoose');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
+var Q = require('q');
 
 /**
  * The SmsRecord model definition
@@ -45,6 +46,29 @@ SmsRecordSchema.plugin(requestContext, {
   contextPath: 'request:acl.user.name'
 });
 
+// {
+//   content: String, // sms content
+//   type: String, // system(dave), app(linda)
+//   mobile: String,
+//   clientId: String,
+//   appUserId: String,
+//   ownerId: String,
+//   status: String // success, failed
+// };
+SmsRecordSchema.static.insertSmsRecord = function (data) {
+  var d = Q.defer();
+  this.create(data, function (err, doc) {
+    if (err) {
+      logger.log(err, doc);
+      return d.reject(err);
+    }
+
+    logger.log('insertSmsRecord success', doc);
+    return d.resolve(doc);
+  });
+
+  return d.promise;
+};
 /**
  * Validations
  */
