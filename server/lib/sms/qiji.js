@@ -94,6 +94,7 @@ function sendVerificationCode(sendData, logData) {
         d.resolve();
       }
 
+      logData.provider = 'qiji';
       SmsRecordModel.insertSmsRecord(logData);
     });
 

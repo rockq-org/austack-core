@@ -27,6 +27,7 @@ var SmsRecordDefinition = {
   clientId: String,
   appUserId: String,
   ownerId: String,
+  provider: String, // weimi, qiji
   status: String // success, failed
 };
 
