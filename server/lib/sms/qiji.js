@@ -5,7 +5,6 @@
 var Q = require('q');
 var cfg = require('../../config/').sms.qiji;
 var crypto = require('crypto');
-var shasum = crypto.createHash('sha1');
 var SuperAgent = require('superagent');
 var QueryString = require('querystring');
 var nonceGen = require('nonce')();
@@ -24,7 +23,7 @@ function generateVerificationCode() {
 }
 
 var sha1sum = function (input) {
-  return shasum.update(input).digest('base64')
+  return crypto.createHash('sha1').update(input).digest('base64')
 }
 
 /**
