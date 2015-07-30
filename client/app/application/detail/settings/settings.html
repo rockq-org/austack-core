@@ -47,7 +47,7 @@
     </md-input-container>
     <div flex layout="row" layout-align="space-between center">
       <md-button ng-disabled="updateForm.$invalid" ng-click="vm.update()" class="md-raised md-primary">保存</md-button>
-      <md-button ng-click="vm.delete()" class="md-warn">删除应用</md-button>
+      <md-button ng-click="vm.remove($event)" class="md-warn">删除应用</md-button>
     </div>
   </form>
 </md-content>
