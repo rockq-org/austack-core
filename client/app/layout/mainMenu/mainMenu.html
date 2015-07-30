@@ -13,6 +13,12 @@
             {{ item.name }}
           </md-button>
         </md-menu-item>
+        <md-menu-item class="submenu" ui-sref-active="md-primary" ui-sref="{{subItem.state}}" ng-repeat="subItem in item.subItems">
+          <md-button ng-class="{'md-accent md-hue-2': menu.isActive(subItem.state)}">
+            <md-icon ng-if="item.icon" md-svg-icon="{{ subItem.icon }}"></md-icon>
+            {{ subItem.name }}
+          </md-button>
+        </md-menu-item>
       </div>
       <div hide-gt-md ng-controller="HeaderController as vm">
         <md-divider></md-divider>

@@ -8,6 +8,12 @@ md-sidenav[md-component-id="mainMenu"] {
     min-width: $sidenavWidth;
     max-width: $sidenavWidth;
   }
+  .submenu {
+    height: 36px;
+    .md-button {
+      padding-left: 60px;
+    }
+  }
   md-divider {
     margin: 10px;
   }

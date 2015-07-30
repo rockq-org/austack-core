@@ -56,11 +56,11 @@
 
     $stateProvider.state(listState);
 
-    mainMenuProvider.addMenuItem({
+    mainMenuProvider.addSubMenuItem('user.list', {
       name: '数据定义',
       state: listState.name,
       icon: 'action:ic_account_box_24px',
-      order: 4
+      order: 1
     });
   }
 
