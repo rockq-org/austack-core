@@ -36,7 +36,6 @@ var ApplicationDefinition = {
   },
   callbackUrls: [String],
   corsDomains: [String],
-  smsTemplate: String,
   loginTemplate: String,
   loginTemplatePreview: String,
   isTrashed: {
