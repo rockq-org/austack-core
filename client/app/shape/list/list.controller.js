@@ -9,7 +9,7 @@
     .controller('ShapeListController', ShapeListController);
 
   // add ShapeListController dependencies to inject
-  ShapeListController.$inject = ['$scope', 'socket', '$state', 'shape', '$mdDialog'];
+  ShapeListController.$inject = ['$scope', 'socket', '$state', 'shape', '$mdDialog', 'shapeTypes'];
 
   /**
    * ShapeListController constructor
@@ -20,11 +20,15 @@
    * @param {Array} shape - The list of shape resolved for this route
    * @param {Service} ToggleComponent - The service for switching the detail view
    */
-  function ShapeListController($scope, socket, $state, shape, $mdDialog) {
+  function ShapeListController($scope, socket, $state, shape, $mdDialog, shapeTypes) {
     var vm = this;
 
     // the array of shape
-    vm.shape = JSON.stringify(shape);
+    vm.shape = shape.data;
+    vm.types = shapeTypes;
+    vm.schema = vm.shape.mSchema;
+    console.log(vm.schema);
+    window.shape = shape.data;
     console.log(vm.shape);
 
     // the selected item id
@@ -39,12 +43,13 @@
 
     vm.create = createShape;
 
-    function createShape() {
+    function createShape(ev) {
       $mdDialog.show({
         controller: 'ShapeCreateController',
         controllerAs: 'create',
         templateUrl: 'app/shape/create/create.html',
-        clickOutsideToClose: false
+        clickOutsideToClose: false,
+        targetEvent: ev
       });
     }
 

@@ -5,12 +5,13 @@
     .module('austackApp.shape.create', [])
     .controller('ShapeCreateController', ShapeCreateController);
 
-  ShapeCreateController.$inject = ['$mdDialog', 'Shape', 'ShapeService', 'Toast'];
+  ShapeCreateController.$inject = ['$mdDialog', 'Shape', 'ShapeService', 'Toast', 'shapeTypes'];
 
-  function ShapeCreateController($mdDialog, Shape, ShapeService, Toast) {
+  function ShapeCreateController($mdDialog, Shape, ShapeService, Toast, shapeTypes) {
     var vm = this;
 
     vm.shape = new Shape();
+    vm.shapeTypes = shapeTypes;
 
     vm.create = createShape;
     vm.close = hideDialog;

@@ -41,7 +41,7 @@
       parent: 'repo',
       url: '/:repoName',
       ncyBreadcrumb: {
-        label: '数据定义'
+        label: '数据列表'
       },
       authenticate: true,
       role: 'admin',
