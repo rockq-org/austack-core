@@ -15,7 +15,33 @@
             <md-button class="md-primary md-raised" ng-click="vm.downloadClient()"> 下载示例代码 </md-button>
           </div>
           <div ng-show="vm.showClientTutorial">
-            <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vivamus suscipit tortor eget felis porttitor volutpat. Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Donec sollicitudin molestie malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Quisque velit nisi, pretium ut lacinia in, elementum id enim.</p>
+            <p>
+              1. 加载预定义常量，建议放到js代码块的最前面
+              <pre>
+                <script src="js/austack-variables.js"></script>
+              </pre>
+            </p>
+            <p>
+              2. 加载 angular-jwt.js 和 angular-austack.js(TODO：我们代码优化后放到npm库里)
+              <pre>
+                <script src="lib/angular-jwt/dist/angular-jwt.js"></script>
+                <script src="js/angular-austack.js"></script>
+              </pre>
+            </p>
+            <p>
+              3. 在app.js后面添加austack的config和run的代码块
+              <pre>
+                // austack config angular.module('starter').config(function austackConfig($stateProvider, austackProvider, jwtInterceptorProvider, $httpProvider) { $stateProvider .state('login', { url: "/login", templateUrl: "templates/login.html", controller: 'LoginCtrl' }); // Configure Austack austackProvider.init({ domain: AUSTACK_DOMAIN, clientId: AUSTACK_CLIENT_ID, loginState: 'login' }); jwtInterceptorProvider.tokenGetter = function($window, jwtHelper, austack) { var idToken = $window.localStorage.getItem('token'); var refreshToken = $window.localStorage.getItem('refreshToken'); if (!idToken || !refreshToken) { return null; } if (jwtHelper.isTokenExpired(idToken)) { return austack.refreshIdToken(refreshToken, function(idToken) { $window.localStorage.setItem('token', idToken); return idToken; }); } else { return idToken; } } $httpProvider.interceptors.push('jwtInterceptor'); }) // austack run .run(function austackRun($rootScope, austack, $window, $location, jwtHelper) { $rootScope.$on('$locationChangeStart', function() { if (austack.isAuthenticated) { return; } var token = $window.localStorage.getItem('token'); if (!token || jwtHelper.isTokenExpired(token)) { $location.path('/login'); } else { // post to dave's backend to get userInfo austack.getUserInfo(token); } }); });
+              </pre>
+            </p>
+            <p>
+              4. 添加controller 代码
+              <pre>
+                angular.module('starter.controllers', []) .controller('LoginCtrl', function($scope, austack, $state, $window) { console.log('start LoginCtrl'); function doAuth() { console.log('start doing signin'); austack.signin({}, function(result) { // $window.localStorage.setItem('profile', result.profile); // $window.localStorage.setItem('refreshToken', result.refreshToken); $window.localStorage.setItem('token', result.idToken); alert(result.idToken); $state.go('tab.dash'); }, function(error) { console.log(error); }); } $scope.$on('$ionic.reconnectScope', function() { doAuth(); }); doAuth(); })
+
+              </pre>
+            </p>
+
           </div>
         </md-card-content>
       </md-card>
@@ -30,7 +56,30 @@
             <md-button class="md-primary md-raised" ng-click="vm.downloadBackend()"> 下载示例代码 </md-button>
           </div>
           <div ng-show="vm.showServerTutorial">
-            <p>Sed porttitor lectus nibh. Nulla porttitor accumsan tincidunt. Donec rutrum congue leo eget malesuada. Pellentesque in ipsum id orci porta dapibus. Sed porttitor lectus nibh. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Nulla porttitor accumsan tincidunt. Curabitur aliquet quam id dui posuere blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus. Cras ultricies ligula sed magna dictum porta. Curabitur aliquet quam id dui posuere blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec sollicitudin molestie malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Nulla porttitor accumsan tincidunt. Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Nulla porttitor accumsan tincidunt. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Pellentesque in ipsum id orci porta dapibus. Donec sollicitudin molestie malesuada.</p>
+            <p>
+              1. app.js 设置支持cors
+              <pre>
+                var cors = require('cors'); app.use(cors({ origin: '*' }));
+              </pre>
+            </p>
+            <p>
+              2. app.js 设置系统启动则获得applicationJwt
+              <pre>
+                var Austack = require('./austack-nodejs'); Austack.getApplicationJwt() .then(function (applicationJwt) { console.log('success get applicationJwt', applicationJwt); });
+              </pre>
+            </p>
+            <p>
+              3. app.js设置路由支持已通过austack登录的客户端请求用户个人信息
+              <pre>
+                app.get('/me', user.me);
+              </pre>
+            </p>
+            <p>
+              4. routes/user.js 设置路由的具体实现代码
+              <pre>
+                var Austack = require('../austack-nodejs'); exports.me = function (req, res) { var userJwt = req.headers.authorization; Austack.validateUserJwt(userJwt) .then(function () { var profile = { clientId: clientId, userOtherInfo: 'some other userInfo dave want to add' }; console.log('success', profile); res.status(200).json(profile); }) .fail(function () { console.log('not validate'); res.status(401).json({ message: 'user force logout' }); }); };
+              </pre>
+            </p>
           </div>
         </md-card-content>
       </md-card>

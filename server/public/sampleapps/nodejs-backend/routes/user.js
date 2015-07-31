@@ -2,7 +2,7 @@
  * GET users listing.
  */
 var appJSON = require('../app.json');
-var Austack = require('../austack');
+var Austack = require('../austack-nodejs');
 var request = require('superagent');
 var apiBaseURL = appJSON.apiBaseURL;
 var clientId = appJSON.clientId;
