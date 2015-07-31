@@ -21,6 +21,14 @@
     // the current application to display
     vm.application = application;
 
+    vm.ionicStep1 = '<script src="js/austack-variables.js"></script>';
+    vm.ionicStep2 = [
+      '<script src="lib/angular-jwt/dist/angular-jwt.js"></script>',
+      '<script src="js/angular-austack.js"></script>'
+    ].join('\n');
+    vm.ionicStep3 = 'step 3 code here';
+    vm.ionicStep4 = 'step 4 code here';
+
     vm.downloadBackend = downloadBackend;
     vm.downloadClient = downloadClient;
 
