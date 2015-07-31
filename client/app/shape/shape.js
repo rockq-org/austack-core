@@ -61,7 +61,7 @@
       name: '数据定义',
       state: shapeState.name,
       icon: 'action:ic_account_box_24px',
-      order: 1
+      order: 2
     });
   }
 

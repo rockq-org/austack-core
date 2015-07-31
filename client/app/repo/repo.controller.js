@@ -7,7 +7,7 @@
     .controller('RepoController', RepoController);
 
   // add RepoController dependencies to inject
-  RepoController.$inject = ['$mdDialog'];
+  RepoController.$inject = ['$mdDialog', 'repos', '$mdDialog'];
 
   /**
    * RepoController constructor. Main controller for the austackApp.repo
@@ -16,7 +16,12 @@
    * @param {$scope} $scope - The scope to listen for events
    * @param {socket.io} socket - The socket to register updates
    */
-  function RepoController($mdDialog) {
+  function RepoController($state, repos, $mdDialog) {
+    var repoName = repos.data[0];
+    $state.go('repo.list', {
+      repoName: repoName
+    });
+
     var vm = this;
 
     vm.create = createRepo;

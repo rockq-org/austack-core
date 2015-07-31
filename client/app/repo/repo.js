@@ -15,6 +15,7 @@
     .module('austackApp.repo', [
       'ngResource',
       'ui.router',
+      'austackApp.repo.service',
       'austackApp.repo.list',
       'austackApp.repo.detail',
       'austackApp.repo.edit',
@@ -23,7 +24,7 @@
     .config(configRepoRoutes);
 
   // inject configRepoRoutes dependencies
-  configRepoRoutes.$inject = ['$urlRouterProvider', '$stateProvider'];
+  configRepoRoutes.$inject = ['$urlRouterProvider', '$stateProvider', 'mainMenuProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -34,13 +35,13 @@
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
    */
-  function configRepoRoutes($urlRouterProvider, $stateProvider) {
+  function configRepoRoutes($urlRouterProvider, $stateProvider, mainMenuProvider) {
     // The repo state configuration
-    var shapeState = {
+    var repoState = {
       name: 'repo',
       parent: 'root',
       url: '/repos',
-      abstract: true,
+      //abstract: true,
       resolve: {
         repos: resolveRepos
       },
@@ -50,17 +51,24 @@
     };
 
     $urlRouterProvider.when('/repos/', '/repos');
-    $stateProvider.state(shapeState);
+    $stateProvider.state(repoState);
+
+    mainMenuProvider.addSubMenuItem('user.list', {
+      name: '数据列表',
+      state: repoState.name,
+      icon: 'action:ic_account_box_24px',
+      order: 1
+    });
   }
 
   // inject resolveRepos dependencies
   resolveRepos.$inject = ['Repo'];
 
   /**
-   * Resolve dependencies for the repo.list state
+   * Resolve dependencies for the shape.list state
    *
-   * @params {Repo} Repo - The service to query repos
-   * @returns {Promise} A promise that, when fullfilled, returns an array of repos
+   * @params {Shape} Shape - The service to query shapes
+   * @returns {Promise} A promise that, when fullfilled, returns an array of shapes
    */
   function resolveRepos(Repo) {
     return Repo.query().$promise;
