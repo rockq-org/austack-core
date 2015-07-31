@@ -43,30 +43,9 @@
   function ShapeService(Shape) {
 
     return {
-      create: create,
       update: update,
-      remove: remove,
-      refreshSecret: refreshSecret
+      remove: remove
     };
-
-    /**
-     * Save a new shape
-     *
-     * @param  {Object}   shape - shapeData
-     * @param  {Function} callback - optional
-     * @return {Promise}
-     */
-    function create(shape, callback) {
-      var cb = callback || angular.noop;
-
-      return Shape.create(shape,
-        function (shape) {
-          return cb(shape);
-        },
-        function (err) {
-          return cb(err);
-        }).$promise;
-    }
 
     /**
      * Remove a shape
@@ -100,28 +79,6 @@
       var cb = callback || angular.noop;
 
       return Shape.update(shape,
-        function (shape) {
-          return cb(shape);
-        },
-        function (err) {
-          return cb(err);
-        }).$promise;
-    }
-
-    /**
-     * Refresh Secret Token
-     *
-     * @param  {Object}   shape - shapeData
-     * @param  {Function} callback - optional
-     * @return {Promise}
-     */
-    function refreshSecret(shape, callback) {
-      var cb = callback || angular.noop;
-
-      return Shape.get({
-          id: shape._id,
-          controller: 'refresh-secret-token'
-        },
         function (shape) {
           return cb(shape);
         },

@@ -53,7 +53,6 @@
       }
     };
 
-    $urlRouterProvider.when('/repos/:id', '/repos/:id/quickstart');
     $stateProvider.state(detailState);
   }
 

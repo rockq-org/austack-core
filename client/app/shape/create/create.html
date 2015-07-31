@@ -32,7 +32,9 @@
         </md-input-container>
         <md-input-container flex>
           <label>字段类型</label>
-          <textarea name="description" ng-model="create.shape.description"></textarea>
+          <md-select placeholder="字段类型" ng-model="create.shape.type">
+            <md-option ng-repeat="type in create.shapeTypes" value="{{type.name}}">{{type.text}}</md-option>
+          </md-select>
         </md-input-container>
 
       </section>

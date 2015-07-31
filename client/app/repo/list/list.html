@@ -3,22 +3,10 @@
   <md-content ng-if="list.repos.data.length" id="repo-items-content" flex>
 
     <md-list>
-      <md-list-item ng-click="list.showSettings(repo)" ng-repeat="repo in list.repos.data" ng-class="{'selected': list.isSelected(repo)}">
+      <md-list-item ng-repeat="repo in list.repos.data" ng-class="{'selected': list.isSelected(repo)}">
         <list-image ng-if="!user.image" string="{{repo.name}}"></list-image>
         <p>{{::repo.name}}</p>
         <p hide-md hide-sm>{{::repo.description}}</p>
-        <md-button ng-click="list.showQuickstart(repo)" class="md-icon-button">
-          <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
-          <md-tooltip>快速开始</md-tooltip>
-        </md-button>
-        <md-button ng-click="list.showSettings(repo)" class="md-icon-button">
-          <md-icon md-svg-icon="action:ic_settings_24px"></md-icon>
-          <md-tooltip>设置</md-tooltip>
-        </md-button>
-        <md-button ng-click="list.showLoginpage(repo)" class="md-icon-button">
-          <md-icon md-svg-icon="action:ic_extension_24px"></md-icon>
-          <md-tooltip>登入界面</md-tooltip>
-        </md-button>
       </md-list-item>
     </md-list>
 

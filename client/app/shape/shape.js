@@ -21,7 +21,24 @@
       'austackApp.shape.edit',
       'austackApp.shape.create'
     ])
+    .constant('shapeTypes', getShapeTypes())
     .config(configShapeRoutes);
+
+  function getShapeTypes() {
+    return [{
+      name: 'String',
+      text: '字符串'
+    }, {
+      name: 'Date',
+      text: '日期'
+    }, {
+      name: 'Number',
+      text: '数字'
+    }, {
+      name: 'Boolean',
+      text: '布尔'
+    }]
+  }
 
   // inject configShapeRoutes dependencies
   configShapeRoutes.$inject = ['$urlRouterProvider', '$stateProvider', 'mainMenuProvider'];

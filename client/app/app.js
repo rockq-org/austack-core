@@ -32,6 +32,7 @@
       'austackApp.account',
       'austackApp.dashboard',
       'austackApp.user',
+      'austackApp.repo',
       'austackApp.shape',
       'austackApp.layout'
     ])

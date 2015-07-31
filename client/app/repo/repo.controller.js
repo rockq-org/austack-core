@@ -7,7 +7,7 @@
     .controller('RepoController', RepoController);
 
   // add RepoController dependencies to inject
-  RepoController.$inject = ['$mdDialog', 'repos', '$mdDialog'];
+  RepoController.$inject = ['$state', 'repos', '$mdDialog'];
 
   /**
    * RepoController constructor. Main controller for the austackApp.repo

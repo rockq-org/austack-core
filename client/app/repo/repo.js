@@ -42,6 +42,9 @@
       parent: 'root',
       url: '/repos',
       //abstract: true,
+      ncyBreadcrumb: {
+        label: '用户'
+      },
       resolve: {
         repos: resolveRepos
       },
@@ -56,7 +59,7 @@
     mainMenuProvider.addSubMenuItem('user.list', {
       name: '数据列表',
       state: repoState.name,
-      icon: 'action:ic_account_box_24px',
+      icon: 'action:ic_supervisor_account_24px',
       order: 1
     });
   }

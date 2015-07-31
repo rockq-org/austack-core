@@ -18,20 +18,11 @@
    */
   function ShapeController($state, shapes, $mdDialog) {
     var repoName = shapes.data[0];
+    console.log(repoName);
     $state.go('shape.list', {
       repoName: repoName
     });
     var vm = this;
-    vm.create = createShape;
-
-    function createShape(ev) {
-      $mdDialog.show({
-        controller: 'ShapeCreateController',
-        controllerAs: 'create',
-        templateUrl: 'app/shape/create/create.html',
-        targetEvent: ev
-      });
-    }
   }
 
 })();
