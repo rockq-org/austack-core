@@ -33,13 +33,14 @@
 
     vm.heatMapConfig = {
       domain: 'month',
+      domainLabelFormat: "%Y-%m",
       subDomain: 'x_day',
       data: dataUrl,
-      start: new Date(2015, 5, 1),
+      start: new Date(2015, 7, 1),
       cellSize: 20,
       cellRadius: 3,
       cellPadding: 5,
-      range: 5,
+      range: 4,
       domainMargin: 20,
       animationDuration: 800,
       domainDynamicDimension: false,
