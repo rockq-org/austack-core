@@ -39,7 +39,7 @@
     var listState = {
       name: 'repo.list',
       parent: 'repo',
-      url: '',
+      url: '/:repoName',
       ncyBreadcrumb: {
         label: '数据定义'
       },
@@ -55,13 +55,6 @@
     };
 
     $stateProvider.state(listState);
-
-    mainMenuProvider.addSubMenuItem('user.list', {
-      name: '数据定义',
-      state: listState.name,
-      icon: 'action:ic_account_box_24px',
-      order: 1
-    });
   }
 
 })();
