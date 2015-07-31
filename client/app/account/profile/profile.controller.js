@@ -12,6 +12,8 @@
 
     vm.user = Auth.getCurrentUser();
 
+    vm.user.avatar = vm.user.avaar || 'assets/images/profile.png';
+
     vm.close = function () {
       $mdDialog.hide();
     };

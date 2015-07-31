@@ -9,7 +9,7 @@
     .controller('ShapeListController', ShapeListController);
 
   // add ShapeListController dependencies to inject
-  ShapeListController.$inject = ['$scope', 'socket', '$state', 'shapes', '$mdDialog'];
+  ShapeListController.$inject = ['$scope', 'socket', '$state', 'shape', '$mdDialog'];
 
   /**
    * ShapeListController constructor
@@ -17,14 +17,15 @@
    * @param {Object} $scope - The current scope
    * @param {Object} socket - The socket service to register to
    * @param {$state} $state - The $state to activate routing states on
-   * @param {Array} shapes - The list of shapes resolved for this route
+   * @param {Array} shape - The list of shape resolved for this route
    * @param {Service} ToggleComponent - The service for switching the detail view
    */
-  function ShapeListController($scope, socket, $state, shapes, $mdDialog) {
+  function ShapeListController($scope, socket, $state, shape, $mdDialog) {
     var vm = this;
 
-    // the array of shapes
-    vm.shapes = shapes;
+    // the array of shape
+    vm.shape = JSON.stringify(shape);
+    console.log(vm.shape);
 
     // the selected item id
     var curShapeId = null;
@@ -89,7 +90,7 @@
      * Register socket updates and unsync on scope $destroy event
      */
     function activate() {
-      socket.syncUpdates('shape', vm.shapes);
+      socket.syncUpdates('shape', vm.shape);
       $scope.$on('$destroy', unsyncShapeUpdates);
 
       function unsyncShapeUpdates() {

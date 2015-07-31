@@ -256,10 +256,12 @@ function getProfile() {
   // jshint validthis: true
   return {
     '_id': this._id,
+    'mobile': this.userId,
     'name': this.name,
     'active': this.active,
     'role': this.role,
-    'info': this.info
+    'info': this.info,
+    'signupAt': this.signupAt
   };
 }
 

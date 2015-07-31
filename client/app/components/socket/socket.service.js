@@ -49,6 +49,7 @@
      */
     function syncUpdates(modelName, array, cb) {
       cb = cb || angular.noop;
+      array = array.data || array;
 
       /**
        * Syncs item creation/updates on 'model:save'

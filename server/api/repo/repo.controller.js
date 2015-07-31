@@ -374,7 +374,7 @@ function _hasPermission(req, resource) {
   // http://stackoverflow.com/questions/11637353/comparing-mongoose-id-and-strings
   // _id and ownerId are object.
   // if (resource.ownerId.equals(req.userInfo._id)) {
-  if (resource.ownerId.equals(req.userInfo.ownerId)) {
+  if (resource.ownerId.equals(req.userInfo._id)) {
     return true;
   }
 

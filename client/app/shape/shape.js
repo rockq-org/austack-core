@@ -15,6 +15,7 @@
     .module('austackApp.shape', [
       'ngResource',
       'ui.router',
+      'austackApp.repo.service',
       'austackApp.shape.list',
       'austackApp.shape.detail',
       'austackApp.shape.edit',
@@ -23,7 +24,7 @@
     .config(configShapeRoutes);
 
   // inject configShapeRoutes dependencies
-  configShapeRoutes.$inject = ['$urlRouterProvider', '$stateProvider'];
+  configShapeRoutes.$inject = ['$urlRouterProvider', '$stateProvider', 'mainMenuProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -34,13 +35,17 @@
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
    */
-  function configShapeRoutes($urlRouterProvider, $stateProvider) {
+  function configShapeRoutes($urlRouterProvider, $stateProvider, mainMenuProvider) {
     // The shape state configuration
+
     var shapeState = {
       name: 'shape',
       parent: 'root',
       url: '/shapes',
-      abstract: true,
+      //abstract: true,
+      ncyBreadcrumb: {
+        label: '用户'
+      },
       resolve: {
         shapes: resolveShapes
       },
@@ -51,10 +56,17 @@
 
     $urlRouterProvider.when('/shapes/', '/shapes');
     $stateProvider.state(shapeState);
+
+    mainMenuProvider.addSubMenuItem('user.list', {
+      name: '数据定义',
+      state: shapeState.name,
+      icon: 'action:ic_account_box_24px',
+      order: 1
+    });
   }
 
   // inject resolveShapes dependencies
-  resolveShapes.$inject = ['Shape'];
+  resolveShapes.$inject = ['Repo'];
 
   /**
    * Resolve dependencies for the shape.list state
@@ -62,8 +74,8 @@
    * @params {Shape} Shape - The service to query shapes
    * @returns {Promise} A promise that, when fullfilled, returns an array of shapes
    */
-  function resolveShapes(Shape) {
-    return Shape.query().$promise;
+  function resolveShapes(Repo) {
+    return Repo.query().$promise;
   }
 
 })();

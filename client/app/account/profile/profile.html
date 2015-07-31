@@ -8,14 +8,21 @@
       </md-button>
     </div>
   </md-toolbar>
+  <div class="header md-whiteframe-z1">
+    <img ng-src="{{vm.user.avatar}}" />
+    <h1 class="md-headline">{{vm.user.name}}</h1>
+  </div>
   <md-dialog-content>
-    <div class="header md-whiteframe-z1">
-      <img ng-src="{{vm.user.avatar}}" />
-      <h1 class="md-headline">{{vm.user.name}}</h1>
-    </div>
-    <div>
-      <h2 class="md-title">{{vm.user.name}}</h2>
-      <h2 class="md-title">{{vm.user.name}}</h2>
-    </div>
+    <md-list>
+      <md-subheader class="md-no-sticky">账户信息</md-subheader>
+      <md-list-item>
+        <p> {{vm.user.mobile}} </p>
+        <md-icon class="md-primary" md-svg-icon="action:ic_settings_phone_24px"></md-icon>
+      </md-list-item>
+      <md-list-item>
+        <p> {{vm.user.signupAt | date: "yyyy-MM-dd HH:mm"}} </p>
+        <md-icon class="md-primary" md-svg-icon="action:ic_event_24px"></md-icon>
+      </md-list-item>
+    </md-list>
   </md-dialog-content>
 </md-dialog>
