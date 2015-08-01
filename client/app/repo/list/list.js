@@ -46,8 +46,18 @@
       authenticate: true,
       role: 'admin',
       resolve: {
-        repoSchema: resolveRepoSchema
-          // repoData: resolveRepoData
+        /* @ngInject */
+        repoSchema: function (ShapeService, repos) {
+          var repoName = repos.data[0];
+          console.log(repoName);
+          return ShapeService.getByRepoName(repoName);
+        },
+        /* @ngInject */
+        repoData: function (RepoService, repos) {
+          var repoName = repos.data[0];
+          console.log(repoName);
+          return RepoService.getRepoData(repoName);
+        }
       },
       views: {
         '': {
@@ -59,18 +69,6 @@
     };
 
     $stateProvider.state(listState);
-  }
-
-  /* @ngInject */
-  function resolveRepoSchema(ShapeService, repos) {
-    var repoName = repos.data[0];
-    return ShapeService.getByRepoName(repoName);
-  }
-
-  /* @ngInject */
-  function resolveRepoData(RepoService, repos) {
-    var repoName = repos.data[0];
-    return RepoService.getRepoData(repoName);
   }
 
 })();

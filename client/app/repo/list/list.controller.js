@@ -6,7 +6,7 @@
     .controller('RepoListController', RepoListController);
 
   /* @ngInject */
-  function RepoListController() {
+  function RepoListController(repoSchema, repoData) {
     var vm = this;
 
     vm.listHeader = getListHeader();

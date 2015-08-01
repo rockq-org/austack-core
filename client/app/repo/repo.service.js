@@ -16,9 +16,7 @@
   // add Repo dependencies to inject
   Repo.$inject = ['Resource', 'Config'];
 
-  /**
-   * Repo resource constructor
-   */
+  /* @ngInject */
   function Repo($resource, Config) {
     // factory members
     var apiURL = Config.API_URL + 'repos';
@@ -31,13 +29,12 @@
   }
 
   /* @ngInject */
-  function RepoService(Repo) {
-
+  function RepoService(Repo, Config, $http, $q) {
+    var apiURL = Config.API_URL + 'repos/';
     return {
       create: create,
       update: update,
       remove: remove,
-      getRepoSchema: getRepoSchema,
       getRepoData: getRepoData
     };
 
@@ -101,7 +98,23 @@
     }
 
     function getRepoData(repoName) {
-      console.log(repoName);
+      var d = $q.defer();
+
+      $http.get(apiURL + repoName)
+        .success(function (data, status, headers, config) {
+          console.log(data);
+          if (data.mSchema) {
+            return d.resolve(data.mSchema);
+          }
+
+          return d.reject('no mSchema');
+        })
+        .error(function (data, status, headers, config) {
+          console.log(data, repoName);
+          d.reject(data);
+        });
+
+      return d.promise;
 
     }
 
