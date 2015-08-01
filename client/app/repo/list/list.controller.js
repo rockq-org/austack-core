@@ -9,14 +9,10 @@
   function RepoListController(repoSchema, repoData) {
     var vm = this;
 
-    console.log(repoSchema, repoData);
-    vm.listHeader = getListHeader();
+    console.log(repoSchema);
+    vm.listHeader = repoSchema;
 
     vm.listData = getListData();
-
-    function getListHeader() {
-      return 'uid | 手机 | 上次验证码发送时间 | 验证码过期时间 | 验证码 | 注册时间 | 上次登录时间'.split(' | ');
-    }
 
     function getListData() {
       return [{

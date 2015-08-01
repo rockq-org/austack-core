@@ -18,7 +18,6 @@
    */
   function RepoController($state, repos, $mdDialog) {
     var repoName = repos.data[0];
-    console.log('here', repoName);
     $state.go('repo.list', {
       repoName: repoName
     });

@@ -4,8 +4,8 @@
 
     <md-list>
       <md-list-item class="md-1-line">
-        <div class="md-list-item-text" ng-repeat="item in list.listHeader">
-          <h3>{{::item}}</h3>
+        <div class="md-list-item-text" ng-repeat="(key, value) in list.listHeader">
+          <h3> {{::key}} </h3>
         </div>
       </md-list-item>
       <md-list-item class="md-1-line" ng-repeat="itemData in list.listData">
