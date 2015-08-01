@@ -62,13 +62,15 @@
   }
 
   /* @ngInject */
-  function resolveRepoSchema(Repo) {
-    return Repo.getRepoSchema();
+  function resolveRepoSchema(Repo, repos) {
+    var repoName = repos.data[0];
+    return Repo.getRepoSchema(repoName);
   }
 
   /* @ngInject */
-  function resolveRepoData(Repo) {
-    return Repo.getRepoData();
+  function resolveRepoData(Repo, repos) {
+    var repoName = repos.data[0];
+    return Repo.getRepoData(repoName);
   }
 
 })();

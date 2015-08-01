@@ -46,7 +46,8 @@
       create: create,
       update: update,
       remove: remove,
-      getDataGrid: getDataGrid
+      getRepoSchema: getRepoSchema,
+      getRepoData: getRepoData
     };
 
     /**
@@ -108,10 +109,13 @@
         }).$promise;
     }
 
-    function getDataGrid() {
-      console.log('getDataGrid');
-      //get scheme
-      //get data list
+    function getRepoSchema(repoName) {
+
     }
+
+    function getRepoData(repoName) {
+
+    }
+
   }
 })();
