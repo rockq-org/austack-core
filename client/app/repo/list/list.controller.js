@@ -9,6 +9,7 @@
   function RepoListController(repoSchema, repoData) {
     var vm = this;
 
+    console.log(repoSchema, repoData);
     vm.listHeader = getListHeader();
 
     vm.listData = getListData();
