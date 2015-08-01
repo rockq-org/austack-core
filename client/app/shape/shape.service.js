@@ -78,7 +78,9 @@
     function update(shape, callback) {
       var cb = callback || angular.noop;
 
-      return Shape.update(shape,
+      return Shape.update({
+          id: shape.name
+        }, shape,
         function (shape) {
           return cb(shape);
         },

@@ -3,7 +3,7 @@
     <md-list>
       <md-list-item ng-repeat="(key, value) in list.schema">
         <p>{{::key}}</p>
-        <p flex="30">{{::value.type}}</p>
+        <p flex="30">{{::value.type | shapeType}}</p>
       </md-list-item>
     </md-list>
   </div>
