@@ -46,8 +46,8 @@
       authenticate: true,
       role: 'admin',
       resolve: {
-        repoSchema: resolveRepoSchema,
-        repoData: resolveRepoData
+        repoSchema: resolveRepoSchema
+          // repoData: resolveRepoData
       },
       views: {
         '': {
@@ -62,15 +62,15 @@
   }
 
   /* @ngInject */
-  function resolveRepoSchema(Repo, repos) {
+  function resolveRepoSchema(ShapeService, repos) {
     var repoName = repos.data[0];
-    return Repo.getRepoSchema(repoName);
+    return ShapeService.getByRepoName(repoName);
   }
 
   /* @ngInject */
-  function resolveRepoData(Repo, repos) {
+  function resolveRepoData(RepoService, repos) {
     var repoName = repos.data[0];
-    return Repo.getRepoData(repoName);
+    return RepoService.getRepoData(repoName);
   }
 
 })();

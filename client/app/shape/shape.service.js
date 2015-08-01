@@ -31,8 +31,8 @@
   }
 
   /* @ngInject */
-  function ShapeService(Shape, Config, $http) {
-    var apiURL = Config.API_URL + 'shapes';
+  function ShapeService(Shape, Config, $http, $q) {
+    var apiURL = Config.API_URL + 'shapes/';
 
     return {
       update: update,
@@ -81,7 +81,21 @@
     }
 
     function getByRepoName(repoName) {
+      var d = $q.defer();
+      $http.get(apiURL + repoName)
+        .success(function (data, status, headers, config) {
+          if (data.mSchema) {
+            return d.resolve(data.mSchema);
+          }
 
+          return d.reject('no mSchema');
+        })
+        .error(function (data, status, headers, config) {
+          console.log(data, repoName);
+          d.reject(data);
+        });
+
+      return d.promise;
     }
   }
 })();

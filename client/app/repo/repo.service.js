@@ -30,16 +30,7 @@
     });
   }
 
-  // add RepoService dependencies to inject
-  RepoService.$inject = ['Repo'];
-
-  /**
-   * RepoService constructor
-   * AngularJS will instantiate a singleton by calling "new" on this function
-   *
-   * @param {$resource} Repo The resource provided by austackApp.repo.resource
-   * @returns {Object} The service definition for the RepoService service
-   */
+  /* @ngInject */
   function RepoService(Repo) {
 
     return {
@@ -107,10 +98,6 @@
         function (err) {
           return cb(err);
         }).$promise;
-    }
-
-    function getRepoSchema(repoName) {
-      console.log(repoName);
     }
 
     function getRepoData(repoName) {
