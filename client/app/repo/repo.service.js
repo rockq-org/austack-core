@@ -110,10 +110,11 @@
     }
 
     function getRepoSchema(repoName) {
-
+      console.log(repoName);
     }
 
     function getRepoData(repoName) {
+      console.log(repoName);
 
     }
 

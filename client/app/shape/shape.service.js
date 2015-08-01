@@ -30,20 +30,13 @@
     });
   }
 
-  // add ShapeService dependencies to inject
-  ShapeService.$inject = ['Shape'];
-
-  /**
-   * ShapeService constructor
-   * AngularJS will instantiate a singleton by calling "new" on this function
-   *
-   * @param {$resource} Shape The resource provided by austackApp.shape.resource
-   * @returns {Object} The service definition for the ShapeService service
-   */
-  function ShapeService(Shape) {
+  /* @ngInject */
+  function ShapeService(Shape, Config, $http) {
+    var apiURL = Config.API_URL + 'shapes';
 
     return {
       update: update,
+      getByRepoName: getByRepoName,
       remove: remove
     };
 
@@ -85,6 +78,10 @@
         function (err) {
           return cb(err);
         }).$promise;
+    }
+
+    function getByRepoName(repoName) {
+
     }
   }
 })();
