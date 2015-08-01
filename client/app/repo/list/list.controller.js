@@ -1,100 +1,32 @@
 (function () {
   'use strict';
 
-  /**
-   * Register the list controller as RepoListController
-   */
   angular
     .module('austackApp.repo.list')
     .controller('RepoListController', RepoListController);
 
-  // add RepoListController dependencies to inject
-  RepoListController.$inject = ['$scope', 'socket', '$state', 'repos', '$mdDialog'];
-
-  /**
-   * RepoListController constructor
-   *
-   * @param {Object} $scope - The current scope
-   * @param {Object} socket - The socket service to register to
-   * @param {$state} $state - The $state to activate routing states on
-   * @param {Array} repos - The list of repos resolved for this route
-   * @param {Service} ToggleComponent - The service for switching the detail view
-   */
-  function RepoListController($scope, socket, $state, repos, $mdDialog) {
+  /* @ngInject */
+  function RepoListController() {
     var vm = this;
 
-    // the array of repos
-    vm.repos = repos;
+    vm.listHeader = getListHeader();
 
-    // the selected item id
-    var curRepoId = null;
+    vm.listData = getListData();
 
-    // check if this item is selected
-    vm.isSelected = isSelected;
-    // switch to the detail state
-    vm.showSettings = showSettings;
-    vm.showQuickstart = showQuickstart;
-    vm.showLoginpage = showLoginpage;
-
-    vm.create = createRepo;
-
-    function createRepo() {
-      $mdDialog.show({
-        controller: 'RepoCreateController',
-        controllerAs: 'create',
-        templateUrl: 'app/repo/create/create.html',
-        clickOutsideToClose: false
-      });
+    function getListHeader() {
+      return 'uid | 手机 | 上次验证码发送时间 | 验证码过期时间 | 验证码 | 注册时间 | 上次登录时间'.split(' | ');
     }
 
-    /**
-     * Check if the passed item is the current selected item
-     *
-     * @param {Object} repo - The object to check for selection
-     */
-    function isSelected(repo) {
-      return curRepoId === repo._id;
-    }
-
-    /**
-     * Open the detail state with the selected item
-     *
-     * @param {Object} repo - The repo to edit
-     */
-    function showSettings(repo) {
-      curRepoId = repo._id;
-      $state.go('repo.detail.settings', {
-        'id': curRepoId
-      });
-    }
-
-    function showQuickstart(repo) {
-      curRepoId = repo._id;
-      $state.go('repo.detail.quickstart', {
-        'id': curRepoId
-      });
-    }
-
-    function showLoginpage(repo) {
-      curRepoId = repo._id;
-      $state.go('repo.detail.loginpage', {
-        'id': curRepoId
-      });
-    }
-
-    // initialize the controller
-    activate();
-
-    /**
-     * Register socket updates and unsync on scope $destroy event
-     */
-    function activate() {
-      socket.syncUpdates('repo', vm.repos);
-      $scope.$on('$destroy', unsyncRepoUpdates);
-
-      function unsyncRepoUpdates() {
-        socket.unsyncUpdates('repo');
-      }
+    function getListData() {
+      return [{
+        uid: 'ssss',
+        mobile: '18959264502',
+        mobile1: '18959264502',
+        mobile2: '18959264502',
+        mobile3: '18959264502',
+        mobile4: '18959264502',
+        mobile5: '18959264502'
+      }];
     }
   }
 

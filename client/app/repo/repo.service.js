@@ -46,7 +46,7 @@
       create: create,
       update: update,
       remove: remove,
-      refreshSecret: refreshSecret
+      getDataGrid: getDataGrid
     };
 
     /**
@@ -106,6 +106,12 @@
         function (err) {
           return cb(err);
         }).$promise;
+    }
+
+    function getDataGrid() {
+      console.log('getDataGrid');
+      //get scheme
+      //get data list
     }
   }
 })();

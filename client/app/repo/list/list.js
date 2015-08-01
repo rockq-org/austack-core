@@ -45,6 +45,10 @@
       },
       authenticate: true,
       role: 'admin',
+      resolve: {
+        repoSchema: resolveRepoSchema,
+        repoData: resolveRepoData
+      },
       views: {
         '': {
           templateUrl: 'app/repo/list/list.html',
@@ -55,6 +59,16 @@
     };
 
     $stateProvider.state(listState);
+  }
+
+  /* @ngInject */
+  function resolveRepoSchema(Repo) {
+    return Repo.getRepoSchema();
+  }
+
+  /* @ngInject */
+  function resolveRepoData(Repo) {
+    return Repo.getRepoData();
   }
 
 })();

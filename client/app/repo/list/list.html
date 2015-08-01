@@ -1,6 +1,20 @@
 <section id="repo-list-content" layout="column" layout-fill flex>
   <!-- for repos data structure, look into https://github.com/arrking/austack-core/issues/126 -->
-  <md-content ng-if="list.repos.data.length" id="repo-items-content" flex>
+  <md-content ng-if="!list.repos.data.length" id="repo-items-content" flex>
+
+    <md-list>
+      <md-list-item class="md-1-line">
+        <div class="md-list-item-text" ng-repeat="item in list.listHeader">
+          <h3>{{::item}}</h3>
+        </div>
+      </md-list-item>
+      <md-list-item class="md-1-line" ng-repeat="itemData in list.listData">
+        <div class="md-list-item-text" ng-repeat="item in itemData">
+          <h3>{{::item}}</h3>
+        </div>
+      </md-list-item>
+
+    </md-list>
 
     <md-list>
       <md-list-item ng-repeat="repo in list.repos.data" ng-class="{'selected': list.isSelected(repo)}">
@@ -16,7 +30,7 @@
     <md-card>
       <md-card-content>
         <p>
-          应用列表为空
+          数据列表为空
           <a ng-click="index.create()">现在创建</a>
         </p>
       </md-card-content>
