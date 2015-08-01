@@ -8,110 +8,86 @@
     .module('austackApp.shape.list')
     .controller('ShapeListController', ShapeListController);
 
-  // add ShapeListController dependencies to inject
-  ShapeListController.$inject = ['$scope', 'socket', '$state', 'shape', '$mdDialog', 'shapeTypes', 'ShapeService', 'Toast'];
+  ShapeListController.$inject = ['$scope', 'shape', '$mdDialog', 'shapeTypes', 'ShapeService', 'Toast', '$mdSidenav'];
 
-  /**
-   * ShapeListController constructor
-   *
-   * @param {Object} $scope - The current scope
-   * @param {Object} socket - The socket service to register to
-   * @param {$state} $state - The $state to activate routing states on
-   * @param {Array} shape - The list of shape resolved for this route
-   * @param {Service} ToggleComponent - The service for switching the detail view
-   */
-  function ShapeListController($scope, socket, $state, shape, $mdDialog, shapeTypes, ShapeService, Toast) {
+  function ShapeListController($scope, shape, $mdDialog, shapeTypes, ShapeService, Toast, $mdSidenav) {
     var vm = this;
 
     // the array of shape
     vm.shape = shape.data;
-    vm.types = shapeTypes;
     vm.schema = vm.shape.mSchema;
-    console.log(vm.schema);
-    window.shape = shape.data;
-    console.log(vm.shape);
+    vm.shapeTypes = shapeTypes;
 
-    // the selected item id
-    var curShapeId = null;
-
-    // check if this item is selected
-    vm.isSelected = isSelected;
     // switch to the detail state
-    vm.showSettings = showSettings;
-    vm.showQuickstart = showQuickstart;
-    vm.showLoginpage = showLoginpage;
+    vm.showDetail = showDetail;
+    vm.closeDetail = closeDetail;
 
-    vm.create = createShape;
+    vm.updateField = updateField;
+    vm.removeField = removeField;
 
-    function createShape(ev) {
+    vm.addField = addField;
+
+    vm.curFieldKey = null;
+    vm.curField = null;
+
+    function addField(ev) {
       $mdDialog.show({
         controller: 'ShapeCreateController',
         controllerAs: 'create',
         templateUrl: 'app/shape/create/create.html',
         clickOutsideToClose: false,
         targetEvent: ev
-      }).then(addField)
+      }).then(function (field) {
+        if (!field.name) {
+          return;
+        }
+
+        var fieldName = field.name;
+        delete field.name;
+        vm.schema[fieldName] = field;
+        ShapeService.update(vm.shape, function () {
+          Toast.show('添加字段成功');
+        });
+      });
     }
 
-    function addField(field) {
-      if (!field.name) return;
-
-      var fieldName = field.name;
-      delete field.name;
-      vm.schema[fieldName] = field;
+    function updateField() {
+      vm.schema[vm.curFieldKey] = vm.curField;
       ShapeService.update(vm.shape, function () {
-        Toast.show('添加字段成功');
+        Toast.show('更新字段成功');
       });
     }
 
-    /**
-     * Check if the passed item is the current selected item
-     *
-     * @param {Object} shape - The object to check for selection
-     */
-    function isSelected(shape) {
-      return curShapeId === shape._id;
-    }
+    function removeField(ev) {
+      var confirm = $mdDialog.confirm()
+        .title('删除字段 ' + vm.curFieldKey + '?')
+        .content('您确定要删除字段 ' + vm.curFieldKey + '?')
+        .ariaLabel('删除字段')
+        .ok('删除字段')
+        .cancel('取消')
+        .targetEvent(ev);
 
-    /**
-     * Open the detail state with the selected item
-     *
-     * @param {Object} shape - The shape to edit
-     */
-    function showSettings(shape) {
-      curShapeId = shape._id;
-      $state.go('shape.detail.settings', {
-        'id': curShapeId
+      $mdDialog.show(confirm).then(function () {
+        delete vm.schema[vm.curFieldKey];
+        ShapeService.update(vm.shape, function () {
+          Toast.show('更新字段成功');
+          vm.closeDetail();
+        });
       });
     }
 
-    function showQuickstart(shape) {
-      curShapeId = shape._id;
-      $state.go('shape.detail.quickstart', {
-        'id': curShapeId
-      });
+    var navID = 'detailView';
+
+    function showDetail(key, value) {
+      vm.curFieldKey = key,
+        vm.curField = value;
+      $mdSidenav(navID)
+        .toggle()
+        .then(function () {});
     }
 
-    function showLoginpage(shape) {
-      curShapeId = shape._id;
-      $state.go('shape.detail.loginpage', {
-        'id': curShapeId
-      });
-    }
-
-    // initialize the controller
-    activate();
-
-    /**
-     * Register socket updates and unsync on scope $destroy event
-     */
-    function activate() {
-      socket.syncUpdates('shape', vm.shape);
-      $scope.$on('$destroy', unsyncShapeUpdates);
-
-      function unsyncShapeUpdates() {
-        socket.unsyncUpdates('shape');
-      }
+    function closeDetail() {
+      $mdSidenav(navID).close();
     }
   }
 

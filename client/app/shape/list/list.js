@@ -45,15 +45,15 @@
       },
       authenticate: true,
       role: 'admin',
+      resolve: {
+        shape: resolveShape
+      },
       views: {
         '': {
           templateUrl: 'app/shape/list/list.html',
           controller: 'ShapeListController',
           controllerAs: 'list'
         }
-      },
-      resolve: {
-        shape: resolveShapeFromArray
       }
     };
 
@@ -61,7 +61,7 @@
   }
 
   // inject resolveShapeFromArray dependencies
-  resolveShapeFromArray.$inject = ['Shape', '$stateParams'];
+  resolveShape.$inject = ['Shape', '$stateParams'];
 
   /**
    * Resolve dependencies for the shape.detail state
@@ -70,7 +70,9 @@
    * @params {Object} $stateParams - The $stateParams to read the shape id from
    * @returns {Object|null} The shape whose value of the _id property equals $stateParams._id
    */
-  function resolveShapeFromArray(Shape, $stateParams) {
+  function resolveShape(Shape, $stateParams) {
+    //return 'asd';
+    //console.log($stateParams);
     return Shape.query({
       id: $stateParams.repoName,
       isArray: false

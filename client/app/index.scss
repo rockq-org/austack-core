@@ -8,6 +8,18 @@ body {
   font-family: 'Microsoft YaHei', RobotoDraft, Roboto, 'Helvetica Neue', sans-serif
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
 md-dialog {
   max-width: 450px;
   min-width: 360px;
@@ -28,14 +40,11 @@ md-menu-item > .md-button {
   display: -moz-box;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
+form {
+  md-list-item .md-no-style {
+    padding: 0 2px;
+  }
+  md-list-item .md-secondary {
+    right: 0px !important;
+  }
 }
