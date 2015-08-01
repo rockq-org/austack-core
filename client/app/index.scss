@@ -15,6 +15,9 @@ md-dialog {
     height: 48px !important;
     min-height: 48px;
   }
+  md-dialog-content {
+    padding: 16px;
+  }
 }
 
 .md-toolbar-tools .md-button {

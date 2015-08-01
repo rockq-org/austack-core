@@ -9,7 +9,7 @@
     .controller('ShapeListController', ShapeListController);
 
   // add ShapeListController dependencies to inject
-  ShapeListController.$inject = ['$scope', 'socket', '$state', 'shape', '$mdDialog', 'shapeTypes'];
+  ShapeListController.$inject = ['$scope', 'socket', '$state', 'shape', '$mdDialog', 'shapeTypes', 'ShapeService', 'Toast'];
 
   /**
    * ShapeListController constructor
@@ -20,7 +20,7 @@
    * @param {Array} shape - The list of shape resolved for this route
    * @param {Service} ToggleComponent - The service for switching the detail view
    */
-  function ShapeListController($scope, socket, $state, shape, $mdDialog, shapeTypes) {
+  function ShapeListController($scope, socket, $state, shape, $mdDialog, shapeTypes, ShapeService, Toast) {
     var vm = this;
 
     // the array of shape
@@ -50,6 +50,17 @@
         templateUrl: 'app/shape/create/create.html',
         clickOutsideToClose: false,
         targetEvent: ev
+      }).then(addField)
+    }
+
+    function addField(field) {
+      if (!field.name) return;
+
+      var fieldName = field.name;
+      delete field.name;
+      vm.schema[fieldName] = field;
+      ShapeService.update(vm.shape, function () {
+        Toast.show('添加字段成功');
       });
     }
 
