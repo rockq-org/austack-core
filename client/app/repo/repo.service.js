@@ -107,27 +107,5 @@
           return cb(err);
         }).$promise;
     }
-
-    /**
-     * Refresh Secret Token
-     *
-     * @param  {Object}   repo - shapeData
-     * @param  {Function} callback - optional
-     * @return {Promise}
-     */
-    function refreshSecret(repo, callback) {
-      var cb = callback || angular.noop;
-
-      return Repo.get({
-          id: repo._id,
-          controller: 'refresh-secret-token'
-        },
-        function (repo) {
-          return cb(repo);
-        },
-        function (err) {
-          return cb(err);
-        }).$promise;
-    }
   }
 })();
