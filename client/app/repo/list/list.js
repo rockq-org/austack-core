@@ -20,6 +20,7 @@
       'ui.router',
       'austackApp.socket',
       'austackApp.listImage',
+      'austackApp.shape.service',
       'austackApp.mainMenu'
     ])
     .config(configRepoListRoutes);
@@ -49,13 +50,11 @@
         /* @ngInject */
         repoSchema: function (ShapeService, repos) {
           var repoName = repos.data[0];
-          console.log(repoName);
           return ShapeService.getByRepoName(repoName);
         },
         /* @ngInject */
         repoData: function (RepoService, repos) {
           var repoName = repos.data[0];
-          console.log(repoName);
           return RepoService.getRepoData(repoName);
         }
       },

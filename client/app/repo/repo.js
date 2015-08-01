@@ -46,7 +46,10 @@
         label: '用户'
       },
       resolve: {
-        repos: resolveRepos
+        /* @ngInject */
+        repos: function (Repo) {
+          return Repo.query().$promise;
+        }
       },
       templateUrl: 'app/repo/repo.html',
       controller: 'RepoController',
@@ -62,19 +65,6 @@
       icon: 'action:ic_supervisor_account_24px',
       order: 1
     });
-  }
-
-  // inject resolveRepos dependencies
-  resolveRepos.$inject = ['Repo'];
-
-  /**
-   * Resolve dependencies for the shape.list state
-   *
-   * @params {Shape} Shape - The service to query shapes
-   * @returns {Promise} A promise that, when fullfilled, returns an array of shapes
-   */
-  function resolveRepos(Repo) {
-    return Repo.query().$promise;
   }
 
 })();

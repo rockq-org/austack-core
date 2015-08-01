@@ -13,17 +13,12 @@
     .factory('Shape', Shape)
     .service('ShapeService', ShapeService);
 
-  // add Shape dependencies to inject
-  Shape.$inject = ['Resource', 'Config'];
-
-  /**
-   * Shape resource constructor
-   */
-  function Shape($resource, Config) {
+  /* @ngInject */
+  function Shape(Resource, Config) {
     // factory members
     var apiURL = Config.API_URL + 'shapes';
     // public API
-    return $resource(apiURL + '/:id/:controller', {}, {
+    return Resource(apiURL + '/:id/:controller', {}, {
       query: {
         isArray: false
       }
@@ -86,8 +81,8 @@
       var d = $q.defer();
       $http.get(apiURL + repoName)
         .success(function (data, status, headers, config) {
-          if (data.mSchema) {
-            return d.resolve(data.mSchema);
+          if (data.data && data.data.mSchema) {
+            return d.resolve(data.data.mSchema);
           }
 
           return d.reject('no mSchema');

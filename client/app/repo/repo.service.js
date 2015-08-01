@@ -102,12 +102,11 @@
 
       $http.get(apiURL + repoName)
         .success(function (data, status, headers, config) {
-          console.log(data);
-          if (data.mSchema) {
-            return d.resolve(data.mSchema);
+          if (data.data) {
+            return d.resolve(data);
           }
 
-          return d.reject('no mSchema');
+          return d.reject('no data');
         })
         .error(function (data, status, headers, config) {
           console.log(data, repoName);
@@ -115,7 +114,6 @@
         });
 
       return d.promise;
-
     }
 
   }
