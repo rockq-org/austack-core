@@ -26,9 +26,9 @@
    * @returns {Service} {@link mainMenu.controller:SidebarController SidebarController}
    */
 
-  SidebarController.$inject = ['$state', 'mainMenu', '$mdSidenav', '_', 'Auth'];
+  SidebarController.$inject = ['$state', 'mainMenu', 'HeaderMenus', '$mdSidenav', '_', 'Auth'];
 
-  function SidebarController($state, mainMenu, $mdSidenav, _, Auth) {
+  function SidebarController($state, mainMenu, HeaderMenus, $mdSidenav, _, Auth) {
     var vm = this;
 
     // view model bindings
@@ -38,6 +38,7 @@
     vm.close = close;
     vm.canAccess = canAccess;
     vm.isActive = isActive;
+    vm.headerMenus = HeaderMenus;
 
     function isActive(state) {
       var root = state.split('.')[0];

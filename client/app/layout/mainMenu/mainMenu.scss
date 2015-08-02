@@ -8,10 +8,29 @@ md-sidenav[md-component-id="mainMenu"] {
     min-width: $sidenavWidth;
     max-width: $sidenavWidth;
   }
+  .toggle-icon {
+    margin-right: 0px;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+    &.toggled {
+      transform: rotate(180deg);
+    }
+  }
   .submenu {
     height: 36px;
     .md-button {
       padding-left: 60px;
+      transition: all 0.3s ease-in-out;
+    }
+    max-height: 100px;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    &.ng-hide {
+      max-height: 0px;
+      opacity: 0;
+      .md-button {
+        padding-left: 16px;
+      }
     }
   }
   md-divider {

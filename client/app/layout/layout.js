@@ -27,7 +27,16 @@
       name: 'root',
       url: '',
       abstract: true,
-      templateUrl: 'app/layout/layout.html',
+      views: {
+        '': {
+          templateUrl: 'app/layout/layout.html',
+        },
+        'header@root': {
+          templateUrl: 'app/layout/header/header.html',
+          controller: 'HeaderController',
+          controllerAs: 'vm'
+        }
+      },
       ncyBreadcrumb: {
         label: 'Home'
       }

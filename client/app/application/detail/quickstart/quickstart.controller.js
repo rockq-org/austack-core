@@ -43,7 +43,7 @@
     vm.nodeStep3 = 'app.get(\'/me\', user.me);';
     vm.nodeStep4 = [
       'var Austack = require(\'../austack-nodejs\');',
-      "exports.me = function (req, res) {",
+      'exports.me = function (req, res) {',
       '  var userJwt = req.headers.authorization; ',
       '  Austack.validateUserJwt(userJwt).then(function () {',
       '    var profile = {',

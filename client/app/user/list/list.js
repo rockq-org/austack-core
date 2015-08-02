@@ -60,6 +60,7 @@
     mainMenuProvider.addMenuItem({
       name: '用户',
       state: listState.name,
+      open: true,
       icon: 'action:ic_perm_identity_24px',
       order: 3
     });
