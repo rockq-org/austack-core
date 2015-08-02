@@ -1,11 +1,19 @@
 #application-detail-content {
   .icon-large {
-    height: 200px;
+    height: 160px;
     width: auto;
     margin: 0 auto;
   }
-}
-
-.ace_editor {
-  height: 100px;
+  .tutorial {
+    padding: 0 16px;
+    background-color: #eee;
+    max-width: 1000px;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    &.ng-hide {
+      background-color: #fff;
+      opacity: 0;
+      max-height: 0px;
+    }
+  }
 }

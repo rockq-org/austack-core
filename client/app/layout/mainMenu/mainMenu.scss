@@ -25,12 +25,12 @@ md-sidenav[md-component-id="mainMenu"] {
     max-height: 100px;
     opacity: 1;
     transition: all 0.3s ease-in-out;
-  }
-  .submenu.ng-hide {
-    max-height: 0px;
-    opacity: 0;
-    .md-button {
-      padding-left: 16px;
+    &.ng-hide {
+      max-height: 0px;
+      opacity: 0;
+      .md-button {
+        padding-left: 16px;
+      }
     }
   }
   md-divider {
