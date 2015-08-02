@@ -209,34 +209,54 @@ function _createRepoAndShapes(users) {
         name: util.format('repo_%s', user.name),
         ownerId: user._id,
         type: '_local_',
-        mSchema: {
-          uid: {
+        mSchema: [{
+          name: 'uid',
+          isSys: true,
+          props: {
             type: 'String',
             unique: true,
             required: true
-          },
-          mobile: {
+          }
+        }, {
+          name: 'mobile',
+          isSys: true,
+          props: {
             type: 'String',
             required: true
-          },
-          createDate: {
+          }
+        }, {
+          name: 'createDate',
+          isSys: true,
+          props: {
             type: 'Date',
             default: Date.now
-          },
-          latestActive: {
+          }
+        }, {
+          name: 'latestActive',
+          isSys: true,
+          props: {
             type: 'Date',
             default: Date.now
-          },
-          verificationCodeExpiredAt: {
+          }
+        }, {
+          name: 'verificationCodeExpiredAt',
+          isSys: true,
+          props: {
             type: 'Date'
-          },
-          verificationCodeLatestSendTime: {
+          }
+        }, {
+          name: 'verificationCodeLatestSendTime',
+          isSys: true,
+          props: {
             type: 'Date'
-          },
-          verificationCode: {
+          }
+        }, {
+          name: 'verificationCode',
+          isSys: true,
+          props: {
             type: 'String'
           }
-        }
+        }]
       })
       .then(function (shape) {
         logger.debug('>> database: create shape as seed %s for %s', shape.name, user.name);

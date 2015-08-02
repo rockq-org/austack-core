@@ -18,6 +18,7 @@ var User = require('../user/user.model').model;
 var u = require('util');
 var Q = require('q');
 var shortid = require('shortid');
+var _ = require('lodash');
 
 /**
  * get repo's model by collection name or shape name.
@@ -34,11 +35,26 @@ function _getModel(shape) {
   delete mongoose.models[shape.name];
   delete mongoose.modelSchemas[shape.name];
 
-  var schema = new mongoose.Schema(shape.mSchema);
+  var schema = new mongoose.Schema(convertSchema(shape.mSchema));
   schema.plugin(mongoosePaginatePlugin);
   var model = mongoose.model(shape.name, schema, shape.name);
   logger.log(shape.name, shape.mSchema);
   return model;
+}
+
+/**
+ * Convert Schema in Array format into Object Format.
+ * https://github.com/arrking/austack-core/issues/93
+ * @param  {[type]} source [description]
+ * @return {[type]}        [description]
+ */
+function convertSchema(source) {
+  var target = {};
+  _.each(source, function (val, index, lis) {
+    target[val.name] = val.props;
+  });
+
+  return target;
 }
 
 /**
@@ -56,7 +72,8 @@ function _create(shape) {
     if (!err) {
       deferred.reject('repo does exist.');
     } else {
-      var mschema = new mongoose.Schema(shape.mSchema, {
+      // https://github.com/arrking/austack-core/issues/181
+      var mschema = new mongoose.Schema(convertSchema(shape.mSchema), {
         strict: false
       });
       // Mongoose#model(name, [schema], [collection], [skipInit])
