@@ -18,6 +18,7 @@
     .module('austackApp.repo.list', [
       'ngMaterial',
       'ui.router',
+      'md.data.table',
       'austackApp.socket',
       'austackApp.listImage',
       'austackApp.shape.service',

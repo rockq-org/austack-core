@@ -4,7 +4,7 @@
       <md-list-item>
         <p ng-repeat="(key, value) in list.listHeader">{{::key}}</p>
       </md-list-item>
-      <md-list-item ng-click="list.showDetail(itemKey, itemValue)" ng-repeat="(itemKey, itemValue) in list.listData">
+      <md-list-item ng-click="list.showDetail(itemKey, itemValue)" aria-label="Edit {{::itemValue}}" ng-repeat="(itemKey, itemValue) in list.listData">
         <p ng-repeat="(key, value) in list.listHeader">{{itemValue[key]}}</p>
       </md-list-item>
     </md-list>
@@ -15,7 +15,7 @@
   <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="detailView">
     <md-toolbar class="md-accent">
       <div class="md-toolbar-tools">
-        <h2>编辑字段</h2>
+        <h2>编辑用户</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="list.closeDetail()" aria-label="Close detail">
           <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
@@ -25,40 +25,13 @@
     <md-content layout-padding layout="column">
       <form name="detailForm">
 
-        <md-input-container flex>
-          <label>字段名称</label>
-          <input name="name" ng-model="list.curFieldKey" disabled ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="repo">
-          <div ng-messages="{message: true}">
-            <div ng-message="message">字段名称无法修改</div>
-          </div>
+        <md-input-container flex ng-repeat="(key, value) in list.listHeader">
+          <label>{{key}}</label>
+          <input name="{{key}}" ng-model="list.listData[list.currentEditKey][key]" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}">
         </md-input-container>
-        <md-input-container flex>
-          <label>字段类型</label>
-          <md-select name="type" placeholder="字段类型" ng-model="list.curField.type" required>
-            <md-option ng-repeat="type in list.repoTypes" value="{{type.name}}">{{type.text}}</md-option>
-          </md-select>
-          <div ng-messages="required">
-            <div ng-message="required">字段类型不能为空</div>
-          </div>
-        </md-input-container>
-        <md-list>
-          <md-list-item>
-            <p>是否必须</p>
-            <md-switch class="md-secondary" ng-model="list.curField.required"></md-switch>
-          </md-list-item>
-          <md-list-item>
-            <p>是否唯一</p>
-            <md-switch class="md-secondary" ng-model="list.curField.unique"></md-switch>
-          </md-list-item>
-          <md-list-item>
-            <p>是否索引</p>
-            <md-switch class="md-secondary" ng-model="list.curField.index"></md-switch>
-          </md-list-item>
-        </md-list>
-
         <div flex layout="row" layout-align="space-between center">
           <md-button ng-disabled="updateForm.$invalid" ng-click="list.updateField()" class="md-raised md-primary">保存</md-button>
-          <md-button ng-click="list.removeField($event)" class="md-warn">删除字段</md-button>
+          <md-button ng-click="list.removeItem($event)" class="md-warn">删除用户</md-button>
         </div>
       </form>
     </md-content>
