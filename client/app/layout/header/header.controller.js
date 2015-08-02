@@ -3,20 +3,25 @@
 
   angular
     .module('austackApp.layout')
+    .constant('HeaderMenus', getHeaderMenus())
     .controller('HeaderController', HeaderController);
 
-  HeaderController.$inject = ['Auth', 'ProfileService', 'SettingsService'];
-  /* @ngInject */
-  function HeaderController(Auth, ProfileService, SettingsService) {
-    var vm = this;
-
-    vm.menus = [{
-      name: '支持和帮助',
+  function getHeaderMenus() {
+    return [{
+      name: '支持',
       url: '#'
     }, {
       name: '文档',
       url: '#'
     }];
+  }
+
+  HeaderController.$inject = ['Auth', 'HeaderMenus', 'ProfileService', 'SettingsService'];
+  /* @ngInject */
+  function HeaderController(Auth, HeaderMenus, ProfileService, SettingsService) {
+    var vm = this;
+
+    vm.menus = HeaderMenus;
 
     vm.user = Auth.getCurrentUser();
     vm.user.avatar = 'assets/images/profile.png';
