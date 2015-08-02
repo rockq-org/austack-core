@@ -108,8 +108,8 @@
 
       $http.get(url)
         .success(function (data, status, headers, config) {
-          if (data.data) {
-            cb(data.data);
+          if (data) {
+            cb(data);
             return d.resolve(data);
           }
 

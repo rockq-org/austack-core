@@ -61,7 +61,7 @@
         query: function () {
           return {
             sortby: 'mobile',
-            limit: 1,
+            limit: 2,
             page: 1
           };
         },

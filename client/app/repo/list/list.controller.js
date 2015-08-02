@@ -28,7 +28,8 @@
     vm.query = query;
 
     function success(data) {
-      vm.repoData = repoData;
+      vm.repoData = data;
+      vm.listData = data.data;
     }
 
     vm.search = function (predicate) {
@@ -37,6 +38,7 @@
     };
 
     function onOrderChange(order) {
+      console.log(order);
       return RepoService.getRepoData(repoName, vm.query, success);
     };
 
