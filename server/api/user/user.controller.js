@@ -180,40 +180,62 @@ UserController.prototype = {
       // Create User Shape & Repo after account is activated.
       // assume user is not active and not verified before.
       if ((!user.active) && (!user.isVerified)) {
+        logger.debug('create Shape for this Dave.');
         Shape.create({
             name: util.format('repo_%s', shortid.generate()),
             ownerId: user._id,
             type: '_local_',
-            mSchema: {
-              uid: {
+            mSchema: [{
+              name: 'uid',
+              isSys: true,
+              props: {
                 type: 'String',
                 unique: true,
                 required: true
-              },
-              mobile: {
+              }
+            }, {
+              name: 'mobile',
+              isSys: true,
+              props: {
                 type: 'String',
                 required: true
-              },
-              createDate: {
+              }
+            }, {
+              name: 'createDate',
+              isSys: true,
+              props: {
                 type: 'Date',
                 default: Date.now
-              },
-              latestActive: {
+              }
+            }, {
+              name: 'latestActive',
+              isSys: true,
+              props: {
                 type: 'Date',
                 default: Date.now
-              },
-              verificationCodeExpiredAt: {
+              }
+            }, {
+              name: 'verificationCodeExpiredAt',
+              isSys: true,
+              props: {
                 type: 'Date'
-              },
-              verificationCodeLatestSendTime: {
+              }
+            }, {
+              name: 'verificationCodeLatestSendTime',
+              isSys: true,
+              props: {
                 type: 'Date'
-              },
-              verificationCode: {
+              }
+            }, {
+              name: 'verificationCode',
+              isSys: true,
+              type: {
                 type: 'String'
               }
-            }
+            }]
           })
           .then(function (shape) {
+            logger.debug('create Repo for this Dave.');
             return Repo.create(shape);
           })
           .then(function (name) {
