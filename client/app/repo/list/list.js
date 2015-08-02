@@ -54,6 +54,11 @@
           return ShapeService.getByRepoName(repoName);
         },
         /* @ngInject */
+        repoName: function (repos) {
+          var repoName = repos.data[0];
+          return repoName;
+        },
+        /* @ngInject */
         repoData: function (RepoService, repos) {
           var repoName = repos.data[0];
           return RepoService.getRepoData(repoName);

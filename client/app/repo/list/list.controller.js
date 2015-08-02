@@ -6,10 +6,9 @@
     .controller('RepoListController', RepoListController);
 
   /* @ngInject */
-  function RepoListController(repoSchema, repoData, $mdSidenav, $mdDialog, RepoService, Toast) {
+  function RepoListController(repoSchema, repoData, repoName, $mdSidenav, $mdDialog, RepoService, Toast) {
     var vm = this;
 
-    console.log(repoSchema);
     vm.listHeader = repoSchema;
     vm.listData = repoData.data;
     vm.showDetail = showDetail;
@@ -61,6 +60,7 @@
     }
 
     function removeItem(ev) {
+      var uid = vm.currentEditItem['uid'];
       var label = vm.currentEditItem['mobile'];
       var confirm = $mdDialog.confirm()
         .title('删除用户 ' + label + '?')
@@ -71,11 +71,16 @@
         .targetEvent(ev);
 
       $mdDialog.show(confirm).then(function () {
-        RepoService.remove(vm.currentEditItem, function () {
-          Toast.show('删除用户成功');
-          vm.listData.splice(vm.currentEditItemIndex, 1);
-          vm.closeDetail();
-        });
+        RepoService.remove(repoName, vm.currentEditItem['uid'])
+          .then(function () {
+            Toast.show('删除用户成功');
+            vm.listData.splice(vm.currentEditItemIndex, 1);
+            vm.closeDetail();
+          })
+          .catch(function (err) {
+            Toast.show('删除用户失败');
+            vm.closeDetail();
+          });
       });
     }
   }
