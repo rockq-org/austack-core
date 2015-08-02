@@ -38,7 +38,7 @@
     };
 
     function onOrderChange(order) {
-      console.log(order);
+      vm.query.sortby = order;
       return RepoService.getRepoData(repoName, vm.query, success);
     };
 
