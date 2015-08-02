@@ -16,7 +16,7 @@ hljs {
 
 hljs:before {
   content: attr(lang);
-  display: block;
+  display: none;
   background: #1C5792;
   color: white;
   line-height: 48px;
@@ -24,8 +24,8 @@ hljs:before {
   border-radius: 2px 2px 0 0;
 }
 
-hljs.no-header:before {
-  display: none;
+hljs.has-header:before {
+  display: block;
 }
 
 .hljs-tag,
@@ -124,9 +124,11 @@ hljs .hljs-constant,
   opacity: 0.5;
 }
 
+
 /*******************
  * CODE HIGHLIGHTING
  *******************/
+
 pre {
   white-space: pre;
   white-space: pre-wrap;
@@ -142,13 +144,13 @@ pre > code.highlight {
   user-select: initial;
 }
 
-pre, code {
+pre,
+code {
   margin: 0;
   padding: 0;
   font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
   overflow-wrap: break-word;
 }
-
 
 pre > code.highlight {
   background-color: transparent;
@@ -174,6 +176,7 @@ code:not(.highlight) {
   padding: 0.125em 0.35em;
   border-radius: 2px;
 }
+
 .layout-content code.highlight {
   margin-bottom: 15px;
 }

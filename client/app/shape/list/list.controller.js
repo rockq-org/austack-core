@@ -79,8 +79,8 @@
     var navID = 'detailView';
 
     function showDetail(key, value) {
-      vm.curFieldKey = key,
-        vm.curField = value;
+      vm.curFieldKey = key;
+      vm.curField = value;
       $mdSidenav(navID)
         .toggle()
         .then(function () {});
