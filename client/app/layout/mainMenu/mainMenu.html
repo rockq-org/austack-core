@@ -4,7 +4,7 @@
       <img src="assets/images/logo-full.png">
     </span>
   </md-toolbar>
-  <md-content>
+  <md-content flex>
     <md-list flex ng-controller="SidebarController as menu">
       <div ng-repeat="item in menu.items">
         <md-menu-item ng-if="!item.subItems" ui-sref="{{item.state}}">
