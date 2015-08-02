@@ -11,7 +11,6 @@
 
     vm.listHeader = repoSchema;
 
-    console.log(repoData.data);
     vm.listData = repoData.data;
   }
 

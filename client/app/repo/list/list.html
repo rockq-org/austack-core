@@ -1,32 +1,24 @@
 <section id="repo-list-content" layout="column" layout-fill flex>
   <!-- for repos data structure, look into https://github.com/arrking/austack-core/issues/126 -->
-  <md-content ng-if="!list.repos.data.length" id="repo-items-content" flex>
-
-    <md-list>
-      <md-list-item class="md-1-line">
-        <div class="md-list-item-text" ng-repeat="(key, value) in list.listHeader">
-          <h3> {{::key}} </h3>
-        </div>
-      </md-list-item>
-      <md-list-item class="md-1-line" ng-repeat="itemData in list.listData">
-        <div class="md-list-item-text" ng-repeat="(key, value) in list.listHeader">
-          <h3>{{itemData[key]}}</h3>
-        </div>
-      </md-list-item>
-
-    </md-list>
-
-    <md-list>
-      <md-list-item ng-repeat="repo in list.repos.data" ng-class="{'selected': list.isSelected(repo)}">
-        <list-image ng-if="!user.image" string="{{repo.name}}"></list-image>
-        <p>{{::repo.name}}</p>
-        <p hide-md hide-sm>{{::repo.description}}</p>
-      </md-list-item>
-    </md-list>
-
+  <md-content ng-if="list.listHeader" id="repo-items-content" flex>
+    <br />
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <!-- <th>#</th> -->
+          <th ng-repeat="(key, value) in list.listHeader">{{::key}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="itemData in list.listData">
+          <!-- <th scope="row">1</th> -->
+          <td ng-repeat="(key, value) in list.listHeader">{{itemData[key]}}</td>
+        </tr>
+      </tbody>
+    </table>
   </md-content>
 
-  <md-content ng-if="!list.repos.data.length">
+  <md-content ng-if="!list.listHeader">
     <md-card>
       <md-card-content>
         <p>
