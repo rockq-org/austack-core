@@ -103,16 +103,16 @@ exports.repo_dave2 = [{
 }];
 
 exports.repo_root = [{
-  "mobile": "1588888888",
+  "mobile": "1588888889",
   "verificationCode": "1234",
   "uid": "linda1"
 }, {
-  "mobile": "1588888889",
-  "verificationCode": "1234",
+  "mobile": "1588888888",
+  "verificationCode": "1235",
   "uid": "linda2"
 }, {
-  "mobile": "1588888887",
-  "verificationCode": "1234",
+  "mobile": "1588888890",
+  "verificationCode": "1236",
   "uid": "linda3"
 }];
 

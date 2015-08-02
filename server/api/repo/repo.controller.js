@@ -114,7 +114,7 @@ function _get(req, res) {
         mongooseUtil.getQuery(req)
           .then(function (mQuery) {
             var options = mongooseUtil.getPaginateOptions(req);
-
+            logger.log(options, req.query);
             M.paginate(
               mQuery || {},
               options,
@@ -122,13 +122,15 @@ function _get(req, res) {
                 if (err) {
                   return res.handleError(err);
                 }
-                return res.ok({
+                var json = {
                   total: itemCount,
                   total_page: pageCount,
                   current_page: pageNumber,
                   rc: 1,
                   data: results
-                });
+                };
+                logger.log(req.query, json);
+                return res.ok(json);
               });
           }, function (err) {
             return res.json({

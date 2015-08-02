@@ -1,6 +1,6 @@
 <md-data-table-container>
   <table md-data-table md-row-select="list.selected" md-progress="list.deferred">
-    <thead md-order="list.query.order" md-trigger="list.onOrderChange">
+    <thead md-order="list.repoData.order" md-trigger="list.onOrderChange">
       <tr>
         <th ng-repeat="(key, value) in list.listHeader" order-by="{{key}}" name="{{key}}"></th>
       </tr>
@@ -13,7 +13,7 @@
   </table>
 </md-data-table-container>
 
-<md-data-table-pagination md-limit="list.query.limit" md-page="list.query.page" md-total="{{list.desserts.total}}" md-trigger="list.onPaginationChange"></md-data-table-pagination>
+<md-data-table-pagination md-limit="list.query.limit" md-page="list.query.page" md-total="{{list.repoData.total}}" md-trigger="list.onPaginationChange"></md-data-table-pagination>
 
 <section id="repo-list-content" layout="row" layout-fill flex>
   <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="detailView">
