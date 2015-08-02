@@ -162,3 +162,4 @@ exports.create = _create;
 exports.insertOrUpdate = insertOrUpdate;
 exports.getModel = _getModel;
 exports.getRepo = getRepo;
+exports.convertSchema = convertSchema;

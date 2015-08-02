@@ -12,6 +12,7 @@ module.exports = ShapeController;
 
 var _ = require('lodash');
 var roles = require('../../lib/auth/roles');
+var Repo = require('../repo/repo.proxy');
 
 /**
  * The Shape model instance
@@ -198,17 +199,18 @@ function _processShapeUpdate(req, res, source) {
  */
 function _validateDesiredShape(mSchema) {
   var result = true;
+  var fixedSchema = Repo.convertSchema(mSchema);
   // first, mobile and uid are defined as unaltered.
-  if (mSchema.mobile && typeof (mSchema.mobile) === 'object' &&
-    mSchema.mobile.required && mSchema.mobile.type === 'String') {
+  if (fixedSchema.mobile && typeof (fixedSchema.mobile) === 'object' &&
+    fixedSchema.mobile.required && fixedSchema.mobile.type === 'String') {
     result = true;
   } else {
     return false;
   }
 
-  if (mSchema.uid && typeof (mSchema.uid) === 'object' &&
-    mSchema.uid.required && mSchema.uid.type === 'String' &&
-    mSchema.uid.unique === true) {
+  if (fixedSchema.uid && typeof (fixedSchema.uid) === 'object' &&
+    fixedSchema.uid.required && fixedSchema.uid.type === 'String' &&
+    fixedSchema.uid.unique === true) {
     result = true;
   } else {
     return false
@@ -216,7 +218,7 @@ function _validateDesiredShape(mSchema) {
 
   // second, check other properites in a try catch way
   try {
-    new Schema(mSchema);
+    new Schema(fixedSchema);
   } catch (e) {
     logger.error('_validateDesiredShape', e);
     return false;
@@ -224,12 +226,12 @@ function _validateDesiredShape(mSchema) {
 
   // at last, to limit store and complex, just support four types of data
   // ['String', 'Boolean', 'Number', 'Date']
-  var keys = _.keys(mSchema);
+  var keys = _.keys(fixedSchema);
   _.each(keys, function (k, index) {
-    if (!mSchema[k].type) {
-      logger.warn('Can not get type for mSchema.');
+    if (!fixedSchema[k].type) {
+      logger.warn('Can not get type for fixedSchema.');
       result = false;
-    } else if (!_.includes(['String', 'Boolean', 'Number', 'Date'], mSchema[k].type)) {
+    } else if (!_.includes(['String', 'Boolean', 'Number', 'Date'], fixedSchema[k].type)) {
       logger.warn('Only allow "String", "Boolean", "Number" and "Date" for type.');
       result = false;
     }
