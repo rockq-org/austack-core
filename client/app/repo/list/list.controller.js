@@ -37,23 +37,23 @@
     // you can implement your own search header and do something like
     vm.search = function (predicate) {
       vm.filter = predicate;
-      vm.deferred = $nutrition.desserts.get(vm.query, success).$promise;
+      //vm.deferred = $nutrition.desserts.get(vm.query, success).$promise;
     };
 
     vm.onOrderChange = function (order) {
-      return $nutrition.desserts.get(vm.query, success).$promise;
+      //return $nutrition.desserts.get(vm.query, success).$promise;
     };
 
     vm.onPaginationChange = function (page, limit) {
-      return $nutrition.desserts.get(vm.query, success).$promise;
+      //return $nutrition.desserts.get(vm.query, success).$promise;
     };
 
     var navID = 'detailView';
 
     function showDetail(item, index) {
       vm.currentEditItemIndex = index;
-      vm.currentEditItem = item,
-        $mdSidenav(navID)
+      vm.currentEditItem = item;
+      $mdSidenav(navID)
         .toggle()
         .then(function () {});
     }
@@ -63,7 +63,7 @@
     }
 
     function removeItem(ev) {
-      var label = vm.currentEditItem['mobile'];
+      var label = vm.currentEditItem.mobile;
       var confirm = $mdDialog.confirm()
         .title('删除用户 ' + label + '?')
         .content('您确定要删除用户 ' + label + '?')
@@ -73,7 +73,7 @@
         .targetEvent(ev);
 
       $mdDialog.show(confirm).then(function () {
-        RepoService.remove(repoName, vm.currentEditItem['uid'])
+        RepoService.remove(repoName, vm.currentEditItem.uid)
           .then(function () {
             Toast.show('删除用户成功');
             vm.listData.splice(vm.currentEditItemIndex, 1);
@@ -88,7 +88,7 @@
     }
 
     function updateItem() {
-      RepoService.update(repoName, vm.currentEditItem['uid'], vm.currentEditItem)
+      RepoService.update(repoName, vm.currentEditItem.uid, vm.currentEditItem)
         .then(function () {
           Toast.show('更新用户成功');
           vm.listData.splice(vm.currentEditItemIndex, 1, vm.currentEditItem);
