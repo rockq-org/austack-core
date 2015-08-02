@@ -7,16 +7,27 @@
   <md-content>
     <md-list flex ng-controller="SidebarController as menu">
       <div ng-repeat="item in menu.items">
-        <md-menu-item ui-sref="{{item.state}}">
+        <md-menu-item ng-if="!item.subItems" ui-sref="{{item.state}}">
           <md-button ng-class="{'md-accent md-hue-2': menu.isActive(item.state)}">
             <md-icon ng-if="item.icon" md-svg-icon="{{ item.icon }}"></md-icon>
             {{ item.name }}
           </md-button>
         </md-menu-item>
-        <md-menu-item class="submenu" ui-sref-active="md-primary" ui-sref="{{subItem.state}}" ng-repeat="subItem in item.subItems">
+        <md-menu-item ng-if="item.subItems" ng-click="item.open = !item.open">
+          <md-button ng-class="{'md-accent md-hue-2': menu.isActive(item.state)}">
+            <div flex layout="row">
+              <md-icon ng-if="item.icon" md-svg-icon="{{ item.icon }}">
+              </md-icon>
+              <span>{{ item.name }}</span>
+              <span flex></span>
+              <md-icon class="toggle-icon" ng-class="{'toggled': item.open}" md-svg-icon="navigation:ic_expand_more_24px"></md-icon>
+            </div>
+          </md-button>
+        </md-menu-item>
+        <md-menu-item ng-show="item.open" class="submenu" ui-sref-active="md-primary" ui-sref="{{subItem.state}}" ng-repeat="subItem in item.subItems">
           <md-button ng-class="{'md-accent md-hue-2': menu.isActive(subItem.state)}">
             <md-icon ng-if="item.icon" md-svg-icon="{{ subItem.icon }}"></md-icon>
-            {{ subItem.name }}
+            <span>{{ subItem.name }}</span>
           </md-button>
         </md-menu-item>
       </div>
