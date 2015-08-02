@@ -17,20 +17,20 @@
           <div ng-show="!vm.showClientTutorial">
             <p>
               1. 加载预定义常量，建议放到js代码块的最前面
-              <div ng-model="vm.ionicStep1" ui-ace="{useWrapMode : true, showGutter: false, theme:'github', mode: 'html'}"></div>
             </p>
+            <hljs class="no-header" code="vm.ionicStep1" lang="html"></hljs>
             <p>
               2. 加载 angular-jwt.js 和 angular-austack.js(TODO：我们代码优化后放到npm库里)
-              <div ui-ace ng-model="vm.ionicStep2" ui-ace="{useWrapMode : true, showGutter: false, theme:'github', mode: 'html'}"></div>
             </p>
+            <hljs class="no-header" code="vm.ionicStep2" lang="html"></hljs>
             <p>
               3. 在app.js后面添加austack的config和run的代码块
-              <div ui-ace ng-model="vm.ionicStep3" ui-ace="{useWrapMode : true, showGutter: false, theme:'github', mode: 'javascript'}"></div>
             </p>
+            <hljs class="no-header" code="vm.ionicStep3" lang="html"></hljs>
             <p>
               4. 添加controller 代码
-              <div ui-ace ng-model="vm.ionicStep4" ui-ace="{useWrapMode : true, showGutter: false, theme:'github', mode: 'javascript'}"></div>
             </p>
+            <hljs class="no-header" code="vm.ionicStep4" lang="html"></hljs>
           </div>
         </md-card-content>
       </md-card>

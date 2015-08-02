@@ -13,7 +13,7 @@
       return _.result(_.find(shapeTypes, {
         name: type
       }), 'text');
-    }
+    };
   }
 
 })();

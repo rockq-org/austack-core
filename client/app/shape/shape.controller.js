@@ -7,7 +7,7 @@
     .controller('ShapeController', ShapeController);
 
   // add ShapeController dependencies to inject
-  ShapeController.$inject = ['$state', 'shapes', '$mdDialog'];
+  ShapeController.$inject = ['$state', 'repos'];
 
   /**
    * ShapeController constructor. Main controller for the austackApp.shape
@@ -16,9 +16,9 @@
    * @param {$scope} $scope - The scope to listen for events
    * @param {socket.io} socket - The socket to register updates
    */
-  function ShapeController($state, shapes, $mdDialog) {
-    var repoName = shapes.data[0];
-    console.log(repoName);
+  function ShapeController($state, repos) {
+    var repoName = repos.data[0];
+
     $state.go('shape.list', {
       repoName: repoName
     });

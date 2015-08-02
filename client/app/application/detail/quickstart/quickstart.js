@@ -12,6 +12,7 @@
   angular
     .module('austackApp.application.detail.quickstart', [
       'ui.router',
+      'austackApp.hljs',
       'angularMoment'
     ])
     .config(configureApplicationQuickstart);

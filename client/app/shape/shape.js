@@ -16,9 +16,8 @@
       'ngResource',
       'ui.router',
       'austackApp.repo.service',
+      'austackApp.shape.service',
       'austackApp.shape.list',
-      'austackApp.shape.detail',
-      'austackApp.shape.edit',
       'austackApp.shape.create'
     ])
     .constant('shapeTypes', getShapeTypes())
@@ -37,7 +36,7 @@
     }, {
       name: 'Boolean',
       text: '布尔'
-    }]
+    }];
   }
 
   // inject configShapeRoutes dependencies
@@ -64,7 +63,7 @@
         label: '用户'
       },
       resolve: {
-        shapes: resolveShapes
+        repos: resolveRepos
       },
       templateUrl: 'app/shape/shape.html',
       controller: 'ShapeController',
@@ -83,7 +82,7 @@
   }
 
   // inject resolveShapes dependencies
-  resolveShapes.$inject = ['Repo'];
+  resolveRepos.$inject = ['Repo'];
 
   /**
    * Resolve dependencies for the shape.list state
@@ -91,7 +90,7 @@
    * @params {Shape} Shape - The service to query shapes
    * @returns {Promise} A promise that, when fullfilled, returns an array of shapes
    */
-  function resolveShapes(Repo) {
+  function resolveRepos(Repo) {
     return Repo.query().$promise;
   }
 
