@@ -6,7 +6,7 @@
     .controller('RepoListController', RepoListController);
 
   /* @ngInject */
-  function RepoListController(repoSchema, repoData, $mdSidenav) {
+  function RepoListController(repoSchema, repoData, $mdSidenav, $mdDialog, RepoService, Toast) {
     var vm = this;
 
     console.log(repoSchema);
@@ -16,6 +16,7 @@
     vm.closeDetail = closeDetail;
     vm.removeItem = removeItem;
     vm.currentEditItem = null;
+    vm.currentEditItemIndex = null;
 
     vm.selected = [];
 
@@ -47,7 +48,8 @@
 
     var navID = 'detailView';
 
-    function showDetail(item) {
+    function showDetail(item, index) {
+      vm.currentEditItemIndex = index;
       vm.currentEditItem = item,
         $mdSidenav(navID)
         .toggle()
@@ -59,18 +61,19 @@
     }
 
     function removeItem(ev) {
+      var label = vm.currentEditItem['mobile'];
       var confirm = $mdDialog.confirm()
-        .title('删除字段 ' + vm.curFieldKey + '?')
-        .content('您确定要删除字段 ' + vm.curFieldKey + '?')
-        .ariaLabel('删除字段')
-        .ok('删除字段')
+        .title('删除用户 ' + label + '?')
+        .content('您确定要删除用户 ' + label + '?')
+        .ariaLabel('删除用户')
+        .ok('删除用户')
         .cancel('取消')
         .targetEvent(ev);
 
       $mdDialog.show(confirm).then(function () {
-        delete vm.schema[vm.curFieldKey];
-        ShapeService.update(vm.shape, function () {
-          Toast.show('更新字段成功');
+        RepoService.remove(vm.currentEditItem, function () {
+          Toast.show('删除用户成功');
+          vm.listData.splice(vm.currentEditItemIndex, 1);
           vm.closeDetail();
         });
       });

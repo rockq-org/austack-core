@@ -6,7 +6,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in list.listData" ng-click="list.showDetail(item)">
+      <tr ng-repeat="item in list.listData" ng-click="list.showDetail(item, $index)">
         <td ng-repeat="(key, value) in list.listHeader">{{item[key]}}</td>
       </tr>
     </tbody>
