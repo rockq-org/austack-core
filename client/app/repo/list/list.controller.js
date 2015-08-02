@@ -6,7 +6,7 @@
     .controller('RepoListController', RepoListController);
 
   /* @ngInject */
-  function RepoListController(repoSchema, repoData, $mdSidenav, $nutrition) {
+  function RepoListController(repoSchema, repoData, $mdSidenav) {
     var vm = this;
 
     console.log(repoSchema);
@@ -15,7 +15,7 @@
     vm.showDetail = showDetail;
     vm.closeDetail = closeDetail;
     vm.removeItem = removeItem;
-    vm.currentEditKey = null;
+    vm.currentEditItem = null;
 
     vm.selected = [];
 
@@ -47,8 +47,8 @@
 
     var navID = 'detailView';
 
-    function showDetail(key, value) {
-      vm.currentEditKey = key,
+    function showDetail(item) {
+      vm.currentEditItem = item,
         $mdSidenav(navID)
         .toggle()
         .then(function () {});

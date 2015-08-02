@@ -1,17 +1,21 @@
-<section id="repo-list-content" layout="row" layout-fill flex>
-  <div layout="column" flex>
-    <md-list>
-      <md-list-item>
-        <p ng-repeat="(key, value) in list.listHeader">{{::key}}</p>
-      </md-list-item>
-      <md-list-item ng-click="list.showDetail(itemKey, itemValue)" aria-label="Edit {{::itemValue}}" ng-repeat="(itemKey, itemValue) in list.listData">
-        <p ng-repeat="(key, value) in list.listHeader">{{itemValue[key]}}</p>
-      </md-list-item>
-    </md-list>
-    <md-button class="md-raised">上一页</md-button>
-    <md-button class="md-raised">下一页</md-button>
-  </div>
+<md-data-table-container>
+  <table md-data-table md-row-select="list.selected" md-progress="list.deferred">
+    <thead md-order="list.query.order" md-trigger="list.onOrderChange">
+      <tr>
+        <th ng-repeat="(key, value) in list.listHeader" order-by="{{key}}" name="{{key}}"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in list.listData" ng-click="list.showDetail(item)">
+        <td ng-repeat="(key, value) in list.listHeader">{{item[key]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
 
+<md-data-table-pagination md-limit="list.query.limit" md-page="list.query.page" md-total="{{list.desserts.total}}" md-trigger="list.onPaginationChange"></md-data-table-pagination>
+
+<section id="repo-list-content" layout="row" layout-fill flex>
   <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="detailView">
     <md-toolbar class="md-accent">
       <div class="md-toolbar-tools">
@@ -27,7 +31,7 @@
 
         <md-input-container flex ng-repeat="(key, value) in list.listHeader">
           <label>{{key}}</label>
-          <input name="{{key}}" ng-model="list.listData[list.currentEditKey][key]" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}">
+          <input name="{{key}}" ng-model="list.currentEditItem[key]" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}">
         </md-input-container>
         <div flex layout="row" layout-align="space-between center">
           <md-button ng-disabled="updateForm.$invalid" ng-click="list.updateField()" class="md-raised md-primary">保存</md-button>
