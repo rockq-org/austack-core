@@ -11,11 +11,14 @@
 
     vm.listHeader = repoSchema;
     vm.listData = repoData.data;
+    vm.currentEditItem = null;
+    vm.currentEditItemIndex = null;
+
+    //methods
     vm.showDetail = showDetail;
     vm.closeDetail = closeDetail;
     vm.removeItem = removeItem;
-    vm.currentEditItem = null;
-    vm.currentEditItemIndex = null;
+    vm.updateItem = updateItem;
 
     vm.selected = [];
 
@@ -60,7 +63,6 @@
     }
 
     function removeItem(ev) {
-      var uid = vm.currentEditItem['uid'];
       var label = vm.currentEditItem['mobile'];
       var confirm = $mdDialog.confirm()
         .title('删除用户 ' + label + '?')
@@ -78,10 +80,25 @@
             vm.closeDetail();
           })
           .catch(function (err) {
+            console.log(err);
             Toast.show('删除用户失败');
             vm.closeDetail();
           });
       });
+    }
+
+    function updateItem() {
+      RepoService.update(repoName, vm.currentEditItem['uid'], vm.currentEditItem)
+        .then(function () {
+          Toast.show('更新用户成功');
+          vm.listData.splice(vm.currentEditItemIndex, 1, vm.currentEditItem);
+          vm.closeDetail();
+        })
+        .catch(function (err) {
+          console.log(err);
+          Toast.show('更新用户失败');
+          vm.closeDetail();
+        });
     }
   }
 
