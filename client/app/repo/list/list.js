@@ -18,6 +18,7 @@
     .module('austackApp.repo.list', [
       'ngMaterial',
       'ui.router',
+      'md.data.table',
       'austackApp.socket',
       'austackApp.listImage',
       'austackApp.shape.service',
@@ -51,6 +52,11 @@
         repoSchema: function (ShapeService, repos) {
           var repoName = repos.data[0];
           return ShapeService.getByRepoName(repoName);
+        },
+        /* @ngInject */
+        repoName: function (repos) {
+          var repoName = repos.data[0];
+          return repoName;
         },
         /* @ngInject */
         repoData: function (RepoService, repos) {

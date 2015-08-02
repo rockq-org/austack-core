@@ -57,44 +57,42 @@
         }).$promise;
     }
 
-    /**
-     * Remove a repo
-     *
-     * @param  {Object}   repo - shapeData
-     * @param  {Function} callback - optional
-     * @return {Promise}
-     */
-    function remove(repo, callback) {
-      var cb = callback || angular.noop;
+    function remove(repoName, uid) {
+      var d = $q.defer();
 
-      return Repo.remove({
-          id: repo._id
-        },
-        function (repo) {
-          return cb(repo);
-        },
-        function (err) {
-          return cb(err);
-        }).$promise;
+      $http.delete(apiURL + repoName + '/' + uid)
+        .success(function (data, status, headers, config) {
+          if (data.rc == '1') {
+            return d.resolve(data);
+          }
+
+          return d.reject('delete failed');
+        })
+        .error(function (data, status, headers, config) {
+          console.log(data, repoName);
+          d.reject(data);
+        });
+
+      return d.promise;
     }
 
-    /**
-     * Create a new repo
-     *
-     * @param  {Object}   repo - shapeData
-     * @param  {Function} callback - optional
-     * @return {Promise}
-     */
-    function update(repo, callback) {
-      var cb = callback || angular.noop;
+    function update(repoName, uid, itemData) {
+      var d = $q.defer();
 
-      return Repo.update(repo,
-        function (repo) {
-          return cb(repo);
-        },
-        function (err) {
-          return cb(err);
-        }).$promise;
+      $http.put(apiURL + repoName + '/' + uid, itemData)
+        .success(function (data, status, headers, config) {
+          if (data.rc == '1') {
+            return d.resolve(data);
+          }
+
+          return d.reject('delete failed');
+        })
+        .error(function (data, status, headers, config) {
+          console.log(data, repoName);
+          d.reject(data);
+        });
+
+      return d.promise;
     }
 
     function getRepoData(repoName) {
