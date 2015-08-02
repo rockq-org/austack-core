@@ -9,7 +9,7 @@
    * @requires {austackApp.resource}
    */
   angular
-    .module('austackApp.repo.service', ['austackApp.resource'])
+    .module('austackApp.repo.service', ['austackApp.resource', 'austackApp.lodash'])
     .factory('Repo', Repo)
     .service('RepoService', RepoService);
 
@@ -29,7 +29,7 @@
   }
 
   /* @ngInject */
-  function RepoService(Repo, Config, $http, $q) {
+  function RepoService(Repo, Config, $http, $q, _) {
     var apiURL = Config.API_URL + 'repos/';
     return {
       create: create,
@@ -95,12 +95,21 @@
       return d.promise;
     }
 
-    function getRepoData(repoName) {
+    function getRepoData(repoName, query, callback) {
+      var cb = callback || angular.noop;
       var d = $q.defer();
+      var url = apiURL + repoName;
 
-      $http.get(apiURL + repoName)
+      var queryString = '';
+      _.forOwn(query, function (value, key) {
+        queryString += key + '=' + value + '&';
+      });
+      url += '?' + queryString;
+
+      $http.get(url)
         .success(function (data, status, headers, config) {
           if (data.data) {
+            cb(data.data);
             return d.resolve(data);
           }
 

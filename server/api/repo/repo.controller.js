@@ -114,7 +114,7 @@ function _get(req, res) {
         mongooseUtil.getQuery(req)
           .then(function (mQuery) {
             var options = mongooseUtil.getPaginateOptions(req);
-
+            logger.log(options, req.query);
             M.paginate(
               mQuery || {},
               options,

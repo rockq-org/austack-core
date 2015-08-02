@@ -49,19 +49,25 @@
       role: 'admin',
       resolve: {
         /* @ngInject */
-        repoSchema: function (ShapeService, repos) {
-          var repoName = repos.data[0];
-          return ShapeService.getByRepoName(repoName);
-        },
-        /* @ngInject */
         repoName: function (repos) {
           var repoName = repos.data[0];
           return repoName;
         },
         /* @ngInject */
-        repoData: function (RepoService, repos) {
-          var repoName = repos.data[0];
-          return RepoService.getRepoData(repoName);
+        repoSchema: function (ShapeService, repoName) {
+          return ShapeService.getByRepoName(repoName);
+        },
+        /* @ngInject */
+        query: function () {
+          return {
+            sortby: 'mobile',
+            limit: 1,
+            page: 1
+          };
+        },
+        /* @ngInject */
+        repoData: function (RepoService, repoName, query) {
+          return RepoService.getRepoData(repoName, query);
         }
       },
       views: {

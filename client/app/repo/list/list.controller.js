@@ -6,46 +6,42 @@
     .controller('RepoListController', RepoListController);
 
   /* @ngInject */
-  function RepoListController(repoSchema, repoData, repoName, $mdSidenav, $mdDialog, RepoService, Toast) {
+  function RepoListController(repoSchema, repoData, repoName, query, $mdSidenav, $mdDialog, RepoService, Toast) {
     var vm = this;
 
+    console.log(repoData);
+    vm.selected = [];
+    vm.repoData = repoData;
     vm.listHeader = repoSchema;
     vm.listData = repoData.data;
     vm.currentEditItem = null;
     vm.currentEditItemIndex = null;
 
     //methods
+    vm.onOrderChange = onOrderChange;
+    vm.onPaginationChange = onPaginationChange;
     vm.showDetail = showDetail;
     vm.closeDetail = closeDetail;
     vm.removeItem = removeItem;
     vm.updateItem = updateItem;
 
-    vm.selected = [];
+    vm.query = query;
 
-    vm.query = {
-      filter: '',
-      order: 'name',
-      limit: 5,
-      page: 1
-    };
-
-    function success(desserts) {
-      vm.desserts = desserts;
+    function success(data) {
+      vm.repoData = repoData;
     }
 
-    // in the future we may see a few built in alternate headers but in the mean time
-    // you can implement your own search header and do something like
     vm.search = function (predicate) {
       vm.filter = predicate;
-      vm.deferred = $nutrition.desserts.get(vm.query, success).$promise;
+      vm.deferred = RepoService.getRepoData(repoName, vm.query, success);
     };
 
-    vm.onOrderChange = function (order) {
-      return $nutrition.desserts.get(vm.query, success).$promise;
+    function onOrderChange(order) {
+      return RepoService.getRepoData(repoName, vm.query, success);
     };
 
-    vm.onPaginationChange = function (page, limit) {
-      return $nutrition.desserts.get(vm.query, success).$promise;
+    function onPaginationChange(page, limit) {
+      return RepoService.getRepoData(repoName, vm.query, success);
     };
 
     var navID = 'detailView';
