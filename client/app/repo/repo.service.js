@@ -62,7 +62,7 @@
 
       $http.delete(apiURL + repoName + '/' + uid)
         .success(function (data, status, headers, config) {
-          if (data.rc === '1') {
+          if (data.rc == '1') {
             return d.resolve(data);
           }
 
@@ -81,7 +81,8 @@
 
       $http.put(apiURL + repoName + '/' + uid, itemData)
         .success(function (data, status, headers, config) {
-          if (data.rc === '1') {
+          console.log(data);
+          if (data.rc == '1') {
             return d.resolve(data);
           }
 
