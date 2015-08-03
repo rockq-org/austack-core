@@ -6,7 +6,7 @@
     .controller('RepoListController', RepoListController);
 
   /* @ngInject */
-  function RepoListController(repoSchema, repoData, repoName, query, $mdSidenav, $mdDialog, RepoService, Toast) {
+  function RepoListController(repoSchema, repoData, repoName, query, $mdSidenav, $mdDialog, RepoService, Toast, $q) {
     var vm = this;
 
     vm.selected = [];
@@ -89,12 +89,14 @@
     function bulkRemoveItems(ev) {
       var content = '您确定要删除用户这些用户?';
       var total = vm.selected.length;
+      var promiseList = [];
       if (total === 0) {
         return;
       }
 
       for (var i = 0; i < total; i++) {
         content += ' ' + vm.selected[i]['mobile'];
+        promiseList.push(RepoService.remove(repoName, vm.selected[i]['uid']));
       }
 
       var confirm = $mdDialog.confirm()
@@ -106,13 +108,12 @@
         .targetEvent(ev);
 
       $mdDialog.show(confirm).then(function () {
-        RepoService.bulkRemove(repoName, vm.selected)
+        $q.all(promiseList)
           .then(function () {
             Toast.show('删除用户成功');
           })
           .catch(function (err) {
-            console.log(err);
-            Toast.show('删除用户失败');
+            Toast.show('删除用户' + err.uid + '失败');
           })
           .finally(function () {
             RepoService.getRepoData(repoName, vm.query)
