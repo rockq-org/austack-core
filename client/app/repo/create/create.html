@@ -13,7 +13,7 @@
   <md-dialog-content>
     <form name="createForm">
       <section layout="column">
-        <md-input-container flex ng-repeat="item in create.repoSchema" ng-hide="item.name == 'uid'">
+        <md-input-container flex ng-repeat="item in create.repoSchema" ng-if="item.name != 'uid'">
           <label>{{item.name}}</label>
           <input name="{{item.name}}" ng-model="create.repo[item.name]" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}">
         </md-input-container>
