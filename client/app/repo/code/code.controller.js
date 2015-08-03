@@ -10,23 +10,23 @@
     var vm = this;
 
     vm.step1 = [
-      '    var request = require(\'superagent\');',
-      '    request.post(apiBaseURL + \'/auth/application\')',
-      '       .set(\'Content-Type\', \'application/json\')',
-      '        .set(\'Accept\', \'application/json\')',
-      '        .send({',
-      '         clientId: clientId,',
-      '        clientSecret: clientSecret',
-      '      })',
-      '      .end(function (err, res) {',
-      '        if (err) {',
-      '          return d.reject(err);',
-      '        }',
-      '        var applicationJwt = res.body.token;',
-      '        var token = res.body.token;',
-      '        set Authorization to \'Bearer \' + token',
-      '      });'
-    ].join('\n');
+  '    var request = require(\'superagent\');',
+  '    request.post(apiBaseURL + \'/auth/application\')',
+  '       .set(\'Content-Type\', \'application/json\')',
+  '        .set(\'Accept\', \'application/json\')',
+  '        .send({',
+  '         clientId: clientId,',
+  '        clientSecret: clientSecret',
+  '      })',
+  '      .end(function (err, res) {',
+  '        if (err) {',
+  '          return d.reject(err);',
+  '        }',
+  '        var applicationJwt = res.body.token;',
+  '        var token = res.body.token;',
+  '        set Authorization to \'Bearer \' + token',
+  '      });'
+].join('\n');
 
     vm.step2 = vm.step1;
     vm.step3 = vm.step1;
@@ -34,6 +34,9 @@
     vm.currentShowStep = '';
     vm.showStep = showStep;
     vm.isShowStep = isShowStep;
+
+    vm.close = close;
+    vm.cancel = cancel;
 
     function showStep(step) {
       vm.currentShowStep = vm.currentShowStep === step ? '' : step;
@@ -47,44 +50,11 @@
       return false;
     }
 
-    vm.repoSchema = repoSchema;
-
-    vm.repo = {};
-
-    vm.create = createRepo;
-    vm.close = hideDialog;
-    vm.cancel = cancelDialog;
-
-    function createRepo(form) {
-      RepoService.create(repoName, vm.repo)
-        .then(createRepoSuccess)
-        .catch(createRepoCatch);
-
-      function createRepoSuccess(newRepo) {
-        console.log(newRepo);
-        newRepo = newRepo.data;
-        Toast.show({
-          type: 'success',
-          text: newRepo.mobile + ' 创建成功'
-        });
-        vm.close();
-      }
-
-      function createRepoCatch(err) {
-        console.log(err);
-
-        Toast.show({
-          type: 'warn',
-          text: '创建失败'
-        });
-      }
-    }
-
-    function hideDialog() {
+    function close() {
       $mdDialog.hide();
     }
 
-    function cancelDialog() {
+    function cancel() {
       $mdDialog.cancel();
     }
   }
