@@ -83,6 +83,25 @@
       return d.promise;
     }
 
+    function bulkRemove(repoName, items) {
+      var d = $q.defer();
+
+      $http.delete(apiURL + repoName + '/' + uid)
+        .success(function (data, status, headers, config) {
+          if (data.rc === 1) {
+            return d.resolve(data);
+          }
+
+          return d.reject('delete failed');
+        })
+        .error(function (data, status, headers, config) {
+          console.log(data, repoName);
+          d.reject(data);
+        });
+
+      return d.promise;
+    }
+
     function update(repoName, uid, itemData) {
       var d = $q.defer();
 
