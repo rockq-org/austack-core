@@ -13,7 +13,6 @@
   function ShapeListController($scope, shape, $mdDialog, shapeTypes, ShapeService, Toast, $mdSidenav, _) {
     var vm = this;
 
-    // the array of shape
     vm.shape = shape.data;
     vm.schema = vm.shape.mSchema;
     vm.shapeTypes = shapeTypes;
@@ -33,8 +32,17 @@
     vm.updateField = updateField;
     vm.removeField = removeField;
 
+    vm.moved = moved;
+
     vm.curField = null;
     vm.isUnique = true;
+
+    function moved(idx) {
+      vm.schema.splice(idx, 1);
+      ShapeService.update(vm.shape, function () {
+        Toast.show('字段排序成功');
+      });
+    }
 
     function checkUnique(form) {
       var unique = _.findIndex(vm.schema, {

@@ -1,12 +1,12 @@
 <md-content id="shape-list-content" layout flex>
   <md-content layout="column" flex>
-    <md-list>
-      <md-list-item class="list-head">
+    <md-list flex dnd-list="list.schema">
+      <!--md-list-item class="list-head">
         <p>字段名称</p>
         <span flex></span>
         <p>字段类型</p>
-      </md-list-item>
-      <md-list-item ng-click="list.showDetail(field)" ng-repeat="field in list.schema">
+      </md-list-item-->
+      <md-list-item dnd-draggable="field" dnd-moved="list.moved($index)" dnd-effect-allowed="move" dnd-selected="list.curField = field" ng-class="{'selected': list.curField === field}" ng-click="list.showDetail(field)" ng-repeat="field in list.schema">
         <p>{{field.name}}</p>
         <span flex></span>
         <p>{{field.props.type | shapeType}}</p>
