@@ -1,8 +1,8 @@
-<md-dialog aria-label="Create a new repo" id="repo-create">
+<md-dialog aria-label="新建用户" id="repo-create">
 
   <md-toolbar class="md-accent">
     <div class="md-toolbar-tools">
-      <h2>新建字段</h2>
+      <h2>新建用户</h2>
       <span flex></span>
       <md-button class="md-icon-button" ng-click="create.close()" aria-label="Create a new repo">
         <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
@@ -11,34 +11,14 @@
   </md-toolbar>
 
   <md-dialog-content>
-    <section layout="column">
-      <p>
-        请输入一个字段名称。
-      </p>
-    </section>
-
     <form name="createForm">
-
       <section layout="column">
-
-        <md-input-container flex>
-          <label>字段名称</label>
-          <input name="name" ng-model="create.repo.name" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="Repo">
-          <div ng-messages="createForm.name.$error">
-            <div ng-message="required">字段名称不能为空</div>
-            <div ng-message="mongoose">此字段已经被使用</div>
-            <div ng-message="remote-unique">此字段已经被使用</div>
-          </div>
+        <md-input-container flex ng-repeat="item in create.repoSchema" ng-hide="item.name == 'uid'">
+          <label>{{item.name}}</label>
+          <input name="{{item.name}}" ng-model="create.repo[item.name]" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}">
         </md-input-container>
-        <md-input-container flex>
-          <label>字段类型</label>
-          <textarea name="description" ng-model="create.repo.description"></textarea>
-        </md-input-container>
-
       </section>
-
     </form>
-
   </md-dialog-content>
 
   <div class="md-actions" layout="row">

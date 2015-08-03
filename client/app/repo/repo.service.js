@@ -45,16 +45,23 @@
      * @param  {Function} callback - optional
      * @return {Promise}
      */
-    function create(repo, callback) {
-      var cb = callback || angular.noop;
+    function create(repoName, itemData) {
+      var d = $q.defer();
 
-      return Repo.create(repo,
-        function (repo) {
-          return cb(repo);
-        },
-        function (err) {
-          return cb(err);
-        }).$promise;
+      $http.post(apiURL + repoName, itemData)
+        .success(function (data, status, headers, config) {
+          if (data.rc == '1') {
+            return d.resolve(data);
+          }
+
+          return d.reject('create failed');
+        })
+        .error(function (data, status, headers, config) {
+          console.log(data, repoName);
+          d.reject(data);
+        });
+
+      return d.promise;
     }
 
     function remove(repoName, uid) {
@@ -86,7 +93,7 @@
             return d.resolve(data);
           }
 
-          return d.reject('delete failed');
+          return d.reject('update failed');
         })
         .error(function (data, status, headers, config) {
           console.log(data, repoName);

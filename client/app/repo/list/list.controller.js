@@ -24,6 +24,7 @@
     vm.closeDetail = closeDetail;
     vm.removeItem = removeItem;
     vm.updateItem = updateItem;
+    vm.addItem = addItem;
 
     vm.query = query;
 
@@ -97,6 +98,19 @@
           Toast.show('更新用户失败');
           vm.closeDetail();
         });
+    }
+
+    function addItem($event) {
+      $mdDialog.show({
+        controller: 'RepoCreateController',
+        controllerAs: 'create',
+        templateUrl: 'app/repo/create/create.html',
+        locals: {
+          repoSchema: repoSchema,
+          repoName: repoName
+        },
+        targetEvent: $event
+      });
     }
   }
 
