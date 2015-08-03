@@ -27,7 +27,6 @@
 
     vm.addField = addField;
 
-    vm.curFieldKey = null;
     vm.curField = null;
 
     function addField(ev) {
@@ -37,14 +36,23 @@
         templateUrl: 'app/shape/create/create.html',
         clickOutsideToClose: false,
         targetEvent: ev
-      }).then(function (field) {
-        if (!field.name) {
+      }).then(function (data) {
+        if (!data.name) {
           return;
         }
 
-        var fieldName = field.name;
-        delete field.name;
-        vm.schema[fieldName] = field;
+        var field = {
+          name: data.name,
+          isSys: false,
+          props: {
+            type: data.type,
+            required: data.required,
+            unique: data.unique,
+            index: data.index
+          }
+        }
+
+        vm.schema.push(field);
         ShapeService.update(vm.shape, function () {
           Toast.show('添加字段成功');
         });
@@ -78,9 +86,8 @@
 
     var navID = 'detailView';
 
-    function showDetail(key, value) {
-      vm.curFieldKey = key;
-      vm.curField = value;
+    function showDetail(field) {
+      vm.curField = field;
       $mdSidenav(navID)
         .toggle()
         .then(function () {});

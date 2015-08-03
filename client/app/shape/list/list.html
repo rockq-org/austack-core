@@ -1,10 +1,10 @@
 <section id="shape-list-content" layout="row" layout-fill flex>
   <div layout="column" flex>
     <md-list>
-      <md-list-item ng-click="list.showDetail(key, value)" ng-repeat="(key, value) in list.schema">
-        <p>{{::key}}</p>
+      <md-list-item ng-click="list.showDetail(field)" ng-repeat="field in list.schema">
+        <p>{{field.name}}</p>
         <span flex></span>
-        <p>{{::value.type | shapeType}}</p>
+        <p>{{field.props.type | shapeType}}</p>
       </md-list-item>
     </md-list>
   </div>
@@ -24,14 +24,14 @@
 
         <md-input-container flex>
           <label>字段名称</label>
-          <input name="name" ng-model="list.curFieldKey" disabled ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="Shape">
+          <input name="name" ng-model="list.curField.name" disabled ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="Shape">
           <div ng-messages="{message: true}">
             <div ng-message="message">字段名称无法修改</div>
           </div>
         </md-input-container>
         <md-input-container flex>
           <label>字段类型</label>
-          <md-select name="type" placeholder="字段类型" ng-model="list.curField.type" required>
+          <md-select name="type" placeholder="字段类型" ng-model="list.curField.props.type" required>
             <md-option ng-repeat="type in list.shapeTypes" value="{{type.name}}">{{type.text}}</md-option>
           </md-select>
           <div ng-messages="required">
@@ -41,15 +41,15 @@
         <md-list>
           <md-list-item>
             <p>是否必须</p>
-            <md-switch class="md-secondary" ng-model="list.curField.required"></md-switch>
+            <md-switch class="md-secondary" ng-model="list.curField.props.required"></md-switch>
           </md-list-item>
           <md-list-item>
             <p>是否唯一</p>
-            <md-switch class="md-secondary" ng-model="list.curField.unique"></md-switch>
+            <md-switch class="md-secondary" ng-model="list.curField.props.unique"></md-switch>
           </md-list-item>
           <md-list-item>
             <p>是否索引</p>
-            <md-switch class="md-secondary" ng-model="list.curField.index"></md-switch>
+            <md-switch class="md-secondary" ng-model="list.curField.props.index"></md-switch>
           </md-list-item>
         </md-list>
 
