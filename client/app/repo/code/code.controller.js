@@ -31,6 +31,21 @@
     vm.step2 = vm.step1;
     vm.step3 = vm.step1;
     vm.step4 = vm.step1;
+    vm.currentShowStep = '';
+    vm.showStep = showStep;
+    vm.isShowStep = isShowStep;
+
+    function showStep(step) {
+      vm.currentShowStep = step;
+    }
+
+    function isShowStep(step) {
+      if (vm.currentShowStep === step) {
+        return true;
+      }
+
+      return false;
+    }
 
     vm.repoSchema = repoSchema;
 
