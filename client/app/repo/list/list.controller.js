@@ -9,7 +9,6 @@
   function RepoListController(repoSchema, repoData, repoName, query, $mdSidenav, $mdDialog, RepoService, Toast) {
     var vm = this;
 
-    console.log(repoData, repoSchema);
     vm.selected = [];
     vm.repoData = repoData;
     vm.listHeader = repoSchema;
@@ -23,6 +22,7 @@
     vm.showDetail = showDetail;
     vm.closeDetail = closeDetail;
     vm.removeItem = removeItem;
+    vm.bulkRemoveItems = bulkRemoveItems;
     vm.updateItem = updateItem;
     vm.addItem = addItem;
 
@@ -86,8 +86,41 @@
       });
     }
 
+    function bulkRemoveItems(ev) {
+      var content = '您确定要删除用户这些用户?';
+      var total = vm.selected.length;
+      if (total === 0) {
+        return;
+      }
+
+      for (var i = 0; i < total; i++) {
+        content += ' ' + vm.selected[i]['mobile'];
+      }
+
+      var confirm = $mdDialog.confirm()
+        .title('批量删除用户')
+        .content(content)
+        .ariaLabel('删除用户')
+        .ok('删除用户')
+        .cancel('取消')
+        .targetEvent(ev);
+
+      $mdDialog.show(confirm).then(function () {
+        RepoService.remove(repoName, vm.currentEditItem.uid)
+          .then(function () {
+            Toast.show('删除用户成功');
+            vm.listData.splice(vm.currentEditItemIndex, 1);
+            vm.closeDetail();
+          })
+          .catch(function (err) {
+            console.log(err);
+            Toast.show('删除用户失败');
+            vm.closeDetail();
+          });
+      });
+    }
+
     function updateItem() {
-      console.log('aaaa');
       RepoService.update(repoName, vm.currentEditItem.uid, vm.currentEditItem)
         .then(function () {
           Toast.show('更新用户成功');

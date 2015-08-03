@@ -1,7 +1,7 @@
 <md-data-table-toolbar class="alternate">
   <div ng-show="list.selected.length">选中 {{list.selected.length}} 位用户</div>
   <div flex></div>
-  <md-button class="md-icon-button md-primary" aria-label="删除">
+  <md-button class="md-icon-button md-primary" aria-label="删除" ng-click="list.bulkRemoveItems($event)">
     <md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
   </md-button>
   <md-button class="md-icon-button md-primary" aria-label="代码示例">
