@@ -36,7 +36,7 @@
     vm.isShowStep = isShowStep;
 
     function showStep(step) {
-      vm.currentShowStep = step;
+      vm.currentShowStep = vm.currentShowStep === step ? '' : step;
     }
 
     function isShowStep(step) {
