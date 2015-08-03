@@ -52,15 +52,17 @@
 
     function removeField(ev) {
       var confirm = $mdDialog.confirm()
-        .title('删除字段 ' + vm.curFieldKey + '?')
-        .content('您确定要删除字段 ' + vm.curFieldKey + '?')
+        .title('删除字段 ' + vm.curField.name + '?')
+        .content('您确定要删除字段 ' + vm.curField.name + '?')
         .ariaLabel('删除字段')
         .ok('删除字段')
         .cancel('取消')
         .targetEvent(ev);
 
       $mdDialog.show(confirm).then(function () {
-        delete vm.schema[vm.curFieldKey];
+        var idx = vm.schema.indexOf(vm.curField);
+        vm.schema.splice(idx, 1);
+        console.log(idx, vm.schema);
         ShapeService.update(vm.shape, function () {
           Toast.show('更新字段成功');
           vm.closeEdit();
