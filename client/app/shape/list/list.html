@@ -1,13 +1,18 @@
-<section id="shape-list-content" layout="row" layout-fill flex>
-  <div layout="column" flex>
+<md-content id="shape-list-content" layout flex>
+  <md-content layout="column" flex>
     <md-list>
+      <md-list-item>
+        <p>字段名称</p>
+        <span flex></span>
+        <p>字段类型</p>
+      </md-list-item>
       <md-list-item ng-click="list.showDetail(field)" ng-repeat="field in list.schema">
         <p>{{field.name}}</p>
         <span flex></span>
         <p>{{field.props.type | shapeType}}</p>
       </md-list-item>
     </md-list>
-  </div>
+  </md-content>
 
   <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="detailView">
     <md-toolbar class="md-accent">
@@ -64,4 +69,4 @@
   <md-button ng-click="list.addField($event)" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new application">
     <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
   </md-button>
-</section>
+</md-content>
