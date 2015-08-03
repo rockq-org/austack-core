@@ -23,6 +23,7 @@
     vm.closeDetail = closeDetail;
     vm.removeItem = removeItem;
     vm.bulkRemoveItems = bulkRemoveItems;
+    vm.showCode = showCode;
     vm.updateItem = updateItem;
     vm.addItem = addItem;
 
@@ -125,6 +126,19 @@
       });
     }
 
+    function showCode(ev) {
+      $mdDialog.show({
+        controller: 'RepoCreateController',
+        controllerAs: 'create',
+        templateUrl: 'app/repo/create/create.html',
+        locals: {
+          repoSchema: repoSchema,
+          repoName: repoName
+        },
+        targetEvent: ev
+      });
+    }
+
     function updateItem() {
       RepoService.update(repoName, vm.currentEditItem.uid, vm.currentEditItem)
         .then(function () {
@@ -139,7 +153,7 @@
         });
     }
 
-    function addItem($event) {
+    function addItem(ev) {
       $mdDialog.show({
         controller: 'RepoCreateController',
         controllerAs: 'create',
@@ -148,7 +162,7 @@
           repoSchema: repoSchema,
           repoName: repoName
         },
-        targetEvent: $event
+        targetEvent: ev
       });
     }
   }
