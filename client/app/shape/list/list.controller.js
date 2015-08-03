@@ -29,6 +29,7 @@
     vm.showEdit = showEdit;
     vm.closeEdit = closeEdit;
 
+    vm.createField = createField;
     vm.updateField = updateField;
     vm.removeField = removeField;
 
@@ -42,8 +43,16 @@
       form.name.$setValidity('unique', unique);
     }
 
+    function createField() {
+      vm.schema.push(vm.curField);
+      ShapeService.update(vm.shape, function () {
+        Toast.show('更新字段成功');
+        vm.closeCreate();
+      });
+    }
+
     function updateField() {
-      vm.schema[vm.curFieldKey] = vm.curField;
+      //vm.schema[vm.curFieldKey] = vm.curField;
       ShapeService.update(vm.shape, function () {
         Toast.show('更新字段成功');
         vm.closeEdit();
@@ -62,7 +71,6 @@
       $mdDialog.show(confirm).then(function () {
         var idx = vm.schema.indexOf(vm.curField);
         vm.schema.splice(idx, 1);
-        console.log(idx, vm.schema);
         ShapeService.update(vm.shape, function () {
           Toast.show('更新字段成功');
           vm.closeEdit();

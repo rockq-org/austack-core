@@ -41,8 +41,7 @@
       </md-list>
 
       <div flex layout="row" layout-align="space-between center">
-        <md-button ng-disabled="createForm.$invalid" ng-click="list.updateField()" class="md-raised md-primary">保存</md-button>
-        <md-button ng-click="list.removeField($event)" class="md-warn">删除字段</md-button>
+        <md-button ng-disabled="createForm.$invalid" ng-click="list.createField()" class="md-raised md-primary">添加</md-button>
       </div>
     </form>
   </md-content>
