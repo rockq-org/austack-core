@@ -11,20 +11,21 @@
   </md-toolbar>
 
   <md-dialog-content>
-    <form name="codeForm">
-      <section layout="column">
-        <md-input-container flex ng-repeat="item in code.repoSchema" ng-if="item.name != 'uid'">
-          <label>{{item.name}}</label>
-          <input name="{{item.name}}" ng-model="code.repo[item.name]" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}">
-        </md-input-container>
-      </section>
-    </form>
+    <p>
+      1. 加载预定义常量，建议放到js代码块的最前面
+    </p>
+    <hljs code="code.step1" lang="html"></hljs>
+    <p>
+      2. 加载 angular-jwt.js 和 angular-austack.js(TODO：我们代码优化后放到npm库里)
+    </p>
+    <hljs code="code.step2" lang="html"></hljs>
+    <p>
+      3. 在app.js后面添加austack的config和run的代码块
+    </p>
+    <hljs code="code.step3" lang="html"></hljs>
+    <p>
+      4. 添加controller 代码
+    </p>
+    <hljs code="code.step4" lang="html"></hljs>
   </md-dialog-content>
-
-  <div class="md-actions" layout="row">
-    <span flex></span>
-    <md-button ng-click="code.close()">取消</md-button>
-    <md-button ng-disabled="codeForm.$invalid" ng-click="code.code(codeForm)" class="md-primary md-raised">确认创建</md-button>
-  </div>
-
 </md-dialog>
