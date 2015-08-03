@@ -87,6 +87,7 @@
     }
 
     function updateItem() {
+      console.log('aaaa');
       RepoService.update(repoName, vm.currentEditItem.uid, vm.currentEditItem)
         .then(function () {
           Toast.show('更新用户成功');

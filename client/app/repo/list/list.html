@@ -29,7 +29,7 @@
     <md-content layout-padding layout="column">
       <form name="detailForm">
 
-        <md-input-container flex ng-repeat="keyItem in list.listHeader">
+        <md-input-container flex ng-repeat="keyItem in list.listHeader" ng-if="keyItem.name != 'uid'">
           <label>{{keyItem.name}}</label>
           <input name="{{key}}" ng-model="list.currentEditItem[keyItem.name]" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}">
         </md-input-container>
