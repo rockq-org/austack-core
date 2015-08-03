@@ -41,11 +41,11 @@
     function onOrderChange(order) {
       vm.query.sortby = order;
       return RepoService.getRepoData(repoName, vm.query, success);
-    };
+    }
 
     function onPaginationChange(page, limit) {
       return RepoService.getRepoData(repoName, vm.query, success);
-    };
+    }
 
     var navID = 'detailView';
 
