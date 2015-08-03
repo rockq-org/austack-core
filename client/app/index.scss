@@ -58,6 +58,9 @@ md-input-container {
   [disabled] & .md-input {
     color: rgba(0, 0, 0, 0.8);
   }
+  md-select[disabled] .md-select-value {
+    color: rgba(0, 0, 0, 0.8);
+  }
   .message {
     color: $as-warn;
     position: absolute;

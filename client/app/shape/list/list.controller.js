@@ -24,46 +24,19 @@
     vm.showCreate = showCreate;
     vm.closeCreate = closeCreate;
 
+    vm.showEdit = showEdit;
+    vm.closeEdit = closeEdit;
+
     vm.updateField = updateField;
     vm.removeField = removeField;
 
-    vm.addField = addField;
-
     vm.curField = null;
-
-    function addField(ev) {
-      $mdDialog.show({
-        controller: 'ShapeCreateController',
-        controllerAs: 'create',
-        templateUrl: 'app/shape/create/create.html',
-        clickOutsideToClose: false,
-        targetEvent: ev
-      }).then(function (data) {
-        if (!data.name) {
-          return;
-        }
-
-        var field = {
-          name: data.name,
-          isSys: false,
-          props: {
-            type: data.type,
-            required: data.required,
-            unique: data.unique,
-            index: data.index
-          }
-        }
-
-        ShapeService.update(vm.shape, function () {
-          Toast.show('添加字段成功');
-        });
-      });
-    }
 
     function updateField() {
       vm.schema[vm.curFieldKey] = vm.curField;
       ShapeService.update(vm.shape, function () {
         Toast.show('更新字段成功');
+        vm.closeEdit();
       });
     }
 
@@ -98,6 +71,19 @@
       $mdSidenav(detailNavID).close();
     }
 
+    var editNavID = 'editView';
+
+    function showEdit() {
+      //vm.closeDetail();
+      $mdSidenav(editNavID)
+        .toggle()
+        .then(function () {});
+    }
+
+    function closeEdit() {
+      $mdSidenav(editNavID).close();
+    }
+
     var createNavID = 'createView';
 
     function showCreate() {
@@ -106,7 +92,7 @@
         props: {
           type: 'String'
         }
-      }
+      };
       vm.curField = field;
       $mdSidenav(createNavID)
         .toggle()
