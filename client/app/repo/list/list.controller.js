@@ -9,7 +9,7 @@
   function RepoListController(repoSchema, repoData, repoName, query, $mdSidenav, $mdDialog, RepoService, Toast) {
     var vm = this;
 
-    console.log(repoData);
+    console.log(repoData, repoSchema);
     vm.selected = [];
     vm.repoData = repoData;
     vm.listHeader = repoSchema;
