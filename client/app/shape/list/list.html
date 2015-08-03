@@ -39,6 +39,7 @@
           <md-select name="type" placeholder="字段类型" ng-model="list.curField.props.type" required>
             <md-option ng-repeat="type in list.shapeTypes" value="{{type.name}}">{{type.text}}</md-option>
           </md-select>
+          <div class="message">字段类型不能为空</div>
           <div ng-messages="required">
             <div ng-message="required">字段类型不能为空</div>
           </div>
@@ -46,15 +47,15 @@
         <md-list>
           <md-list-item>
             <p>是否必须</p>
-            <md-switch class="md-secondary" ng-model="list.curField.props.required"></md-switch>
+            <md-checkbox class="md-secondary" ng-model="list.curField.props.required"></md-checkbox>
           </md-list-item>
           <md-list-item>
             <p>是否唯一</p>
-            <md-switch class="md-secondary" ng-model="list.curField.props.unique"></md-switch>
+            <md-checkbox class="md-secondary" ng-model="list.curField.props.unique"></md-checkbox>
           </md-list-item>
           <md-list-item>
             <p>是否索引</p>
-            <md-switch class="md-secondary" ng-model="list.curField.props.index"></md-switch>
+            <md-checkbox class="md-secondary" ng-model="list.curField.props.index"></md-checkbox>
           </md-list-item>
         </md-list>
 
