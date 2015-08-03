@@ -10,27 +10,29 @@
     var vm = this;
 
     vm.step1 = [
-  '    var request = require(\'superagent\');',
-  '    request.post(apiBaseURL + \'/auth/application\')',
-  '       .set(\'Content-Type\', \'application/json\')',
-  '        .set(\'Accept\', \'application/json\')',
-  '        .send({',
-  '         clientId: clientId,',
-  '        clientSecret: clientSecret',
-  '      })',
-  '      .end(function (err, res) {',
-  '        if (err) {',
-  '          return d.reject(err);',
-  '        }',
-  '        var applicationJwt = res.body.token;',
-  '        var token = res.body.token;',
-  '        set Authorization to \'Bearer \' + token',
-  '      });'
-].join('\n');
+      '    var request = require(\'superagent\');',
+      '    request.post(apiBaseURL + \'/auth/application\')',
+      '       .set(\'Content-Type\', \'application/json\')',
+      '        .set(\'Accept\', \'application/json\')',
+      '        .send({',
+      '         clientId: clientId,',
+      '        clientSecret: clientSecret',
+      '      })',
+      '      .end(function (err, res) {',
+      '        if (err) {',
+      '          return d.reject(err);',
+      '        }',
+      '        var applicationJwt = res.body.token;',
+      '        var token = res.body.token;',
+      '        set Authorization to \'Bearer \' + token',
+      '      });'
+    ].join('\n');
 
     vm.step2 = vm.step1;
     vm.step3 = vm.step1;
     vm.step4 = vm.step1;
+    vm.step5 = vm.step1;
+    vm.step6 = vm.step1;
     vm.currentShowStep = '';
     vm.showStep = showStep;
     vm.isShowStep = isShowStep;
