@@ -9,24 +9,21 @@
     </div>
   </md-toolbar>
   <md-content layout-padding layout="column">
-    <form name="detailForm">
+    <form name="createForm">
 
       <md-input-container flex>
         <label>字段名称</label>
-        <input name="name" ng-model="list.curField.name" disabled ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="Shape">
-        <div ng-messages="{message: true}">
-          <div ng-message="message">字段名称无法修改</div>
+        <input name="name" ng-model="list.curField.name" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required ng-change="list.checkUnique()">
+        <div ng-messages="createForm.name.$error">
+          <div ng-message="required">字段名称不能为空</div>
         </div>
+        <div class="message" ng-show="!list.isUnique">此字段名称已经被使用</div>
       </md-input-container>
       <md-input-container flex>
         <label>字段类型</label>
         <md-select name="type" placeholder="字段类型" ng-model="list.curField.props.type" required>
           <md-option ng-repeat="type in list.shapeTypes" value="{{type.name}}">{{type.text}}</md-option>
         </md-select>
-        <div class="message">字段类型不能为空</div>
-        <div ng-messages="required">
-          <div ng-message="required">字段类型不能为空</div>
-        </div>
       </md-input-container>
       <md-list>
         <md-list-item>
@@ -44,7 +41,7 @@
       </md-list>
 
       <div flex layout="row" layout-align="space-between center">
-        <md-button ng-disabled="updateForm.$invalid" ng-click="list.updateField()" class="md-raised md-primary">保存</md-button>
+        <md-button ng-disabled="createForm.$invalid" ng-click="list.updateField()" class="md-raised md-primary">保存</md-button>
         <md-button ng-click="list.removeField($event)" class="md-warn">删除字段</md-button>
       </div>
     </form>

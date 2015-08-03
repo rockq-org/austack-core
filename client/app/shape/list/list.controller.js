@@ -18,6 +18,8 @@
     vm.schema = vm.shape.mSchema;
     vm.shapeTypes = shapeTypes;
 
+    vm.checkUnique = checkUnique;
+
     vm.showDetail = showDetail;
     vm.closeDetail = closeDetail;
 
@@ -31,6 +33,14 @@
     vm.removeField = removeField;
 
     vm.curField = null;
+    vm.isUnique = true;
+
+    function checkUnique() {
+      if (vm.curField.name === 'uid')
+        vm.isUnique = false;
+      else
+        vm.isUnique = true;
+    }
 
     function updateField() {
       vm.schema[vm.curFieldKey] = vm.curField;
@@ -53,6 +63,7 @@
         delete vm.schema[vm.curFieldKey];
         ShapeService.update(vm.shape, function () {
           Toast.show('更新字段成功');
+          vm.closeEdit();
           vm.closeDetail();
         });
       });

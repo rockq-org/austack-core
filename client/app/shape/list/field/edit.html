@@ -1,7 +1,7 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="editView">
   <md-toolbar class="md-primary">
     <div class="md-toolbar-tools">
-      <h2>字段详情</h2>
+      <h2>编辑字段</h2>
       <span flex></span>
       <md-button class="md-icon-button" ng-click="list.closeEdit()" aria-label="Close edit">
         <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
@@ -13,7 +13,8 @@
 
       <md-input-container flex>
         <label>字段名称</label>
-        <input name="name" ng-model="list.curField.name">
+        <input name="name" disabled ng-model="list.curField.name">
+        <div class="message">字段名称无法修改</div>
       </md-input-container>
       <md-input-container flex>
         <label>字段类型</label>
