@@ -8,9 +8,9 @@
     .module('austackApp.shape.list')
     .controller('ShapeListController', ShapeListController);
 
-  ShapeListController.$inject = ['$scope', 'shape', '$mdDialog', 'shapeTypes', 'ShapeService', 'Toast', '$mdSidenav'];
+  ShapeListController.$inject = ['$scope', 'shape', '$mdDialog', 'shapeTypes', 'ShapeService', 'Toast', '$mdSidenav', '_'];
 
-  function ShapeListController($scope, shape, $mdDialog, shapeTypes, ShapeService, Toast, $mdSidenav) {
+  function ShapeListController($scope, shape, $mdDialog, shapeTypes, ShapeService, Toast, $mdSidenav, _) {
     var vm = this;
 
     // the array of shape
@@ -35,11 +35,11 @@
     vm.curField = null;
     vm.isUnique = true;
 
-    function checkUnique() {
-      if (vm.curField.name === 'uid')
-        vm.isUnique = false;
-      else
-        vm.isUnique = true;
+    function checkUnique(form) {
+      var unique = _.findIndex(vm.schema, {
+        'name': vm.curField.name
+      }) === -1;
+      form.name.$setValidity('unique', unique);
     }
 
     function updateField() {
