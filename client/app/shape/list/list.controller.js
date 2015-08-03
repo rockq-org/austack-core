@@ -18,9 +18,11 @@
     vm.schema = vm.shape.mSchema;
     vm.shapeTypes = shapeTypes;
 
-    // switch to the detail state
     vm.showDetail = showDetail;
     vm.closeDetail = closeDetail;
+
+    vm.showCreate = showCreate;
+    vm.closeCreate = closeCreate;
 
     vm.updateField = updateField;
     vm.removeField = removeField;
@@ -52,7 +54,6 @@
           }
         }
 
-        vm.schema.push(field);
         ShapeService.update(vm.shape, function () {
           Toast.show('添加字段成功');
         });
@@ -84,17 +85,36 @@
       });
     }
 
-    var navID = 'detailView';
+    var detailNavID = 'detailView';
 
     function showDetail(field) {
       vm.curField = field;
-      $mdSidenav(navID)
+      $mdSidenav(detailNavID)
         .toggle()
         .then(function () {});
     }
 
     function closeDetail() {
-      $mdSidenav(navID).close();
+      $mdSidenav(detailNavID).close();
+    }
+
+    var createNavID = 'createView';
+
+    function showCreate() {
+      var field = {
+        isSys: false,
+        props: {
+          type: 'String'
+        }
+      }
+      vm.curField = field;
+      $mdSidenav(createNavID)
+        .toggle()
+        .then(function () {});
+    }
+
+    function closeCreate() {
+      $mdSidenav(createNavID).close();
     }
   }
 
