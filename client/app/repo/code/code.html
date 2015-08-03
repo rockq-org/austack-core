@@ -1,0 +1,30 @@
+<md-dialog id="repo-code">
+
+  <md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+      <h2>代码示例</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="code.close()" aria-label="关闭">
+        <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <form name="codeForm">
+      <section layout="column">
+        <md-input-container flex ng-repeat="item in code.repoSchema" ng-if="item.name != 'uid'">
+          <label>{{item.name}}</label>
+          <input name="{{item.name}}" ng-model="code.repo[item.name]" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}">
+        </md-input-container>
+      </section>
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="code.close()">取消</md-button>
+    <md-button ng-disabled="codeForm.$invalid" ng-click="code.code(codeForm)" class="md-primary md-raised">确认创建</md-button>
+  </div>
+
+</md-dialog>

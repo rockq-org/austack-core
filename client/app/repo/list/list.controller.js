@@ -128,9 +128,10 @@
 
     function showCode(ev) {
       $mdDialog.show({
-        controller: 'RepoCreateController',
-        controllerAs: 'create',
-        templateUrl: 'app/repo/create/create.html',
+        controller: 'RepoCodeController',
+        controllerAs: 'code',
+        clickOutsideToClose: true,
+        templateUrl: 'app/repo/code/code.html',
         locals: {
           repoSchema: repoSchema,
           repoName: repoName
