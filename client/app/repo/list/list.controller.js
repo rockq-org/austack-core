@@ -95,8 +95,8 @@
       }
 
       for (var i = 0; i < total; i++) {
-        content += ' ' + vm.selected[i]['mobile'];
-        promiseList.push(RepoService.remove(repoName, vm.selected[i]['uid']));
+        content += ' ' + vm.selected[i].mobile;
+        promiseList.push(RepoService.remove(repoName, vm.selected[i].uid));
       }
 
       var confirm = $mdDialog.confirm()
