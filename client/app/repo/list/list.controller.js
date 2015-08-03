@@ -106,16 +106,20 @@
         .targetEvent(ev);
 
       $mdDialog.show(confirm).then(function () {
-        RepoService.remove(repoName, vm.currentEditItem.uid)
+        RepoService.bulkRemove(repoName, vm.selected)
           .then(function () {
             Toast.show('删除用户成功');
-            vm.listData.splice(vm.currentEditItemIndex, 1);
-            vm.closeDetail();
           })
           .catch(function (err) {
             console.log(err);
             Toast.show('删除用户失败');
-            vm.closeDetail();
+          })
+          .finally(function () {
+            RepoService.getRepoData(repoName, vm.query)
+              .then(function (data) {
+                success(data);
+                vm.closeDetail();
+              });
           });
       });
     }
