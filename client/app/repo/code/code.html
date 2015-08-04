@@ -15,8 +15,28 @@
     1.
     <md-button class="md-raised md-primary" ng-click="code.showStep('1')"> 获取JWT令牌 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
-      <p></p>
-      <hljs code="code.step1" lang="javascript"></hljs>
+      <hljs lang="javascript" should-interpolate="true">
+var request = require('superagent');
+var API_URL = '{{code.API_URL}}';
+var clientId = '{{code.clientId}}';
+var clientSecret = '{{code.clientSecret}}';
+
+request.post(API_URL + '/auth/application')
+  .set('Content-Type', 'application/json')
+  .set('Accept', 'application/json')
+  .send({
+    clientId: clientId,
+    clientSecret: clientSecret
+  })
+  .end(function (err, res) {
+    if (err) {
+      return console.log(err);
+    }
+
+    //成功获得application JWT
+    var applicationJwt = res.body.token;
+  });
+      </hljs>
     </md-content>
     <br /> 2.
     <md-button class="md-raised md-primary" ng-click="code.showStep('2')"> 创建新用户 </md-button>

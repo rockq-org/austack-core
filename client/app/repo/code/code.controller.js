@@ -6,9 +6,13 @@
     .controller('RepoCodeController', RepoCodeController);
 
   /* @ngInject */
-  function RepoCodeController($mdDialog, Repo, RepoService, Toast, repoSchema, repoName) {
+  function RepoCodeController($mdDialog, Repo, RepoService, Toast, repoSchema, repoName, Config) {
     var vm = this;
 
+    // vm.step1 = codeSample.step1;
+    vm.API_URL = Config.API_URL;
+    vm.clientId = 'clientIdhere';
+    vm.clientSecret = 'clientSecrethere';
     vm.step1 = [
       '    var request = require(\'superagent\');',
       '    request.post(apiBaseURL + \'/auth/application\')',
@@ -33,7 +37,7 @@
     vm.step4 = vm.step1;
     vm.step5 = vm.step1;
     vm.step6 = vm.step1;
-    vm.currentShowStep = '';
+    vm.currentShowStep = '1';
     vm.showStep = showStep;
     vm.isShowStep = isShowStep;
 
