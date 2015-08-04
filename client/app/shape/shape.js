@@ -25,16 +25,16 @@
   function getShapeTypes() {
     return [{
       name: 'String',
-      text: '字符串'
+      text: 'String'
     }, {
       name: 'Date',
-      text: '日期'
+      text: 'Date'
     }, {
       name: 'Number',
-      text: '数字'
+      text: 'Number'
     }, {
       name: 'Boolean',
-      text: '布尔'
+      text: 'Boolean'
     }];
   }
 
