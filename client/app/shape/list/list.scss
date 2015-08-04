@@ -2,8 +2,16 @@
   .list-head {
     color: $as-primary;
   }
-  ul[dnd-list],
-  ul[dnd-list] > li {
+  [dnd-list],
+  [dnd-list] > li {
     position: relative;
+  }
+  [dnd-list] .dndDraggingSource {
+    display: none;
+  }
+  [dnd-list] .dndPlaceholder {
+    display: block;
+    background-color: #ddd;
+    min-height: 48px;
   }
 }
