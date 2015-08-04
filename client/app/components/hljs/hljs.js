@@ -26,21 +26,34 @@
           }
           var shouldInterpolate = scope.$eval(attr.shouldInterpolate);
 
-          $q.when(code).then(function (code) {
+          $q.when(code).then(reRender);
+
+          scope.$watch(attr.reRender, function (newVal, oldVal) {
+            if (angular.equals(newVal, oldVal)) {
+              return;
+            }
+
+            reRender(code);
+          });
+
+          function reRender(code) {
             if (code) {
               if (shouldInterpolate) {
                 code = $interpolate(code)(scope);
               }
+              element.empty();
+
               var contentParent = angular.element(
                 '<pre><code class="highlight" ng-non-bindable></code></pre>'
               );
               element.append(contentParent);
+
               // Defer highlighting 1-frame to prevent GA interference...
               $timeout(function () {
                 render(code, contentParent);
               }, 34, false);
             }
-          });
+          }
 
           function render(contents, parent) {
 
