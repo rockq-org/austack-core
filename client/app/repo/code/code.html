@@ -11,15 +11,17 @@
   </md-toolbar>
 
   <md-dialog-content>
-
+<md-select ng-model="code.selectedApp" placeholder="选择一个应用">
+  <md-option ng-value="item" ng-repeat="item in code.applicationList">{{ item.name }} - {{ item.clientId }}</md-option>
+</md-select>
     1.
     <md-button class="md-raised md-primary" ng-click="code.showStep('1')"> 获取JWT令牌 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
       <hljs lang="javascript" should-interpolate="true">
 var request = require('superagent');
 var API_URL = '{{code.API_URL}}';
-var clientId = '{{code.clientId}}';
-var clientSecret = '{{code.clientSecret}}';
+var clientId = '{{code.selectedApp.clientId}}';
+var clientSecret = '{{code.selectedApp.clientSecret}}';
 
 request.post(API_URL + '/auth/application')
   .set('Content-Type', 'application/json')

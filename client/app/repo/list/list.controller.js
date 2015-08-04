@@ -137,6 +137,12 @@
           repoSchema: repoSchema,
           repoName: repoName
         },
+        resolve: {
+          /* @ngInject */
+          applicationList: function (Application) {
+            return Application.query().$promise;
+          }
+        },
         targetEvent: ev
       });
     }

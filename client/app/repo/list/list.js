@@ -20,6 +20,7 @@
       'ui.router',
       'md.data.table',
       'austackApp.socket',
+      'austackApp.application.service',
       'austackApp.listImage',
       'austackApp.shape.service',
       'austackApp.mainMenu'

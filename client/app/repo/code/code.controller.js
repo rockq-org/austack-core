@@ -2,17 +2,18 @@
   'use strict';
 
   angular
-    .module('austackApp.repo.code', ['austackApp.hljs'])
+    .module('austackApp.repo.code', ['austackApp.hljs', 'austackApp.application.service'])
     .controller('RepoCodeController', RepoCodeController);
 
   /* @ngInject */
-  function RepoCodeController($mdDialog, Repo, RepoService, Toast, repoSchema, repoName, Config) {
+  function RepoCodeController($mdDialog, Repo, RepoService, Toast, repoSchema, repoName, Config, applicationList) {
     var vm = this;
 
     // vm.step1 = codeSample.step1;
     vm.API_URL = Config.API_URL;
-    vm.clientId = 'clientIdhere';
-    vm.clientSecret = 'clientSecrethere';
+    vm.applicationList = applicationList.data;
+    console.log(vm.applicationList);
+    vm.selectedApp = applicationList.data[0];
     vm.step1 = [
       '    var request = require(\'superagent\');',
       '    request.post(apiBaseURL + \'/auth/application\')',
