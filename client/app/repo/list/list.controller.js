@@ -130,6 +130,7 @@
       $mdDialog.show({
         controller: 'RepoCodeController',
         controllerAs: 'code',
+        parent: angular.element(document.body),
         clickOutsideToClose: true,
         templateUrl: 'app/repo/code/code.html',
         locals: {
