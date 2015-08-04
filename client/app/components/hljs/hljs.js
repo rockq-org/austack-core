@@ -60,11 +60,6 @@
             var codeElement = parent.find('code');
             var lines = contents.split('\n');
 
-            // Remove empty lines
-            lines = lines.filter(function (line) {
-              return line.trim().length;
-            });
-
             // Make it so each line starts at 0 whitespace
             var firstLineWhitespace = lines[0].match(/^\s*/)[0];
             var startingWhitespaceRegex = new RegExp('^' + firstLineWhitespace);
