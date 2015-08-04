@@ -187,13 +187,15 @@ ApplicationController.prototype = {
           if (err) {
             return res.handleError(err);
           }
-          return res.ok({
+          var result = {
             total: itemCount,
             rc: 1,
             current_page: pageNumber,
             total_page: pageCount,
             data: results
-          });
+          };
+          logger.log(result);
+          return res.ok(result);
         });
     }, function (err) {
       return res.json({
