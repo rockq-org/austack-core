@@ -17,8 +17,7 @@
       'ui.router',
       'austackApp.repo.service',
       'austackApp.shape.service',
-      'austackApp.shape.list',
-      'austackApp.shape.create'
+      'austackApp.shape.list'
     ])
     .constant('shapeTypes', getShapeTypes())
     .config(configShapeRoutes);

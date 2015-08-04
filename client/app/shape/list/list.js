@@ -18,6 +18,7 @@
     .module('austackApp.shape.list', [
       'ngMaterial',
       'ui.router',
+      'dndLists',
       'austackApp.socket',
       'austackApp.listImage',
       'austackApp.mainMenu'

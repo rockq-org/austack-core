@@ -1,0 +1,44 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="detailView">
+  <md-toolbar class="md-primary">
+    <div class="md-toolbar-tools">
+      <h2>字段详情</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="list.closeDetail()" aria-label="Close detail">
+        <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content layout-padding layout="column">
+    <form name="detailForm" ng-disabled="true">
+
+      <md-input-container flex>
+        <label>字段名称</label>
+        <input name="name" disabled ng-model="list.curField.name">
+      </md-input-container>
+      <md-input-container flex>
+        <label>字段类型</label>
+        <md-select name="type" placeholder="字段类型" disabled ng-model="list.curField.props.type" required>
+          <md-option ng-repeat="type in list.shapeTypes" value="{{type.name}}">{{type.text}}</md-option>
+        </md-select>
+      </md-input-container>
+      <md-list>
+        <md-list-item>
+          <p>是否必须</p>
+          <md-checkbox class="md-secondary" disabled ng-model="list.curField.props.required"></md-checkbox>
+        </md-list-item>
+        <md-list-item>
+          <p>是否唯一</p>
+          <md-checkbox class="md-secondary" disabled ng-model="list.curField.props.unique"></md-checkbox>
+        </md-list-item>
+        <md-list-item>
+          <p>是否索引</p>
+          <md-checkbox class="md-secondary" disabled ng-model="list.curField.props.index"></md-checkbox>
+        </md-list-item>
+      </md-list>
+
+      <div flex layout="row" layout-align="space-between center" ng-show="!list.curField.isSys">
+        <md-button ng-click="list.showEdit()" class="md-primary">编辑</md-button>
+      </div>
+    </form>
+  </md-content>
+</md-sidenav>

@@ -46,7 +46,28 @@ form {
     padding: 0 2px;
   }
   md-list-item .md-secondary {
-    right: 0px !important;
+    right: 6px !important;
+  }
+  md-switch .md-container {
+    margin-right: 0px;
+  }
+}
+
+md-input-container {
+  .md-input[disabled],
+  [disabled] & .md-input {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  md-select[disabled] .md-select-value {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .message {
+    color: $as-warn;
+    position: absolute;
+    order: 3;
+    font-size: 12px;
+    line-height: 24px;
+    padding-right: 30px;
   }
 }
 
