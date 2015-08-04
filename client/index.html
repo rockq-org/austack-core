@@ -9,6 +9,21 @@
   <meta name="description" content="">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <style type="text/css" media="screen">
+    .loading {
+      background-color: rgb(33, 150, 243);
+      width: 100%;
+    }
+    
+    .loading img {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+  </style>
   <!-- build:css({.tmp/serve,client}) styles/vendor.css -->
   <link rel="stylesheet" href="app/vendor.css">
   <!-- bower:css -->
@@ -28,7 +43,12 @@
   your browser</a> to improve your experience.</p>
 <![endif]-->
   <!-- Add your site or application content here -->
-  <div layout flex ui-view></div>
+  <div layout flex ui-view>
+
+    <div class="loading">
+      <img src="assets/images/rings.svg" width="150" alt="">
+    </div>
+  </div>
   <script src="socket.io-client/socket.io.js"></script>
   <!-- build:js(client) scripts/vendor.js -->
   <!-- bower:js -->
