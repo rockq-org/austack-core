@@ -1,33 +1,26 @@
-// austack config
-angular.module('austack')
-    .config(function austackConfig($stateProvider, austackProvider, jwtInterceptorProvider, $httpProvider) {
-        $stateProvider
-            .state('login', {
-                url: "/login",
-                templateUrl: "templates/login.html",
-                controller: 'LoginCtrl'
-            });
-        // Configure Austack
-        austackProvider.init({
-            domain: AUSTACK_DOMAIN,
-            clientId: AUSTACK_CLIENT_ID,
-            loginState: 'login'
-        });
-        jwtInterceptorProvider.tokenGetter = function($window, jwtHelper, austack) {
-            var idToken = $window.localStorage.getItem('token');
-            var refreshToken = $window.localStorage.getItem('refreshToken');
-            if (!idToken || !refreshToken) {
-                return null;
-            }
-            if (jwtHelper.isTokenExpired(idToken)) {
-                return austack.refreshIdToken(refreshToken, function(idToken) {
-                    $window.localStorage.setItem('token', idToken);
-                    return idToken;
-                });
-            } else {
-                return idToken;
-            }
-        }
+(function() {
+    // austack config
+    angular.module('austack')
+        .config(function austackConfig($stateProvider, austackProvider, jwtInterceptorProvider, $httpProvider) {
+            $stateProvider
+                .state(AUSTACK.loginStateName, AUSTACK.loginStateConfig);
 
-        $httpProvider.interceptors.push('jwtInterceptor');
-    });
+            jwtInterceptorProvider.tokenGetter = function($window, jwtHelper, austack) {
+                var jwt = $window.localStorage.getItem(AUSTACK.tokenKey);
+                var refreshToken = $window.localStorage.getItem(AUSTACK.refreshTokenKey);
+                if (!jwt || !refreshToken) {
+                    return null;
+                }
+                if (jwtHelper.isTokenExpired(jwt)) {
+                    return austack.refreshjwt(refreshToken, function(jwt) {
+                        $window.localStorage.setItem('token', jwt);
+                        return jwt;
+                    });
+                } else {
+                    return jwt;
+                }
+            }
+
+            $httpProvider.interceptors.push('jwtInterceptor');
+        });
+}());
