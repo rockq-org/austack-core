@@ -6,7 +6,7 @@ This application is based on [ionicframework](http://ionicframework.com/). ionic
 
 ## Installation
 
-### NodeJS 
+### NodeJS
 
 Get help from [NodeJS Community](http://nodejs.org/).
 
@@ -23,12 +23,21 @@ cd ionic-client
 npm install
 bower install
 ionic setup sass
-ionic serve
+```
+
+## add platform
+```
+cordova platform add ios
+```
+
+## emulate
+```
+ionic emulate ios -l -c -s
 ```
 
 Get more detail in our [blog](http://blog.austack.com).
 
-## Learn more about ionic 
+## Learn more about ionic
 
 [Start building with Ionic!](http://ionicframework.com/getting-started/)
 
