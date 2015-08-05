@@ -10,3 +10,5 @@ npm-debug.log
 client/app/config.js
 lyman/
 server/public/sampleapps/ionic-client/www/lib
+server/public/sampleapps/nodejs-backend/app.json
+server/public/sampleapps/nodejs-backend/node_modules

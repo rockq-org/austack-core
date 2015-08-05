@@ -6,7 +6,7 @@ This application is based on NodeJS, Node.js® is a platform built on Chrome's J
 
 ## Installation
 
-### NodeJS 
+### NodeJS
 
 Get help from [NodeJS Community](http://nodejs.org/).
 
@@ -14,8 +14,9 @@ Get help from [NodeJS Community](http://nodejs.org/).
 
 ```
 cd nodejs-backend
+npm install -g nodemon
 npm install
-node app.js
+nodemon -i node_modules app.js
 ```
 
 ## Learn more about [Austack](http://www.austack.com)
