@@ -9,9 +9,10 @@
       min-width: inherit;
     }
     .md-menu {
-      padding: 0;
+      padding: 6px;
       .md-button.md-icon-button {
-        padding: 6px;
+        padding: 0;
+        margin: 0;
         line-height: 36px;
         width: 36px;
         height: 36px;

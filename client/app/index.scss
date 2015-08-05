@@ -76,7 +76,7 @@ md-input-container {
   background-color: #eee;
   max-width: 1000px;
   &.ng-show {
-    animation: fadeInUp 0.3s;
+    animation: slideInLeft 0.3s;
   }
   &.ng-hide {
     animation: fadeOutDown 0.3s;

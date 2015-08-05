@@ -1,5 +1,5 @@
 <md-card>
-  <div class="desc" layout="row" layout-align="center center">
+  <div geopattern string="{{::application.name}}" class="desc" layout="row" layout-align="center center">
     <div>{{::application.description}}</div>
   </div>
   <div layout="row">
@@ -19,7 +19,7 @@
         <md-menu-item>
           <md-button ng-click="list.showSettings(application)">
             <md-icon md-svg-icon="action:ic_settings_24px"></md-icon>
-            <span>设置</span>
+            <span>应用设置</span>
           </md-button>
         </md-menu-item>
         <md-menu-item>

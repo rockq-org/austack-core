@@ -24,7 +24,8 @@
     "angular-ui-ace": "bower",
     "angular-material-data-table": "~0.8.0",
     "angular-drag-and-drop-lists": "~1.2.0",
-    "animate.css": "~3.3.1"
+    "animate.css": "~3.3.1",
+    "geopattern": "~1.2.3"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
