@@ -19,11 +19,10 @@
 
   function geopattern(GeoPattern) {
     return {
-      restrict: 'EA',
+      restrict: 'A',
 
       link: function ($scope, element, attrs) {
-        $scope.string = attrs.string;
-        var pattern = GeoPattern.generate($scope.string);
+        var pattern = GeoPattern.generate(attrs.geopattern);
         element.css('background-image', pattern.toDataUrl());
       }
     };
