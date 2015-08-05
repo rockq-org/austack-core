@@ -15,13 +15,13 @@
             <md-button class="md-primary md-raised" ng-click="vm.downloadClient()"> 下载示例代码 </md-button>
           </div>
         </md-card-content>
-        <md-content class="collapse-animate" ng-show="vm.showClientTutorial">
+        <md-content class="collapse-animate" ng-show="!vm.showClientTutorial">
           <p>
             1. 加载预定义常量，建议放到js代码块的最前面
           </p>
           <hljs code="vm.ionicStep1" lang="html"></hljs>
           <p>
-            2. 加载 angular-jwt.js 和 angular-austack.js(TODO：我们代码优化后放到npm库里)
+            2. 加载 angular-jwt.js 和 angular-austack.js
           </p>
           <hljs code="vm.ionicStep2" lang="html"></hljs>
           <p>

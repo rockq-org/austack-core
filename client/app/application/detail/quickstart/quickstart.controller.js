@@ -26,8 +26,6 @@
       '<script src="lib/angular-jwt/dist/angular-jwt.js"></script>',
       '<script src="js/angular-austack.js"></script>'
     ].join('\n');
-    vm.ionicStep3 = 'step 3 code here';
-    vm.ionicStep4 = 'step 4 code here';
 
     vm.nodeStep1 = [
       'var cors = require(\'cors\');',
