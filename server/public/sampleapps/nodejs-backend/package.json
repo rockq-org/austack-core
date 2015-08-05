@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "cors": "^2.7.1",
+    "dotenv": "^1.2.0",
     "ejs": "*",
     "express": "3.4.7",
     "q": "^1.4.1",
