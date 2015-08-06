@@ -17,20 +17,13 @@ md-sidenav[md-component-id="mainMenu"] {
     }
   }
   .submenu {
-    height: 36px;
+    //height: 36px;
     .md-button {
-      padding-left: 60px;
-      transition: all 0.3s ease-in-out;
+      padding-left: 56px;
     }
-    max-height: 100px;
-    opacity: 1;
-    transition: all 0.3s ease-in-out;
+    animation: fadeInDown 0.3s;
     &.ng-hide {
-      max-height: 0px;
-      opacity: 0;
-      .md-button {
-        padding-left: 16px;
-      }
+      animation: fadeOutUp 0.3s;
     }
   }
   md-divider {

@@ -1,42 +1,27 @@
-<section id="application-list-content" layout="column" layout-fill flex>
-  <!-- for applications data structure, look into https://github.com/arrking/austack-core/issues/126 -->
-  <md-content ng-if="list.applications.data.length" id="application-items-content" flex>
+<md-content id="application-list-content" layout="column" layout-padding flex>
+  <md-content>
+    <md-content layout="row" ng-if="!list.applications.data.length">
+      <div flex="33" flex-sm="100" flex-md="50">
+        <md-card>
+          <div geopattern="austack" class="desc" layout="row" layout-align="center center">
+            <div>应用列表为空</div>
+          </div>
+          <div layout="row">
+            <md-button ng-click="index.create()">现在创建</md-button>
+          </div>
+        </md-card>
+      </div>
+    </md-content>
 
-    <md-list>
-      <md-list-item ng-click="list.showSettings(application)" ng-repeat="application in list.applications.data" ng-class="{'selected': list.isSelected(application)}">
-        <list-image ng-if="!user.image" string="{{application.name}}"></list-image>
-        <p>{{::application.name}}</p>
-        <p hide-md hide-sm>{{::application.description}}</p>
-        <md-button ng-click="list.showQuickstart(application)" class="md-icon-button">
-          <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
-          <md-tooltip>快速开始</md-tooltip>
-        </md-button>
-        <md-button ng-click="list.showSettings(application)" class="md-icon-button">
-          <md-icon md-svg-icon="action:ic_settings_24px"></md-icon>
-          <md-tooltip>设置</md-tooltip>
-        </md-button>
-        <md-button ng-click="list.showLoginpage(application)" class="md-icon-button">
-          <md-icon md-svg-icon="action:ic_extension_24px"></md-icon>
-          <md-tooltip>登入界面</md-tooltip>
-        </md-button>
-      </md-list-item>
-    </md-list>
-
-  </md-content>
-
-  <md-content ng-if="!list.applications.data.length">
-    <md-card>
-      <md-card-content>
-        <p>
-          应用列表为空
-          <a ng-click="index.create()">现在创建</a>
-        </p>
-      </md-card-content>
-    </md-card>
+    <md-content layout="row" layout-wrap ng-if="list.applications.data.length">
+      <div ng-repeat="application in list.applications.data" flex="33" flex-sm="100" flex-md="50">
+        <ng-include src="'app/application/list/tile.html'"></ng-include>
+      </div>
+    </md-content>
   </md-content>
 
   <md-button ng-click="index.create($event)" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new application">
     <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
   </md-button>
 
-</section>
+</md-content>

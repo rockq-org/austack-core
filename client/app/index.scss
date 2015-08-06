@@ -20,6 +20,11 @@ body {
   text-align: right;
 }
 
+.tip {
+  color: #fff;
+  background-color: $as-accent;
+}
+
 md-dialog {
   max-width: 750px;
   min-width: 360px;
@@ -75,11 +80,8 @@ md-input-container {
   padding: 0 16px;
   background-color: #eee;
   max-width: 1000px;
-  opacity: 1;
-  transition: all 0.3s ease-in-out;
+  animation: fadeInUp 0.3s;
   &.ng-hide {
-    background-color: #fff;
-    opacity: 0;
-    max-height: 0px;
+    animation: fadeOutDown 0.3s;
   }
 }

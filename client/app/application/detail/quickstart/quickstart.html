@@ -1,5 +1,5 @@
 <md-content layout="column" flex layout-padding id="application-settings-content">
-  <md-card>
+  <md-card class="tip">
     <md-card-content>
       <span>应用包含两部分：移动客户端和服务客户端。移动客户端可以借助austack提供的服务直接支持用户的注册，登录等功能。服务客户端可以使用austack提供的API管理用户。</span>
     </md-card-content>
@@ -7,15 +7,17 @@
   <div layout="row" layout-md="column" layout-sm="column">
     <md-content flex>
       <md-card layout="column">
-        <h1 class="text-center">客户端（Ionic）</h1>
-        <img src="assets/images/ionic.png" class="icon-large" />
-        <md-card-content>
-          <div class="md-actions" layout="row" layout-align="space-between center">
-            <md-button class="md-primary" ng-click="vm.showClientTutorial =! vm.showClientTutorial"> 示例说明 </md-button>
-            <md-button class="md-primary md-raised" ng-click="vm.downloadClient()"> 下载示例代码 </md-button>
+        <md-card-content layout="row" layout-align="space-between center">
+          <div flex>
+            <img src="assets/images/ionic.png" class="icon-large" />
           </div>
+          <h3 flex class="text-center">客户端（Ionic）</h3>
         </md-card-content>
-        <md-content class="collapse-animate" ng-show="!vm.showClientTutorial">
+        <div class="md-actions" layout="row" layout-align="space-between center">
+          <md-button class="md-primary" ng-click="vm.showClientTutorial =! vm.showClientTutorial"> 示例说明 </md-button>
+          <md-button class="md-primary md-raised" ng-click="vm.downloadClient()"> 下载示例代码 </md-button>
+        </div>
+        <md-content class="collapse-animate" ng-show="vm.showClientTutorial">
           <p>
             1. 加载预定义常量，建议放到js代码块的最前面
           </p>
@@ -37,14 +39,16 @@
     </md-content>
     <md-content flex>
       <md-card layout="column">
-        <h1 class="text-center">服务器端（NodeJS）</h1>
-        <img src="assets/images/nodejs.svg" class="icon-large" />
-        <md-card-content>
-          <div class="md-actions" layout="row" layout-align="space-between center">
-            <md-button class="md-primary" ng-click="vm.showServerTutorial =! vm.showServerTutorial"> 示例说明 </md-button>
-            <md-button class="md-primary md-raised" ng-click="vm.downloadBackend()"> 下载示例代码 </md-button>
+        <md-card-content layout="row" layout-align="space-between center">
+          <div flex>
+            <img src="assets/images/nodejs.svg" class="icon-large" />
           </div>
+          <h3 flex class="text-center">服务器端（NodeJS）</h3>
         </md-card-content>
+        <div class="md-actions" layout="row" layout-align="space-between center">
+          <md-button class="md-primary" ng-click="vm.showServerTutorial =! vm.showServerTutorial"> 示例说明 </md-button>
+          <md-button class="md-primary md-raised" ng-click="vm.downloadBackend()"> 下载示例代码 </md-button>
+        </div>
         <md-content class="collapse-animate" ng-show="vm.showServerTutorial">
           <p>
             1. app.js 设置支持cors

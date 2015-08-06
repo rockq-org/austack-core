@@ -2,16 +2,23 @@
   .list-head {
     color: $as-primary;
   }
-  [dnd-list],
-  [dnd-list] > li {
+  [dnd-list] {
     position: relative;
-  }
-  [dnd-list] .dndDraggingSource {
-    display: none;
-  }
-  [dnd-list] .dndPlaceholder {
-    display: block;
-    background-color: #ddd;
-    min-height: 48px;
+    md-list-item {
+      position: relative;
+      min-height: 36px;
+      margin-bottom: 12px;
+      background-color: lighten($as-primary, 30%);
+      border-left: 3px solid $as-accent;
+    }
+    .dndDraggingSource {
+      display: none;
+    }
+    .dndPlaceholder {
+      display: block;
+      background-color: lighten($as-primary, 30%);
+      min-height: 36px;
+      margin-bottom: 12px;
+    }
   }
 }

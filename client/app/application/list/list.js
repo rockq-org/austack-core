@@ -20,6 +20,7 @@
       'ui.router',
       'austackApp.socket',
       'austackApp.listImage',
+      'austackApp.geopattern',
       'austackApp.mainMenu'
     ])
     .config(configApplicationListRoutes);
