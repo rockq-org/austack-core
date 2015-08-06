@@ -72,6 +72,7 @@ function _create(shape) {
     if (!err) {
       deferred.reject('repo does exist.');
     } else {
+      logger.log(shape.mSchema);
       // https://github.com/arrking/austack-core/issues/181
       var mschema = new mongoose.Schema(convertSchema(shape.mSchema), {
         strict: false
