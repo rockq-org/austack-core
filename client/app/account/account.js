@@ -15,6 +15,7 @@
     .module('austackApp.account', [
       'ui.router',
       'timer',
+      'ngImgCrop',
       'ngMaterial'
     ])
     .config(configAccountRoute);
