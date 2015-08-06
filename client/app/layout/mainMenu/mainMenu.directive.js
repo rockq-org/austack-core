@@ -18,6 +18,8 @@
       link: link,
       restrict: 'E',
       replace: true,
+      controller: 'SidebarController',
+      controllerAs: 'menu',
       templateUrl: 'app/layout/mainMenu/mainMenu.html'
     };
 

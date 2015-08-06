@@ -8,24 +8,6 @@ md-sidenav[md-component-id="mainMenu"] {
     min-width: $sidenavWidth;
     max-width: $sidenavWidth;
   }
-  .toggle-icon {
-    margin-right: 0px;
-    transform: rotate(0deg);
-    transition: transform 0.3s ease-in-out;
-    &.toggled {
-      transform: rotate(180deg);
-    }
-  }
-  .submenu {
-    //height: 36px;
-    .md-button {
-      padding-left: 56px;
-    }
-    animation: fadeInDown 0.3s;
-    &.ng-hide {
-      animation: fadeOutUp 0.3s;
-    }
-  }
   md-divider {
     margin: 10px;
   }
@@ -35,6 +17,26 @@ md-sidenav[md-component-id="mainMenu"] {
     }
     span {
       font-size: 32px;
+    }
+  }
+  .toggle-icon {
+    margin-right: 0px;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+  }
+  .toggled {
+    background-color: #eee;
+    .toggle-icon {
+      transform: rotate(180deg);
+    }
+  }
+  .submenu {
+    .md-button {
+      padding-left: 36px;
+    }
+    animation: fadeInDown 0.3s;
+    &.ng-hide {
+      animation: fadeOutUp 0.3s;
     }
   }
 }

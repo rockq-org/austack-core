@@ -5,7 +5,8 @@
     </span>
   </md-toolbar>
   <md-content flex>
-    <md-list flex ng-controller="SidebarController as menu">
+    <md-list flex>
+      <md-subheader class="md-no-sticky">管理</md-subheader>
       <div ng-repeat="item in menu.items">
         <md-menu-item ng-if="!item.subItems" ui-sref="{{item.state}}">
           <md-button ng-class="{'md-accent md-hue-2': menu.isActive(item.state)}">
@@ -14,23 +15,26 @@
           </md-button>
         </md-menu-item>
         <md-menu-item ng-if="item.subItems" ng-click="item.open = !item.open">
-          <md-button ng-class="{'md-accent md-hue-2': menu.isActive(item.state)}">
+          <md-button ng-class="{'toggled': item.open, 'md-accent md-hue-2': menu.isActive(item.state)}">
             <md-icon ng-if="item.icon" md-svg-icon="{{ item.icon }}">
             </md-icon>
             <span>{{ item.name }}</span>
             <span flex></span>
-            <md-icon class="toggle-icon" ng-class="{'toggled': item.open}" md-svg-icon="navigation:ic_expand_more_24px"></md-icon>
+            <md-icon class="toggle-icon" md-svg-icon="navigation:ic_expand_more_24px"></md-icon>
           </md-button>
         </md-menu-item>
-        <md-menu-item ng-show="item.open" class="submenu" ui-sref-active="md-primary" ui-sref="{{subItem.state}}" ng-repeat="subItem in item.subItems">
-          <md-button ng-class="{'md-accent md-hue-2': menu.isActive(subItem.state)}">
-            <md-icon ng-if="item.icon" md-svg-icon="{{ subItem.icon }}"></md-icon>
-            <span>{{ subItem.name }}</span>
-          </md-button>
-        </md-menu-item>
+        <div class="submenu" ng-if="item.subItems">
+          <md-menu-item ng-show="item.open" class="submenu" ui-sref-active="md-primary" ui-sref="{{subItem.state}}" ng-repeat="subItem in item.subItems">
+            <md-button ng-class="{'md-accent md-hue-2': menu.isActive(subItem.state)}">
+              <md-icon ng-if="item.icon" md-svg-icon="{{ subItem.icon }}"></md-icon>
+              <span>{{ subItem.name }}</span>
+            </md-button>
+          </md-menu-item>
+        </div>
       </div>
       <div hide-gt-md>
         <md-divider></md-divider>
+        <md-subheader class="md-no-sticky">其他</md-subheader>
         <md-menu-item href="{{item.url}}" ng-repeat="item in menu.headerMenus">
           <md-button>
             <md-icon md-svg-icon="{{ item.icon }}"></md-icon>
