@@ -163,6 +163,7 @@ UserController.prototype = {
     this.model.findOne({
       'name': req.body.name
     }, function (err, user) {
+      console.log(user);
       if (user.verifyCode !== verifyCode) {
         return res.forbidden({
           message: "Verify Code Not Correct"
@@ -229,7 +230,7 @@ UserController.prototype = {
             }, {
               name: 'verificationCode',
               isSys: true,
-              type: {
+              props: {
                 type: 'String'
               }
             }]

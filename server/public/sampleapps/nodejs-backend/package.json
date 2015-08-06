@@ -9,7 +9,7 @@
     "cors": "^2.7.1",
     "dotenv": "^1.2.0",
     "ejs": "*",
-    "express": "3.4.7",
+    "express": "*",
     "q": "^1.4.1",
     "superagent": "^1.2.0"
   }
