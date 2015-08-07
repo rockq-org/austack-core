@@ -84,8 +84,8 @@ function getApplicationJwt() {
     .set('Content-Type', 'application/json')
     .set('Accept', 'application/json')
     .send({
-      clientId: clientId,
-      clientSecret: clientSecret
+      clientId: Austack.get('clientId'),
+      clientSecret: Austack.get('clientSecret')
     })
     .end(function (err, res) {
       if (err) {

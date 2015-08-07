@@ -1,23 +1,14 @@
-/*
- * GET users listing.
- */
-var appJSON = require('../app.json');
+var express = require('express');
+var router = express.Router();
 var Austack = require('../austack-nodejs');
-var request = require('superagent');
-var apiBaseURL = appJSON.apiBaseURL;
-var clientId = appJSON.clientId;
-var clientSecret = appJSON.clientSecret;
 
-exports.list = function (req, res) {
-  res.send("respond with a resource");
-};
-
-exports.me = function (req, res) {
+router.get('/me', function (req, res, next) {
   var userJwt = req.headers.authorization;
   Austack.validateUserJwt(userJwt)
     .then(function () {
       var profile = {
-        clientId: clientId,
+        clientId: Austack.get('clientId'),
+        //下面得数据你可以通过查询你的数据库用户表数据来添加
         userOtherInfo: 'some other userInfo dave want to add'
       };
       console.log('success', profile);
@@ -29,4 +20,6 @@ exports.me = function (req, res) {
         message: 'user force logout'
       });
     });
-};
+});
+
+module.exports = router;
