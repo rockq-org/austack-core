@@ -9,6 +9,8 @@ var Austack = {
   data: {
     applicationJwt: ''
   },
+  get: get,
+  set: set,
   // method
   // 验证用户的JWT是否合法（主要是为了验证是否被用户强制退出登录而导致的过期）
   validateUserJwt: validateUserJwt,
@@ -27,6 +29,20 @@ var Austack = {
 };
 
 module.exports = Austack;
+
+function get(key) {
+  if (Austack.data[key]) {
+    return Austack.data[key];
+  }
+
+  return null;
+}
+
+function set(key, val) {
+  Austack.data[key] = val;
+
+  return Austack;
+}
 
 function validateUserJwt(userJwt) {
   var d = Q.defer();
