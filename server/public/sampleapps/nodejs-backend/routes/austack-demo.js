@@ -2,7 +2,11 @@ var express = require('express');
 var router = express.Router();
 var Austack = require('../austack-nodejs');
 
-router.get('/me', function (req, res, next) {
+router.get('/me', me);
+
+module.exports = router;
+
+function me(req, res, next) {
   var userJwt = req.headers.authorization;
   Austack.validateUserJwt(userJwt)
     .then(function () {
@@ -20,6 +24,4 @@ router.get('/me', function (req, res, next) {
         message: 'user force logout'
       });
     });
-});
-
-module.exports = router;
+}
