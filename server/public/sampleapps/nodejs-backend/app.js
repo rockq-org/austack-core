@@ -13,9 +13,6 @@ Austack.getApplicationJwt()
     console.log('success get applicationJwt', applicationJwt); // you can save the applicationJwt to some place
   });
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
 
 // view engine setup
@@ -36,8 +33,9 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/austack-demo', require('./routes/austack-demo'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
