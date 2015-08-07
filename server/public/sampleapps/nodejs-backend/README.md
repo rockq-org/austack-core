@@ -16,7 +16,7 @@ Get help from [NodeJS Community](http://nodejs.org/).
 cd nodejs-backend
 npm install -g nodemon
 npm install
-nodemon -i node_modules app.js
+npm start
 ```
 
 ## Learn more about [Austack](http://www.austack.com)

@@ -1,46 +1,73 @@
-/**
- * Module dependencies.
- */
-
-require('dotenv').load();
-var express = require('express');
-var routes = require('./routes');
-var Austack = require('./austack-nodejs');
-var user = require('./routes/user');
-var http = require('http');
 var path = require('path');
 var cors = require('cors');
-var app = express();
+var logger = require('morgan');
+var express = require('express');
+var favicon = require('serve-favicon');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-// all environments
-app.set('port', process.env.PORT || 3000);
+// include Austack
+var Austack = require('./austack-nodejs.js');
+Austack.getApplicationJwt()
+  .then(function (applicationJwt) {
+    console.log('success get applicationJwt', applicationJwt); // you can save the applicationJwt to some place
+  });
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
+
+var app = express();
+
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+// setup the cors
 app.use(cors({
   origin: '*'
 }));
-app.use(app.router);
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+app.use('/', routes);
+app.use('/users', users);
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
 }
 
-app.get('/', routes.index);
-app.get('/me', user.me);
-app.get('/users', user.list);
-
-Austack.getApplicationJwt()
-  .then(function (applicationJwt) {
-    console.log('success get applicationJwt', applicationJwt);
+// production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
   });
-
-http.createServer(app).listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'));
 });
+
+module.exports = app;
