@@ -1,13 +1,13 @@
 var Q = require('q');
 var appJSON = require('./app.json');
 var request = require('superagent');
-var apiBaseURL = appJSON.apiBaseURL;
-var clientId = appJSON.clientId;
-var clientSecret = appJSON.clientSecret;
 
 var Austack = {
   data: {
-    applicationJwt: ''
+    applicationJwt: '',
+    apiBaseURL: appJSON.apiBaseURL,
+    clientId: appJSON.clientId,
+    clientSecret: appJSON.clientSecret,
   },
   get: get,
   set: set,
@@ -50,7 +50,7 @@ function validateUserJwt(userJwt) {
   Austack.getApplicationJwt()
     .then(function (applicationJwt) {
       console.log('start validateUserJwt applicationJwt', applicationJwt);
-      request.post(apiBaseURL + '/loginRecords/validateJwt')
+      request.post(Austack.get('apiBaseURL') + '/loginRecords/validateJwt')
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('Authorization', 'Bearer ' + applicationJwt)
@@ -74,12 +74,13 @@ function validateUserJwt(userJwt) {
 
 function getApplicationJwt() {
   var d = Q.defer();
-  if (Austack.applicationJwt && Austack.applicationJwt != '') {
-    d.resolve(Austack.applicationJwt);
+  var applicationJwt = Austack.get('applicationJwt');
+  if (applicationJwt) {
+    d.resolve(applicationJwt);
     return d.promise;
   }
 
-  request.post(apiBaseURL + '/auth/application')
+  request.post(Austack.get('apiBaseURL') + '/auth/application')
     .set('Content-Type', 'application/json')
     .set('Accept', 'application/json')
     .send({
@@ -90,10 +91,11 @@ function getApplicationJwt() {
       if (err) {
         return d.reject(err);
       }
+
       var applicationJwt = res.body.token;
       console.log('get applicationJwt', applicationJwt);
-      Austack.applicationJwt = res.body.token;
-      d.resolve(Austack.applicationJwt);
+      Austack.set('applicationJwt', res.body.token);
+      d.resolve(applicationJwt);
     });
 
   return d.promise;
