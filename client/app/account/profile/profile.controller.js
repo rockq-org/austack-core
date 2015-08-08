@@ -26,8 +26,8 @@
       reader.onload = function (ev) {
         $scope.$apply(function ($scope) {
           $scope.myImage = ev.target.result;
-        })
-      }
+        });
+      };
     });
   }
 

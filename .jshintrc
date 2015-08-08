@@ -41,6 +41,7 @@
     "describe": false,
     "it": false,
     "saveAs": false,
+    "FileReader": false,
     "Blob": false,
     "before": false,
     "beforeEach": false,
