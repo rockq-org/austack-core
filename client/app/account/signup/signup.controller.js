@@ -6,11 +6,7 @@
     .module('austackApp.account')
     .controller('SignupController', SignupController);
 
-  /**
-   * @ngInject
-   */
-  SignupController.$inject = ['$scope', '$timeout', 'Toast', 'Auth', '$state', 'User', '$cookieStore'];
-
+  /* @ngInject */
   function SignupController($scope, $timeout, Toast, Auth, $state, User, $cookieStore) {
     // here we use $scope in case of the angular-timer
     var vm = this;
