@@ -6,6 +6,15 @@
       <div ng-message="required">请输入您的手机号！</div>
     </div>
   </md-input-container>
+  <md-input-container>
+    <img ng-src="{{signup.captchaUrl}}" />
+    <label>图形验证码</label>
+    <input name="captcha" ng-model="signup.user.captcha" required/>
+    <div ng-messages="getVerifyCodeForm.captcha.$error" ng-if="getVerifyCodeForm.captcha.$dirty">
+      <div ng-message="required">请输入图形验证码！</div>
+    </div>
+  </md-input-container>
+
   <md-button class="md-primary md-raised" ng-disabled="!getVerifyCodeForm.$valid" type="submit">
     <span>获取手机验证码</span>
     <md-icon md-svg-icon="content:ic_send_24px"></md-icon>
