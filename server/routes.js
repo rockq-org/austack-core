@@ -23,7 +23,7 @@ module.exports = function (app) {
     .post(middleware.removeReservedSchemaKeywords);
 
   // Insert routes below
-app.use('/api/loginRecords', require('./api/loginRecord'));
+  app.use('/api/loginRecords', require('./api/loginRecord'));
   app.use('/tenant', require('./api/tenant'));
   app.use('/api/applications', require('./api/application'));
   app.use('/api/users', require('./api/user'));
@@ -31,6 +31,7 @@ app.use('/api/loginRecords', require('./api/loginRecord'));
   app.use('/api/shapes', require('./api/shape'));
   app.use('/api/sampleapps', require('./api/sampleapp'));
   app.use('/api/auth', require('./lib/auth'));
+  app.use('/api/captcha', require('./lib/captcha'));
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
