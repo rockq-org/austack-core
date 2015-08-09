@@ -7,7 +7,7 @@
     .controller('ResetController', ResetController);
 
   /* @ngInject */
-  function ResetController($scope, $timeout, Toast, Auth, $state, User, $cookieStore) {
+  function ResetController($scope, $timeout, Toast, Auth, $state, User, $cookieStore, Config) {
     // here we use $scope in case of the angular-timer
     var vm = this;
 
@@ -16,6 +16,7 @@
     vm.user = {};
     // vm.user = _demoData();
     vm.step = 'step1';
+    vm.captchaUrl = Config.API_URL + 'captcha';
     vm.disableResendVerifyCodeBtn = false;
     vm.disableResendVerifyCodeBtn = true;
     vm.pending = false;
@@ -27,6 +28,7 @@
     vm.resendVerifyCode = resendVerifyCode;
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
+    vm.gotoLogin = gotoLogin;
 
     // vm.step = 'step3';
 
@@ -45,7 +47,7 @@
         return;
       }
 
-      vm.step = 'loading';
+      //vm.step = 'loading';
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
         vm.step = 'step2';
         vm.user.name = data.name;
@@ -64,7 +66,7 @@
     }
 
     function resendVerifyCode(form) {
-      vm.step = 'loading';
+      //vm.step = 'loading';
       loadNameFromCookieStoreIfNotExist();
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
         Toast.show('验证码发送成功！');
@@ -96,7 +98,7 @@
         return;
       }
 
-      vm.step = 'loading';
+      //vm.step = 'loading';
       loadNameFromCookieStoreIfNotExist();
       User.verifyMobile(vm.user).$promise.then(function (data) {
         vm.step = 'step3';
@@ -114,11 +116,10 @@
       }
       loadNameFromCookieStoreIfNotExist();
 
-      vm.step = 'loading';
+      //vm.step = 'loading';
       User.setNewPassword(vm.user).$promise.then(function (data) {
-        Toast.show('重置密码成功！', function () {
-          $state.go('account.login');
-        });
+        Toast.show('重置密码成功！');
+        vm.step = 'step4';
       }).catch(function (err) {
         vm.step = 'step3';
         switch (err.data.errors.userId.kind) {
@@ -132,6 +133,11 @@
           Toast.show('未知错误');
         }
       });
+    }
+
+    function gotoLogin() {
+      $cookieStore.remove('token'); // remove token, so user can go to login state
+      $state.go('account.login');
     }
 
     function loadNameFromCookieStoreIfNotExist() {

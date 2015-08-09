@@ -1,10 +1,12 @@
 #account-content {
   background-color: $as-primary;
-  padding-top: 10%;
-  padding-bottom: 5%;
-  margin-bottom: 10%;
+  margin-bottom: 8%;
   .text-center {
     color: #fff;
+  }
+  .captcha {
+    margin-top: 20px;
+    height: 30px;
   }
   md-card {
     width: 100%;

@@ -6,6 +6,8 @@ var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
 });
 
+var analytics = '<script src="http://s11.cnzz.com/z_stat.php?id=1255732935&web_id=1255732935" language="javascript"></script>';
+
 module.exports = function (options) {
   gulp.task('partials', function () {
     return gulp.src([
@@ -56,6 +58,8 @@ module.exports = function (options) {
       .pipe($.useref())
       .pipe($.revReplace())
       .pipe(htmlFilter)
+      .pipe($.replace('<!-- analytics -->', analytics))
+      .pipe($.minifyInline())
       .pipe($.minifyHtml({
         empty: true,
         spare: true,
