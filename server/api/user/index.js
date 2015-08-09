@@ -42,6 +42,9 @@ var isAdmin = auth.hasRole('admin');
 router.route('/')
   .post(controller.create);
 
+router.route('/captcha')
+  .get(controller.captcha);
+
 // resendVerifyCode
 router.route('/resendVerifyCode')
   .put(controller.resendVerifyCode);

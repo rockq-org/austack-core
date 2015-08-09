@@ -13,7 +13,7 @@ var cors = require('cors');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
+var cookieSession = require('cookie-session');
 var methodOverride = require('method-override');
 // var favicon = require('serve-favicon');
 var errorHandler = require('errorhandler');
@@ -51,11 +51,9 @@ function initExpress(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
-  app.use(session({
-    secret: config.secrets.session,
-    cookie: {
-      maxAge: 60000
-    }
+  app.use(cookieSession({
+    name: 'session',
+    keys: ['captcha']
   }));
   app.use(passport.initialize());
   // app.use(favicon(path.join(publicDir, 'favicon.ico')));

@@ -16,6 +16,7 @@ var Shape = require('../shape/shape.proxy');
 var Repo = require('../repo/repo.proxy');
 var util = require('util');
 var auth = require('../../lib/auth/auth.service');
+var Captcha = require('../../lib/captcha');
 
 /**
  * The User model instance
@@ -51,6 +52,8 @@ UserController.prototype = {
   constructor: UserController,
 
   create: function (req, res) {
+    logger.log(req.session.captcha);
+
     var self = this;
     var name = req.body['name'];
     var mobile = name;
@@ -94,6 +97,15 @@ UserController.prototype = {
           return res.handleError(err);
         });
     });
+  },
+
+  captcha: function (req, res) {
+    var captcha = Captcha.generate();
+    var text = captcha[0];
+    var img = captcha[1];
+    req.session.captcha = text;
+    logger.log(text);
+    res.send(img);
   },
 
   resendVerifyCode: function (req, res) {
