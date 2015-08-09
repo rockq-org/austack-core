@@ -56,6 +56,7 @@ module.exports = function (options) {
       .pipe($.useref())
       .pipe($.revReplace())
       .pipe(htmlFilter)
+      .pipe($.replace('<!-- cnzz -->', '<script src="http://s11.cnzz.com/z_stat.php?id=1255732935&web_id=1255732935" language="javascript"></script>'))
       .pipe($.minifyHtml({
         empty: true,
         spare: true,
