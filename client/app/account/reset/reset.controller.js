@@ -7,7 +7,7 @@
     .controller('ResetController', ResetController);
 
   /* @ngInject */
-  function ResetController($scope, $timeout, Toast, Auth, $state, User, $cookieStore) {
+  function ResetController($scope, $timeout, Toast, Auth, $state, User, $cookieStore, Config) {
     // here we use $scope in case of the angular-timer
     var vm = this;
 
@@ -16,6 +16,7 @@
     vm.user = {};
     // vm.user = _demoData();
     vm.step = 'step1';
+    vm.captchaUrl = Config.API_URL + 'captcha';
     vm.disableResendVerifyCodeBtn = false;
     vm.disableResendVerifyCodeBtn = true;
     vm.pending = false;
