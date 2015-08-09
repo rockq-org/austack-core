@@ -63,6 +63,7 @@ module.exports = function (options) {
         quotes: true,
         conditionals: true
       }))
+      .pipe($.minifyInline())
       .pipe(htmlFilter.restore())
       .pipe(gulp.dest(options.dist + '/'))
       .pipe($.size({
