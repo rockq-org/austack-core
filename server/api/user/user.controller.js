@@ -111,6 +111,7 @@ UserController.prototype = {
   captcha: function (req, res) {
     var captcha = ccap().get();
     req.session.captcha = captcha[0];
+    logger.log(captcha[0]);
     res.send(captcha[1]);
   },
 
