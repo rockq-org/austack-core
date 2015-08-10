@@ -239,7 +239,6 @@ var Helper = {
       type: 'app',
       mobile: sendData.mobile,
       clientId: String(Helper.req.application.clientId),
-      appUserId: String(Helper.req.appUser._id),
       ownerId: String(Helper.req.application.ownerId),
       status: '' // only get this valude after sms send
     };
