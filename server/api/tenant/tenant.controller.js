@@ -1,9 +1,3 @@
-/**
- * Module for the controller definition of the tenant api.
- * The TenantController is handling /tenant requests.
- * @module {tenant:controller~TenantController} tenant:controller
- * @requires {@link ParamController}
- */
 'use strict';
 
 module.exports = TenantController;

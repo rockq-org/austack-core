@@ -147,25 +147,6 @@ UserController.prototype = {
     });
   },
 
-  createInvitationCode: function (req, res, next) {
-    var invitationCode = req.params.invitationCode;
-    var pwd = req.params.pwd;
-    if (pwd != '5596b9bd30e816d8f84bba34') {
-      return res.forbidden();
-    }
-
-    InvitationCode.create({
-      invitationCode: invitationCode
-    }, function (err, data) {
-      if (err) {
-        return res.handleError(err);
-      }
-
-      return res.sendData(data);
-    });
-
-  },
-
   captcha: function (req, res) {
     var captcha = ccap().get();
     req.session.captcha = captcha[0];
