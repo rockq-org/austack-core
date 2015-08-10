@@ -146,7 +146,7 @@ UserController.prototype = {
   createInvitationCode: function (req, res, next) {
     var invitationCode = req.params.invitationCode;
     var pwd = req.params.pwd;
-    if(pwd != '5596b9bd30e816d8f84bba34'){
+    if (pwd != '5596b9bd30e816d8f84bba34') {
       return res.forbidden();
     }
 
@@ -159,6 +159,7 @@ UserController.prototype = {
 
       return res.sendData(data);
     });
+
   },
 
   captcha: function (req, res) {
