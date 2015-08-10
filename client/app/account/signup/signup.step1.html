@@ -14,7 +14,7 @@
         <div ng-message="required">请输入图形验证码！</div>
       </div>
     </md-input-container>
-    <img class="captcha" ng-src="{{signup.captchaUrl}}" />
+    <img class="captcha" ng-src="{{signup.captchaUrl}}" ng-click="signup.reloadCaptcha()" />
   </div>
 
   <md-button class="md-primary md-raised" ng-disabled="!getVerifyCodeForm.$valid" type="submit">

@@ -52,6 +52,7 @@
    * @param $locationProvider
    */
   function appConfig(Config, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, $httpProvider) {
+    $httpProvider.defaults.withCredentials = true;
     $urlRouterProvider.otherwise('/');
     $urlMatcherFactoryProvider.strictMode(false);
     $locationProvider.html5Mode(true);

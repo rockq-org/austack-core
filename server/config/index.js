@@ -33,6 +33,10 @@ var common = {
 
   port: process.env.PORT || 9001,
 
+  corsOptions: {
+    credentials: true
+  },
+
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
     session: process.env.SESSION_SECRET || 'my-austack-secret'

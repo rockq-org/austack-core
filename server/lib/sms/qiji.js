@@ -3,6 +3,7 @@
  */
 
 var Q = require('q');
+var Config = require('../../config/');
 var cfg = require('../../config/').sms.qiji;
 var crypto = require('crypto');
 var SuperAgent = require('superagent');
@@ -69,6 +70,11 @@ function sendVerificationCode(sendData, logData) {
   logger.log('sendVerificationCode start');
   // API Docs
   // https://github.com/arrking/austack-docs/blob/master/SMS/%E6%A8%A1%E6%9D%BF%E7%9F%AD%E4%BF%A1%E5%8D%8F%E8%AE%AE.doc
+  if (Config.env === 'development') {
+    onEnd(null, 'success res on development do not really send out sms');
+    return d.promise;
+  }
+
   SuperAgent.post(cfg.api)
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
@@ -81,23 +87,25 @@ function sendVerificationCode(sendData, logData) {
       "argsNum": 3,
       "args": [appName, verifyCode, period]
     })
-    .end(function (err, res) {
-      var str = "【金矢科技】 {{appName}} - 验证码：{{verifyCode}}。请在{{period}}分钟内用于登录验证。"
-
-      logData.content = S(str).template(sendData).s; // add content for logData
-      if (err) {
-        logData.status = 'failed'; // add failed status for logData
-        d.reject();
-      } else {
-        logData.status = 'success'; // add success status for logData
-        d.resolve();
-      }
-
-      logData.provider = 'qiji';
-      SmsRecordModel.insertSmsRecord(logData);
-    });
+    .end(onEnd);
 
   return d.promise;
+
+  function onEnd(err, res) {
+    var str = "【金矢科技】 {{appName}} - 验证码：{{verifyCode}}。请在{{period}}分钟内用于登录验证。"
+
+    logData.content = S(str).template(sendData).s; // add content for logData
+    if (err) {
+      logData.status = 'failed'; // add failed status for logData
+      d.reject();
+    } else {
+      logData.status = 'success'; // add success status for logData
+      d.resolve();
+    }
+
+    logData.provider = 'qiji';
+    SmsRecordModel.insertSmsRecord(logData);
+  }
 }
 
 // logger.debug('send sms ..')

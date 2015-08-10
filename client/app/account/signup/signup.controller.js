@@ -16,7 +16,7 @@
     vm.user = {};
     // vm.user = _demoData();
     vm.step = 'step1';
-    vm.captchaUrl = Config.API_URL + 'captcha';
+    vm.captchaUrl = Config.API_URL + 'users/captcha';
     vm.disableResendVerifyCodeBtn = false;
     vm.disableResendVerifyCodeBtn = true;
     vm.pending = false;
@@ -29,6 +29,7 @@
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
     vm.gotoLogin = gotoLogin;
+    vm.reloadCaptcha = reloadCaptcha;
 
     // vm.step = 'step3';
 
@@ -48,8 +49,10 @@
       }
 
       //vm.step = 'loading';
+      console.log(vm.user);
       User.create({
         name: vm.user.name,
+        captcha: vm.user.captcha,
         role: 'admin' // for tenant's role
       }).$promise.then(function (data) {
         vm.step = 'step2';
@@ -57,9 +60,19 @@
         $cookieStore.put('mobile', vm.user.name);
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
+        console.log(err);
         vm.step = 'step1';
-        Toast.show('手机号不合法或者已经被注册');
+        var msg = '手机号不合法或者已经被注册';
+        if (err.data.type === 'captcha not validate') {
+          msg = '验证码错误，请重新输入';
+          vm.reloadCaptcha();
+        }
+        Toast.show(msg);
       });
+    }
+
+    function reloadCaptcha() {
+      vm.captchaUrl = Config.API_URL + 'users/captcha?_=' + Math.random();
     }
 
     function countDownFinish() {

@@ -13,7 +13,7 @@ var cors = require('cors');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var cookieSession = require('cookie-session');
+var session = require('express-session');
 var methodOverride = require('method-override');
 // var favicon = require('serve-favicon');
 var errorHandler = require('errorhandler');
@@ -50,11 +50,18 @@ function initExpress(app) {
   }));
   app.use(bodyParser.json());
   app.use(methodOverride());
-  app.use(cookieParser());
-  app.use(cookieSession({
-    name: 'session',
-    keys: ['captcha']
+  // app.use(cookieParser());
+  app.use(session({
+    name: 'austack-api.sid',
+    secret: config.secrets.session,
+    proxy: true,
+    resave: true
   }));
+  // app.use(function (req, res, next) {
+      //   logger.log(req.session);
+      //   req.session.time = Date.now();
+      //   next();
+      // });
   app.use(passport.initialize());
   // app.use(favicon(path.join(publicDir, 'favicon.ico')));
 
