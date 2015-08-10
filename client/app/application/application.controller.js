@@ -26,6 +26,7 @@
         controller: 'ApplicationCreateController',
         controllerAs: 'create',
         templateUrl: 'app/application/create/create.html',
+        clickOutsideToClose: true,
         targetEvent: ev
       });
     }
