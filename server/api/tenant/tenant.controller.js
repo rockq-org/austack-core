@@ -72,7 +72,7 @@ TenantController.prototype = {
     };
     Helper.data = data;
     Helper.getApplication()
-      .then(Helper.render);
+      .finally(Helper.render);
   },
   loginPost: function loginPost(req, res, next) {
 
@@ -133,7 +133,7 @@ var Helper = {
   msg: '',
   render: function (data) {
     if (!Helper.req.application) {
-      return Helper.res.notFound();
+      return Helper.res.notFound('该应用不存在');
     }
     var loginTemplate = Helper.req.application.loginTemplate;
     if (!loginTemplate) {
