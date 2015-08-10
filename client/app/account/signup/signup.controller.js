@@ -60,7 +60,6 @@
         $cookieStore.put('mobile', vm.user.name);
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
-        console.log(err);
         vm.step = 'step1';
         var msg = '手机号不合法或者已经被注册';
         if (err.data.type === 'captcha not validate') {

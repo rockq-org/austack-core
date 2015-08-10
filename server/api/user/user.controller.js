@@ -52,7 +52,6 @@ UserController.prototype = {
   constructor: UserController,
 
   create: function (req, res) {
-    logger.log(req.session);
     var sessCaptcha = (req.session.captcha || '').toLowerCase();
     var captcha = (req.body.captcha || '').toLowerCase();
 
