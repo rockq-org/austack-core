@@ -6,6 +6,14 @@
       <div ng-message="required">请输入您的手机号！</div>
     </div>
   </md-input-container>
+  <md-input-container>
+    <label>邀请码</label>
+    <input name="invitationCode" ng-model="signup.user.invitationCode" required/>
+    <div ng-messages="getVerifyCodeForm.invitationCode.$error" ng-if="getVerifyCodeForm.invitationCode.$dirty">
+      <div ng-message="required">请输入您的邀请码！</div>
+    </div>
+  </md-input-container>
+
   <div layout="row">
     <md-input-container flex>
       <label>图形验证码</label>
