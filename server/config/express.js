@@ -58,14 +58,14 @@ function initExpress(app) {
     resave: true
   }));
   // app.use(function (req, res, next) {
-      //   logger.log(req.session);
-      //   req.session.time = Date.now();
-      //   next();
-      // });
+  //   logger.log(req.session);
+  //   req.session.time = Date.now();
+  //   next();
+  // });
   app.use(passport.initialize());
   // app.use(favicon(path.join(publicDir, 'favicon.ico')));
 
-  if ('production' === env) {
+  if ('production' === env || 'staging' === env) {
     app.use(express.static(distDir));
     app.use(express.static(publicDir));
     app.set('appPath', publicDir);
