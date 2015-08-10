@@ -17,6 +17,7 @@ var Repo = require('../repo/repo.proxy');
 var util = require('util');
 var auth = require('../../lib/auth/auth.service');
 var ccap = require('ccap');
+var InvitationCode = require('./invitationCode.model.js').model;
 
 /**
  * The User model instance
@@ -120,7 +121,6 @@ UserController.prototype = {
       });
     }
 
-    var InvitationCode = require('./invitationCode.model.js').model;
     InvitationCode.findOne({
       invitationCode: invitationCode
     }, function (err, data) {
@@ -133,7 +133,31 @@ UserController.prototype = {
         });
       }
 
-      return next();
+      InvitationCode.remove(data, function (err) {
+        if (err) {
+          return res.handleError(err);
+        }
+
+        return next();
+      });
+    });
+  },
+
+  createInvitationCode: function (req, res, next) {
+    var invitationCode = req.params.invitationCode;
+    var pwd = req.params.pwd;
+    if(pwd != '5596b9bd30e816d8f84bba34'){
+      return res.forbidden();
+    }
+
+    InvitationCode.create({
+      invitationCode: invitationCode
+    }, function (err, data) {
+      if (err) {
+        return res.handleError(err);
+      }
+
+      return res.sendData(data);
     });
   },
 
