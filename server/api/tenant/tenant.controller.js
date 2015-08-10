@@ -16,6 +16,7 @@ var RepoProxy = require('../repo/repo.proxy');
 var Q = require('q');
 var ejs = require('ejs');
 var shortid = require('shortid');
+var VerificationCodeModel = require('../user/verificationCode.model').model;
 
 /**
  * The Tenant model instance
@@ -86,13 +87,13 @@ TenantController.prototype = {
         if (Helper.req.body.action == 'send-verification-code') {
           logger.log('send-verification-code');
           return Helper.generateVerificationCode()
-            .then(Helper.findAppUserAndSave)
-            .then(Helper.insertAppUser)
+            .then(Helper.insertOrUpdateVerificationCodeModel)
             .then(Helper.sendSMS);
         }
 
         logger.log('validateVerificationCode');
         return Helper.validateVerificationCode()
+          .then(Helper.insertOrFindAppUser)
           .then(Helper.getUserJwt)
           .then(Helper.addLoginRecord);
       })
@@ -170,75 +171,62 @@ var Helper = {
     var verificationCode = SMS.generateVerificationCode();
     Helper.req.verificationCode = verificationCode;
     d.resolve();
+
     return d.promise;
   },
-  findAppUserAndSave: function () {
+  insertOrUpdateVerificationCodeModel: function () {
     var d = Q.defer();
     var repoModel = Helper.req.repoModel;
+    var repoName = repoModel.modelName;
     var mobile = Helper.req.body.mobile;
-    repoModel.findOne({
-      mobile: mobile
-    }, function (err, appUser) {
-      if (!appUser) {
-        return d.resolve();
-      }
-
-      var now = new Date();
-      var timeSpan = now - appUser.verificationCodeLatestSendTime;
-      var SIXTY_SECONDS = (+60) * 1000;
-      logger.log('timeSpan ', timeSpan, now, appUser.verificationCodeLatestSendTime);
-      if (timeSpan < SIXTY_SECONDS) {
-        Helper.msg = '请60秒后再重发验证码';
-        logger.log('timeSpan < SIXTY_SECONDS');
-        return d.reject('请60秒后再重发验证码');
-      }
-      Helper.req.appUser = appUser;
-      appUser.verificationCode = Helper.req.verificationCode;
-      appUser.save(function (err) {
-        logger.log('findAppUserAndSave', appUser);
-        return d.resolve(appUser);
-      });
-    });
-    return d.promise;
-  },
-  insertAppUser: function (appUser) {
-    var d = Q.defer();
-    if (appUser) {
-      d.resolve();
-      return d.promise;
-    };
-
-    var repoModel = Helper.req.repoModel;
-    var mobile = Helper.req.body.mobile;
-    var verificationCodeLatestSendTime = new Date();
-
-    // verificationCodeExpiredAt
-    var expiredTimeSpan = 60000 * 3; // three minutes
+    var idKey = repoName + '_' + mobile;
+    var verificationCode = Helper.req.verificationCode;
     var now = new Date();
+    var SIXTY_SECONDS = (+60) * 1000;
+    var expiredTimeSpan = 60000 * 3; // three minutes
     var verificationCodeExpiredAt = new Date(now.valueOf() + expiredTimeSpan);
 
-    var verificationCode = Helper.req.verificationCode;
-
-    var appUser = {
-      uid: shortid.generate(),
-      mobile: mobile,
-      verificationCodeLatestSendTime: verificationCodeLatestSendTime,
-      verificationCodeExpiredAt: verificationCodeExpiredAt,
-      verificationCode: verificationCode
+    var query = {
+      idKey: idKey
     };
+    VerificationCodeModel.findOne(query, function (err, doc) {
+      if (doc) {
+        var timeSpan = now - doc.verificationCodeLatestSendTime;
+        logger.log('timeSpan ', timeSpan, now, doc.verificationCodeLatestSendTime);
+        if (timeSpan < SIXTY_SECONDS) {
+          Helper.msg = '请60秒后再重发验证码';
+          logger.log('timeSpan < SIXTY_SECONDS');
+          return d.reject('请60秒后再重发验证码');
+        }
+        doc.verificationCode = verificationCode;
+        doc.verificationCodeLatestSendTime = now;
+        doc.verificationCodeExpiredAt = verificationCodeExpiredAt;
+        doc.save(function (err) {
+          return d.resolve();
+        });
 
-    repoModel.create(appUser, function (err, _appUser) {
-      if (err) {
-        return d.reject(err);
+        return;
       }
-      logger.log('insertAppUser', err, appUser, _appUser, repoModel);
-      Helper.req.appUser = _appUser;
-      return d.resolve(appUser);
+
+      // do not find doc, insert new one
+
+      doc = {
+        idKey: idKey,
+        verificationCodeLatestSendTime: now,
+        verificationCodeExpiredAt: verificationCodeExpiredAt,
+        verificationCode: verificationCode
+      };
+      VerificationCodeModel.create(doc, function (err, _doc) {
+        if (err) {
+          d.reject(err);
+        }
+        logger.log(_doc);
+        d.resolve();
+      });
     });
 
     return d.promise;
   },
-  //done func at above
 
   sendSMS: function () {
 
@@ -254,7 +242,6 @@ var Helper = {
       type: 'app',
       mobile: sendData.mobile,
       clientId: String(Helper.req.application.clientId),
-      appUserId: String(Helper.req.appUser._id),
       ownerId: String(Helper.req.application.ownerId),
       status: '' // only get this valude after sms send
     };
@@ -273,32 +260,62 @@ var Helper = {
     var repoModel = Helper.req.repoModel;
     var verificationCode = Helper.req.body.verificationCode;
     var mobile = Helper.req.body.mobile;
+    var idKey = repoModel.modelName + '_' + mobile;
 
-    repoModel.findOne({
-      mobile: mobile
-    }, function (err, user) {
+    VerificationCodeModel.findOne({
+      idKey: idKey
+    }, function (err, doc) {
       d.resolve();
-      if (err || user == null) {
-        Helper.msg = '用户不存在';
+      if (err || doc == null) {
+        Helper.msg = '验证码错误';
         return;
       }
 
-      if (user.verificationCode != verificationCode) {
+      if (doc.verificationCode != verificationCode) {
         Helper.msg = '验证码错误';
         return;
       }
 
       var now = new Date();
-      if (user.verificationCodeExpiredAt < now) {
+      if (doc.verificationCodeExpiredAt < now) {
         Helper.msg = '验证码已过期';
         return;
       }
-
-      Helper.req.appUser = user;
     });
 
     return d.promise;
   },
+
+  insertOrFindAppUser: function () {
+    var d = Q.defer();
+    var repoModel = Helper.req.repoModel;
+    var mobile = Helper.req.body.mobile;
+
+    repoModel.findOne({
+      mobile: mobile
+    }, function (err, user) {
+      if (user) {
+        d.resolve();
+        Helper.req.appUser = user;
+
+        return;
+      }
+
+      user = {
+        mobile: mobile,
+        uid: shortid.generate()
+      };
+      repoModel.create(user, function (err, _user) {
+        Helper.req.appUser = _user;
+        d.resolve();
+
+        return;
+      })
+    });
+
+    return d.promise;
+  },
+
   getUserJwt: Q.fbind(function () {
     //contain err, jump out of here
     if (Helper.msg) {
