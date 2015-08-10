@@ -5,8 +5,7 @@ var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
 
 var VerificationCodeDefinition = {
-  idKey: String, //repoName_uid
-  mobile: String,
+  idKey: String, //repoName_mobile
   verificationCode: String,
   verificationCodeExpiredAt: Date,
   verificationCodeLatestSendTime: Date

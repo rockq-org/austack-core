@@ -87,9 +87,6 @@ TenantController.prototype = {
         if (Helper.req.body.action == 'send-verification-code') {
           logger.log('send-verification-code');
           return Helper.generateVerificationCode()
-            // .then(Helper.findAppUserAndSave)
-            // .then(Helper.insertAppUser)
-            .then(Helper.insertOrUpdateAppUser)
             .then(Helper.insertOrUpdateVerificationCodeModel)
             .then(Helper.sendSMS);
         }
@@ -175,73 +172,58 @@ var Helper = {
     d.resolve();
     return d.promise;
   },
-  findAppUserAndSave: function () {
+  insertOrUpdateVerificationCodeModel: function () {
     var d = Q.defer();
     var repoModel = Helper.req.repoModel;
+    var repoName = repoModel.modelName;
     var mobile = Helper.req.body.mobile;
-    repoModel.findOne({
-      mobile: mobile
-    }, function (err, appUser) {
-      if (!appUser) {
-        return d.resolve();
-      }
-
-      var now = new Date();
-      var timeSpan = now - appUser.verificationCodeLatestSendTime;
-      var SIXTY_SECONDS = (+60) * 1000;
-      logger.log('timeSpan ', timeSpan, now, appUser.verificationCodeLatestSendTime);
-      if (timeSpan < SIXTY_SECONDS) {
-        Helper.msg = '请60秒后再重发验证码';
-        logger.log('timeSpan < SIXTY_SECONDS');
-        return d.reject('请60秒后再重发验证码');
-      }
-      Helper.req.appUser = appUser;
-      appUser.verificationCode = Helper.req.verificationCode;
-      appUser.save(function (err) {
-        logger.log('findAppUserAndSave', appUser);
-        return d.resolve(appUser);
-      });
-    });
-    return d.promise;
-  },
-  insertAppUser: function (appUser) {
-    var d = Q.defer();
-    if (appUser) {
-      d.resolve();
-      return d.promise;
-    };
-
-    var repoModel = Helper.req.repoModel;
-    var mobile = Helper.req.body.mobile;
-    var verificationCodeLatestSendTime = new Date();
-
-    // verificationCodeExpiredAt
-    var expiredTimeSpan = 60000 * 3; // three minutes
-    var now = new Date();
-    var verificationCodeExpiredAt = new Date(now.valueOf() + expiredTimeSpan);
-
+    var idKey = repoName + '_' + mobile;
     var verificationCode = Helper.req.verificationCode;
 
-    var appUser = {
-      uid: shortid.generate(),
-      mobile: mobile,
-      verificationCodeLatestSendTime: verificationCodeLatestSendTime,
-      verificationCodeExpiredAt: verificationCodeExpiredAt,
-      verificationCode: verificationCode
-    };
+    var now = new Date();
+    var SIXTY_SECONDS = (+60) * 1000;
 
-    repoModel.create(appUser, function (err, _appUser) {
-      if (err) {
-        return d.reject(err);
+    var query = {
+      idKey: idKey
+    };
+    VerificationCodeModel.findOne(query, function (err, doc) {
+      if (doc) {
+        var timeSpan = now - doc.verificationCodeLatestSendTime;
+        logger.log('timeSpan ', timeSpan, now, doc.verificationCodeLatestSendTime);
+        if (timeSpan < SIXTY_SECONDS) {
+          Helper.msg = '请60秒后再重发验证码';
+          logger.log('timeSpan < SIXTY_SECONDS');
+          return d.reject('请60秒后再重发验证码');
+        }
+        doc.verificationCode = verificationCode;
+        doc.save(function (err) {
+          return d.resolve();
+        });
+
+        return;
       }
-      logger.log('insertAppUser', err, appUser, _appUser, repoModel);
-      Helper.req.appUser = _appUser;
-      return d.resolve(appUser);
+
+      // do not find doc, insert new one
+      var expiredTimeSpan = 60000 * 3; // three minutes
+      var verificationCodeExpiredAt = new Date(now.valueOf() + expiredTimeSpan);
+
+      doc = {
+        idKey: idKey,
+        verificationCodeLatestSendTime: now,
+        verificationCodeExpiredAt: verificationCodeExpiredAt,
+        verificationCode: verificationCode
+      };
+      VerificationCodeModel.create(doc, function (err, _doc) {
+        if (err) {
+          d.reject(err);
+        }
+        logger.log(_doc);
+        d.resolve();
+      });
     });
 
     return d.promise;
   },
-  //done func at above
 
   sendSMS: function () {
 
