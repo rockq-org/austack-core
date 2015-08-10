@@ -6,7 +6,7 @@ var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
 });
 
-var analytics = '<script src="http://s11.cnzz.com/z_stat.php?id=1255732935&web_id=1255732935" language="javascript"></script>';
+var analytics = ''; //<script src="http://s11.cnzz.com/z_stat.php?id=1255732935&web_id=1255732935" language="javascript"></script>';
 
 module.exports = function (options) {
   gulp.task('partials', function () {
