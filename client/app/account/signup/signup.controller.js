@@ -50,11 +50,7 @@
       }
 
       //vm.step = 'loading';
-      User.create({
-        name: vm.user.name,
-        captcha: vm.user.captcha,
-        role: 'admin' // for tenant's role
-      }).$promise.then(function (data) {
+      User.create(vm.user).$promise.then(function (data) {
         vm.step = 'step2';
         vm.user.name = data.name;
         $cookieStore.put('mobile', vm.user.name);
