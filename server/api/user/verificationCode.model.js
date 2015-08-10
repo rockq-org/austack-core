@@ -6,6 +6,7 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
 
 var VerificationCodeDefinition = {
   idKey: String, //repoName_uid
+  mobile: String,
   verificationCode: String,
   verificationCodeExpiredAt: Date,
   verificationCodeLatestSendTime: Date
@@ -43,20 +44,20 @@ module.exports = {
   model: VerificationCode
 };
 
-function validateUniqueVerificationCode(value, respond) {
-  var self = this;
+// function validateUniqueVerificationCode(value, respond) {
+//   var self = this;
 
-  this.constructor.findOne({
-    invitationCode: value
-  }, function (err, doc) {
-    if (err) {
-      throw err;
-    }
+//   this.constructor.findOne({
+//     invitationCode: value
+//   }, function (err, doc) {
+//     if (err) {
+//       throw err;
+//     }
 
-    if (doc) {
-      return respond(self.id === doc.id);
-    }
+//     if (doc) {
+//       return respond(self.id === doc.id);
+//     }
 
-    respond(true);
-  });
-}
+//     respond(true);
+//   });
+// }

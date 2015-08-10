@@ -16,6 +16,7 @@ var RepoProxy = require('../repo/repo.proxy');
 var Q = require('q');
 var ejs = require('ejs');
 var shortid = require('shortid');
+var VerificationCodeModel = require('../user/verificationCode.model').model;
 
 /**
  * The Tenant model instance
@@ -86,8 +87,10 @@ TenantController.prototype = {
         if (Helper.req.body.action == 'send-verification-code') {
           logger.log('send-verification-code');
           return Helper.generateVerificationCode()
-            .then(Helper.findAppUserAndSave)
-            .then(Helper.insertAppUser)
+            // .then(Helper.findAppUserAndSave)
+            // .then(Helper.insertAppUser)
+            .then(Helper.insertOrUpdateAppUser)
+            .then(Helper.insertOrUpdateVerificationCodeModel)
             .then(Helper.sendSMS);
         }
 
