@@ -93,6 +93,7 @@ TenantController.prototype = {
 
         logger.log('validateVerificationCode');
         return Helper.validateVerificationCode()
+          .then(Helper.insertOrFindAppUser)
           .then(Helper.getUserJwt)
           .then(Helper.addLoginRecord);
       })
@@ -170,6 +171,7 @@ var Helper = {
     var verificationCode = SMS.generateVerificationCode();
     Helper.req.verificationCode = verificationCode;
     d.resolve();
+
     return d.promise;
   },
   insertOrUpdateVerificationCodeModel: function () {
@@ -284,37 +286,36 @@ var Helper = {
     return d.promise;
   },
 
-  validateVerificationCode2: function () {
+  insertOrFindAppUser: function () {
     var d = Q.defer();
     var repoModel = Helper.req.repoModel;
-    var verificationCode = Helper.req.body.verificationCode;
     var mobile = Helper.req.body.mobile;
 
     repoModel.findOne({
       mobile: mobile
     }, function (err, user) {
-      d.resolve();
-      if (err || user == null) {
-        Helper.msg = '用户不存在';
+      if (user) {
+        d.resolve();
+        Helper.req.appUser = user;
+
         return;
       }
 
-      if (user.verificationCode != verificationCode) {
-        Helper.msg = '验证码错误';
-        return;
-      }
+      user = {
+        mobile: mobile,
+        uid: shortid.generate()
+      };
+      repoModel.create(user, function (err, _user) {
+        Helper.req.appUser = _user;
+        d.resolve();
 
-      var now = new Date();
-      if (user.verificationCodeExpiredAt < now) {
-        Helper.msg = '验证码已过期';
         return;
-      }
-
-      Helper.req.appUser = user;
+      })
     });
 
     return d.promise;
   },
+
   getUserJwt: Q.fbind(function () {
     //contain err, jump out of here
     if (Helper.msg) {
