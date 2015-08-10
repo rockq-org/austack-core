@@ -263,36 +263,7 @@ UserController.prototype = {
             name: util.format('repo_%s', shortid.generate()),
             ownerId: user._id,
             type: '_local_',
-            mSchema: [{
-              name: 'uid',
-              isSys: true,
-              props: {
-                type: 'String',
-                unique: true,
-                required: true
-              }
-            }, {
-              name: 'mobile',
-              isSys: true,
-              props: {
-                type: 'String',
-                required: true
-              }
-            }, {
-              name: 'createDate',
-              isSys: true,
-              props: {
-                type: 'Date',
-                default: Date.now
-              }
-            }, {
-              name: 'latestActive',
-              isSys: true,
-              props: {
-                type: 'Date',
-                default: Date.now
-              }
-            }]
+            mSchema: Config.mSchema
           })
           .then(function (shape) {
             logger.debug('create Repo for this Dave.');
