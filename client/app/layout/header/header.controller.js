@@ -8,11 +8,14 @@
 
   function getHeaderMenus() {
     return [{
-      name: '支持',
+      name: '帮助',
       url: '#'
     }, {
       name: '文档',
       url: '#'
+    }, {
+      name: '博客',
+      url: 'http://blog.austack.com'
     }];
   }
 
