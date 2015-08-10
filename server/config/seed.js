@@ -7,6 +7,7 @@
 logger.log('seeding');
 var mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
+var Config = require('./index');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var Q = require('q');
 var S = require('string');
@@ -209,54 +210,7 @@ function _createRepoAndShapes(users) {
         name: util.format('repo_%s', user.name),
         ownerId: user._id,
         type: '_local_',
-        mSchema: [{
-          name: 'uid',
-          isSys: true,
-          props: {
-            type: 'String',
-            unique: true,
-            required: true
-          }
-        }, {
-          name: 'mobile',
-          isSys: true,
-          props: {
-            type: 'String',
-            required: true
-          }
-        }, {
-          name: 'createDate',
-          isSys: true,
-          props: {
-            type: 'Date',
-            default: Date.now
-          }
-        }, {
-          name: 'latestActive',
-          isSys: true,
-          props: {
-            type: 'Date',
-            default: Date.now
-          }
-        }, {
-          name: 'verificationCodeExpiredAt',
-          isSys: true,
-          props: {
-            type: 'Date'
-          }
-        }, {
-          name: 'verificationCodeLatestSendTime',
-          isSys: true,
-          props: {
-            type: 'Date'
-          }
-        }, {
-          name: 'verificationCode',
-          isSys: true,
-          props: {
-            type: 'String'
-          }
-        }]
+        mSchema: Config.mSchema
       })
       .then(function (shape) {
         logger.debug('>> database: create shape as seed %s for %s', shape.name, user.name);

@@ -67,6 +67,8 @@ UserController.prototype = {
     req.body['password'] = 'password'; // moogose need this field or we can not create new user
     req.body['role'] = 'admin'; // should be set or maybe user make it to be root
 
+    var invitationCode = req.body['invitationCode'];
+
     this.model.create(req.body, function (err, document) {
       if (err) {
         return res.handleError(err);
@@ -91,7 +93,15 @@ UserController.prototype = {
 
       SMS.sendVerificationCode(sendData, logData)
         .then(function () {
-          return res.created(self.getResponseObject(document));
+          InvitationCode.remove({
+            invitationCode: invitationCode
+          }, function (err) {
+            if (err) {
+              return res.handleError(err);
+            }
+
+            return res.created(self.getResponseObject(document));
+          });
         }).fail(function (err) {
           return res.handleError(err);
         });
@@ -133,31 +143,7 @@ UserController.prototype = {
         });
       }
 
-      InvitationCode.remove(data, function (err) {
-        if (err) {
-          return res.handleError(err);
-        }
-
-        return next();
-      });
-    });
-  },
-
-  createInvitationCode: function (req, res, next) {
-    var invitationCode = req.params.invitationCode;
-    var pwd = req.params.pwd;
-    if(pwd != '5596b9bd30e816d8f84bba34'){
-      return res.forbidden();
-    }
-
-    InvitationCode.create({
-      invitationCode: invitationCode
-    }, function (err, data) {
-      if (err) {
-        return res.handleError(err);
-      }
-
-      return res.sendData(data);
+      return next();
     });
   },
 
@@ -258,54 +244,7 @@ UserController.prototype = {
             name: util.format('repo_%s', shortid.generate()),
             ownerId: user._id,
             type: '_local_',
-            mSchema: [{
-              name: 'uid',
-              isSys: true,
-              props: {
-                type: 'String',
-                unique: true,
-                required: true
-              }
-            }, {
-              name: 'mobile',
-              isSys: true,
-              props: {
-                type: 'String',
-                required: true
-              }
-            }, {
-              name: 'createDate',
-              isSys: true,
-              props: {
-                type: 'Date',
-                default: Date.now
-              }
-            }, {
-              name: 'latestActive',
-              isSys: true,
-              props: {
-                type: 'Date',
-                default: Date.now
-              }
-            }, {
-              name: 'verificationCodeExpiredAt',
-              isSys: true,
-              props: {
-                type: 'Date'
-              }
-            }, {
-              name: 'verificationCodeLatestSendTime',
-              isSys: true,
-              props: {
-                type: 'Date'
-              }
-            }, {
-              name: 'verificationCode',
-              isSys: true,
-              props: {
-                type: 'String'
-              }
-            }]
+            mSchema: Config.mSchema
           })
           .then(function (shape) {
             logger.debug('create Repo for this Dave.');

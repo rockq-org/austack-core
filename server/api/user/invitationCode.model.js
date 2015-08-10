@@ -1,10 +1,10 @@
 /**
  * An module for defining and initializing the InvitationCode model.
  * Exporting the InvitationCode model definition, schema and model instance.
- * @module {Object} loginRecord:model
- * @property {Object} definition - The [definition object]{@link loginRecord:model~InvitationCodeDefinition}
- * @property {MongooseSchema} schema - The [mongoose model schema]{@link loginRecord:model~InvitationCodeSchema}
- * @property {MongooseModel} model - The [mongoose model]{@link loginRecord:model~InvitationCode}
+ * @module {Object} invitationCode:model
+ * @property {Object} definition - The [definition object]{@link invitationCode:model~InvitationCodeDefinition}
+ * @property {MongooseSchema} schema - The [mongoose model schema]{@link invitationCode:model~InvitationCodeSchema}
+ * @property {MongooseModel} model - The [mongoose model]{@link invitationCode:model~InvitationCode}
  */
 'use strict';
 
@@ -15,9 +15,9 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
 /**
  * The InvitationCode model definition
  * @type {Object}
- * @property {String} name - The name of this loginRecord
- * @property {String} info - Details about this loginRecord
- * @property {Boolean} active - Flag indicating this loginRecord is active
+ * @property {String} name - The name of this invitationCode
+ * @property {String} info - Details about this invitationCode
+ * @property {Boolean} active - Flag indicating this invitationCode is active
  */
 var InvitationCodeDefinition = {
   invitationCode: String
@@ -42,9 +42,9 @@ InvitationCodeSchema.plugin(requestContext, {
 /**
  * Validations
  */
-// InvitationCodeSchema
-//   .path('name')
-//   .validate(validateUniqueName, 'The specified name is already in use.');
+InvitationCodeSchema
+  .path('invitationCode')
+  .validate(validateUniqueInvitationCode, 'The specified invitationCode is already in use.');
 
 /**
  *  The registered mongoose model instance of the InvitationCode model
@@ -62,49 +62,49 @@ module.exports = {
   /**
    * The InvitationCode model definition object
    * @type {Object}
-   * @see loginRecord:InvitationCodeModel~InvitationCodeDefinition
+   * @see invitationCode:InvitationCodeModel~InvitationCodeDefinition
    */
   definition: InvitationCodeDefinition,
 
   /**
    * The InvitationCode model schema
    * @type {MongooseSchema}
-   * @see loginRecord:model~InvitationCodeSchema
+   * @see invitationCode:model~InvitationCodeSchema
    */
   schema: InvitationCodeSchema,
 
   /**
    * The InvitationCode model instance
-   * @type {loginRecord:model~InvitationCode}
+   * @type {invitationCode:model~InvitationCode}
    */
   model: InvitationCode
 
 };
 
 /**
- * Validate the uniqueness of the given name
+ * Validate the uniqueness of the given invitationCode
  *
  * @api private
- * @param {String} value - The username to check for uniqueness
+ * @param {String} value - The invitationCode to check for uniqueness
  * @param {Function} respond - The callback function
  */
-// function validateUniqueName(value, respond) {
-//   // jshint validthis: true
-//   var self = this;
+function validateUniqueInvitationCode(value, respond) {
+  // jshint validthis: true
+  var self = this;
 
-//   // check for uniqueness of user name
-//   this.constructor.findOne({
-//     name: value
-//   }, function (err, loginRecord) {
-//     if (err) {
-//       throw err;
-//     }
+  // check for uniqueness of user invitationCode
+  this.constructor.findOne({
+    invitationCode: value
+  }, function (err, invitationCode) {
+    if (err) {
+      throw err;
+    }
 
-//     if (loginRecord) {
-//       // the searched name is my name or a duplicate
-//       return respond(self.id === loginRecord.id);
-//     }
+    if (invitationCode) {
+      // the searched invitationCode is my invitationCode or a duplicate
+      return respond(self.id === invitationCode.id);
+    }
 
-//     respond(true);
-//   });
-// }
+    respond(true);
+  });
+}

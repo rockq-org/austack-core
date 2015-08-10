@@ -46,6 +46,38 @@ var common = {
   userRoles: ['user', 'appAdmin', 'admin', 'root'],
   limit: 100, // paginate limit
 
+  // shape's default schema
+  mSchema: [{
+    name: 'uid',
+    isSys: true,
+    props: {
+      type: 'String',
+      unique: true,
+      required: true
+    }
+  }, {
+    name: 'mobile',
+    isSys: true,
+    props: {
+      type: 'String',
+      required: true
+    }
+  }, {
+    name: 'createDate',
+    isSys: true,
+    props: {
+      type: 'Date',
+      default: Date.now
+    }
+  }, {
+    name: 'latestActive',
+    isSys: true,
+    props: {
+      type: 'Date',
+      default: Date.now
+    }
+  }],
+
   // options passed to create mongo connections
   mongo: {
     options: {
