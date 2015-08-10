@@ -1,3 +1,9 @@
+<md-content layout="row" layout-wrap id="repo-list-content">
+  <div ng-repeat="user in list.listData" flex="50" flex-md="100" flex-sm="100" ng-click="list.showDetail(user, $index)">
+    <ng-include src="'app/repo/list/user.html'"></ng-include>
+  </div>
+</md-content>
+
 <md-data-table-toolbar class="alternate">
   <div ng-show="list.selected.length">选中 {{list.selected.length}} 位用户</div>
   <div flex></div>
@@ -18,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in list.listData" ng-click="list.showDetail(item, $index)">
+      <tr ng-repeat="item in list.listData">
         <td ng-repeat="keyItem in list.listHeader">{{item[keyItem.name]}}</td>
       </tr>
     </tbody>
