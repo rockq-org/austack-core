@@ -57,7 +57,12 @@
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
-        Toast.show('手机号未注册或验证码发送失败！');
+        var msg = '手机号未注册';
+        if (err.data.type === 'captcha not validate') {
+          msg = '验证码错误，请重新输入';
+          vm.reloadCaptcha();
+        }
+        Toast.show(msg);
       });
     }
 
