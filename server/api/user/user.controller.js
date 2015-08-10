@@ -292,24 +292,6 @@ UserController.prototype = {
                 type: 'Date',
                 default: Date.now
               }
-            }, {
-              name: 'verificationCodeExpiredAt',
-              isSys: true,
-              props: {
-                type: 'Date'
-              }
-            }, {
-              name: 'verificationCodeLatestSendTime',
-              isSys: true,
-              props: {
-                type: 'Date'
-              }
-            }, {
-              name: 'verificationCode',
-              isSys: true,
-              props: {
-                type: 'String'
-              }
             }]
           })
           .then(function (shape) {
