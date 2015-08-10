@@ -19,9 +19,9 @@
     }];
   }
 
-  HeaderController.$inject = ['Auth', 'HeaderMenus', 'ProfileService', 'SettingsService'];
+  HeaderController.$inject = ['$mdSidenav', 'Auth', 'HeaderMenus', 'ProfileService', 'SettingsService'];
   /* @ngInject */
-  function HeaderController(Auth, HeaderMenus, ProfileService, SettingsService) {
+  function HeaderController($mdSidenav, Auth, HeaderMenus, ProfileService, SettingsService) {
     var vm = this;
 
     vm.menus = HeaderMenus;
@@ -32,6 +32,19 @@
     vm.profile = profile;
     vm.setting = setting;
     vm.logout = logout;
+
+    var sidenavId = 'mainMenu';
+
+    vm.openSidebar = openSidebar;
+    vm.closeSidebar = closeSidebar;
+
+    function closeSidebar() {
+      return $mdSidenav(vm.sidenavId).close();
+    }
+
+    function openSidebar() {
+      return $mdSidenav(vm.sidenavId).open();
+    }
 
     function profile(ev) {
       ProfileService.show(ev);
