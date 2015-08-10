@@ -40,14 +40,14 @@ var isAdmin = auth.hasRole('admin');
 
 // create
 router.route('/')
-  .post(controller.create);
+  .post(controller.validateCaptcha, controller.create);
 
 router.route('/captcha')
   .get(controller.captcha);
 
 // resendVerifyCode
 router.route('/resendVerifyCode')
-  .put(controller.resendVerifyCode);
+  .put(controller.validateCaptcha, controller.resendVerifyCode);
 
 // verifyMobile
 router.route('/verifyMobile')

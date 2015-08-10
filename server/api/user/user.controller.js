@@ -52,16 +52,6 @@ UserController.prototype = {
   constructor: UserController,
 
   create: function (req, res) {
-    var sessCaptcha = (req.session.captcha || '').toLowerCase();
-    var captcha = (req.body.captcha || '').toLowerCase();
-
-    logger.log(captcha, sessCaptcha);
-    if (captcha == '' || sessCaptcha !== captcha) {
-      return res.forbidden({
-        type: 'captcha not validate'
-      });
-    }
-
     var self = this;
     var name = req.body['name'];
     var mobile = name;
@@ -105,6 +95,20 @@ UserController.prototype = {
           return res.handleError(err);
         });
     });
+  },
+
+  validateCaptcha: function (req, res, next) {
+    var sessCaptcha = (req.session.captcha || '').toLowerCase();
+    var captcha = (req.body.captcha || '').toLowerCase();
+
+    logger.log(captcha, sessCaptcha);
+    if (captcha == '' || sessCaptcha !== captcha) {
+      return res.forbidden({
+        type: 'captcha not validate'
+      });
+    }
+
+    return next();
   },
 
   captcha: function (req, res) {
