@@ -145,9 +145,6 @@ var Helper = {
   },
   getApplication: function () {
     var d = Q.defer();
-    var data = {
-      mobile: Helper.req.body.mobile
-    };
     var clientId = Helper.req.query.clientId;
 
     Application.findByClientId(clientId, function (err, application) {
