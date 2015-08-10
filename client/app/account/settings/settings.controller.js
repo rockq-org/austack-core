@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('austackApp.account')
-    .controller('SettingsController', SettingsController);
+    .module('austackApp.account.settings')
+    .controller('AccountSettingsController', AccountSettingsController);
 
-  SettingsController.$inject = ['$mdDialog'];
+  AccountSettingsController.$inject = ['$mdDialog'];
 
-  function SettingsController($mdDialog) {
+  function AccountSettingsController($mdDialog) {
     var vm = this;
 
     vm.hide = function () {

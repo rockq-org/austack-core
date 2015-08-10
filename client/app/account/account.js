@@ -16,7 +16,8 @@
       'ui.router',
       'timer',
       'ngImgCrop',
-      'ngMaterial'
+      'ngMaterial',
+      'austackApp.account.settings'
     ])
     .config(configAccountRoute);
 

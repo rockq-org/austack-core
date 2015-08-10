@@ -12,6 +12,9 @@
       border: 5px solid rgba($as-primary, 0.8);
     }
   }
+  .md-button {
+    min-width: inherit;
+  }
   md-dialog-content {
     color: $as-primary;
   }
