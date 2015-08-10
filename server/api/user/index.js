@@ -40,7 +40,8 @@ var isAdmin = auth.hasRole('admin');
 
 // create
 router.route('/')
-  .post(controller.validateCaptcha, controller.create);
+  // .post(controller.validateCaptcha, controller.validateInvitationCode, controller.create);
+  .post(controller.validateInvitationCode, controller.create);
 
 router.route('/captcha')
   .get(controller.captcha);

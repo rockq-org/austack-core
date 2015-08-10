@@ -111,6 +111,32 @@ UserController.prototype = {
     return next();
   },
 
+  validateInvitationCode: function (req, res, next) {
+    var invitationCode = req.body.invitationCode;
+
+    if (invitationCode == '') {
+      return res.forbidden({
+        type: 'invitation code not validate'
+      });
+    }
+
+    var InvitationCode = require('./invitationCode.model.js').model;
+    InvitationCode.findOne({
+      invitationCode: invitationCode
+    }, function (err, data) {
+      if (err) {
+        return res.handleError(err);
+      }
+      if (!data) {
+        return res.forbidden({
+          type: 'invitation code not validate'
+        });
+      }
+
+      return next();
+    });
+  },
+
   captcha: function (req, res) {
     var captcha = ccap().get();
     req.session.captcha = captcha[0];

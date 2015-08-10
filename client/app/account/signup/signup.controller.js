@@ -62,6 +62,10 @@
           msg = '验证码错误，请重新输入';
           vm.reloadCaptcha();
         }
+        if (err.data.type === 'invitation code not validate') {
+          msg = '邀请码错误';
+        }
+
         Toast.show(msg);
       });
     }
