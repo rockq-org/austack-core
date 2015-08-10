@@ -22,6 +22,7 @@
     vm.pending = false;
     vm.pendingMsg = '加载中...';
     vm.errorMsg = '';
+
     vm.getVerifyCode = getVerifyCode;
     vm.submitVerifyCode = submitVerifyCode;
     vm.submitUserDetail = submitUserDetail;
@@ -49,7 +50,6 @@
       }
 
       //vm.step = 'loading';
-      console.log(vm.user);
       User.create({
         name: vm.user.name,
         captcha: vm.user.captcha,

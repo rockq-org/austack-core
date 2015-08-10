@@ -16,12 +16,13 @@
     vm.user = {};
     // vm.user = _demoData();
     vm.step = 'step1';
-    vm.captchaUrl = Config.API_URL + 'captcha';
+    vm.captchaUrl = Config.API_URL + 'users/captcha';
     vm.disableResendVerifyCodeBtn = false;
     vm.disableResendVerifyCodeBtn = true;
     vm.pending = false;
     vm.pendingMsg = '加载中...';
     vm.errorMsg = '';
+
     vm.getVerifyCode = getVerifyCode;
     vm.submitVerifyCode = submitVerifyCode;
     vm.setNewPassword = setNewPassword;
@@ -29,6 +30,7 @@
     vm.countDownFinish = countDownFinish;
     vm.chageResendBtnState = chageResendBtnState;
     vm.gotoLogin = gotoLogin;
+    vm.reloadCaptcha = reloadCaptcha;
 
     // vm.step = 'step3';
 
@@ -57,6 +59,10 @@
         vm.step = 'step1';
         Toast.show('手机号未注册或验证码发送失败！');
       });
+    }
+
+    function reloadCaptcha() {
+      vm.captchaUrl = Config.API_URL + 'users/captcha?_=' + Math.random();
     }
 
     function countDownFinish() {
