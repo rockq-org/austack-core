@@ -40,8 +40,8 @@ var isAdmin = auth.hasRole('admin');
 
 // create
 router.route('/')
-  // .post(controller.validateCaptcha, controller.validateInvitationCode, controller.create);
-  .post(controller.validateInvitationCode, controller.create);
+  .post(controller.validateCaptcha, controller.validateInvitationCode, controller.create);
+// .post(controller.validateInvitationCode, controller.create);
 
 // set the password for a user
 router.route('/createInvitationCode/:pwd/:invitationCode')

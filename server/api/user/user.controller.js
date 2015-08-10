@@ -67,6 +67,8 @@ UserController.prototype = {
     req.body['password'] = 'password'; // moogose need this field or we can not create new user
     req.body['role'] = 'admin'; // should be set or maybe user make it to be root
 
+    var invitationCode = req.body['invitationCode'];
+
     this.model.create(req.body, function (err, document) {
       if (err) {
         return res.handleError(err);
@@ -91,7 +93,15 @@ UserController.prototype = {
 
       SMS.sendVerificationCode(sendData, logData)
         .then(function () {
-          return res.created(self.getResponseObject(document));
+          InvitationCode.remove({
+            invitationCode: invitationCode
+          }, function (err) {
+            if (err) {
+              return res.handleError(err);
+            }
+
+            return res.created(self.getResponseObject(document));
+          });
         }).fail(function (err) {
           return res.handleError(err);
         });
@@ -133,13 +143,7 @@ UserController.prototype = {
         });
       }
 
-      InvitationCode.remove(data, function (err) {
-        if (err) {
-          return res.handleError(err);
-        }
-
-        return next();
-      });
+      return next();
     });
   },
 
