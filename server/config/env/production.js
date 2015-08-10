@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.AUSTACK_DATABASE_URL = process.env.AUSTACK_DATABASE_URL || 'mongodb://peter:Be8s2fsisOdWy@115.28.162.221:27088/austackdb';
+process.env.AUSTACK_DATABASE_URL = process.env.AUSTACK_DATABASE_URL || 'xxx';
 
 module.exports = {
 
@@ -31,5 +31,5 @@ module.exports = {
 
   apiBaseURL: 'http://api.austack.com/api',
 
-  seedDB: true
+  seedDB: false
 };

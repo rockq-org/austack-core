@@ -1,6 +1,6 @@
 {
   "Config": {
-    "API_URL": "http://api.austack.com/api/",
-    "SERVER_URL": "http://api.austack.com"
+    "API_URL": "http://api-stg.austack.com/api/",
+    "SERVER_URL": "http://api-stg.austack.com"
   }
 }
