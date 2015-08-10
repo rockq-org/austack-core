@@ -179,9 +179,10 @@ var Helper = {
     var mobile = Helper.req.body.mobile;
     var idKey = repoName + '_' + mobile;
     var verificationCode = Helper.req.verificationCode;
-
     var now = new Date();
     var SIXTY_SECONDS = (+60) * 1000;
+    var expiredTimeSpan = 60000 * 3; // three minutes
+    var verificationCodeExpiredAt = new Date(now.valueOf() + expiredTimeSpan);
 
     var query = {
       idKey: idKey
@@ -196,6 +197,8 @@ var Helper = {
           return d.reject('请60秒后再重发验证码');
         }
         doc.verificationCode = verificationCode;
+        doc.verificationCodeLatestSendTime = now;
+        doc.verificationCodeExpiredAt = verificationCodeExpiredAt;
         doc.save(function (err) {
           return d.resolve();
         });
@@ -204,8 +207,6 @@ var Helper = {
       }
 
       // do not find doc, insert new one
-      var expiredTimeSpan = 60000 * 3; // three minutes
-      var verificationCodeExpiredAt = new Date(now.valueOf() + expiredTimeSpan);
 
       doc = {
         idKey: idKey,
@@ -253,6 +254,37 @@ var Helper = {
   },
 
   validateVerificationCode: function () {
+    var d = Q.defer();
+    var repoModel = Helper.req.repoModel;
+    var verificationCode = Helper.req.body.verificationCode;
+    var mobile = Helper.req.body.mobile;
+    var idKey = repoModel.modelName + '_' + mobile;
+
+    VerificationCodeModel.findOne({
+      idKey: idKey
+    }, function (err, doc) {
+      d.resolve();
+      if (err || doc == null) {
+        Helper.msg = '验证码错误';
+        return;
+      }
+
+      if (doc.verificationCode != verificationCode) {
+        Helper.msg = '验证码错误';
+        return;
+      }
+
+      var now = new Date();
+      if (doc.verificationCodeExpiredAt < now) {
+        Helper.msg = '验证码已过期';
+        return;
+      }
+    });
+
+    return d.promise;
+  },
+
+  validateVerificationCode2: function () {
     var d = Q.defer();
     var repoModel = Helper.req.repoModel;
     var verificationCode = Helper.req.body.verificationCode;
