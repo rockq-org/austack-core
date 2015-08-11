@@ -151,21 +151,30 @@ function _ionic(res, app) {
       logger.error('Error building zip: ' + err);
       res.status(500).send('Error downloading zip')
     });
+    var sampleAppPath = path.join(__dirname, '../../public/sampleapps');
 
     res.setHeader('Content-disposition', 'attachment; filename=ionic-client.zip');
     res.setHeader('Content-type', 'application/octet-stream');
     archive.pipe(res);
-    _zipDir(path.join(__dirname, '../../public/sampleapps/ionic-client'),
+    _zipDir(
+      path.join(sampleAppPath, 'ionic-client'),
       archive,
       'ionic-client',
-      path.join(__dirname, '../../public/sampleapps/ionic-client/www/lib') + '/*');
+      path.join(sampleAppPath, 'ionic-client/www/lib/*')
+    );
 
     var serverUrl = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
     var loginUrl = serverUrl + 'tenant/login?clientId=' + app.clientId;
 
+    // readfile from sampleapps/austack-variables.js
+    var austackVariables = fs.readFileSync(path.join(sampleAppPath, 'austack-variables.js'), {encoding: 'utf8'});
+    austackVariables = austackVariables.replace('#clientId#', app.clientId);
+    austackVariables = austackVariables.replace('#loginUrl#', loginUrl);
+
     archive.append(austackVariables, {
-      name: '/ionic-client/www/js/austack-variables.js'
+      name: '/ionic-client/www/js/austack/austack-variables.js'
     });
+
     archive.finalize();
   } catch (err) {
     logger.error('Error generating zip: ' + err);
