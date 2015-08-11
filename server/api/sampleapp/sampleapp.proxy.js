@@ -161,12 +161,7 @@ function _ionic(res, app) {
       path.join(__dirname, '../../public/sampleapps/ionic-client/www/lib') + '/*');
 
     var serverUrl = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
-    var domain = serverUrl + 'tenant/login?clientId=' + app.clientId;
-    var austackVariables = [
-      "var AUSTACK_CLIENT_ID = '" + app.clientId + "';",
-      "var AUSTACK_DOMAIN = '" + domain + "';",
-      "var AUSTACK_CALLBACK_URL = location.href;"
-    ].join('\n');
+    var loginUrl = serverUrl + 'tenant/login?clientId=' + app.clientId;
 
     archive.append(austackVariables, {
       name: '/ionic-client/www/js/austack-variables.js'

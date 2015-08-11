@@ -1,6 +1,6 @@
 var AUSTACK = {
-  clinetId: '7e37446147bc5224fa420725',
-  loginUrl: 'http://localhost:9001/tenant/login?clientId=7e37446147bc5224fa420725',
+  clinetId: '#clientId#',
+  loginUrl: '#loginUrl#',
   callbackUrl: location.href,
   tokenKey: 'token',
   refreshTokenKey: 'refreshToken',
