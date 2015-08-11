@@ -25,8 +25,7 @@
           <p>
             2. 添加LoginCtrl到js/controllers.js内
           </p>
-          <hljs lang="javascript">
-angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
+          <hljs lang="javascript">angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
     console.log('start LoginCtrl');
 
     function doAuth() {
@@ -50,8 +49,7 @@ angular.module('starter.controllers'.controller('LoginCtrl', function($scope, au
 });
           </hljs>
           <p> 3. 添加其他插件，启动ios模拟器</p>
-          <hljs lang="bash">
-cordova platform add ios
+          <hljs lang="javascript">cordova platform add ios
 cordova plugin add cordova-plugin-inappbrowser
 ionic emulate ios -l -c -s
           </hljs>
@@ -74,8 +72,7 @@ ionic emulate ios -l -c -s
           <p>
             1. app.js 设置支持cors
           </p>
-          <hljs lang="js">
-// 1. 设置支持cors
+          <hljs lang="js">// 1. 设置支持cors
 var cors = require('cors');
 app.use(cors({
   origin: '*'
@@ -84,8 +81,7 @@ app.use(cors({
           <p>
             2. app.js 设置系统启动则获得applicationJwt
           </p>
-          <hljs lang="js">
-// 2. 加载 Austack 代码库，添加austack-demo路由示范
+          <hljs lang="js">// 2. 加载 Austack 代码库，添加austack-demo路由示范
 var Austack = require('./austack-nodejs.js');
 Austack.getApplicationJwt()
   .then(function (applicationJwt) {
@@ -94,6 +90,15 @@ Austack.getApplicationJwt()
   });
 app.use('/austack-demo', require('./routes/austack-demo'));
           </hljs>
+          <p>
+            3. 启动server服务:
+          </p>
+          <hljs lang="js">npm install
+npm start
+//或者
+nodemon -i node_modules ./bin/www
+          </hljs>
+
         </md-content>
       </md-card>
     </md-content>
