@@ -19,7 +19,13 @@ exports.download = function (req, res) {
   var appId = req.params['appId'];
   var type = req.params['type'];
   if (appId && type && _.includes(['nodejs', 'ionic'], type)) {
-    Application.findOne(function (err, app) {
+    var query = {
+      _id: appId
+    };
+
+    Application.findOne(query, function (err, app) {
+
+      logger.log(err, app, appId, type);
 
       if (err)
         return res.json({
@@ -171,6 +177,7 @@ function _ionic(res, app) {
     austackVariables = austackVariables.replace('#clientId#', app.clientId);
     austackVariables = austackVariables.replace('#loginUrl#', loginUrl);
 
+    logger.log(austackVariables);
     archive.append(austackVariables, {
       name: '/ionic-client/www/js/austack/austack-variables.js'
     });
@@ -206,6 +213,7 @@ function _zipDir(dir, zip, zipBaseDir, ignore, baseDir) {
       _zipDir(name, zip, zipBaseDir, ignore, baseDir);
     } else {
       if (!minimatch(name, ignore)) {
+        logger.log(zipLocation);
         var zipLocation = zipBaseDir + name.substring(baseDir.length);
         zip.file(name, {
           name: zipLocation
