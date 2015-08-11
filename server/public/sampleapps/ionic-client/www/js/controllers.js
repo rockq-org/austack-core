@@ -49,7 +49,8 @@ angular.module('starter.controllers', [])
     }
 });
 
-angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
+angular.module('starter.controllers')
+.controller('LoginCtrl', function($scope, austack, $state, $window) {
     console.log('start LoginCtrl');
 
     function doAuth() {

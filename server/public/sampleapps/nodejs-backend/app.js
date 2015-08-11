@@ -5,14 +5,6 @@ var express = require('express');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-// include Austack
-var Austack = require('./austack-nodejs.js');
-Austack.getApplicationJwt()
-  .then(function (applicationJwt) {
-    console.log('success get applicationJwt', applicationJwt); // you can save the applicationJwt to some place
-  });
-
 var app = express();
 
 // view engine setup
@@ -26,15 +18,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-// setup the cors
+
+// 1. 设置支持cors
+var cors = require('cors');
 app.use(cors({
   origin: '*'
 }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+
+// 2. 加载 Austack 代码库，添加austack-demo路由示范
+var Austack = require('./austack-nodejs.js');
+Austack.getApplicationJwt()
+  .then(function (applicationJwt) {
+    // 你可以保存该applicationJwt到你的服务器数据库里
+    console.log('success get applicationJwt', applicationJwt);
+  });
 app.use('/austack-demo', require('./routes/austack-demo'));
 
 // catch 404 and forward to error handler
