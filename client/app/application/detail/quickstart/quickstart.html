@@ -19,21 +19,42 @@
         </div>
         <md-content class="collapse-animate" ng-show="vm.showClientTutorial">
           <p>
-            1. 加载预定义常量，建议放到js代码块的最前面
+            1. 加载austack的代码库
           </p>
           <hljs code="vm.ionicStep1" lang="html"></hljs>
           <p>
-            2. 加载 angular-jwt.js 和 angular-austack.js
+            2. 添加LoginCtrl到js/controllers.js内
           </p>
-          <hljs code="vm.ionicStep2" lang="html"></hljs>
-          <p>
-            3. 在app.js后面添加austack的config和run的代码块
-          </p>
-          <hljs code="vm.ionicStep3" lang="html"></hljs>
-          <p>
-            4. 添加controller 代码
-          </p>
-          <hljs code="vm.ionicStep4" lang="html"></hljs>
+          <hljs lang="javascript">
+angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
+    console.log('start LoginCtrl');
+
+    function doAuth() {
+        console.log('start doing signin');
+        austack.signin({}, function(result) {
+            // $window.localStorage.setItem('profile', result.profile);
+            // $window.localStorage.setItem('refreshToken', result.refreshToken);
+            $window.localStorage.setItem('token', result.idToken);
+            alert(result.idToken);
+            $state.go('tab.dash');
+        }, function(error) {
+            console.log(error);
+        });
+    }
+
+    $scope.$on('$ionic.reconnectScope', function() {
+        doAuth();
+    });
+
+    doAuth();
+});
+          </hljs>
+          <p> 3. 添加其他插件，启动ios模拟器</p>
+          <hljs lang="bash">
+cordova platform add ios
+cordova plugin add cordova-plugin-inappbrowser
+ionic emulate ios -l -c -s
+          </hljs>
         </md-content>
       </md-card>
     </md-content>

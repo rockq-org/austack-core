@@ -21,11 +21,16 @@
     // the current application to display
     vm.application = application;
 
-    vm.ionicStep1 = '<script src="js/austack-variables.js"></script>';
-    vm.ionicStep2 = [
-      '<script src="lib/angular-jwt/dist/angular-jwt.js"></script>',
-      '<script src="js/angular-austack.js"></script>'
-    ].join('\n');
+    vm.ionicStep1 = [
+        '<script src="cordova.js"></script>',
+        '<!-- 把austack的代码放在cordova.js的后面 -->',
+        '<script src="js/austack/austack-variables.js"></script>',
+        '<script src="js/austack/angular-jwt.js"></script>',
+        '<script src="js/austack/austack-module-define.js"></script>',
+        '<script src="js/austack/austack-service.js"></script>',
+        '<script src="js/austack/austack-config.js"></script>',
+        '<script src="js/austack/austack-run.js"></script>'
+      ].join('\n');
 
     vm.nodeStep1 = [
       'var cors = require(\'cors\');',
