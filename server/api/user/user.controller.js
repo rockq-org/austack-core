@@ -244,7 +244,7 @@ UserController.prototype = {
             name: util.format('repo_%s', shortid.generate()),
             ownerId: user._id,
             type: '_local_',
-            mSchema: Config.mSchema
+            mSchema: config.mSchema
           })
           .then(function (shape) {
             logger.debug('create Repo for this Dave.');
