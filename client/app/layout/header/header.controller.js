@@ -9,10 +9,10 @@
   function getHeaderMenus() {
     return [{
       name: '帮助',
-      url: '#'
+      url: 'https://github.com/arrking/austack-issues/issues'
     }, {
       name: '文档',
-      url: '#'
+      url: 'https://github.com/arrking/austack-issues/wiki'
     }, {
       name: '博客',
       url: 'http://blog.austack.com'
