@@ -17,7 +17,7 @@
           <md-button class="md-primary" ng-click="vm.showClientTutorial =! vm.showClientTutorial"> 示例说明 </md-button>
           <md-button class="md-primary md-raised" ng-click="vm.downloadClient()"> 下载示例代码 </md-button>
         </div>
-        <md-content class="collapse-animate" ng-show="vm.showClientTutorial">
+        <md-content layout-padding class="collapse-animate" ng-show="vm.showClientTutorial">
           <p>
             1. 加载austack的代码库到www/index.html内
           </p>
@@ -71,7 +71,7 @@ ionic emulate ios -l -c -s
           <md-button class="md-primary" ng-click="vm.showServerTutorial =! vm.showServerTutorial"> 示例说明 </md-button>
           <md-button class="md-primary md-raised" ng-click="vm.downloadBackend()"> 下载示例代码 </md-button>
         </div>
-        <md-content class="collapse-animate" ng-show="vm.showServerTutorial">
+        <md-content layout-padding class="collapse-animate" ng-show="vm.showServerTutorial">
           <p>
             1. app.js 设置支持cors
           </p>
