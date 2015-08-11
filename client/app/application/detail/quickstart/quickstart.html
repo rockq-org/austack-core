@@ -25,8 +25,7 @@
           <p>
             2. 添加LoginCtrl到js/controllers.js内
           </p>
-          <hljs lang="javascript">
-angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
+          <hljs lang="javascript">angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
     console.log('start LoginCtrl');
 
     function doAuth() {
@@ -50,8 +49,7 @@ angular.module('starter.controllers'.controller('LoginCtrl', function($scope, au
 });
           </hljs>
           <p> 3. 添加其他插件，启动ios模拟器</p>
-          <hljs lang="bash">
-cordova platform add ios
+          <hljs lang="bash">cordova platform add ios
 cordova plugin add cordova-plugin-inappbrowser
 ionic emulate ios -l -c -s
           </hljs>
