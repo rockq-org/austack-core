@@ -74,19 +74,26 @@ ionic emulate ios -l -c -s
           <p>
             1. app.js 设置支持cors
           </p>
-          <hljs code="vm.nodeStep1" lang="js"></hljs>
+          <hljs lang="js">
+// 1. 设置支持cors
+var cors = require('cors');
+app.use(cors({
+  origin: '*'
+}));
+          </hljs>
           <p>
             2. app.js 设置系统启动则获得applicationJwt
           </p>
-          <hljs code="vm.nodeStep2" lang="js"></hljs>
-          <p>
-            3. app.js设置路由支持已通过austack登录的客户端请求用户个人信息
-          </p>
-          <hljs code="vm.nodeStep3" lang="js"></hljs>
-          <p>
-            4. routes/user.js 设置路由的具体实现代码
-          </p>
-          <hljs code="vm.nodeStep4" lang="js"></hljs>
+          <hljs lang="js">
+// 2. 加载 Austack 代码库，添加austack-demo路由示范
+var Austack = require('./austack-nodejs.js');
+Austack.getApplicationJwt()
+  .then(function (applicationJwt) {
+    // 你可以保存该applicationJwt到你的服务器数据库里
+    console.log('success get applicationJwt', applicationJwt);
+  });
+app.use('/austack-demo', require('./routes/austack-demo'));
+          </hljs>
         </md-content>
       </md-card>
     </md-content>

@@ -32,36 +32,6 @@
         '<script src="js/austack/austack-run.js"></script>'
       ].join('\n');
 
-    vm.nodeStep1 = [
-      'var cors = require(\'cors\');',
-      'app.use(cors({ origin: \'*\' }));'
-    ].join('\n');
-    vm.nodeStep2 = [
-      'var Austack = require(\'./austack-nodejs\');',
-      'ustack.getApplicationJwt()',
-      '  .then(function (applicationJwt) {',
-      '    console.log(\'success get applicationJwt\', applicationJwt);',
-      '  });'
-    ].join('\n');
-    vm.nodeStep3 = 'app.get(\'/me\', user.me);';
-    vm.nodeStep4 = [
-      'var Austack = require(\'../austack-nodejs\');',
-      'exports.me = function (req, res) {',
-      '  var userJwt = req.headers.authorization; ',
-      '  Austack.validateUserJwt(userJwt).then(function () {',
-      '    var profile = {',
-      '      clientId: clientId,',
-      '      userOtherInfo: \'some other userInfo dave want to add\'',
-      '    };',
-      '    console.log(\'success\', profile);',
-      '    res.status(200).json(profile);',
-      '  }).fail( function () {',
-      '    console.log(\'not validate\');',
-      '    res.status(401).json({ message: \'user force logout\' });',
-      '  });',
-      '}'
-    ].join('\n');
-
     vm.downloadBackend = downloadBackend;
     vm.downloadClient = downloadClient;
 
