@@ -21,11 +21,11 @@
           <p>
             1. 加载austack的代码库到www/index.html内
           </p>
-          <hljs code="vm.ionicStep1" lang="html"></hljs>
+          <pre hljs code="vm.ionicStep1" lang="html"></pre>
           <p>
             2. 添加LoginCtrl到www/js/controllers.js内
           </p>
-          <hljs lang="javascript">angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
+          <pre hljs lang="javascript">angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
     console.log('start LoginCtrl');
 
     function doAuth() {
@@ -47,15 +47,15 @@
 
     doAuth();
 });
-          </hljs>
+          </pre>
           <p> 3. 添加其他插件，启动ios模拟器</p>
-          <hljs lang="bash">npm install -g cordova ionic
+          <pre hljs lang="bash">npm install -g cordova ionic
 npm install
 bower install
 cordova platform add ios
 cordova plugin add cordova-plugin-inappbrowser
 ionic emulate ios -l -c -s
-          </hljs>
+          </pre>
         </md-content>
       </md-card>
     </md-content>
@@ -75,16 +75,16 @@ ionic emulate ios -l -c -s
           <p>
             1. app.js 设置支持cors
           </p>
-          <hljs lang="js">// 1. 设置支持cors
+          <pre hljs lang="js">// 1. 设置支持cors
 var cors = require('cors');
 app.use(cors({
   origin: '*'
 }));
-          </hljs>
+          </pre>
           <p>
             2. app.js 设置系统启动则获得applicationJwt
           </p>
-          <hljs lang="js">// 2. 加载 Austack 代码库，添加austack-demo路由示范
+          <pre hljs lang="js">// 2. 加载 Austack 代码库，添加austack-demo路由示范
 var Austack = require('./austack-nodejs.js');
 Austack.getApplicationJwt()
   .then(function (applicationJwt) {
@@ -92,15 +92,15 @@ Austack.getApplicationJwt()
     console.log('success get applicationJwt', applicationJwt);
   });
 app.use('/austack-demo', require('./routes/austack-demo'));
-          </hljs>
+          </pre>
           <p>
             3. 启动server服务:
           </p>
-          <hljs lang="js">npm install
+          <pre hljs lang="js">npm install
 npm start
 //或者
 nodemon -i node_modules ./bin/www
-          </hljs>
+          </pre>
 
         </md-content>
       </md-card>

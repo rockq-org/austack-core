@@ -1,4 +1,5 @@
-hljs {
+hljs,
+[hljs] {
   display: block;
   overflow-x: auto;
   padding: 0;
@@ -11,10 +12,11 @@ hljs {
   -webkit-text-size-adjust: none;
   position: relative;
   border-radius: 2px;
-  //margin: 0 0 1em;
+  margin: 0;
 }
 
-hljs:before {
+hljs:before,
+[hljs]:before {
   content: attr(lang);
   display: inline-block;
   background: #1C5792;
@@ -28,7 +30,9 @@ hljs:before {
   border-radius: 0 0 0 2px;
 }
 
-hljs.no-header:before {
+hljs.no-header:before,
+,
+[hljs].no-header:before {
   display: none;
 }
 
@@ -45,11 +49,13 @@ hljs.no-header:before {
   color: #E5C3A2;
 }
 
-hljs {
+hljs,
+[hljs] {
   color: #ddd;
 }
 
 hljs .hljs-constant,
+[hljs] .hljs-constant,
 .asciidoc .hljs-code,
 .markdown .hljs-code {
   color: #80CBC4;
@@ -179,8 +185,4 @@ code:not(.highlight) {
   -webkit-font-smoothing: auto;
   padding: 0.125em 0.35em;
   border-radius: 2px;
-}
-
-.layout-content code.highlight {
-  margin-bottom: 15px;
 }
