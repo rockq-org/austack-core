@@ -79,7 +79,9 @@ TenantController.prototype = {
     // var host = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
     // var url = host + 'tenant' + req.url + '#id_token=' + Helper.jwt;
     // return res.redirect(302, url);
+    logger.log(Helper.jwt);
 
+    Helper.jwt = '';
     Helper.req = req;
     Helper.res = res;
     Helper.next = next;
@@ -88,7 +90,7 @@ TenantController.prototype = {
     Helper.getApplication()
       .then(Helper.getRepoByOwnerId)
       .then(function () {
-        logger.log(Helper.req.body.action);
+        logger.log(Helper.req.body.action, Helper.jwt);
         if (Helper.req.body.action == 'send-verification-code') {
           logger.log('send-verification-code');
           return Helper.generateVerificationCode()
@@ -103,6 +105,8 @@ TenantController.prototype = {
           .then(Helper.addLoginRecord);
       })
       .catch(function (msg) {
+        logger.log('catch', msg, Helper.msg);
+        logger.log(Helper.jwt);
         if (!Helper.msg) {
           Helper.msg = msg;
         }
@@ -116,7 +120,7 @@ TenantController.prototype = {
           // TODO: should be have bug later while we use tenant domain
           var host = Config.apiBaseURL.substr(0, Config.apiBaseURL.length - 3);
           var url = host + 'tenant' + req.url + '#id_token=' + Helper.jwt;
-          logger.log(Helper.jwt);
+          logger.log('redirect', Helper.jwt);
           return res.redirect(302, url);
         }
 
@@ -176,10 +180,13 @@ var Helper = {
     var verificationCode = SMS.generateVerificationCode();
     Helper.req.verificationCode = verificationCode;
     d.resolve();
+    logger.log(Helper.jwt);
 
     return d.promise;
   },
   insertOrUpdateVerificationCodeModel: function () {
+    logger.log(Helper.jwt);
+
     var d = Q.defer();
     var repoModel = Helper.req.repoModel;
     var repoName = repoModel.modelName;
@@ -203,6 +210,8 @@ var Helper = {
           logger.log('timeSpan < SIXTY_SECONDS');
           return d.reject('请60秒后再重发验证码');
         }
+
+        logger.log('not here!!!!');
         doc.verificationCode = verificationCode;
         doc.verificationCodeLatestSendTime = now;
         doc.verificationCodeExpiredAt = verificationCodeExpiredAt;
@@ -214,7 +223,6 @@ var Helper = {
       }
 
       // do not find doc, insert new one
-
       doc = {
         idKey: idKey,
         verificationCodeLatestSendTime: now,
@@ -234,7 +242,12 @@ var Helper = {
   },
 
   sendSMS: function () {
-
+    logger.log(Helper.msg);
+    if(Helper.msg){
+      var d = Q.defer();
+      d.resolve();
+      return d.promise;
+    }
     var sendData = {
       mobile: Helper.req.body.mobile,
       appName: Helper.req.application.name,
@@ -333,10 +346,13 @@ var Helper = {
     var token = auth.signTokenForApplicationUser(clientId, clientSecret, mobile, appUserId);
     Helper.req.jwt = token;
 
+    console.log('getUserJwt ', Helper.jwt);
+
     Helper.msg = '登录成功！';
     Helper.jwt = token;
     logger.log(token);
   }),
+
   addLoginRecord: Q.fbind(function () {
     if (!Helper.jwt) {
       return;
