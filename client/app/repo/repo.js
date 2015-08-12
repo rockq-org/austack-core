@@ -18,9 +18,7 @@
       'austackApp.repo.service',
       'austackApp.repo.list',
       'austackApp.repo.detail',
-      'austackApp.repo.edit',
-      'austackApp.repo.code',
-      'austackApp.repo.create'
+      'austackApp.repo.code'
     ])
     .config(configRepoRoutes);
 

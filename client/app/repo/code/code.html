@@ -11,13 +11,12 @@
   </md-toolbar>
 
   <md-dialog-content>
-<md-select ng-model="code.selectedApp" placeholder="选择一个应用">
-  <md-option ng-value="item" ng-repeat="item in code.applicationList">[应用名] {{ item.name }} - [ClientId] {{ item.clientId }}</md-option>
-</md-select>
-    1.
-    <md-button class="md-raised md-primary" ng-click="code.showStep('1')"> 获取JWT令牌 </md-button>
+    <md-select ng-model="code.selectedApp" placeholder="选择一个应用">
+      <md-option ng-value="item" ng-repeat="item in code.applicationList">[应用名] {{ item.name }} - [ClientId] {{ item.clientId }}</md-option>
+    </md-select>
+    <md-button class="md-primary" ng-click="code.showStep('1')">1. 获取JWT令牌 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
-      <hljs lang="javascript" should-interpolate="true" re-render="code.selectedApp">
+      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">
 var request = require('superagent');
 var API_URL = '{{code.API_URL}}';
 var clientId = '{{code.selectedApp.clientId}}';
@@ -40,35 +39,25 @@ request.post(API_URL + '/auth/application')
   });
       </hljs>
     </md-content>
-    <br /> 2.
-    <md-button class="md-raised md-primary" ng-click="code.showStep('2')"> 创建新用户 </md-button>
+    <md-button class="md-primary" ng-click="code.showStep('2')">2. 创建新用户 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('2')">
-      <p></p>
-      <hljs code="code.step2" lang="javascript"></hljs>
+      <hljs code="code.step2" lang="js"></hljs>
     </md-content>
-    <br /> 3.
-    <md-button class="md-raised md-primary" ng-click="code.showStep('3')"> 获取用户详细信息 </md-button>
+    <md-button class="md-primary" ng-click="code.showStep('3')">3. 获取用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('3')">
-      <p></p>
-      <hljs code="code.step3" lang="javascript"></hljs>
+      <hljs code="code.step3" lang="js"></hljs>
     </md-content>
-    <br /> 4.
-    <md-button class="md-raised md-primary" ng-click="code.showStep('4')"> 更新用户详细信息 </md-button>
+    <md-button class="md-primary" ng-click="code.showStep('4')">4. 更新用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('4')">
-      <p></p>
-      <hljs code="code.step3" lang="javascript"></hljs>
+      <hljs code="code.step3" lang="js"></hljs>
     </md-content>
-    <br /> 5.
-    <md-button class="md-raised md-primary" ng-click="code.showStep('5')"> 删除指定用户 </md-button>
+    <md-button class="md-primary" ng-click="code.showStep('5')">5. 删除指定用户 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('5')">
-      <p></p>
-      <hljs code="code.step3" lang="javascript"></hljs>
+      <hljs code="code.step3" lang="js"></hljs>
     </md-content>
-    <br /> 6.
-    <md-button class="md-raised md-primary" ng-click="code.showStep('6')"> 获取用户列表 </md-button>
+    <md-button class="md-primary" ng-click="code.showStep('6')">6. 获取用户列表 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('6')">
-      <p></p>
-      <hljs code="code.step3" lang="javascript"></hljs>
+      <hljs code="code.step3" lang="js"></hljs>
     </md-content>
     <br />
 

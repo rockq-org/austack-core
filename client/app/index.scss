@@ -86,11 +86,11 @@ md-input-container {
 }
 
 .collapse-animate {
-  padding: 0 16px;
   background-color: #eee;
-  max-width: 1000px;
-  animation: fadeInUp 0.3s;
+  max-height: 3000px;
+  transition: all 0.3s ease-in-out;
   &.ng-hide {
-    animation: fadeOutDown 0.3s;
+    background-color: #fff;
+    max-height: 0;
   }
 }

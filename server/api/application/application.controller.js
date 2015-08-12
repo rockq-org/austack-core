@@ -118,7 +118,7 @@ ApplicationController.prototype = {
       return res.notFound();
     }
     var template = this.getResponseObject(req[this.paramName]).loginTemplatePreview;
-    return res.status(200).type('html').send(template);
+    return res.status(200).type('html').end(template);
     //return res.ok(this.getResponseObject(req[this.paramName]));
   },
 
@@ -169,41 +169,41 @@ ApplicationController.prototype = {
   },
 
   index: function (req, res) {
-  var query = req.query || {};
-  var self = this;
+    var query = req.query || {};
+    var self = this;
 
-  if (!roles.hasRole(req.userInfo.role, 'root')) {
-    query.ownerId = req.userInfo._id
-    query.isTrashed = false;
-  }
-  logger.debug(query);
+    if (!roles.hasRole(req.userInfo.role, 'root')) {
+      query.ownerId = req.userInfo._id
+      query.isTrashed = false;
+    }
+    logger.debug(query);
 
-  mongooseUtil.getQuery(req)
-    .then(function () {
-      self.model.paginate(
-        query,
-        mongooseUtil.getPaginateOptions(req),
-        function (err, results, pageNumber, pageCount, itemCount) {
-          if (err) {
-            return res.handleError(err);
-          }
-          var result = {
-            total: itemCount,
-            rc: 1,
-            current_page: pageNumber,
-            total_page: pageCount,
-            data: results
-          };
-          logger.log(result);
-          return res.ok(result);
+    mongooseUtil.getQuery(req)
+      .then(function () {
+        self.model.paginate(
+          query,
+          mongooseUtil.getPaginateOptions(req),
+          function (err, results, pageNumber, pageCount, itemCount) {
+            if (err) {
+              return res.handleError(err);
+            }
+            var result = {
+              total: itemCount,
+              rc: 1,
+              current_page: pageNumber,
+              total_page: pageCount,
+              data: results
+            };
+            logger.log(result);
+            return res.ok(result);
+          });
+      }, function (err) {
+        return res.json({
+          rc: 0,
+          error: err
         });
-    }, function (err) {
-      return res.json({
-        rc: 0,
-        error: err
       });
-    });
-}
+  }
 };
 
 // inherit from ParamController
