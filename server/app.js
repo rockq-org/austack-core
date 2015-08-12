@@ -22,11 +22,31 @@ exports = module.exports = app;
 app.startServer = startServer;
 app.serverShutdown = serverShutdown;
 
+
+// log every request header in console.log
+app.use(function (req, res, next) {
+  var arr = [
+    '/css/style.css',
+    '/img/logo.png',
+    '/img/favicon.ico'
+  ];
+  if( arr.indexOf(req.originalUrl) === -1 ){
+    console.log('================================ originalUrl', req.originalUrl);
+    console.log('================================ baseUrl', req.baseUrl);
+    console.log('================================ body', req.body);
+    console.log('================================ params', req.params);
+    console.log('================================ path', req.path);
+  }
+
+  next();
+});
+
 // Setup Express
 require('./config/express')(app);
 
 // Setup Routes
 require('./routes')(app);
+
 
 // register the shutdown handler to close the database connection on interrupt signals
 process
