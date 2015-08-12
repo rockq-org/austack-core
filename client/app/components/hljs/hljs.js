@@ -9,7 +9,7 @@
 
   function hljsDirective($timeout, $q, $interpolate) {
     return {
-      restrict: 'E',
+      restrict: 'AE',
       compile: function (element, attr) {
         var code;
         //No attribute? code is the content
@@ -44,7 +44,7 @@
               element.empty();
 
               var contentParent = angular.element(
-                '<pre><code class="highlight" ng-non-bindable></code></pre>'
+                '<pre><code class="hljs highlight" ng-non-bindable></code></pre>'
               );
               element.append(contentParent);
 
