@@ -311,7 +311,7 @@ var Helper = {
         var condition = {
           _id: appUserId
         };
-        logger.log(condition, repoModel);
+        logger.log(condition, repoModel.modelName);
 
         repoModel.findOne(condition, function (err, doc) {
           logger.log(err, doc);

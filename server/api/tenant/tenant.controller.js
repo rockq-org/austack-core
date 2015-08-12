@@ -63,8 +63,12 @@ TenantController.prototype = {
     Helper.msg = '';
 
     var data = {
-      mobile: 18959264502,
+
     };
+    if(req.app.get('env') === 'development'){
+      data.mobile = '18959264502';
+    }
+
     Helper.data = data;
     Helper.getApplication()
       .finally(Helper.render);
@@ -84,6 +88,7 @@ TenantController.prototype = {
     Helper.getApplication()
       .then(Helper.getRepoByOwnerId)
       .then(function () {
+        logger.log(Helper.req.body.action);
         if (Helper.req.body.action == 'send-verification-code') {
           logger.log('send-verification-code');
           return Helper.generateVerificationCode()

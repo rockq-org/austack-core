@@ -57,11 +57,6 @@ function initExpress(app) {
     proxy: true,
     resave: true
   }));
-  // app.use(function (req, res, next) {
-  //   logger.log(req.session);
-  //   req.session.time = Date.now();
-  //   next();
-  // });
   app.use(passport.initialize());
   // app.use(favicon(path.join(publicDir, 'favicon.ico')));
 
