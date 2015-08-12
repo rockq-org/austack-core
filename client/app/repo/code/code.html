@@ -16,8 +16,7 @@
     </md-select>
     <md-button class="md-primary" ng-click="code.showStep('1')">1. 获取JWT令牌 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
-      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">
-var request = require('superagent');
+      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">var request = require('superagent');
 var API_URL = '{{code.API_URL}}';
 var clientId = '{{code.selectedApp.clientId}}';
 var clientSecret = '{{code.selectedApp.clientSecret}}';
@@ -43,11 +42,11 @@ request.post(API_URL + '/auth/application')
     <md-content class="collapse-animate" ng-show="code.isShowStep('2')">
       <hljs code="code.step2" lang="js"></hljs>
     </md-content>
-    <md-button class="md-primary" ng-click="code.showStep('3')">3. 获取用户详细信息 </md-button>
+    <md-button class="md-primary" ng-click="code.showStep('3')">3. 获取指定用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('3')">
       <hljs code="code.step3" lang="js"></hljs>
     </md-content>
-    <md-button class="md-primary" ng-click="code.showStep('4')">4. 更新用户详细信息 </md-button>
+    <md-button class="md-primary" ng-click="code.showStep('4')">4. 更新指定用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('4')">
       <hljs code="code.step3" lang="js"></hljs>
     </md-content>
