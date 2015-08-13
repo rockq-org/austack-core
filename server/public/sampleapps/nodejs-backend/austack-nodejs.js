@@ -1,5 +1,4 @@
 var Q = require('q');
-var appJSON = require('./app.json');
 var request = require('superagent');
 
 var Austack = {
