@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 var path = require('path');
 var cors = require('cors');
 var logger = require('morgan');
