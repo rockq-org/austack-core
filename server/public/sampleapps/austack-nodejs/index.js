@@ -4,14 +4,13 @@ var request = require('superagent');
 
 var Austack = {
   data: {
-    clientId: '',
-    apiBaseURL: '',
-    clientSecret: '',
     applicationJwt: '',
+    apiBaseURL: appJSON.apiBaseURL,
+    clientId: appJSON.clientId,
+    clientSecret: appJSON.clientSecret,
   },
   get: get,
   set: set,
-  init: init,
   // method
   // 验证用户的JWT是否合法（主要是为了验证是否被用户强制退出登录而导致的过期）
   validateUserJwt: validateUserJwt,
@@ -30,12 +29,6 @@ var Austack = {
 };
 
 module.exports = Austack;
-
-function init (cfg) {
-  Austack.set('clientId', cfg.clientId);
-  Austack.set('apiBaseURL', cfg.apiBaseURL);
-  Austack.set('clientSecret', cfg.clientSecret);
-}
 
 function get(key) {
   if (Austack.data[key]) {
