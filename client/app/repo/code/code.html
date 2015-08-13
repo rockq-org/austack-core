@@ -14,6 +14,11 @@
     <md-select ng-model="code.selectedApp" placeholder="选择一个应用">
       <md-option ng-value="item" ng-repeat="item in code.applicationList">[应用名] {{ item.name }} - [ClientId] {{ item.clientId }}</md-option>
     </md-select>
+    <md-button class="md-primary" ng-click="code.showStep('0')">&nbsp; &nbsp; 安装依赖库 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('0')">
+      <hljs lang="bash" should-interpolate="true" re-render="code.selectedApp">npm install austack-nodejs
+      </hljs>
+    </md-content>
     <md-button class="md-primary" ng-click="code.showStep('1')">1. 获取JWT令牌 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
       <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">var request = require('superagent');
@@ -36,27 +41,27 @@ request.post(API_URL + '/auth/application')
     //成功获得application JWT
     var applicationJwt = res.body.token;
   });
-      </pre>
+      </hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('2')">2. 创建新用户 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('2')">
-      <pre hljs code="code.step2" lang="js"></pre>
+      <hljs hljs code="code.step2" lang="js"></hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('3')">3. 获取指定用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('3')">
-      <pre hljs code="code.step3" lang="js"></pre>
+      <hljs hljs code="code.step3" lang="js"></hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('4')">4. 更新指定用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('4')">
-      <pre hljs code="code.step3" lang="js"></pre>
+      <hljs hljs code="code.step3" lang="js"></hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('5')">5. 删除指定用户 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('5')">
-      <pre hljs code="code.step3" lang="js"></pre>
+      <hljs hljs code="code.step3" lang="js"></hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('6')">6. 获取用户列表 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('6')">
-      <pre hljs code="code.step3" lang="js"></pre>
+      <hljs hljs code="code.step3" lang="js"></hljs>
     </md-content>
     <br />
 

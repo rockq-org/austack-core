@@ -38,7 +38,7 @@
     vm.step4 = vm.step1;
     vm.step5 = vm.step1;
     vm.step6 = vm.step1;
-    vm.currentShowStep = '1';
+    vm.currentShowStep = '0';
     vm.showStep = showStep;
     vm.isShowStep = isShowStep;
 
