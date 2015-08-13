@@ -3,6 +3,7 @@ var router = express.Router();
 var Austack = require('austack-nodejs');
 
 router.get('/me', me);
+router.get('/createNewUser', createNewUser);
 
 module.exports = router;
 
@@ -23,5 +24,15 @@ function me(req, res, next) {
       res.status(401).json({
         message: 'user force logout'
       });
+    });
+}
+
+function createNewUser(req, res, next) {
+  Austack.createNewUser(newUser)
+    .then(function (user) {
+      console.log(user);
+    })
+    .catch(function (err) {
+      console.log(err);
     });
 }
