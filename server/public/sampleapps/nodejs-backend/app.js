@@ -32,15 +32,22 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
 // 2. 加载 Austack 代码库，添加austack-demo路由示范
+var austackCfg = require('./austack-variables.json');
 var Austack = require('austack-nodejs');
 Austack.init({
-
+  clientId: austackCfg.clientId,
+  apiBaseURL: austackCfg.apiBaseURL,
+  clientSecret: austackCfg.clientSecret
 });
-Austack.getApplicationJwt()
+
+//获取 application jwt
+Austack.getApplicationJwt() // 默认已经保存在内存中
   .then(function (applicationJwt) {
     // 你可以保存该applicationJwt到你的服务器数据库里
     console.log('success get applicationJwt', applicationJwt);
   });
+
+// 路由示范
 app.use('/austack-demo', require('./routes/austack-demo'));
 
 // catch 404 and forward to error handler
