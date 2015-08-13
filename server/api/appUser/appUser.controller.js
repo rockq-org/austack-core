@@ -72,6 +72,13 @@ AppUserController.prototype = {
             uid: shortid.generate()
           };
           repoModel.create(user, function (err, _user) {
+            if (err) {
+              logger.log(err);
+              return res.forbidden({
+                message: 'error while repoModel.create'
+              });
+            }
+            logger.log(_user, repoModel.modelName);
             return res.json(_user);
           });
         });

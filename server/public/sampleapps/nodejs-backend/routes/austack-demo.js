@@ -3,7 +3,7 @@ var router = express.Router();
 var Austack = require('austack-nodejs');
 
 router.get('/me', me);
-router.get('/createNewUser', createNewUser);
+router.get('/createNewUser/:mobile', createNewUser);
 
 module.exports = router;
 
@@ -28,22 +28,24 @@ function me(req, res, next) {
 }
 
 function createNewUser(req, res, next) {
-  var newUser = {
-    mobile: '18959264502'
-  };
+  var mobile = req.params.mobile;
 
-  Austack.createNewUser(newUser)
-    .then(function (res) {
-      var user = res.body;
-      console.log(user);
+  Austack.createNewUser({
+      mobile: mobile
+    })
+    .then(function (data) {
+      var message = 'create user success: mobile: ' + data.mobile + ' uid: ' + data.uid;
+
       res.render('index', {
-        message: user
+        message: message
       });
     })
     .catch(function (err) {
-      console.log(err);
-      res.render('index', {
-        message: err.message
-      });
+      var data = {
+        message: err.body.message,
+        error: err
+      };
+      console.log(data);
+      res.render('error', data);
     });
 }

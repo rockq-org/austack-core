@@ -30,7 +30,7 @@ var Austack = {
 
 module.exports = Austack;
 
-function init (cfg) {
+function init(cfg) {
   Austack.set('clientId', cfg.clientId);
   Austack.set('apiBaseURL', cfg.apiBaseURL);
   Austack.set('clientSecret', cfg.clientSecret);
@@ -115,7 +115,7 @@ function getUserList() {
 function createNewUser(user) {
   var d = Q.defer();
   Austack.getApplicationJwt()
-    .then(function(applicationJwt){
+    .then(function (applicationJwt) {
       request.post(Austack.get('apiBaseURL') + '/appUsers/')
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
@@ -123,13 +123,10 @@ function createNewUser(user) {
         .send(user)
         .end(function (err, res) {
           if (err) {
-            console.log(err);
-            console.dir(res);
             return d.reject(err);
           }
-
-          console.dir(res);
-          d.resolve(res.data);
+          console.log(res.body);
+          d.resolve(res.body);
         });
     });
 
