@@ -28,6 +28,10 @@ function me(req, res, next) {
 }
 
 function createNewUser(req, res, next) {
+  var newUser = {
+
+  };
+
   Austack.createNewUser(newUser)
     .then(function (user) {
       console.log(user);

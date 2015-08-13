@@ -10,6 +10,8 @@ module.exports = AppUserController;
 
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
+var RepoProxy = require('../repo/repo.proxy');
+var shortid = require('shortid');
 
 /**
  * AppUserController constructor
@@ -43,7 +45,37 @@ AppUserController.prototype = {
    */
   constructor: AppUserController,
   create: function (req, res) {
-    logger.log(req.userInfo);
+    var ownerId = req.userInfo.ownerId;
+    var mobile = req.body.mobile;
+    if (!mobile) {
+      return res.forbidden({
+        msg: 'missing mobile'
+      });
+    }
+
+    RepoProxy.getRepo({
+        ownerId: ownerId
+      })
+      .then(function (repoModel) {
+        repoModel.findOne({
+          mobile: mobile
+        }, function (err, user) {
+          if (user) {
+            //current mobile exist, can not create
+            return res.forbidden({
+              msg: 'mobile exist'
+            });
+          }
+
+          user = {
+            mobile: mobile,
+            uid: shortid.generate()
+          };
+          repoModel.create(user, function (err, _user) {
+            return res.json(_user);
+          });
+        });
+      });
   }
 };
 
