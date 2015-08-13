@@ -16,30 +16,23 @@
     </md-select>
     <md-button class="md-primary" ng-click="code.showStep('0')">&nbsp; &nbsp; 安装依赖库 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('0')">
-      <hljs lang="bash" should-interpolate="true" re-render="code.selectedApp">npm install austack-nodejs
+      <hljs lang="bash" should-interpolate="true" re-render="code.selectedApp">npm install --save austack-nodejs
       </hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('1')">1. 获取JWT令牌 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
-      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">var request = require('superagent');
-var API_URL = '{{code.API_URL}}';
-var clientId = '{{code.selectedApp.clientId}}';
-var clientSecret = '{{code.selectedApp.clientSecret}}';
+      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">var Austack = require('austack-nodejs');
+Austack.init({
+  clientId: '{{code.selectedApp.clientId}}',
+  apiBaseURL: '{{code.API_URL}}',
+  clientSecret: '{{code.selectedApp.clientSecret}}'
+});
 
-request.post(API_URL + '/auth/application')
-  .set('Content-Type', 'application/json')
-  .set('Accept', 'application/json')
-  .send({
-    clientId: clientId,
-    clientSecret: clientSecret
-  })
-  .end(function (err, res) {
-    if (err) {
-      return console.log(err);
-    }
-
-    //成功获得application JWT
-    var applicationJwt = res.body.token;
+//获取 application jwt
+Austack.getApplicationJwt() // 默认已经保存在内存中
+  .then(function (applicationJwt) {
+    // 你可以保存该applicationJwt到你的服务器数据库里
+    console.log('success get applicationJwt', applicationJwt);
   });
       </hljs>
     </md-content>
