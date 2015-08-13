@@ -103,13 +103,12 @@ ApplicationController.prototype = {
     var bodyData = _.omit(req.body, this.omit);
     var updated = _.merge(req[this.paramName], bodyData);
 
-    updated.save(function (err) {
+    updated.save(function (err, doc) {
       if (err) {
         return res.handleError(err);
       }
 
-      req[this.paramName] = updated;
-      return res.ok(self.getResponseObject(updated));
+      return res.json(doc);
     });
   },
 
