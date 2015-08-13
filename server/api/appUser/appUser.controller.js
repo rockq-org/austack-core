@@ -49,7 +49,7 @@ AppUserController.prototype = {
     var mobile = req.body.mobile;
     if (!mobile) {
       return res.forbidden({
-        msg: 'missing mobile'
+        message: 'missing mobile'
       });
     }
 
@@ -63,7 +63,7 @@ AppUserController.prototype = {
           if (user) {
             //current mobile exist, can not create
             return res.forbidden({
-              msg: 'mobile exist'
+              message: 'mobile exist'
             });
           }
 

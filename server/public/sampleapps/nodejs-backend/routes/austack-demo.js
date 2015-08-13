@@ -29,14 +29,21 @@ function me(req, res, next) {
 
 function createNewUser(req, res, next) {
   var newUser = {
-
+    mobile: '18959264502'
   };
 
   Austack.createNewUser(newUser)
-    .then(function (user) {
+    .then(function (res) {
+      var user = res.body;
       console.log(user);
+      res.render('index', {
+        message: user
+      });
     })
     .catch(function (err) {
       console.log(err);
+      res.render('index', {
+        message: err.message
+      });
     });
 }

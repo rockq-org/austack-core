@@ -27,7 +27,6 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-require('../api/appUser/appUser.socket').register(socket);
   require('../api/loginRecord/loginRecord.socket').register(socket);
   require('../api/tenant/tenant.socket').register(socket);
   require('../api/application/application.socket').register(socket);
