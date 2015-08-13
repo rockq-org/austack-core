@@ -33,6 +33,9 @@ app.use('/users', require('./routes/users'));
 
 // 2. 加载 Austack 代码库，添加austack-demo路由示范
 var Austack = require('austack-nodejs');
+Austack.init({
+
+});
 Austack.getApplicationJwt()
   .then(function (applicationJwt) {
     // 你可以保存该applicationJwt到你的服务器数据库里

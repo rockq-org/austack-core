@@ -1,0 +1,11 @@
+{
+    "name": "Troy",
+    "clientId": "7e37446147bc5224fa42072f",
+    "clientSecret": "e98e13bfbc6aa39da1693e13",
+    "modified": "2015-07-26T04:11:19.868Z",
+    "created": "2015-07-09T15:45:03.410Z",
+    "corsDomains": [],
+    "callbackUrls": [],
+    "jwtExpiration": 36000,
+    "apiBaseURL": "http://localhost:9001/api"
+}
