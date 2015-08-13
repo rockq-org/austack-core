@@ -89,6 +89,7 @@
     $mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');
     $mdIconProvider.iconSet('toggle', spritePath + 'svg-sprite-toggle.svg');
     $mdIconProvider.iconSet('alert', spritePath + 'svg-sprite-alert.svg');
+    $mdIconProvider.iconSet('social', spritePath + 'svg-sprite-social.svg');
   }
 
   /* App run bootstrap */
