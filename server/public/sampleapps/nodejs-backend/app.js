@@ -1,5 +1,10 @@
 require('dotenv').load();
 
+GLOBAL.logger = require('tracer').console({
+  level: level,
+  format: "{{timestamp}} {{path}}:{{line}} \n <{{title}}> {{message}}"
+});
+
 var path = require('path');
 var cors = require('cors');
 var logger = require('morgan');

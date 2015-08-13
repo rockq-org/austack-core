@@ -31,6 +31,7 @@ var Austack = {
 module.exports = Austack;
 
 function init(cfg) {
+  Austack.set('repoName', cfg.name);
   Austack.set('clientId', cfg.clientId);
   Austack.set('apiBaseURL', cfg.apiBaseURL);
   Austack.set('clientSecret', cfg.clientSecret);
@@ -113,16 +114,22 @@ function getUserList() {
 }
 
 function createNewUser(user) {
+  console.log('start createNewUser');
+  var repoName = Austack.get('repoName');
+  console.log(repoName);
   var d = Q.defer();
   Austack.getApplicationJwt()
     .then(function (applicationJwt) {
-      request.post(Austack.get('apiBaseURL') + '/appUsers/')
+      request.post(Austack.get('apiBaseURL') + '/repos/' + repoName)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('Authorization', 'Bearer ' + applicationJwt)
         .send(user)
         .end(function (err, res) {
+          console.log('request responce here');
           if (err) {
+            console.log('err here');
+            console.log(err);
             return d.reject(err);
           }
           console.log(res.body);
