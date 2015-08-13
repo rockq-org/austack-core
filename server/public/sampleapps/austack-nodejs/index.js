@@ -82,6 +82,7 @@ function getApplicationJwt() {
   var d = Q.defer();
   var applicationJwt = Austack.get('applicationJwt');
   if (applicationJwt) {
+    console.log('use applicationJwt from cache');
     d.resolve(applicationJwt);
     return d.promise;
   }
@@ -111,8 +112,28 @@ function getUserList() {
   // body...
 }
 
-function createNewUser() {
-  // body...
+function createNewUser(user) {
+  var d = Q.defer();
+  Austack.getApplicationJwt()
+    .then(function(applicationJwt){
+      request.post(Austack.get('apiBaseURL') + '/appUsers/')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + applicationJwt)
+        .send(user)
+        .end(function (err, res) {
+          if (err) {
+            console.log(err);
+            console.dir(res);
+            return d.reject(err);
+          }
+
+          console.dir(res);
+          d.resolve(res.data);
+        });
+    });
+
+  return d.promise;
 }
 
 function getUserDetail() {
