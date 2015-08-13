@@ -114,9 +114,8 @@ function getUserList() {
 }
 
 function createNewUser(user) {
-  console.log('start createNewUser');
   var repoName = Austack.get('repoName');
-  console.log(repoName);
+  logger.log(repoName);
   var d = Q.defer();
   Austack.getApplicationJwt()
     .then(function (applicationJwt) {
