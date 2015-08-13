@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Austack = require('../austack-nodejs');
+var Austack = require('austack-nodejs');
 
 router.get('/me', me);
 
