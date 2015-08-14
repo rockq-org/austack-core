@@ -1,3 +1,8 @@
+GLOBAL.logger = require('tracer').console({
+  level: 'log',
+  format: "{{timestamp}} {{path}}:{{line}} \n <{{title}}> {{message}}"
+});
+
 var Q = require('q');
 var request = require('superagent');
 
@@ -123,8 +128,7 @@ function createNewUser(user) {
         .send(user)
         .end(function (err, res) {
           if (err) {
-            console.log(res.res.body);
-            return d.reject(err);
+            return d.reject(err.response.body.message);
           }
           d.resolve(res.body);
         });

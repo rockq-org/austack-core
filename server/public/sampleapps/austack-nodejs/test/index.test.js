@@ -12,22 +12,23 @@ describe('Austack nodejs sdk', function () {
     Austack.getApplicationJwt()
       .then(function (result) {
         appJwt = result;
+        console.log('success get appJwt ', appJwt);
+        done();
+      });
+  });
+  after(function (done) {
+    Austack.getApplicationJwt()
+      .then(function (result) {
+        console.log('TODO: delete all test data');
         done();
       });
   });
 
-  it('createNewUser', function (done) {
+  it('createNewUser', function () {
     var data = {
-      mobile: '18959264502'
+      mobile: '18959264509'
     };
 
-    Austack.createNewUser(data)
-      .then(function (user) {
-        console.log(user);
-        done();
-      })
-      .catch(function (err) {
-        done();
-      })
+    return Austack.createNewUser(data);
   });
 });
