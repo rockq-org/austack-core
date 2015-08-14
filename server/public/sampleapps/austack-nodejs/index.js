@@ -15,7 +15,17 @@ var Austack = {
   // 验证用户的JWT是否合法（主要是为了验证是否被用户强制退出登录而导致的过期）
   validateUserJwt: validateUserJwt,
   // 1. 获取jwt
-  getApplicationJwt: getApplicationJwt
+  getApplicationJwt: getApplicationJwt,
+  // 2. 获取用户列表
+  getUserList: getUserList,
+  // 3. 创建新用户
+  createNewUser: createNewUser,
+  // 4. 获取用户详情
+  getUserDetail: getUserDetail,
+  // 5. 更新用户
+  updateUser: updateUser,
+  // 6. 删除用户
+  deleteUser: deleteUser
 };
 
 module.exports = Austack;
@@ -97,4 +107,24 @@ function getApplicationJwt() {
     });
 
   return d.promise;
+}
+
+function getUserList() {
+  // body...
+}
+
+function createNewUser() {
+  // body...
+}
+
+function getUserDetail() {
+  // body...
+}
+
+function updateUser() {
+  // body...
+}
+
+function deleteUser() {
+  // body...
 }
