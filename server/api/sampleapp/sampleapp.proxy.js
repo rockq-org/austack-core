@@ -139,7 +139,7 @@ function _nodejs(res, app) {
 
     logger.log(austackVariables);
     archive.append(austackVariables, {
-      name: '/nodejs-backend/austack-variables.js'
+      name: '/nodejs-backend/austack-variables.json'
     });
 
     archive.finalize();
