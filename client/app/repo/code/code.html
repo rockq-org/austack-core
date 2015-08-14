@@ -46,7 +46,10 @@ Austack.getApplicationJwt() // 默认已经保存在内存中
   mobile: '1894502xxxx' //替换成手机号即可
 };
 
-Austack.createNewUser(data);
+Austack.createNewUser(data)
+  .then(function(user){
+    console.log('success create new user', user);
+  });
       </hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('3')">3. 获取指定用户详细信息 </md-button>
