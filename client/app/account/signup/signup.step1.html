@@ -1,9 +1,10 @@
 <form class="card" name="getVerifyCodeForm" layout="column" layout-fill layout-align="space-between" ng-submit="signup.getVerifyCode(getVerifyCodeForm)">
   <md-input-container>
     <label>手机号</label>
-    <input name="name" ng-model="signup.user.name" required/>
+    <input name="name" pattern="^1d{10}$" ng-model="signup.user.name" required/>
     <div ng-messages="getVerifyCodeForm.name.$error" ng-if="getVerifyCodeForm.name.$dirty">
       <div ng-message="required">请输入您的手机号！</div>
+      <div ng-message="pattern">输入的手机号格式不正确！</div>
     </div>
   </md-input-container>
   <md-input-container>

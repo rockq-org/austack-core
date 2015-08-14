@@ -1,36 +1,61 @@
 <md-content flex id="dashboard-content" layout-padding>
-  <md-grid-list layout-margin md-cols="2" md-cols-gt-md="5" md-row-height-gt-md="3:2" md-row-height="3:2" md-gutter="12px" md-gutter-gt-sm="8px">
-    <md-grid-tile class="green md-whiteframe-z2">
-      <span class="md-display-2">{{dashboard.statisticsData.allUserCount}}</span>
-      <md-grid-tile-footer>
-        <h3>全部用户</h3>
-      </md-grid-tile-footer>
-    </md-grid-tile>
-    <md-grid-tile class="lightPurple md-whiteframe-z2">
-      <span class="md-display-2">{{dashboard.statisticsData.allSmsCount}}</span>
-      <md-grid-tile-footer>
-        <h3>已发送短信数</h3>
-      </md-grid-tile-footer>
-    </md-grid-tile>
-    <md-grid-tile class="purple md-whiteframe-z2">
-      <span class="md-display-2">{{dashboard.statisticsData.currentMonthActively}}</span>
-      <md-grid-tile-footer>
-        <h3>本月活跃用户</h3>
-      </md-grid-tile-footer>
-    </md-grid-tile>
-    <md-grid-tile class="blue md-whiteframe-z2">
-      <span class="md-display-2">{{dashboard.statisticsData.currentWeekLoginTimes}}</span>
-      <md-grid-tile-footer>
-        <h3>本周登录次数</h3>
-      </md-grid-tile-footer>
-    </md-grid-tile>
-    <md-grid-tile class="red md-whiteframe-z2">
-      <span class="md-display-2">{{dashboard.statisticsData.currentWeekNewUser}}</span>
-      <md-grid-tile-footer>
-        <h3>本周新用户</h3>
-      </md-grid-tile-footer>
-    </md-grid-tile>
-  </md-grid-list>
+  <md-content layout="row" layout-wrap>
+    <div flex="25" flex-sm="100" flex-md="50">
+      <md-card class="widget pink" layout="row" layout-align="space-between center">
+        <div>
+          <md-icon md-svg-icon="social:ic_group_24px "></md-icon>
+        </div>
+        <div flex layout="column" layout-align="center end">
+          <h1 class="md-display-3">{{dashboard.statisticsData.allUserCount}}</h1>
+          <h3 class="md-body-2">全部用户</h3>
+        </div>
+      </md-card>
+    </div>
+    <div flex="25" flex-sm="100" flex-md="50">
+      <md-card class="widget purple" layout="row" layout-align="space-between center">
+        <div>
+          <md-icon md-svg-icon="action:ic_question_answer_24px "></md-icon>
+        </div>
+        <div flex layout="column" layout-align="center end">
+          <h1 class="md-display-3">{{dashboard.statisticsData.allSmsCount}}</h1>
+          <h3 class="md-body-2">已发送短信数</h3>
+        </div>
+      </md-card>
+    </div>
+    <div flex="25" flex-sm="100" flex-md="50">
+      <md-card class="widget red" layout="row" layout-align="space-between center">
+        <div>
+          <md-icon md-svg-icon="action:ic_account_circle_24px "></md-icon>
+        </div>
+        <div flex layout="column" layout-align="center end">
+          <h1 class="md-display-3">{{dashboard.statisticsData.currentMonthActively}}</h1>
+          <h3 class="md-body-2">本月活跃用户</h3>
+        </div>
+      </md-card>
+    </div>
+    <!--div flex="25" flex-sm="100" flex-md="50">
+      <md-card class="widget deepBlue" layout-padding layout="row" layout-align="space-between center">
+        <div>
+          <md-icon md-svg-icon="content:ic_send_24px "></md-icon>
+        </div>
+        <div layout="column" layout-align="center end">
+          <h1 class="md-display-3">{{dashboard.statisticsData.currentWeekLoginTimes}}</h1>
+          <h3 class="md-body-2">本周登录次数</h3>
+        </div>
+      </md-card>
+    </div-->
+    <div flex="25" flex-sm="100" flex-md="50">
+      <md-card class="widget deepBlue" layout="row" layout-align="space-between center">
+        <div>
+          <md-icon md-svg-icon="social:ic_person_add_24px "></md-icon>
+        </div>
+        <div flex layout="column" layout-align="center end">
+          <h1 class="md-display-3">{{dashboard.statisticsData.currentWeekNewUser}}</h1>
+          <h3 class="md-body-2">本周新用户</h3>
+        </div>
+      </md-card>
+    </div>
+  </md-content>
   <md-content layout-padding>
     <cal-heatmap config="dashboard.heatMapConfig"></cal-heatmap>
   </md-content>
