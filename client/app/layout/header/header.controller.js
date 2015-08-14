@@ -27,7 +27,7 @@
     vm.menus = HeaderMenus;
 
     vm.user = Auth.getCurrentUser();
-    vm.user.avatar = 'assets/images/profile.png';
+    vm.user.avatar = vm.user.avatar || 'assets/images/profile.png';
 
     vm.profile = profile;
     vm.setting = setting;

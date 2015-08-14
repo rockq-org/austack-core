@@ -21,7 +21,7 @@
 
     function closeDialog() {
       $mdDialog.cancel();
-    };
+    }
   }
 
 })();

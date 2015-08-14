@@ -5,18 +5,17 @@
     .module('austackApp.account.settings')
     .controller('AccountSettingsController', AccountSettingsController);
 
-  AccountSettingsController.$inject = ['$scope', '$mdDialog', 'Auth', 'CropImageService'];
-
-  function AccountSettingsController($scope, $mdDialog, Auth, CropImageService) {
+  /* @ngInject */
+  function AccountSettingsController($scope, $mdDialog, Toast, user, UserService, CropImageService) {
     var vm = this;
 
     var fileInput = document.querySelector('#fileInput');
     var target;
 
-    vm.user = Auth.getCurrentUser();
-    console.log(vm.user);
-    vm.user.avatar = vm.user.avaar || 'assets/images/profile.png';
+    vm.user = user;
+    vm.user.avatar = vm.user.avatar || 'assets/images/profile.png';
     vm.uploadImage = uploadImage;
+    vm.update = update;
 
     function uploadImage(ev) {
       target = ev;
@@ -24,8 +23,15 @@
       fileInput.click();
     }
 
-    $scope.myImage = '';
-    $scope.myCroppedImage = '';
+    function update() {
+      UserService.update(vm.user)
+        .then(function (data) {
+          Toast.show('更新成功');
+        })
+        .catch(function () {
+          Toast.show('更新失败');
+        });
+    }
 
     angular.element(fileInput).on('change', handleFileSelect);
 
@@ -38,11 +44,12 @@
           CropImageService.show(srcImage, target)
             .then(function (data) {
               vm.user.avatar = data;
-            })
+              update();
+            });
         });
       };
       reader.readAsDataURL(file);
-    };
+    }
   }
 
 })();
