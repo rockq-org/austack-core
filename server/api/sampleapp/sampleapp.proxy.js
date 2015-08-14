@@ -173,7 +173,9 @@ function _ionic(res, app) {
     var loginUrl = serverUrl + 'tenant/login?clientId=' + app.clientId;
 
     // readfile from sampleapps/austack-variables.js
-    var austackVariables = fs.readFileSync(path.join(sampleAppPath, 'austack-variables.js'), {encoding: 'utf8'});
+    var austackVariables = fs.readFileSync(path.join(sampleAppPath, 'austack-variables-ionic.js'), {
+      encoding: 'utf8'
+    });
     austackVariables = austackVariables.replace('#clientId#', app.clientId);
     austackVariables = austackVariables.replace('#loginUrl#', loginUrl);
 

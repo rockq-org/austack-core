@@ -1,0 +1,10 @@
+{
+  "name": "#name#",
+  "repoName": "#repoName#",
+  "clientId": "#clientId#",
+  "clientSecret": "#clientSecret#",
+  "corsDomains": [],
+  "callbackUrls": [],
+  "jwtExpiration": "#jwtExpiration#",
+  "apiBaseURL": "#apiBaseURL#"
+}
