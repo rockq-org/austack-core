@@ -4,7 +4,7 @@ var SuperAgent = require('superagent');
 var QueryString = require('querystring');
 var _ = require('lodash');
 var S = require('string');
-var SmsRecordModel = require('./SmsRecord.model.js').model;
+var SmsRecordModel = require('./smsRecord.model.js').model;
 
 module.exports = {
   sendVerificationCode: sendVerificationCode,
