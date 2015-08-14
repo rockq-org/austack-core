@@ -2,7 +2,9 @@
   'use strict';
 
   angular
-    .module('austackApp.account.settings', [])
+    .module('austackApp.account.settings', [
+      'austackApp.cropImage'
+    ])
     .config(configAccountSettingsLogin);
 
   // inject configAccountSettingsLogin dependencies

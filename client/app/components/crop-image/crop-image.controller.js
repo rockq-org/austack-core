@@ -2,19 +2,18 @@
   'use strict';
 
   angular
-    .module('austackApp.account.settings')
-    .controller('AccountSettingsController', AccountSettingsController);
+    .module('austackApp.cropImage')
+    .controller('CropImageController', CropImageController);
 
-  AccountSettingsController.$inject = ['$scope', '$mdDialog', 'CropImageService'];
+  CropImageController.$inject = ['$scope', '$mdDialog'];
 
-  function AccountSettingsController($scope, $mdDialog, CropImageService) {
+  function CropImageController($scope, $mdDialog) {
     var vm = this;
 
     $scope.myImage = '';
     $scope.myCroppedImage = '';
 
     var handleFileSelect = function (evt) {
-      CropImageService.show();
       var file = evt.currentTarget.files[0];
       var reader = new FileReader();
       reader.onload = function (evt) {
