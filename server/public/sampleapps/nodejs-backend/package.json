@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -i node_modules ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "austack-nodejs": "*",

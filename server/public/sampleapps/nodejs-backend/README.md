@@ -14,7 +14,6 @@ Get help from [NodeJS Community](http://nodejs.org/).
 
 ```
 cd nodejs-backend
-npm install -g nodemon
 npm install
 npm start
 ```
