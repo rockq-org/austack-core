@@ -25,13 +25,12 @@ var Austack = {
   // 5. 更新用户
   updateUser: updateUser,
   // 6. 删除用户
-  deleteUser: deleteUser
+  deleteUser: deleteUser,
 };
 
 module.exports = Austack;
 
 function init(cfg) {
-  Austack.set('repoName', cfg.repoName);
   Austack.set('clientId', cfg.clientId);
   Austack.set('apiBaseURL', cfg.apiBaseURL);
   Austack.set('clientSecret', cfg.clientSecret);
@@ -113,8 +112,25 @@ function getUserList() {
   // body...
 }
 
-function createNewUser() {
-  // body...
+function createNewUser(user) {
+  var d = Q.defer();
+  Austack.getApplicationJwt()
+    .then(function (applicationJwt) {
+      request.post(Austack.get('apiBaseURL') + '/appUsers/')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + applicationJwt)
+        .send(user)
+        .end(function (err, res) {
+          if (err) {
+            return d.reject(err);
+          }
+          console.log(res.body);
+          d.resolve(res.body);
+        });
+    });
+
+  return d.promise;
 }
 
 function getUserDetail() {
