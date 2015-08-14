@@ -10,28 +10,13 @@ This application is based on [ionicframework](http://ionicframework.com/). ionic
 
 Get help from [NodeJS Community](http://nodejs.org/).
 
-### Ionic
-
-```
-npm install -g cordova ionic
-```
-
-## Launch up
-
 ```
 cd ionic-client
+npm install -g cordova ionic
 npm install
 bower install
-ionic setup sass
-```
-
-## add platform
-```
 cordova platform add ios
-```
-
-## emulate
-```
+cordova plugin add cordova-plugin-inappbrowser
 ionic emulate ios -l -c -s
 ```
 
