@@ -1,6 +1,5 @@
 {
   "name": "#name#",
-  "repoName": "#repoName#",
   "clientId": "#clientId#",
   "clientSecret": "#clientSecret#",
   "corsDomains": [],

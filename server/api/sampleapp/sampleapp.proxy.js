@@ -121,16 +121,25 @@ function _nodejs(res, app) {
       'nodejs-backend',
       path.join(__dirname, '../../public/sampleapps/nodejs-backend/node_modules') + '/*');
 
-    // delete some keys that should not expose to backend
-    app['_id'] = undefined;
-    app['ownerId'] = undefined;
-    app['isTrashed'] = undefined;
-    app['__v'] = undefined;
-
     app['apiBaseURL'] = Config.apiBaseURL;
 
-    archive.append(JSON.stringify(app, null, 4), {
-      name: '/nodejs-backend/app.json'
+    logger.log(app);
+    var sampleAppPath = path.join(__dirname, '../../public/sampleapps');
+    // readfile from sampleapps/austack-variables-nodejs.js
+    var austackVariables = fs.readFileSync(path.join(sampleAppPath, 'austack-variables-nodejs.json'), {
+      encoding: 'utf8'
+    });
+    austackVariables = austackVariables.replace('#name#', app.name);
+    austackVariables = austackVariables.replace('#clientId#', app.clientId);
+    austackVariables = austackVariables.replace('#clientSecret#', app.clientSecret);
+    austackVariables = austackVariables.replace('#corsDomains#', app.corsDomains);
+    austackVariables = austackVariables.replace('#callbackUrls#', app.callbackUrls);
+    austackVariables = austackVariables.replace('#jwtExpiration#', app.jwtExpiration);
+    austackVariables = austackVariables.replace('#apiBaseURL#', app.apiBaseURL);
+
+    logger.log(austackVariables);
+    archive.append(austackVariables, {
+      name: '/nodejs-backend/austack-variables.js'
     });
 
     archive.finalize();
@@ -215,7 +224,7 @@ function _zipDir(dir, zip, zipBaseDir, ignore, baseDir) {
       _zipDir(name, zip, zipBaseDir, ignore, baseDir);
     } else {
       if (!minimatch(name, ignore)) {
-        logger.log(zipLocation);
+        // logger.log(zipLocation);
         var zipLocation = zipBaseDir + name.substring(baseDir.length);
         zip.file(name, {
           name: zipLocation
