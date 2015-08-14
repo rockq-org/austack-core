@@ -123,9 +123,9 @@ function createNewUser(user) {
         .send(user)
         .end(function (err, res) {
           if (err) {
+            console.log(res.res.body);
             return d.reject(err);
           }
-          console.log(res.body);
           d.resolve(res.body);
         });
     });
