@@ -63,7 +63,7 @@ TenantController.prototype = {
     Helper.msg = '';
 
     var data = {
-
+      mobile: ''
     };
     if (req.app.get('env') === 'development') {
       data.mobile = '18959264502';
