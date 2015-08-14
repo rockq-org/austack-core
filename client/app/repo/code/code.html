@@ -14,21 +14,25 @@
     <md-select ng-model="code.selectedApp" placeholder="选择一个应用">
       <md-option ng-value="item" ng-repeat="item in code.applicationList">[应用名] {{ item.name }} - [ClientId] {{ item.clientId }}</md-option>
     </md-select>
-    <md-button class="md-primary" ng-click="code.showStep('0')">&nbsp; &nbsp; 安装依赖库 </md-button>
-    <md-content class="collapse-animate" ng-show="code.isShowStep('0')">
+    <md-button class="md-primary" ng-click="code.showStep('install-dep')">&nbsp; &nbsp; 安装依赖库 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('install-dep')">
       <hljs lang="bash" should-interpolate="true" re-render="code.selectedApp">npm install --save austack-nodejs
       </hljs>
     </md-content>
-    <md-button class="md-primary" ng-click="code.showStep('1')">1. 获取JWT令牌 </md-button>
-    <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
-      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">var Austack = require('austack-nodejs');
+    <md-button class="md-primary" ng-click="code.showStep('init')">&nbsp; &nbsp; 初始化Austack </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('init')">
+      <hljs lang="bash" should-interpolate="true" re-render="code.selectedApp">var Austack = require('austack-nodejs');
 Austack.init({
   clientId: '{{code.selectedApp.clientId}}',
   apiBaseURL: '{{code.API_URL}}',
   clientSecret: '{{code.selectedApp.clientSecret}}'
 });
+      </hljs>
+    </md-content>
 
-//获取 application jwt
+    <md-button class="md-primary" ng-click="code.showStep('1')">1. 获取JWT令牌 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
+      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">//获取 application jwt
 Austack.getApplicationJwt() // 默认已经保存在内存中
   .then(function (applicationJwt) {
     // 你可以保存该applicationJwt到你的服务器数据库里
@@ -38,7 +42,12 @@ Austack.getApplicationJwt() // 默认已经保存在内存中
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('2')">2. 创建新用户 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('2')">
-      <hljs lang="js"></hljs>
+      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">var data = {
+  mobile: '1894502xxxx' //替换成手机号即可
+};
+
+Austack.createNewUser(data);
+      </hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('3')">3. 获取指定用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('3')">
