@@ -37,6 +37,9 @@ Austack.getApplicationJwt() // 默认已经保存在内存中
   .then(function (applicationJwt) {
     // 你可以保存该applicationJwt到你的服务器数据库里
     console.log('success get applicationJwt', applicationJwt);
+  })
+  .catch(function(err){
+    console.log(err);
   });
       </hljs>
     </md-content>
@@ -49,6 +52,9 @@ Austack.getApplicationJwt() // 默认已经保存在内存中
 Austack.createNewUser(data)
   .then(function(user){
     console.log('success create new user', user);
+  })
+  .catch(function(err){
+    console.log(err);
   });
       </hljs>
     </md-content>
