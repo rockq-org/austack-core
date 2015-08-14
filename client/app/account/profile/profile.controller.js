@@ -14,9 +14,8 @@
     vm.gotoSettings = gotoSettings;
 
     function gotoSettings() {
-      $mdDialog.hide().then(function () {
-        $state.go('settings');
-      });
+      $state.go('settings');
+      $mdDialog.hide();
     }
 
     vm.user.avatar = vm.user.avaar || 'assets/images/profile.png';

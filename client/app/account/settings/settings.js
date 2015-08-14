@@ -27,7 +27,7 @@
       role: 'admin',
       templateUrl: 'app/account/settings/settings.html',
       controller: 'AccountSettingsController',
-      controllerAs: 'settings',
+      controllerAs: 'vm',
       ncyBreadcrumb: {
         label: '账户设置'
       }

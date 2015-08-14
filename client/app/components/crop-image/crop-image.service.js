@@ -12,26 +12,28 @@
   function CropImageService($mdDialog, $log) {
 
     return {
-      show: showSettings,
-      hide: hideSettings
+      show: showDialog,
+      close: closeDialog
     };
 
-    function showSettings(ev) {
+    function showDialog(srcImage, ev) {
       var dialog = $mdDialog.show({
         controller: 'CropImageController',
         controllerAs: 'vm',
         templateUrl: 'app/components/crop-image/crop-image.html',
+        //clickOutsideToClose: true,
+        locals: {
+          a: 'asdfasdf',
+          srcImage: srcImage
+        },
         parent: angular.element(document.body),
         targetEvent: ev,
-      }).then(function (answer) {
-        $log.debug('You said the information was "' + answer + '".');
-      }, function () {
-        $log.debug('You cancelled the dialog.');
       });
+      return dialog;
     }
 
-    function hideSettings() {
-      return $mdDialog.hide();
+    function closeDialog() {
+      return $mdDialog.cancel();
     }
   }
 

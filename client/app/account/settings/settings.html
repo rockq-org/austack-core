@@ -1,55 +1,29 @@
-<md-content layout="column" flex layout-padding id="account-settings-content">
+<md-content layout="column" flex id="account-settings-content">
   <form name="updateForm">
-    <div layout="column">
-      <div>Select an image file:
-        <input type="file" id="fileInput" />
-      </div>
-      <div class="cropArea">
-        <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
-      </div>
-      <div>Cropped Image:</div>
+    <h2 class="md-subheader">头像</h2>
+    <div layout="row" layout-align="start center">
       <div>
-        <img ng-src="{{myCroppedImage}}" />
+        <img class="avatar" ng-src="{{vm.user.avatar}}" />
+      </div>
+      <div>
+        <md-button ng-click="vm.uploadImage($event)" class="md-raised md-accent">上传图片</md-button>
+        <input hide type="file" id="fileInput" />
       </div>
     </div>
     <div layout="row">
       <md-input-container flex>
-        <label>应用令牌</label>
-        <input ng-model="vm.application.clientSecret" disabled>
+        <label>手机号</label>
+        <input ng-model="vm.user.mobile" disabled>
       </md-input-container>
-      <md-button ng-click="vm.refreshSecret()" class="md-fab md-mini md-accent">
-        <md-icon md-svg-icon="navigation:ic_refresh_24px"></md-icon>
-        <md-tooltip>刷新</md-tooltip>
-      </md-button>
-      <md-button hide class="md-fab md-mini md-primary">
-        <md-icon md-svg-icon="content:ic_content_copy_24px"></md-icon>
-        <md-tooltip>拷贝</md-tooltip>
-      </md-button>
     </div>
-    <md-input-container flex>
-      <label>应用名称</label>
-      <input name="name" ng-model="vm.name" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="Application">
-      <div ng-messages="updateForm.name.$error">
-        <div ng-message="required">应用名称不能为空</div>
-        <div ng-message="mongoose">此应用名称已经被使用</div>
-        <div ng-message="remote-unique">此应用名称已经被使用</div>
-      </div>
-    </md-input-container>
-    <md-input-container flex>
-      <label>应用简介</label>
-      <textarea name="description" ng-model="vm.application.description"></textarea>
-    </md-input-container>
-    <md-input-container flex>
-      <label>回调链接</label>
-      <textarea ng-model="vm.application.callbackUrls" columns="1"></textarea>
-    </md-input-container>
-    <md-input-container flex="">
-      <label>令牌过期时间（秒）</label>
-      <input type="number" ng-model="vm.application.jwtExpiration">
-    </md-input-container>
+    <div layout="row">
+      <md-input-container flex>
+        <label>用户名</label>
+        <input ng-model="vm.user.name">
+      </md-input-container>
+    </div>
     <div flex layout="row" layout-align="space-between center">
       <md-button ng-disabled="updateForm.$invalid" ng-click="vm.update()" class="md-raised md-primary">保存</md-button>
-      <md-button ng-click="vm.remove($event)" class="md-warn">删除应用</md-button>
     </div>
   </form>
 </md-content>

@@ -5,25 +5,23 @@
     .module('austackApp.cropImage')
     .controller('CropImageController', CropImageController);
 
-  CropImageController.$inject = ['$scope', '$mdDialog'];
+  CropImageController.$inject = ['$scope', '$mdDialog', 'srcImage'];
 
-  function CropImageController($scope, $mdDialog) {
+  function CropImageController($scope, $mdDialog, srcImage) {
     var vm = this;
 
-    $scope.myImage = '';
-    $scope.myCroppedImage = '';
+    vm.srcImage = srcImage;
+    vm.croppedImage = null;
+    vm.save = saveImage;
+    vm.close = closeDialog;
 
-    var handleFileSelect = function (evt) {
-      var file = evt.currentTarget.files[0];
-      var reader = new FileReader();
-      reader.onload = function (evt) {
-        $scope.$apply(function ($scope) {
-          $scope.myImage = evt.target.result;
-        });
-      };
-      reader.readAsDataURL(file);
+    function saveImage() {
+      $mdDialog.hide(vm.croppedImage);
+    }
+
+    function closeDialog() {
+      $mdDialog.cancel();
     };
-    angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
   }
 
 })();
