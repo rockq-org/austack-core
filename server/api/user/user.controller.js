@@ -56,12 +56,11 @@ UserController.prototype = {
     var self = this;
     var name = req.body['name'];
     var mobile = name;
-    var expiredTimeSpan = 60000 * 3; // three minutes
     var now = new Date();
     // 四位数字验证码
     var verifyCode = SMS.generateVerificationCode();
     req.body['verifyCode'] = verifyCode;
-    req.body['verifyCodeExpiredAt'] = new Date(now.valueOf() + expiredTimeSpan);
+    req.body['verifyCodeExpiredAt'] = new Date(now.valueOf() + 60000 * 3);
     req.body['verifyCodeLatestSendTime'] = now;
 
     req.body['password'] = 'password'; // moogose need this field or we can not create new user
@@ -180,6 +179,7 @@ UserController.prototype = {
       }
       var verifyCode = SMS.generateVerificationCode();
       user.verifyCodeLatestSendTime = now;
+      user.verifyCodeExpiredAt = new Date(now.valueOf() + 60000 * 3);
       user.verifyCode = verifyCode;
 
       var sendData = {
@@ -221,14 +221,15 @@ UserController.prototype = {
     this.model.findOne({
       'name': req.body.name
     }, function (err, user) {
-      console.log(user);
       if (user.verifyCode !== verifyCode) {
         return res.forbidden({
           message: "Verify Code Not Correct"
         });
       }
 
-      if (user.verifyCodeExpiredAt < new Date()) {
+      var now = new Date();
+      logger.log(user.verifyCodeExpiredAt, now, user.verifyCodeExpiredAt < now);
+      if (user.verifyCodeExpiredAt < now) {
         return res.forbidden({
           message: "Verify Code Is Expired"
         });
