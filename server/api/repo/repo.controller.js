@@ -371,7 +371,7 @@ function _hasPermission(req, resource) {
   if (req.userInfo.role == 'root') {
     return true;
   }
-
+  logger.log(resource.ownerId, req.userInfo._id);
   // assign the requested resource into req before check.
   // http://stackoverflow.com/questions/11637353/comparing-mongoose-id-and-strings
   // _id and ownerId are object.

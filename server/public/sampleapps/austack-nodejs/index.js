@@ -15,23 +15,13 @@ var Austack = {
   // 验证用户的JWT是否合法（主要是为了验证是否被用户强制退出登录而导致的过期）
   validateUserJwt: validateUserJwt,
   // 1. 获取jwt
-  getApplicationJwt: getApplicationJwt,
-  // 2. 获取用户列表
-  getUserList: getUserList,
-  // 3. 创建新用户
-  createNewUser: createNewUser,
-  // 4. 获取用户详情
-  getUserDetail: getUserDetail,
-  // 5. 更新用户
-  updateUser: updateUser,
-  // 6. 删除用户
-  deleteUser: deleteUser,
+  getApplicationJwt: getApplicationJwt
 };
 
 module.exports = Austack;
 
 function init(cfg) {
-  Austack.set('repoName', cfg.name);
+  Austack.set('repoName', cfg.repoName);
   Austack.set('clientId', cfg.clientId);
   Austack.set('apiBaseURL', cfg.apiBaseURL);
   Austack.set('clientSecret', cfg.clientSecret);
@@ -107,46 +97,4 @@ function getApplicationJwt() {
     });
 
   return d.promise;
-}
-
-function getUserList() {
-  // body...
-}
-
-function createNewUser(user) {
-  var repoName = Austack.get('repoName');
-  logger.log(repoName);
-  var d = Q.defer();
-  Austack.getApplicationJwt()
-    .then(function (applicationJwt) {
-      request.post(Austack.get('apiBaseURL') + '/repos/' + repoName)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('Authorization', 'Bearer ' + applicationJwt)
-        .send(user)
-        .end(function (err, res) {
-          console.log('request responce here');
-          if (err) {
-            console.log('err here');
-            console.log(err);
-            return d.reject(err);
-          }
-          console.log(res.body);
-          d.resolve(res.body);
-        });
-    });
-
-  return d.promise;
-}
-
-function getUserDetail() {
-  // body...
-}
-
-function updateUser() {
-  // body...
-}
-
-function deleteUser() {
-  // body...
 }
