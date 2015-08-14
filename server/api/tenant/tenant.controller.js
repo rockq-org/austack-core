@@ -65,7 +65,7 @@ TenantController.prototype = {
     var data = {
 
     };
-    if(req.app.get('env') === 'development'){
+    if (req.app.get('env') === 'development') {
       data.mobile = '18959264502';
     }
 
@@ -243,7 +243,7 @@ var Helper = {
 
   sendSMS: function () {
     logger.log(Helper.msg);
-    if(Helper.msg){
+    if (Helper.msg) {
       var d = Q.defer();
       d.resolve();
       return d.promise;
@@ -321,6 +321,7 @@ var Helper = {
 
       user = {
         mobile: mobile,
+        createDate: Date.now(),
         uid: shortid.generate()
       };
       repoModel.create(user, function (err, _user) {

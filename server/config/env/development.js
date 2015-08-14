@@ -18,5 +18,5 @@ module.exports = {
 
   apiBaseURL: 'http://localhost:9001/api',
 
-  seedDB: true
+  seedDB: false
 };
