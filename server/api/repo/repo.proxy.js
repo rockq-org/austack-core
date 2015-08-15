@@ -27,6 +27,7 @@ module.exports = {
   getModel: _getModel,
   getRepo: getRepo,
   convertSchema: convertSchema,
+  createAppUser: createAppUser,
   getRepoByName: getRepoByName
 };
 
@@ -186,3 +187,32 @@ function getRepoByName(repoName) {
 
   return d.promise;
 };
+
+function createAppUser(repoModel, mobile) {
+  var d = Q.defer();
+
+  repoModel.findOne({
+      mobile: mobile
+    },
+    function (err, user) {
+      if (user) {
+        //current mobile exist, can not create
+        return d.reject('mobile exist');
+      }
+
+      user = {
+        mobile: mobile,
+        uid: shortid.generate()
+      };
+      repoModel.create(user, function (err, _user) {
+        if (err) {
+          logger.log(err);
+          return d.reject('error while repoModel.create');
+        }
+        logger.log(_user, repoModel.modelName);
+        return d.resolve(_user);
+      });
+    });
+
+  return d.promise;
+}
