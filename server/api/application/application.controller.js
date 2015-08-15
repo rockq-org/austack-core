@@ -78,6 +78,7 @@ ApplicationController.prototype = {
 
     return false;
   },
+
   show: function (req, res) {
     if (!req[this.paramName]) {
       return res.notFound();
