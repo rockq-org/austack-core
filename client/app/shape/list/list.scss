@@ -10,6 +10,10 @@
       margin-bottom: 12px;
       background-color: lighten($as-primary, 30%);
       border-left: 3px solid $as-accent;
+      &.static {
+        background-color: lighten($as-primary, 40%);
+        border-left: 3px solid lighten($as-accent, 10%);
+      }
     }
     .dndDraggingSource {
       display: none;

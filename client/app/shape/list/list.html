@@ -11,7 +11,7 @@
         <span flex></span>
         <p>字段类型</p>
       </md-list-item-->
-      <md-list-item dnd-draggable="field" dnd-moved="list.moved($index)" dnd-effect-allowed="move" dnd-selected="list.showDetail(field)" ng-class="{'selected': list.curField === field}" ng-repeat="field in list.schema">
+      <md-list-item dnd-draggable="field" dnd-moved="list.moved($index)" dnd-effect-allowed="move" dnd-selected="list.showDetail(field)" ng-class="{'selected': list.curField === field, 'static': field.isSys}" ng-repeat="field in list.schema">
         <p>{{field.name}}</p>
         <span flex></span>
         <p>{{field.props.type | shapeType}}</p>
