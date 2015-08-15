@@ -21,7 +21,7 @@ var shortid = require('shortid');
 var _ = require('lodash');
 
 module.exports = {
-  import: import,
+  import: _import,
   create: _create,
   insertOrUpdate: insertOrUpdate,
   getModel: _getModel,
@@ -103,8 +103,7 @@ function _create(shape) {
  * @param  {[type]} data     [description]
  * @return {[type]}          [description]
  */
-function
-import (repoName, data) {
+function _import(repoName, data) {
   var deferred = Q.defer();
   Shape.findOne({
       name: repoName
