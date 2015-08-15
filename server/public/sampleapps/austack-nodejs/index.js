@@ -138,7 +138,23 @@ function createNewUser(user) {
 }
 
 function getUserDetail() {
-  // body...
+  var d = Q.defer();
+  Austack.getApplicationJwt()
+    .then(function (applicationJwt) {
+      request.post(Austack.get('apiBaseURL') + '/appUsers/')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + applicationJwt)
+        .send(user)
+        .end(function (err, res) {
+          if (err) {
+            return d.reject(err.response.body.message);
+          }
+          d.resolve(res.body);
+        });
+    });
+
+  return d.promise;
 }
 
 function updateUser() {
