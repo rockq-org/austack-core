@@ -46,9 +46,12 @@ function initExpress(app) {
   app.use(cors(config.corsOptions));
   app.use(compression());
   app.use(bodyParser.urlencoded({
-    extended: false
+    extended: false,
+    limit: '5mb'
   }));
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({
+    limit: '5mb'
+  }));
   app.use(methodOverride());
   // app.use(cookieParser());
   app.use(session({
