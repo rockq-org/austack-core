@@ -5,7 +5,7 @@ module.exports = TenantController;
 var _ = require('lodash');
 var ParamController = require('../../lib/controllers/param.controller');
 var LoginRecordModel = require('../loginRecord/loginRecord.model').model;
-var Application = require('../application/application.model').model;
+var ApplicationModel = require('../application/application.model').model;
 var User = require('../user/user.model').model;
 var compose = require('composable-middleware');
 var ShapeProxy = require('../shape/shape.proxy');
@@ -151,7 +151,7 @@ var Helper = {
     var d = Q.defer();
     var clientId = Helper.req.query.clientId;
 
-    Application.findByClientId(clientId, function (err, application) {
+    ApplicationModel.findByClientId(clientId, function (err, application) {
       if (err) {
         d.reject('该应用不存在');
         return d.promise;

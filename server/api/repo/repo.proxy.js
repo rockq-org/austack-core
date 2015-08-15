@@ -20,6 +20,17 @@ var Q = require('q');
 var shortid = require('shortid');
 var _ = require('lodash');
 
+module.exports = {
+  import: import,
+  create: _create,
+  insertOrUpdate: insertOrUpdate,
+  getModel: _getModel,
+  getRepo: getRepo,
+  convertSchema: convertSchema,
+  createAppUser: createAppUser,
+  getRepoByName: getRepoByName
+};
+
 /**
  * get repo's model by collection name or shape name.
  * @param  {[type]} name [description]
@@ -92,7 +103,8 @@ function _create(shape) {
  * @param  {[type]} data     [description]
  * @return {[type]}          [description]
  */
-exports.import = function (repoName, data) {
+function
+import (repoName, data) {
   var deferred = Q.defer();
   Shape.findOne({
       name: repoName
@@ -159,8 +171,48 @@ function getRepo(data) {
   return d.promise;
 };
 
-exports.create = _create;
-exports.insertOrUpdate = insertOrUpdate;
-exports.getModel = _getModel;
-exports.getRepo = getRepo;
-exports.convertSchema = convertSchema;
+function getRepoByName(repoName) {
+  var d = Q.defer();
+
+  ShapeProxy.getShapeByName(repoName)
+    .then(function (shape) {
+      var repoModel = _getModel(shape);
+      logger.log(shape.name, shape.mSchema, repoModel);
+      d.resolve(repoModel);
+    })
+    .catch(function (err) {
+      logger.log(err);
+      d.reject(err);
+    });
+
+  return d.promise;
+};
+
+function createAppUser(repoModel, mobile) {
+  var d = Q.defer();
+
+  repoModel.findOne({
+      mobile: mobile
+    },
+    function (err, user) {
+      if (user) {
+        //current mobile exist, can not create
+        return d.reject('mobile exist');
+      }
+
+      user = {
+        mobile: mobile,
+        uid: shortid.generate()
+      };
+      repoModel.create(user, function (err, _user) {
+        if (err) {
+          logger.log(err);
+          return d.reject('error while repoModel.create');
+        }
+        logger.log(_user, repoModel.modelName);
+        return d.resolve(_user);
+      });
+    });
+
+  return d.promise;
+}
