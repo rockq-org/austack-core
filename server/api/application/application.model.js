@@ -28,6 +28,7 @@ var ApplicationDefinition = {
   },
   description: String,
   ownerId: String,
+  repoName: String,
   clientId: String,
   clientSecret: String,
   jwtExpiration: {

@@ -31,4 +31,14 @@ describe('Austack nodejs sdk', function () {
 
     return Austack.createNewUser(data);
   });
+
+  it('getUserDetail', function () {
+    var data = {
+      mobile: '18959264509'
+    };
+
+    return Austack.getUserDetail(data);
+  });
+
+
 });

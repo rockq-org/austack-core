@@ -54,7 +54,7 @@ AppUserController.prototype = {
     }
 
     RepoProxy.getRepo({
-        ownerId: ownerId
+        ownerId: ownerId // query by ownerId is enough, as the jwt can not be modify or it will not pass validate
       })
       .then(function (repoModel) {
         repoModel.findOne({
