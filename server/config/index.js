@@ -25,11 +25,17 @@ var common = {
 
   root: path.normalize(__dirname + '/../..'),
 
-  publicDir: 'dist',
+  distDir: 'dist',
+
+  publicDir: 'server/public',
 
   ip: '0.0.0.0',
 
   port: process.env.PORT || 9001,
+
+  corsOptions: {
+    credentials: true
+  },
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
@@ -37,13 +43,40 @@ var common = {
   },
 
   // List of user roles
-  userRoles: ['user', 'admin', 'root'],
+  userRoles: ['user', 'appAdmin', 'admin', 'root'],
+  limit: 100, // paginate limit
 
-  weimi: {
-    uid: "lmf8FDhlAHHB",
-    pas: "r2z36xbh",
-    cid: "Zh07NWBGgr1r"
-  },
+  // shape's default schema
+  mSchema: [{
+    name: 'uid',
+    isSys: true,
+    props: {
+      type: 'String',
+      unique: true,
+      required: true
+    }
+  }, {
+    name: 'mobile',
+    isSys: true,
+    props: {
+      type: 'String',
+      required: true
+    }
+  }, {
+    name: 'createDate',
+    isSys: true,
+    props: {
+      type: 'Date',
+      default: Date.now
+    }
+  }, {
+    name: 'latestActive',
+    isSys: true,
+    props: {
+      type: 'Date',
+      default: Date.now
+    }
+  }],
 
   // options passed to create mongo connections
   mongo: {
@@ -63,6 +96,22 @@ var common = {
           connectTimeoutMS: 10000
         }
       }
+    }
+  },
+  logLevel: 'log',
+  sms: {
+    provider: 'weimi',
+    weimi: {
+      uid: "lmf8FDhlAHHB",
+      pas: "r2z36xbh",
+      cid: "Zh07NWBGgr1r"
+    },
+    qiji: {
+      api: 'http://111.206.169.91:8180/templatesms/mysms',
+      srcId: '0005',
+      templateSmsId: '6',
+      username: 'austack90-d46a-486d-abc0-1586d0001',
+      password: 'IrcUgyug'
     }
   }
 };

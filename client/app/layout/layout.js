@@ -5,10 +5,20 @@
   angular
     .module('austackApp.layout', [
       'ui.router',
-      'austackApp.mainMenu',
-      'austackApp.layout.breadcrumb'
+      'ncy-angular-breadcrumb',
+      'austackApp.mainMenu'
     ])
+    .config(configBreadcrumb)
     .config(configLayoutRoute);
+
+  configBreadcrumb.$inject = ['$breadcrumbProvider'];
+
+  function configBreadcrumb($breadcrumbProvider) {
+    $breadcrumbProvider.setOptions({
+      includeAbstract: false,
+      templateUrl: 'app/layout/header/breadcrumb.html'
+    });
+  }
 
   configLayoutRoute.$inject = ['$stateProvider'];
 
@@ -17,7 +27,16 @@
       name: 'root',
       url: '',
       abstract: true,
-      templateUrl: 'app/layout/layout.html',
+      views: {
+        '': {
+          templateUrl: 'app/layout/layout.html',
+        },
+        'header@root': {
+          templateUrl: 'app/layout/header/header.html',
+          controller: 'HeaderController',
+          controllerAs: 'vm'
+        }
+      },
       ncyBreadcrumb: {
         label: 'Home'
       }

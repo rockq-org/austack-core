@@ -18,7 +18,13 @@
       authenticate: true,
       templateUrl: 'app/dashboard/dashboard.html',
       controller: 'DashboardController',
-      controllerAs: 'vm',
+      controllerAs: 'dashboard',
+      resolve: {
+        /* @ngInject */
+        statisticsData: function (LoginRecord) {
+          return LoginRecord.getStatisticsData();
+        }
+      },
       ncyBreadcrumb: {
         label: '仪表盘'
       }
@@ -29,6 +35,7 @@
     mainMenuProvider.addMenuItem({
       name: '仪表盘',
       state: dashboardState.name,
+      icon: 'action:ic_dashboard_24px',
       order: 1
     });
   }

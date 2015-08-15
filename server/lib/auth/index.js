@@ -19,22 +19,12 @@ module.exports = router;
  * @type {user:model~User}
  */
 var User = require('../../api/user/user.model').model;
+var Application = require('../../api/application/application.model').model;
 
-// Passport Configuration
+// username, password in user
 require('./local/passport').setup(User, config);
-
-// apply authentication routes for the providers
 router.use('/local', require('./local/index'));
 
-
-
-// /**
-//  * The authentication for tenant
-//  */
-// var User = require('../../api/tenant/tenant.model').model;
-
-// // Passport Configuration
-// require('./tenant/passport').setup(User, config);
-
-// // apply authentication routes for the providers
-// router.use('/tenant', require('./tenant/index'));
+// clientId, clientSecret in application
+require('./application/passport').setup(Application, config);
+router.use('/application', require('./application/index'));

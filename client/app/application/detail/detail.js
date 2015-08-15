@@ -12,12 +12,15 @@
   angular
     .module('austackApp.application.detail', [
       'ui.router',
-      'angularMoment'
+      'angularMoment',
+      'austackApp.application.detail.quickstart',
+      'austackApp.application.detail.settings',
+      'austackApp.application.detail.loginpage'
     ])
-    .config(configureApplicationListDetail);
+    .config(configureApplicationDetail);
 
   // inject configApplicationRoutes dependencies
-  configureApplicationListDetail.$inject = ['$stateProvider'];
+  configureApplicationDetail.$inject = ['$stateProvider', '$urlRouterProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -29,11 +32,12 @@
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
    */
-  function configureApplicationListDetail($stateProvider) {
+  function configureApplicationDetail($stateProvider, $urlRouterProvider) {
     // The detail state configuration
     var detailState = {
       name: 'application.detail',
       parent: 'application',
+      abstract: true,
       url: '/:id',
       authenticate: true,
       role: 'admin',
@@ -45,14 +49,19 @@
         }
       },
       ncyBreadcrumb: {
+        force: true,
         label: '{{detail.application.name}}',
         parent: 'application.list'
       },
       resolve: {
         application: resolveApplicationFromArray
+      },
+      data: {
+        tabIdx: 0
       }
     };
 
+    $urlRouterProvider.when('/applications/:id', '/applications/:id/quickstart');
     $stateProvider.state(detailState);
   }
 
@@ -67,7 +76,8 @@
    * @returns {Object|null} The application whose value of the _id property equals $stateParams._id
    */
   function resolveApplicationFromArray(applications, $stateParams, _) {
-    return _.find(applications, {
+    //console.log(detail.application.name);
+    return _.find(applications.data, {
       '_id': $stateParams.id
     });
   }

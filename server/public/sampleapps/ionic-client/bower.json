@@ -1,0 +1,9 @@
+{
+  "name": "ionic-client",
+  "private": "true",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.0.1"
+  }
+}

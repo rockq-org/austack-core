@@ -1,8 +1,9 @@
 <as-main-menu>
 </as-main-menu>
 <div layout="column" flex>
-  <as-header></as-header>
-  <as-breadcrumb></as-breadcrumb>
-  <section ui-view></section>
+  <!--as-header></as-header-->
+  <div layout ui-view="header"></div>
+  <md-content layout flex ui-view></md-content>
   <!--as-footer></as-footer-->
+  <div layout ui-view="footer"></div>
 </div>

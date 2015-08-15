@@ -24,7 +24,6 @@
     ])
     .factory('Resource', Resource);
 
-
   /**
    * @ngdoc function
    * @name resource.provider:Resource

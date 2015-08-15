@@ -1,0 +1,9 @@
+{
+  "name": "#name#",
+  "clientId": "#clientId#",
+  "clientSecret": "#clientSecret#",
+  "corsDomains": [],
+  "callbackUrls": [],
+  "jwtExpiration": "#jwtExpiration#",
+  "apiBaseURL": "#apiBaseURL#"
+}

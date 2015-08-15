@@ -1,0 +1,27 @@
+<md-dialog class="crop-image" aria-label="Crop image">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>上传头像</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="vm.close()" aria-label="Close settings">
+          <md-icon md-svg-src="navigation:ic_close_24px"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="crop-area">
+        <img-crop image="vm.srcImage" result-image="vm.croppedImage"></img-crop>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+      <span flex></span>
+      <md-button ng-click="vm.close()" class="md-primary">
+        取消
+      </md-button>
+      <md-button ng-click="vm.save()" class="md-raised md-primary">
+        保存
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

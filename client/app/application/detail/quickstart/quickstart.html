@@ -1,0 +1,109 @@
+<md-content layout="column" flex layout-padding id="application-settings-content">
+  <md-card class="tip">
+    <md-card-content>
+      <span>应用包含两部分：移动客户端和服务客户端。移动客户端可以借助austack提供的服务直接支持用户的注册，登录等功能。服务客户端可以使用austack提供的API管理用户。</span>
+    </md-card-content>
+  </md-card>
+  <div layout="row" layout-md="column" layout-sm="column">
+    <md-content flex md-scroll-x>
+      <md-card layout="column">
+        <md-card-content layout="row" layout-align="space-between center">
+          <div flex>
+            <img src="assets/images/ionic.png" class="icon-large" />
+          </div>
+          <h3 flex class="text-center">客户端（Ionic）</h3>
+        </md-card-content>
+        <div class="md-actions" layout="row" layout-align="space-between center">
+          <md-button class="md-primary" ng-click="vm.showClientTutorial =! vm.showClientTutorial"> 示例说明 </md-button>
+          <md-button class="md-primary md-raised" ng-click="vm.downloadClient()"> 下载示例代码 </md-button>
+        </div>
+        <md-content layout-padding class="collapse-animate" ng-show="vm.showClientTutorial">
+          <p>
+            1. 加载austack的代码库到www/index.html内
+          </p>
+          <pre hljs code="vm.ionicStep1" lang="html"></pre>
+          <p>
+            2. 添加LoginCtrl到www/js/controllers.js内
+          </p>
+          <pre hljs lang="javascript">angular.module('starter.controllers'.controller('LoginCtrl', function($scope, austack, $state, $window) {
+    console.log('start LoginCtrl');
+
+    function doAuth() {
+        console.log('start doing signin');
+        austack.signin({}, function(result) {
+            // $window.localStorage.setItem('profile', result.profile);
+            // $window.localStorage.setItem('refreshToken', result.refreshToken);
+            $window.localStorage.setItem('token', result.idToken);
+            alert(result.idToken);
+            $state.go('tab.dash');
+        }, function(error) {
+            console.log(error);
+        });
+    }
+
+    $scope.$on('$ionic.reconnectScope', function() {
+        doAuth();
+    });
+
+    doAuth();
+});
+          </pre>
+          <p> 3. 添加其他插件，启动ios模拟器</p>
+          <pre hljs lang="bash">npm install -g cordova ionic
+npm install
+bower install
+cordova platform add ios
+cordova plugin add cordova-plugin-inappbrowser
+ionic emulate ios -l -c -s
+          </pre>
+        </md-content>
+      </md-card>
+    </md-content>
+    <md-content flex md-scroll-x>
+      <md-card layout="column">
+        <md-card-content layout="row" layout-align="space-between center">
+          <div flex>
+            <img src="assets/images/nodejs.svg" class="icon-large" />
+          </div>
+          <h3 flex class="text-center">服务器端（NodeJS）</h3>
+        </md-card-content>
+        <div class="md-actions" layout="row" layout-align="space-between center">
+          <md-button class="md-primary" ng-click="vm.showServerTutorial =! vm.showServerTutorial"> 示例说明 </md-button>
+          <md-button class="md-primary md-raised" ng-click="vm.downloadBackend()"> 下载示例代码 </md-button>
+        </div>
+        <md-content layout-padding class="collapse-animate" ng-show="vm.showServerTutorial">
+          <p>
+            1. app.js 设置支持cors
+          </p>
+          <pre hljs lang="js">// 1. 设置支持cors
+var cors = require('cors');
+app.use(cors({
+  origin: '*'
+}));
+          </pre>
+          <p>
+            2. app.js 设置系统启动则获得applicationJwt
+          </p>
+          <pre hljs lang="js">// 2. 加载 Austack 代码库，添加austack-demo路由示范
+var Austack = require('./austack-nodejs.js');
+Austack.getApplicationJwt()
+  .then(function (applicationJwt) {
+    // 你可以保存该applicationJwt到你的服务器数据库里
+    console.log('success get applicationJwt', applicationJwt);
+  });
+app.use('/austack-demo', require('./routes/austack-demo'));
+          </pre>
+          <p>
+            3. 启动server服务:
+          </p>
+          <pre hljs lang="js">npm install
+npm start
+//或者
+nodemon -i node_modules ./bin/www
+          </pre>
+
+        </md-content>
+      </md-card>
+    </md-content>
+  </div>
+</md-content>

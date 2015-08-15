@@ -40,6 +40,9 @@
     // JASMINE
     "describe": false,
     "it": false,
+    "saveAs": false,
+    "FileReader": false,
+    "Blob": false,
     "before": false,
     "beforeEach": false,
     "after": false,
@@ -51,9 +54,12 @@
     "_": false,
     // sinon
     "sinon": false,
+    // Jquery
+    "$": false,
     // Browser
     "document": false,
-    "console": false
+    "console": false,
+    "window": false
   },
   //relaxing options
   "globalstrict": true,

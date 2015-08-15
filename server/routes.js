@@ -23,10 +23,14 @@ module.exports = function (app) {
     .post(middleware.removeReservedSchemaKeywords);
 
   // Insert routes below
+  app.use('/api/appUsers', require('./api/appUser'));
+  app.use('/api/loginRecords', require('./api/loginRecord'));
+  app.use('/tenant', require('./api/tenant'));
   app.use('/api/applications', require('./api/application'));
-
   app.use('/api/users', require('./api/user'));
-  // app.use('/api/tenant', require('./api/tenant'));
+  app.use('/api/repos', require('./api/repo'));
+  app.use('/api/shapes', require('./api/shape'));
+  app.use('/api/sampleapps', require('./api/sampleapp'));
   app.use('/api/auth', require('./lib/auth'));
 
   // All undefined asset or api routes should return a 404
@@ -36,11 +40,11 @@ module.exports = function (app) {
     });
 
   // All other routes should redirect to the index.html
-  app.route('/*')
-    .get(function getIndexFile(req, res) {
-      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
-    });
+  // app.route('/*')
+  //   .get(function getIndexFile(req, res) {
+  //     res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+  //   });
 
   // register the default error handler
-  app.use(middleware.defaultErrorHandler);
+  // app.use(middleware.defaultErrorHandler);
 };

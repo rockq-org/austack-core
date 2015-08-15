@@ -1,0 +1,17 @@
+<form class="card" name="verifyCodeForm" layout="column" layout-fill layout-align="space-between" ng-submit="reset.submitVerifyCode(verifyCodeForm)">
+  <md-input-container>
+    <label>验证码</label>
+    <input name="verifyCode" ng-model="reset.user.verifyCode" required/>
+    <div ng-messages="verifyCodeForm.verifyCode.$error" ng-if="verifyCodeForm.verifyCode.$dirty">
+      <div ng-message="required">请输入验证码！</div>
+    </div>
+  </md-input-container>
+  <md-button class="md-raised md-primary" ng-disabled="!verifyCodeForm.$valid" type="submit">提交手机验证码</md-button>
+  <div class="md-actions" layout="row" layout-align="end center">
+
+    <md-button class="md-accent" ng-click="reset.resendVerifyCode()" ng-disabled="reset.disableResendVerifyCodeBtn">
+      重发验证码
+      <timer ng-show="reset.disableResendVerifyCodeBtn" interval="1000" finish-callback="reset.countDownFinish()" countdown="60">({{countdown}} 秒)</timer>
+    </md-button>
+  </div>
+</form>

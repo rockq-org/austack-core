@@ -40,23 +40,36 @@ var isAdmin = auth.hasRole('admin');
 
 // create
 router.route('/')
-  .post(controller.create);
+  .post(controller.validateCaptcha, controller.validateInvitationCode, controller.create);
+// .post(controller.validateInvitationCode, controller.create);
+
+router.route('/captcha')
+  .get(controller.captcha);
+
+// resendVerifyCode
+router.route('/resendVerifyCode')
+  .put(controller.validateCaptcha, controller.resendVerifyCode);
+
 // verifyMobile
-router.route('/' + controller.paramString + '/verifyMobile')
+router.route('/verifyMobile')
   .put(controller.verifyMobile);
-// submitUserDetail
-router.route('/' + controller.paramString + '/submitUserDetail')
-  .put(controller.submitUserDetail);
 
 // wrap in domain, check authentication and attach userInfo object, set user request context
 router.route('*')
   .all(addRequestContext, isAuthenticated, addUserContext);
 
+// submitUserDetail
+router.route('/submitUserDetail')
+  .put(isAdmin, controller.submitUserDetail);
+
+// setNewPassword
+router.route('/setNewPassword')
+  .put(isAdmin, controller.setNewPassword);
 
 // register user routes
 router.route('/')
-  .get(isAdmin, controller.index)
-  // .post(isAdmin, controller.create);
+  .get(isAdmin, controller.index);
+// .post(isAdmin, controller.create);
 
 // fetch authenticated user info
 router.route('/me')

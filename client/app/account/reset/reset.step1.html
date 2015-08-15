@@ -1,0 +1,26 @@
+<form class="card" name="getVerifyCodeForm" layout="column" layout-fill layout-align="space-between" ng-submit="reset.getVerifyCode(getVerifyCodeForm)">
+  <md-input-container>
+    <label>手机号</label>
+    <input name="name" ng-model="reset.user.name" required/>
+    <div ng-messages="getVerifyCodeForm.name.$error" ng-if="getVerifyCodeForm.name.$dirty">
+      <div ng-message="required">请输入您的手机号！</div>
+    </div>
+  </md-input-container>
+  <div layout="row">
+    <md-input-container flex>
+      <label>图形验证码</label>
+      <input name="captcha" ng-model="reset.user.captcha" required/>
+      <div ng-messages="getVerifyCodeForm.captcha.$error" ng-if="getVerifyCodeForm.captcha.$dirty">
+        <div ng-message="required">请输入图形验证码！</div>
+      </div>
+    </md-input-container>
+    <img class="captcha" ng-src="{{reset.captchaUrl}}" ng-click="reset.reloadCaptcha()" />
+  </div>
+  <md-button class="md-primary md-raised" ng-disabled="!getVerifyCodeForm.$valid" type="submit">
+    <span>获取手机验证码</span>
+    <md-icon md-svg-icon="content:ic_send_24px "></md-icon>
+  </md-button>
+  <div class="md-actions" layout="row" layout-align="end center">
+    <md-button ui-sref="account.login">取消</md-button>
+  </div>
+</form>

@@ -13,7 +13,7 @@
     .config(configAccountLogout);
 
   // inject configAccountLogout dependencies
-  configAccountLogout.$inject = ['$stateProvider', 'mainMenuProvider'];
+  configAccountLogout.$inject = ['$stateProvider'];
 
   /**
    * Route configuration function configuring the passed $stateProvider.
@@ -21,30 +21,20 @@
    * 'logout' view paired with the UserMainController as 'logout'.
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
-   * @param {mainMenuProvider} mainMenuProvider - The service to pass navigation information to
    */
-  function configAccountLogout($stateProvider, mainMenuProvider) {
+  function configAccountLogout($stateProvider) {
     // The logout state configuration
     var logoutState = {
       name: 'account.logout',
-      url: '^/logout',
+      url: '/logout',
       authenticate: false,
       role: 'user',
       templateUrl: 'app/account/logout/logout.html',
       controller: 'AccountLogoutController',
-      controllerAs: 'logout',
-      ncyBreadcrumb: {
-        label: 'Logout'
-      }
+      controllerAs: 'logout'
     };
 
     $stateProvider.state(logoutState);
-
-    // mainMenuProvider.addMenuItem({
-    //   name: 'Logout',
-    //   state: logoutState.name,
-    //   role: logoutState.role
-    // });
   }
 
 })();

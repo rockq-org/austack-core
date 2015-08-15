@@ -6,6 +6,8 @@ var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
 });
 
+var analytics = 'e69238dd29a746cb5cd3e0e99c0a3f4d';
+
 module.exports = function (options) {
   gulp.task('partials', function () {
     return gulp.src([
@@ -56,6 +58,8 @@ module.exports = function (options) {
       .pipe($.useref())
       .pipe($.revReplace())
       .pipe(htmlFilter)
+      .pipe($.replace('<!-- analytics -->', analytics))
+      .pipe($.minifyInline())
       .pipe($.minifyHtml({
         empty: true,
         spare: true,
@@ -104,5 +108,5 @@ module.exports = function (options) {
     $.del([options.dist + '/', options.tmp + '/'], done);
   });
 
-  gulp.task('build', ['html', 'fonts', 'icons', 'other', 'socket']);
+  gulp.task('build', ['config', 'html', 'fonts', 'icons', 'other', 'socket']);
 };

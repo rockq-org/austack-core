@@ -27,6 +27,8 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/loginRecord/loginRecord.socket').register(socket);
+  require('../api/tenant/tenant.socket').register(socket);
   require('../api/application/application.socket').register(socket);
   require('../api/user/user.socket').register(socket);
 }
@@ -48,8 +50,8 @@ function initSocketIO(socketio) {
   //
   // 2. Require authentication here:
   // socketio.use(require('socketio-jwt').authorize({
-  //	secret: config.secrets.session,
-  //	handshake: true
+  //  secret: config.secrets.session,
+  //  handshake: true
   // }));
 
   socketio.on('connection', function (socket) {

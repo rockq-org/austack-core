@@ -1,0 +1,26 @@
+<section id="user-list-content" layout="row" layout-fill flex>
+  <md-content ng-if="list.users.length" flex>
+    <md-list layout="column">
+      <md-list-item ng-repeat="user in list.users" ng-click="list.showInDetails(user)" ng-class="{'selected': list.isSelected(user)}">
+        <list-image ng-if="!user.image" string="{{user.name}}"></list-image>
+        <p>{{user.name}}</p>
+        <p>{{list.getRole(user).name}}</p>
+        <md-icon ng-show="user.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
+        <md-icon ng-show="!user.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
+      </md-list-item>
+    </md-list>
+  </md-content>
+  <md-content ng-if="!list.users.length">
+    <md-card>
+      <h2>No Users found</h2>
+      <p>
+        There are no Users!
+        <a ng-click="index.create()">Create one!</a>
+      </p>
+    </md-card>
+  </md-content>
+  <md-button ng-click="index.create()" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new user">
+    <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+  </md-button>
+
+</section>

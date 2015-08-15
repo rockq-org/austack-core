@@ -40,16 +40,24 @@ var addUserContext = auth.addAuthContext('request:acl.user');
 // check if the request is made by an authenticated user with at least the admin role
 var isAuthenticated = auth.hasRole('admin');
 
+// login-page-preview
+router.route('/' + controller.paramString + '/login-page-preview')
+  .get(controller.loginPagePreview);
+
 // apply auth middleware to all routes
 router.route('*').all(addRequestContext, isAuthenticated, addUserContext);
 
 // register application routes
 router.route('/')
-	.get(controller.index)
-	.post(controller.create);
+  .get(controller.index)
+  .post(controller.create);
 
 router.route('/' + controller.paramString)
-	.get(controller.show)
-	.delete(controller.destroy)
-	.put(controller.update)
-	.patch(controller.update);
+  .get(controller.show)
+  .delete(controller.destroy)
+  .put(controller.update)
+  .patch(controller.update);
+
+// update-sms-templates
+router.route('/' + controller.paramString + '/refresh-secret-token')
+  .get(controller.refreshSecretToken);

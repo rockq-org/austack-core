@@ -257,7 +257,7 @@ function handleError(err, options) {
   var res = this.res;
   var statusCode;
 
-  console.log('handleError', err, options);
+  logger.log('handleError', err, options);
 
   if (err.name && err.name === 'ValidationError') {
     return res.badRequest(err);
@@ -272,7 +272,7 @@ function handleError(err, options) {
       return res[statusCode](err);
     }
   } catch (e) {
-    console.log('Exception while handling error: %s', e);
+    logger.log('Exception while handling error: %s', e);
   }
 
   return res.serverError(err);

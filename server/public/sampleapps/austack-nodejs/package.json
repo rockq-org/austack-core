@@ -1,0 +1,22 @@
+{
+  "name": "austack-nodejs",
+  "version": "0.0.1",
+  "description": "Austack Node.js toolkit",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -w --reporter spec"
+  },
+  "keywords": [
+    "Austack"
+  ],
+  "author": "Lyman Lai",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "2.x.x"
+  },
+  "dependencies": {
+    "q": "^1.4.1",
+    "superagent": "^1.3.0",
+    "tracer": "^0.7.4"
+  }
+}
