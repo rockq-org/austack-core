@@ -2,7 +2,10 @@
   'use strict';
 
   angular
-    .module('austackApp.account.settings', [])
+    .module('austackApp.account.settings', [
+      'austackApp.auth',
+      'austackApp.cropImage'
+    ])
     .config(configAccountSettingsLogin);
 
   // inject configAccountSettingsLogin dependencies
@@ -25,13 +28,21 @@
       role: 'admin',
       templateUrl: 'app/account/settings/settings.html',
       controller: 'AccountSettingsController',
-      controllerAs: 'settings',
+      controllerAs: 'vm',
       ncyBreadcrumb: {
         label: '账户设置'
+      },
+      resolve: {
+        user: resolveUser
       }
     };
 
     $stateProvider.state(state);
+  }
+
+  /* @ngInject */
+  function resolveUser(User) {
+    return User.get().$promise;
   }
 
 })();

@@ -33,6 +33,9 @@ var UserDefinition = {
     type: String,
     required: true
   },
+  avatar: String,
+  email: String,
+  company: String,
   role: {
     type: String,
     default: 'user',
@@ -258,6 +261,9 @@ function getProfile() {
     '_id': this._id,
     'mobile': this.userId,
     'name': this.name,
+    'avatar': this.avatar,
+    'email': this.email,
+    'company': this.company,
     'active': this.active,
     'role': this.role,
     'info': this.info,

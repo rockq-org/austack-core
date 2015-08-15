@@ -27,7 +27,7 @@
     vm.menus = HeaderMenus;
 
     vm.user = Auth.getCurrentUser();
-    vm.user.avatar = 'assets/images/profile.png';
+    vm.user.avatar = vm.user.avatar || 'assets/images/profile.png';
 
     vm.profile = profile;
     vm.setting = setting;
@@ -39,11 +39,11 @@
     vm.closeSidebar = closeSidebar;
 
     function closeSidebar() {
-      return $mdSidenav(vm.sidenavId).close();
+      return $mdSidenav(sidenavId).close();
     }
 
     function openSidebar() {
-      return $mdSidenav(vm.sidenavId).open();
+      return $mdSidenav(sidenavId).open();
     }
 
     function profile(ev) {
