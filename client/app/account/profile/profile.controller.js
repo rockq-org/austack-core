@@ -11,6 +11,7 @@
     var vm = this;
 
     vm.user = Auth.getCurrentUser();
+    console.log(vm.user);
     vm.gotoSettings = gotoSettings;
 
     function gotoSettings() {
@@ -18,7 +19,7 @@
       $mdDialog.hide();
     }
 
-    vm.user.avatar = vm.user.avaar || 'assets/images/profile.png';
+    vm.user.avatar = vm.user.avatar || 'assets/images/profile.png';
 
     vm.close = function () {
       $mdDialog.hide();
