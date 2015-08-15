@@ -74,37 +74,6 @@ AppUserController.prototype = {
           message: 'mobile exist'
         });
       });
-
-    // RepoProxy.getRepo({
-    //     ownerId: ownerId // query by ownerId is enough, as the jwt can not be modify or it will not pass validate
-    //   })
-    //   .then(function (repoModel) {
-    //     repoModel.findOne({
-    //       mobile: mobile
-    //     }, function (err, user) {
-    //       if (user) {
-    //         //current mobile exist, can not create
-    //         return res.forbidden({
-    //           message: 'mobile exist'
-    //         });
-    //       }
-
-    //       user = {
-    //         mobile: mobile,
-    //         uid: shortid.generate()
-    //       };
-    //       repoModel.create(user, function (err, _user) {
-    //         if (err) {
-    //           logger.log(err);
-    //           return res.forbidden({
-    //             message: 'error while repoModel.create'
-    //           });
-    //         }
-    //         logger.log(_user, repoModel.modelName);
-    //         return res.json(_user);
-    //       });
-    //     });
-    //   });
   }
 };
 
