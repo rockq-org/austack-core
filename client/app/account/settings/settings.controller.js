@@ -39,6 +39,7 @@
       var file = evt.currentTarget.files[0];
       var reader = new FileReader();
       reader.onload = function (evt) {
+        fileInput.value = null;
         $scope.$apply(function ($scope) {
           var srcImage = evt.target.result;
           CropImageService.show(srcImage, target)

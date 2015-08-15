@@ -11,7 +11,6 @@
     var vm = this;
 
     vm.user = Auth.getCurrentUser();
-    console.log(vm.user);
     vm.gotoSettings = gotoSettings;
 
     function gotoSettings() {
