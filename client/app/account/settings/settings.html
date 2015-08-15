@@ -19,7 +19,12 @@
     <div layout="row">
       <md-input-container flex>
         <label>用户名</label>
-        <input ng-model="vm.user.name">
+        <input name="name" ng-model="vm.user.name" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="User">
+        <div ng-messages="updateForm.name.$error">
+          <div ng-message="required">用户名不能为空</div>
+          <div ng-message="mongoose">该用户名已存在</div>
+          <div ng-message="remote-unique">该用户名已存在</div>
+        </div>
       </md-input-container>
     </div>
     <div layout="row">

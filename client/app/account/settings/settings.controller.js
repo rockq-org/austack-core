@@ -6,13 +6,13 @@
     .controller('AccountSettingsController', AccountSettingsController);
 
   /* @ngInject */
-  function AccountSettingsController($scope, $mdDialog, Toast, user, UserService, CropImageService) {
+  function AccountSettingsController($scope, $mdDialog, Toast, Auth, UserService, CropImageService) {
     var vm = this;
 
     var fileInput = document.querySelector('#fileInput');
     var target;
 
-    vm.user = user;
+    vm.user = Auth.getCurrentUser();
     vm.user.avatar = vm.user.avatar || 'assets/images/profile.png';
     vm.uploadImage = uploadImage;
     vm.update = update;
