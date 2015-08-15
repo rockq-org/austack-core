@@ -62,7 +62,7 @@
         query: function () {
           return {
             sortby: 'mobile',
-            limit: 2,
+            limit: 10,
             page: 1
           };
         },

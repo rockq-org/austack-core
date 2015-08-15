@@ -24,7 +24,7 @@
         <md-input-container flex>
           <label>应用名称</label>
           <input name="name" ng-model="create.application.name" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required mongoose-error remote-unique="Application">
-          <div ng-messages="createForm.name.$error">
+          <div ng-messages="createForm.name.$error" ng-if="createForm.name.$dirty">
             <div ng-message="required">应用名称不能为空</div>
             <div ng-message="mongoose">此应用名称已经被使用</div>
             <div ng-message="remote-unique">此应用名称已经被使用</div>

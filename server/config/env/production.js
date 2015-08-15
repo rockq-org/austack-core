@@ -2,10 +2,17 @@
 
 process.env.AUSTACK_DATABASE_URL = process.env.AUSTACK_DATABASE_URL || 'xxx';
 
+// Fix https://github.com/arrking/austack-core/issues/238
+// Doc https://github.com/expressjs/cors
+var corsWhitelist = ['http://console.austack.com', 'http://7xl33e.com1.z0.glb.clouddn.com'];
+
 module.exports = {
 
   corsOptions: {
-    origin: 'http://console.austack.com'
+    origin: function (origin, callback) {
+      var originIsWhitelisted = corsWhitelist.indexOf(origin) !== -1;
+      callback(null, originIsWhitelisted);
+    }
   },
 
   ip: process.env.AUSTACK_SYS_IP || undefined,
