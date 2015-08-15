@@ -13,6 +13,8 @@ var ParamController = require('../../lib/controllers/param.controller');
 var RepoProxy = require('../repo/repo.proxy');
 var shortid = require('shortid');
 var ApplicationModel = require('../application/application.model').model;
+var Q = require('q');
+
 /**
  * AppUserController constructor
  * @classdesc Controller that handles /api/appUsers route requests
