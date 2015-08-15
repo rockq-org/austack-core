@@ -1,5 +1,10 @@
-<md-content id="shape-list-content" layout flex md-scroll-y>
+<md-content id="shape-list-content" layout="column" flex md-scroll-y>
   <md-content layout-padding layout="column" flex>
+    <md-card class="tip">
+      <md-card-content>
+        <span>自定义用户表字段，其中 uid、mobile、createDate、lastActive 为系统预留字段，您可以自由添加您需要的字段，并且通过拖拽字段来进行排序</span>
+      </md-card-content>
+    </md-card>
     <md-list flex dnd-list="list.schema">
       <!--md-list-item class="list-head">
         <p>字段名称</p>
