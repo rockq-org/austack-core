@@ -52,8 +52,8 @@
       //vm.step = 'loading';
       User.create(vm.user).$promise.then(function (data) {
         vm.step = 'step2';
-        vm.user.name = data.name;
-        $cookieStore.put('mobile', vm.user.name);
+        vm.user.mobile = data.mobile;
+        $cookieStore.put('mobile', vm.user.mobile);
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
@@ -139,7 +139,7 @@
       }).catch(function (err) {
         console.log('注册失败！');
         vm.step = 'step3';
-        switch (err.data.errors.userId.kind) {
+        switch (err.data.errors.name.kind) {
         case 'regexp':
           Toast.show('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
           break;
@@ -158,8 +158,8 @@
     }
 
     function loadNameFromCookieStoreIfNotExist() {
-      if (!vm.user.name) {
-        vm.user.name = $cookieStore.get('mobile');
+      if (!vm.user.mobile) {
+        vm.user.mobile = $cookieStore.get('mobile');
       }
     }
 

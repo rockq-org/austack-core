@@ -1,8 +1,8 @@
 <form class="card" name="userDetailForm" layout="column" layout-fill layout-align="space-between" ng-submit="signup.submitUserDetail(userDetailForm)">
   <md-input-container>
     <label>用户ID</label>
-    <input name="userId" ng-model="signup.user.userId" required/>
-    <div ng-messages="userDetailForm.userId.$error" ng-if="userDetailForm.userId.$dirty">
+    <input name="name" ng-model="signup.user.name" required/>
+    <div ng-messages="userDetailForm.name.$error" ng-if="userDetailForm.name.$dirty">
       <div ng-message="required">请输入您的用户ID</div>
     </div>
   </md-input-container>

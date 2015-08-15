@@ -20,7 +20,7 @@ VerificationCodeSchema.plugin(createdModifiedPlugin);
 
 VerificationCodeSchema.plugin(requestContext, {
   propertyName: 'modifiedBy',
-  contextPath: 'request:acl.user.name'
+  contextPath: 'request:acl.user.mobile'
 });
 
 /**

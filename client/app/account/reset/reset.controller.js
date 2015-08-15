@@ -37,9 +37,9 @@
     function _demoData() {
       return {
         _id: '558a6edff7a49124d6edc764',
-        name: '18959264502',
+        mobile: '18959264502',
         verifyCode: '5168',
-        userId: 'lymanlai-',
+        name: 'lymanlai-',
         password: 'laijinyue'
       };
     }
@@ -52,8 +52,8 @@
       //vm.step = 'loading';
       User.resendVerifyCode(vm.user).$promise.then(function (data) {
         vm.step = 'step2';
-        vm.user.name = data.name;
-        $cookieStore.put('mobile', data.name);
+        vm.user.mobile = data.mobile;
+        $cookieStore.put('mobile', data.mobile);
         vm.chageResendBtnState('disableResend');
       }).catch(function (err) {
         vm.step = 'step1';
@@ -133,7 +133,7 @@
         vm.step = 'step4';
       }).catch(function (err) {
         vm.step = 'step3';
-        switch (err.data.errors.userId.kind) {
+        switch (err.data.errors.name.kind) {
         case 'regexp':
           Toast.show('用户ID不合法，只能包含字母数字及"-"，并以字母数字结尾');
           break;
@@ -152,8 +152,8 @@
     }
 
     function loadNameFromCookieStoreIfNotExist() {
-      if (!vm.user.name) {
-        vm.user.name = $cookieStore.get('mobile');
+      if (!vm.user.mobile) {
+        vm.user.mobile = $cookieStore.get('mobile');
       }
     }
 
