@@ -58,8 +58,15 @@ AppUserController.prototype = {
     ApplicationModel.findByClientId(clientId)
       .then(function (application) {
         var d = Q.defer();
-        d.resolve(application.repoName);
+        if (application.repoName) {
+          d.resolve(application.repoName);
+          return d.promise;
+        }
 
+        RepoProxy.getRepoName(ownerId)
+          .then(function (repoName) {
+
+          });
         return d.promise;
       })
       .then(RepoProxy.getRepoByName)

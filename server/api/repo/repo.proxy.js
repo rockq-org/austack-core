@@ -28,6 +28,7 @@ module.exports = {
   getRepo: getRepo,
   convertSchema: convertSchema,
   createAppUser: createAppUser,
+  getRepoName: getRepoName,
   getRepoByName: getRepoByName
 };
 
@@ -165,6 +166,19 @@ function getRepo(data) {
           logger.log(shape.name, shape.mSchema, repoModel);
           d.resolve(repoModel);
         });
+    });
+
+  return d.promise;
+};
+
+function getRepoName(ownerId) {
+  var d = Q.defer();
+
+  User.getById(ownerId)
+    .then(function (user) {
+      // var shapeName = 'repo_' + user.userId;
+      var shapeName = user.repos[0];
+      return shapeName;
     });
 
   return d.promise;
