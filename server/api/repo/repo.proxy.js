@@ -21,13 +21,14 @@ var shortid = require('shortid');
 var _ = require('lodash');
 
 module.exports = {
-  import: import,
+  import: _import,
   create: _create,
   insertOrUpdate: insertOrUpdate,
   getModel: _getModel,
   getRepo: getRepo,
   convertSchema: convertSchema,
   createAppUser: createAppUser,
+  getRepoName: getRepoName,
   getRepoByName: getRepoByName
 };
 
@@ -103,8 +104,7 @@ function _create(shape) {
  * @param  {[type]} data     [description]
  * @return {[type]}          [description]
  */
-function
-import (repoName, data) {
+function _import(repoName, data) {
   var deferred = Q.defer();
   Shape.findOne({
       name: repoName
@@ -166,6 +166,19 @@ function getRepo(data) {
           logger.log(shape.name, shape.mSchema, repoModel);
           d.resolve(repoModel);
         });
+    });
+
+  return d.promise;
+};
+
+function getRepoName(ownerId) {
+  var d = Q.defer();
+
+  User.getById(ownerId)
+    .then(function (user) {
+      // var shapeName = 'repo_' + user.userId;
+      var shapeName = user.repos[0];
+      return shapeName;
     });
 
   return d.promise;

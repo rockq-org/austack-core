@@ -13,6 +13,8 @@ var ParamController = require('../../lib/controllers/param.controller');
 var RepoProxy = require('../repo/repo.proxy');
 var shortid = require('shortid');
 var ApplicationModel = require('../application/application.model').model;
+var Q = require('q');
+
 /**
  * AppUserController constructor
  * @classdesc Controller that handles /api/appUsers route requests
@@ -56,8 +58,15 @@ AppUserController.prototype = {
     ApplicationModel.findByClientId(clientId)
       .then(function (application) {
         var d = Q.defer();
-        d.resolve(application.repoName);
+        if (application.repoName) {
+          d.resolve(application.repoName);
+          return d.promise;
+        }
 
+        RepoProxy.getRepoName(ownerId)
+          .then(function (repoName) {
+
+          });
         return d.promise;
       })
       .then(RepoProxy.getRepoByName)
@@ -74,37 +83,6 @@ AppUserController.prototype = {
           message: 'mobile exist'
         });
       });
-
-    // RepoProxy.getRepo({
-    //     ownerId: ownerId // query by ownerId is enough, as the jwt can not be modify or it will not pass validate
-    //   })
-    //   .then(function (repoModel) {
-    //     repoModel.findOne({
-    //       mobile: mobile
-    //     }, function (err, user) {
-    //       if (user) {
-    //         //current mobile exist, can not create
-    //         return res.forbidden({
-    //           message: 'mobile exist'
-    //         });
-    //       }
-
-    //       user = {
-    //         mobile: mobile,
-    //         uid: shortid.generate()
-    //       };
-    //       repoModel.create(user, function (err, _user) {
-    //         if (err) {
-    //           logger.log(err);
-    //           return res.forbidden({
-    //             message: 'error while repoModel.create'
-    //           });
-    //         }
-    //         logger.log(_user, repoModel.modelName);
-    //         return res.json(_user);
-    //       });
-    //     });
-    //   });
   }
 };
 

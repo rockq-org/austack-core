@@ -18,6 +18,7 @@ var util = require('util');
 var auth = require('../../lib/auth/auth.service');
 var ccap = require('ccap');
 var InvitationCode = require('./invitationCode.model.js').model;
+var AppModel = require('../application/application.model');
 
 /**
  * The User model instance
@@ -255,12 +256,18 @@ UserController.prototype = {
             user.isVerified = true;
             user.active = true;
             user.repos.push(name);
-            user.save(function (err) {
+            user.save(function (err, result) {
               if (err) {
                 return res.handleError(err);
               } else {
-                return res.ok({
-                  token: token
+                // create an simple app 
+                _createSampleApp(result, function (err) {
+                  if (err)
+                    return res.handleError(err);
+                  // else, the app is created successfully.
+                  res.ok({
+                    token: token
+                  });
                 });
               }
             });
@@ -423,5 +430,21 @@ UserController.prototype = {
     res.redirect('/');
   }
 };
+
+/**
+ * create a sample app for dave after signup 
+ * @return {[type]} [description]
+ */
+function _createSampleApp(user, callback) {
+  AppModel.create({
+    name: 'SampleApp',
+    ownerId: user._id,
+    repoName: user.repos[0],
+    clientId: AppModel.generateRandomObjectId(),
+    clientSecret: AppModel.generateRandomObjectId()
+  }, function (err, document) {
+    callback(err, document);
+  });
+}
 
 UserController.prototype = _.create(ParamController.prototype, UserController.prototype);
