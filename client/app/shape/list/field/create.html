@@ -14,7 +14,7 @@
       <md-input-container flex>
         <label>字段名称</label>
         <input name="name" ng-model="list.curField.name" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" required ng-change="list.checkUnique(createForm)">
-        <div ng-messages="createForm.name.$error">
+        <div ng-messages="createForm.name.$error" ng-if="createForm.name.$dirty">
           <div ng-message="required">字段名称不能为空</div>
           <div ng-message="unique">此字段名称已经被使用</div>
         </div>
