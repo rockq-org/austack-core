@@ -109,6 +109,9 @@ UserController.prototype = {
   },
 
   validateCaptcha: function (req, res, next) {
+    if (process.env.NODE_ENV === 'development')
+      return next();
+
     var sessCaptcha = (req.session.captcha || '').toLowerCase();
     var captcha = (req.body.captcha || '').toLowerCase();
 
@@ -123,6 +126,8 @@ UserController.prototype = {
   },
 
   validateInvitationCode: function (req, res, next) {
+    if (process.env.NODE_ENV === 'development')
+      return next();
     var invitationCode = req.body.invitationCode;
 
     if (invitationCode == '') {
@@ -134,8 +139,6 @@ UserController.prototype = {
     InvitationCode.findOne({
       invitationCode: invitationCode
     }, function (err, data) {
-      if (process.env.NODE_ENV === 'development')
-        return next();
       if (err) {
         return res.handleError(err);
       }
@@ -262,14 +265,8 @@ UserController.prototype = {
               if (err) {
                 return res.handleError(err);
               } else {
-                // create an simple app 
-                _createSampleApp(result, function (err) {
-                  if (err)
-                    return res.handleError(err);
-                  // else, the app is created successfully.
-                  res.ok({
-                    token: token
-                  });
+                res.ok({
+                  token: token
                 });
               }
             });
@@ -432,21 +429,5 @@ UserController.prototype = {
     res.redirect('/');
   }
 };
-
-/**
- * create a sample app for dave after signup 
- * @return {[type]} [description]
- */
-function _createSampleApp(user, callback) {
-  AppModel.create({
-    name: 'SampleApp',
-    ownerId: user._id,
-    repoName: user.repos[0],
-    clientId: AppModel.generateRandomObjectId(),
-    clientSecret: AppModel.generateRandomObjectId()
-  }, function (err, document) {
-    callback(err, document);
-  });
-}
 
 UserController.prototype = _.create(ParamController.prototype, UserController.prototype);
