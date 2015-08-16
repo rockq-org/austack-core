@@ -137,11 +137,12 @@ function createNewUser(user) {
   return d.promise;
 }
 
-function getUserDetail() {
+function getUserDetail(uid) {
+  var url = Austack.get('apiBaseURL') + '/repos/' + Austack.get('repoName') + '/' + uid;
   var d = Q.defer();
   Austack.getApplicationJwt()
     .then(function (applicationJwt) {
-      request.post(Austack.get('apiBaseURL') + '/appUsers/')
+      request.get(url)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('Authorization', 'Bearer ' + applicationJwt)
