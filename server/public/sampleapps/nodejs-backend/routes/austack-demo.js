@@ -4,6 +4,7 @@ var Austack = require('../../austack-nodejs');
 
 router.get('/me', me);
 router.get('/getUserDetail', getUserDetail);
+router.get('/updateUser', updateUser);
 
 module.exports = router;
 
@@ -31,6 +32,25 @@ function getUserDetail(req, res, next) {
   var uid = 'linda1';
   logger.log(uid);
   Austack.getUserDetail(uid)
+    .then(function (data) {
+      logger.log(data);
+      res.status(200).json(data);
+    })
+    .fail(function (err) {
+      logger.log(err);
+      res.status(400).json({
+        message: err
+      });
+    });
+}
+
+function updateUser(req, res, next) {
+  var uid = 'linda1';
+  var data = {
+    mobile: 'xxxxx'
+  };
+
+  Austack.updateUser(uid, data)
     .then(function (data) {
       logger.log(data);
       res.status(200).json(data);

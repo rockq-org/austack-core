@@ -162,8 +162,27 @@ function getUserDetail(uid) {
   return d.promise;
 }
 
-function updateUser() {
-  // body...
+function updateUser(uid, data) {
+  var url = Austack.get('apiBaseURL') + '/repos/' + Austack.get('repoName') + '/' + uid;
+  var d = Q.defer();
+  logger.log('put', url);
+  Austack.getApplicationJwt()
+    .then(function (applicationJwt) {
+      request.put(url)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + applicationJwt)
+        .send(data)
+        .end(function (err, res) {
+          logger.log(err, res.body);
+          if (err) {
+            return d.reject(err.response.body.message);
+          }
+          d.resolve(res.body);
+        });
+    });
+
+  return d.promise;
 }
 
 function deleteUser() {
