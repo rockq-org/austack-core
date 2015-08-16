@@ -9,6 +9,7 @@ var request = require('superagent');
 var Austack = {
   data: {
     clientId: '',
+    repoName: '',
     apiBaseURL: '',
     clientSecret: '',
     applicationJwt: '',
@@ -36,7 +37,9 @@ var Austack = {
 module.exports = Austack;
 
 function init(cfg) {
+  logger.log(cfg);
   Austack.set('clientId', cfg.clientId);
+  Austack.set('repoName', cfg.repoName);
   Austack.set('apiBaseURL', cfg.apiBaseURL);
   Austack.set('clientSecret', cfg.clientSecret);
 }
@@ -140,14 +143,15 @@ function createNewUser(user) {
 function getUserDetail(uid) {
   var url = Austack.get('apiBaseURL') + '/repos/' + Austack.get('repoName') + '/' + uid;
   var d = Q.defer();
+  logger.log(url);
   Austack.getApplicationJwt()
     .then(function (applicationJwt) {
       request.get(url)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('Authorization', 'Bearer ' + applicationJwt)
-        .send(user)
         .end(function (err, res) {
+          logger.log(err, res.body);
           if (err) {
             return d.reject(err.response.body.message);
           }

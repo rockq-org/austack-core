@@ -14,6 +14,7 @@ var archiver = require('archiver');
 var path = require('path');
 var minimatch = require("minimatch");
 var Config = require('../../config');
+var RepoProxy = require('../repo/repo.proxy');
 
 exports.download = function (req, res) {
   var appId = req.params['appId'];
@@ -44,8 +45,21 @@ exports.download = function (req, res) {
           rc: 4,
           error: 'Permission denied.'
         });
+      logger.log(app);
+      RepoProxy.getRepoName(app.ownerId)
+      .then(function (repoName) {
+        app.repoName = repoName;
+        logger.log(app);
+        _handleOnBehalf(res, app, type);
+      })
+      .catch(function (err) {
+        logger.log(err);
+        res.json({
+          rc: 5,
+          err: err
+        });
+      })
 
-      _handleOnBehalf(res, app, type);
     });
   } else {
     res.json({
@@ -131,6 +145,7 @@ function _nodejs(res, app) {
     });
     austackVariables = austackVariables.replace('#name#', app.name);
     austackVariables = austackVariables.replace('#clientId#', app.clientId);
+    austackVariables = austackVariables.replace('#repoName#', app.repoName);
     austackVariables = austackVariables.replace('#clientSecret#', app.clientSecret);
     austackVariables = austackVariables.replace('#corsDomains#', app.corsDomains);
     austackVariables = austackVariables.replace('#callbackUrls#', app.callbackUrls);
