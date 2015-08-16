@@ -23,7 +23,7 @@ var Austack = {
   // 1. 获取jwt
   getApplicationJwt: getApplicationJwt,
   // 2. 获取用户列表
-  getUserList: getUserList,
+  listUser: listUser,
   // 3. 创建新用户
   createNewUser: createNewUser,
   // 4. 获取用户详情
@@ -116,8 +116,26 @@ function getApplicationJwt() {
   return d.promise;
 }
 
-function getUserList() {
-  // body...
+function listUser() {
+  var url = Austack.get('apiBaseURL') + '/repos/' + Austack.get('repoName');
+  var d = Q.defer();
+  logger.log(url);
+  Austack.getApplicationJwt()
+    .then(function (applicationJwt) {
+      request.get(url)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + applicationJwt)
+        .end(function (err, res) {
+          logger.log(err, res.body);
+          if (err) {
+            return d.reject(err.response.body.message);
+          }
+          d.resolve(res.body);
+        });
+    });
+
+  return d.promise;
 }
 
 function createNewUser(user) {

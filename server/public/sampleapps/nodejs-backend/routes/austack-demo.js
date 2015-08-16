@@ -6,6 +6,7 @@ router.get('/me', me);
 router.get('/getUserDetail', getUserDetail);
 router.get('/updateUser', updateUser);
 router.get('/deleteUser', deleteUser);
+router.get('/listUser', listUser);
 
 module.exports = router;
 
@@ -68,6 +69,21 @@ function deleteUser(req, res, next) {
   var uid = 'linda1';
 
   Austack.deleteUser(uid)
+    .then(function (data) {
+      logger.log(data);
+      res.status(200).json(data);
+    })
+    .fail(function (err) {
+      logger.log(err);
+      res.status(400).json({
+        message: err
+      });
+    });
+}
+
+function listUser(req, res, next) {
+
+  Austack.listUser()
     .then(function (data) {
       logger.log(data);
       res.status(200).json(data);
