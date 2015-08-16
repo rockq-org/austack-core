@@ -60,7 +60,16 @@ Austack.createNewUser(data)
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('3')">3. 获取指定用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('3')">
-      <hljs lang="js"></hljs>
+      <hljs lang="js">
+        var uid = 'xxx';
+Austack.getUserDetail(uid)
+  .then(function(user){
+    console.log('success get user', user);
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+      </hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('4')">4. 更新指定用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('4')">
