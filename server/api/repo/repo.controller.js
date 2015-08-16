@@ -402,7 +402,6 @@ function _updateRepoRecord(res, shape, model, uid, data) {
     })
     .then(function (doc) {
       if (!doc) {
-        logger.error(err);
         return res.json({
           rc: 4,
           error: 'Can not find record with this uid.'

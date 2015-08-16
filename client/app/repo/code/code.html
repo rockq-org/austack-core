@@ -73,7 +73,24 @@ Austack.getUserDetail(uid)
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('4')">4. 更新指定用户详细信息 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('4')">
-      <hljs lang="js"></hljs>
+      <hljs lang="js">
+var uid = 'linda1';
+var data = {
+  mobile: 'xxxxx'
+};
+
+Austack.updateUser(uid, data)
+  .then(function (data) {
+    logger.log(data);
+    res.status(200).json(data);
+  })
+  .fail(function (err) {
+    logger.log(err);
+    res.status(400).json({
+      message: err
+    });
+  });
+      </hljs>
     </md-content>
     <md-button class="md-primary" ng-click="code.showStep('5')">5. 删除指定用户 </md-button>
     <md-content class="collapse-animate" ng-show="code.isShowStep('5')">
