@@ -8,9 +8,10 @@
   </md-input-container>
   <md-input-container>
     <label>密码</label>
-    <input name="password" type="password" ng-model="signup.user.password" required/>
+    <input name="password" pattern="^[a-zA-Z]\w{5,17}$" type="password" ng-model="signup.user.password" required/>
     <div ng-messages="userDetailForm.password.$error" ng-if="userDetailForm.password.$dirty">
       <div ng-message="required">请输入您的密码！</div>
+      <div ng-message="pattern">密码只能包含字符、数字和下划线，以字母开头，长度在6~18之间</div>
     </div>
   </md-input-container>
   <md-button class="md-primary md-raised" ng-disabled="!userDetailForm.$valid" type="submit">提交注册</md-button>
