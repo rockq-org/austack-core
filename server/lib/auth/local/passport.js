@@ -56,7 +56,7 @@ function getAuthentication(authModel, config) {
         $or: [{
           name: name
         }, {
-          userId: name
+          mobile: name
         }]
       }, {
         active: true

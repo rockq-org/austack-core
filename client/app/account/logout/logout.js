@@ -31,7 +31,10 @@
       role: 'user',
       templateUrl: 'app/account/logout/logout.html',
       controller: 'AccountLogoutController',
-      controllerAs: 'logout'
+      controllerAs: 'logout',
+      ncyBreadcrumb: {
+        skip: true
+      }
     };
 
     $stateProvider.state(logoutState);

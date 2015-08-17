@@ -55,8 +55,8 @@ UserController.prototype = {
 
   create: function (req, res) {
     var self = this;
-    var name = req.body['name'];
-    var mobile = name;
+    var mobile = req.body['mobile'];
+    //var mobile = name;
     var now = new Date();
     // 四位数字验证码
     var verifyCode = SMS.generateVerificationCode();
@@ -109,6 +109,9 @@ UserController.prototype = {
   },
 
   validateCaptcha: function (req, res, next) {
+    if (process.env.NODE_ENV === 'development')
+      return next();
+
     var sessCaptcha = (req.session.captcha || '').toLowerCase();
     var captcha = (req.body.captcha || '').toLowerCase();
 
@@ -123,6 +126,8 @@ UserController.prototype = {
   },
 
   validateInvitationCode: function (req, res, next) {
+    if (process.env.NODE_ENV === 'development')
+      return next();
     var invitationCode = req.body.invitationCode;
 
     if (invitationCode == '') {
@@ -156,11 +161,11 @@ UserController.prototype = {
 
   resendVerifyCode: function (req, res) {
     var self = this;
-    if (!req.body.name) {
+    if (!req.body.mobile) {
       return res.badRequest();
     }
     var params = {
-      'name': req.body.name
+      'mobile': req.body.mobile
     };
 
     this.model.findOne(params, function (err, user) {
@@ -184,7 +189,7 @@ UserController.prototype = {
       user.verifyCode = verifyCode;
 
       var sendData = {
-        mobile: user.name,
+        mobile: user.mobile,
         appName: '开发者注册',
         verifyCode: verifyCode,
         period: 3
@@ -214,13 +219,13 @@ UserController.prototype = {
   },
 
   verifyMobile: function (req, res) {
-    if (!req.body.name) {
+    if (!req.body.mobile) {
       return res.badRequest();
     }
     var verifyCode = String(req.body.verifyCode);
 
     this.model.findOne({
-      'name': req.body.name
+      'mobile': req.body.mobile
     }, function (err, user) {
       if (user.verifyCode !== verifyCode) {
         return res.forbidden({
@@ -260,14 +265,8 @@ UserController.prototype = {
               if (err) {
                 return res.handleError(err);
               } else {
-                // create an simple app 
-                _createSampleApp(result, function (err) {
-                  if (err)
-                    return res.handleError(err);
-                  // else, the app is created successfully.
-                  res.ok({
-                    token: token
-                  });
+                res.ok({
+                  token: token
                 });
               }
             });
@@ -286,7 +285,7 @@ UserController.prototype = {
 
   submitUserDetail: function (req, res) {
     var name = String(req.body.name);
-    var userId = String(req.body.userId);
+    var mobile = String(req.body.mobile);
     var password = String(req.body.password);
 
     // var userIdReg = /^[a-zA-Z0-9\-]{1,}[a-zA-Z0-9]$/; //字母数字及“-”并以字母数字结尾
@@ -298,19 +297,19 @@ UserController.prototype = {
     //   });
     // }
 
-    if (name != String(req.userInfo.name)) {
+    if (mobile != String(req.userInfo.mobile)) {
       return res.forbidden({
         message: "permission deny, you are not the user " + name
       });
     }
 
     this.model.findOne({
-      'name': name
+      'mobile': mobile
     }, function (err, user) {
       if (err) {
         return res.handleError(err);
       }
-      user.userId = userId;
+      user.name = name;
       user.password = password;
 
       user.save(function (err) {
@@ -324,17 +323,17 @@ UserController.prototype = {
   },
 
   setNewPassword: function (req, res) {
-    var name = String(req.body.name);
+    var mobile = String(req.body.mobile);
     var password = String(req.body.password);
 
-    if (name != String(req.userInfo.name)) {
+    if (mobile != String(req.userInfo.mobile)) {
       return res.forbidden({
         message: "permission deny, you are not the user " + name
       });
     }
 
     this.model.findOne({
-      'name': name
+      'mobile': mobile
     }, function (err, user) {
       if (err) {
         return res.handleError(err);
@@ -430,21 +429,5 @@ UserController.prototype = {
     res.redirect('/');
   }
 };
-
-/**
- * create a sample app for dave after signup 
- * @return {[type]} [description]
- */
-function _createSampleApp(user, callback) {
-  AppModel.create({
-    name: 'SampleApp',
-    ownerId: user._id,
-    repoName: user.repos[0],
-    clientId: AppModel.generateRandomObjectId(),
-    clientSecret: AppModel.generateRandomObjectId()
-  }, function (err, document) {
-    callback(err, document);
-  });
-}
 
 UserController.prototype = _.create(ParamController.prototype, UserController.prototype);
