@@ -40,7 +40,7 @@ app.use('/users', require('./routes/users'));
 
 // 2. 加载 Austack 代码库，添加austack-demo路由示范
 var austackCfg = require('./austack-variables.json');
-var Austack = require('austack-nodejs');
+var Austack = require('../austack-nodejs');
 Austack.init(austackCfg);
 
 //获取 application jwt

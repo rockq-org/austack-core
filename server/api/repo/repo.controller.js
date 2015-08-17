@@ -186,6 +186,7 @@ function _get(req, res) {
           data: rs
         });
       }, function (err) {
+        logger.log(err);
         res.json({
           rc: 2,
           error: err
@@ -371,12 +372,13 @@ function _hasPermission(req, resource) {
   if (req.userInfo.role == 'root') {
     return true;
   }
-  logger.log(resource.ownerId, req.userInfo._id);
+  logger.log(resource, req.userInfo);
   // assign the requested resource into req before check.
   // http://stackoverflow.com/questions/11637353/comparing-mongoose-id-and-strings
   // _id and ownerId are object.
   // if (resource.ownerId.equals(req.userInfo._id)) {
-  if (resource.ownerId.equals(req.userInfo._id)) {
+  if (resource.ownerId.equals(req.userInfo.ownerId) //appAdmin
+    || resource.ownerId.equals(req.userInfo._id)) { //admin
     return true;
   }
 
@@ -400,7 +402,6 @@ function _updateRepoRecord(res, shape, model, uid, data) {
     })
     .then(function (doc) {
       if (!doc) {
-        logger.error(err);
         return res.json({
           rc: 4,
           error: 'Can not find record with this uid.'

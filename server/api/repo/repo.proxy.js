@@ -178,7 +178,12 @@ function getRepoName(ownerId) {
     .then(function (user) {
       // var shapeName = 'repo_' + user.userId;
       var shapeName = user.repos[0];
-      return shapeName;
+      logger.log(shapeName);
+      d.resolve(shapeName);
+    })
+    .catch(function (err) {
+      logger.log(err);
+      d.reject(err);
     });
 
   return d.promise;

@@ -1,6 +1,7 @@
 {
   "name": "#name#",
   "clientId": "#clientId#",
+  "repoName": "#repoName#",
   "clientSecret": "#clientSecret#",
   "corsDomains": [],
   "callbackUrls": [],

@@ -9,6 +9,7 @@ var request = require('superagent');
 var Austack = {
   data: {
     clientId: '',
+    repoName: '',
     apiBaseURL: '',
     clientSecret: '',
     applicationJwt: '',
@@ -22,7 +23,7 @@ var Austack = {
   // 1. 获取jwt
   getApplicationJwt: getApplicationJwt,
   // 2. 获取用户列表
-  getUserList: getUserList,
+  listUser: listUser,
   // 3. 创建新用户
   createNewUser: createNewUser,
   // 4. 获取用户详情
@@ -36,7 +37,9 @@ var Austack = {
 module.exports = Austack;
 
 function init(cfg) {
+  logger.log(cfg);
   Austack.set('clientId', cfg.clientId);
+  Austack.set('repoName', cfg.repoName);
   Austack.set('apiBaseURL', cfg.apiBaseURL);
   Austack.set('clientSecret', cfg.clientSecret);
 }
@@ -113,8 +116,26 @@ function getApplicationJwt() {
   return d.promise;
 }
 
-function getUserList() {
-  // body...
+function listUser() {
+  var url = Austack.get('apiBaseURL') + '/repos/' + Austack.get('repoName');
+  var d = Q.defer();
+  logger.log(url);
+  Austack.getApplicationJwt()
+    .then(function (applicationJwt) {
+      request.get(url)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + applicationJwt)
+        .end(function (err, res) {
+          logger.log(err, res.body);
+          if (err) {
+            return d.reject(err.response.body.message);
+          }
+          d.resolve(res.body);
+        });
+    });
+
+  return d.promise;
 }
 
 function createNewUser(user) {
@@ -137,16 +158,18 @@ function createNewUser(user) {
   return d.promise;
 }
 
-function getUserDetail() {
+function getUserDetail(uid) {
+  var url = Austack.get('apiBaseURL') + '/repos/' + Austack.get('repoName') + '/' + uid;
   var d = Q.defer();
+  logger.log(url);
   Austack.getApplicationJwt()
     .then(function (applicationJwt) {
-      request.post(Austack.get('apiBaseURL') + '/appUsers/')
+      request.get(url)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('Authorization', 'Bearer ' + applicationJwt)
-        .send(user)
         .end(function (err, res) {
+          logger.log(err, res.body);
           if (err) {
             return d.reject(err.response.body.message);
           }
@@ -157,10 +180,47 @@ function getUserDetail() {
   return d.promise;
 }
 
-function updateUser() {
-  // body...
+function updateUser(uid, data) {
+  var url = Austack.get('apiBaseURL') + '/repos/' + Austack.get('repoName') + '/' + uid;
+  var d = Q.defer();
+  logger.log('put', url);
+  Austack.getApplicationJwt()
+    .then(function (applicationJwt) {
+      request.put(url)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + applicationJwt)
+        .send(data)
+        .end(function (err, res) {
+          logger.log(err, res.body);
+          if (err) {
+            return d.reject(err.response.body.message);
+          }
+          d.resolve(res.body);
+        });
+    });
+
+  return d.promise;
 }
 
-function deleteUser() {
-  // body...
+function deleteUser(uid) {
+  var url = Austack.get('apiBaseURL') + '/repos/' + Austack.get('repoName') + '/' + uid;
+  var d = Q.defer();
+  logger.log('delete', url);
+  Austack.getApplicationJwt()
+    .then(function (applicationJwt) {
+      request.del(url)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + applicationJwt)
+        .end(function (err, res) {
+          logger.log(err, res.body);
+          if (err) {
+            return d.reject(err.response.body.message);
+          }
+          d.resolve(res.body);
+        });
+    });
+
+  return d.promise;
 }
