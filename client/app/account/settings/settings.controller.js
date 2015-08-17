@@ -16,6 +16,7 @@
     vm.user.avatar = vm.user.avatar || 'assets/images/profile.png';
     vm.uploadImage = uploadImage;
     vm.update = update;
+    vm.changePassword = changePassword;
 
     function uploadImage(ev) {
       target = ev;
@@ -30,6 +31,17 @@
         })
         .catch(function () {
           Toast.show('更新失败');
+        });
+    }
+
+    function changePassword(form) {
+      Auth
+        .changePassword(vm.oldPassword, vm.newPassword)
+        .then(function (data) {
+          Toast.show('更新密码成功');
+        })
+        .catch(function () {
+          Toast.show('原密码错误');
         });
     }
 
