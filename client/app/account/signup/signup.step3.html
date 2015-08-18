@@ -1,9 +1,10 @@
 <form class="card" name="userDetailForm" layout="column" layout-fill layout-align="space-between" ng-submit="signup.submitUserDetail(userDetailForm)">
   <md-input-container>
     <label>用户ID</label>
-    <input name="name" ng-model="signup.user.name" required/>
+    <input name="name" pattern="^[a-zA-Z]\w{2,14}$" ng-model="signup.user.name" required/>
     <div ng-messages="userDetailForm.name.$error" ng-if="userDetailForm.name.$dirty">
       <div ng-message="required">请输入您的用户ID</div>
+      <div ng-message="pattern">用户名只能包含字符、数字和下划线，以字母开头，长度在3~15之间</div>
     </div>
   </md-input-container>
   <md-input-container>
