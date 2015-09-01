@@ -19,12 +19,9 @@
         controller: 'ProfileController',
         controllerAs: 'vm',
         templateUrl: 'app/account/profile/profile.html',
+        clickOutsideToClose: true,
         parent: angular.element(document.body),
         targetEvent: ev,
-      }).then(function (answer) {
-        $log.debug('You said the information was "' + answer + '".');
-      }, function () {
-        $log.debug('You cancelled the dialog.');
       });
     }
 

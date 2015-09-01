@@ -11,13 +11,20 @@
 
   // route config function configuring the passed $stateProvider
   function configSignupRoute($stateProvider) {
-    $stateProvider
-      .state('account.signup', {
-        url: '^/signup',
-        templateUrl: 'app/account/signup/signup.html',
-        controller: 'SignupCtrl',
-        controllerAs: 'signup'
-      });
+    var signupState = {
+      name: 'account.signup',
+      url: '/signup',
+      authenticate: false,
+      // role: 'anonymous',
+      templateUrl: 'app/account/signup/signup.html',
+      controller: 'SignupController',
+      controllerAs: 'signup',
+      ncyBreadcrumb: {
+        skip: true
+      }
+    };
+
+    $stateProvider.state(signupState);
   }
 
 })();

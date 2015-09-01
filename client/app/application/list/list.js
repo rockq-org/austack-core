@@ -19,6 +19,8 @@
       'ngMaterial',
       'ui.router',
       'austackApp.socket',
+      'austackApp.listImage',
+      'austackApp.geopattern',
       'austackApp.mainMenu'
     ])
     .config(configApplicationListRoutes);
@@ -38,7 +40,7 @@
     var listState = {
       name: 'application.list',
       parent: 'application',
-      url: '/',
+      url: '',
       ncyBreadcrumb: {
         label: '应用'
       },
@@ -57,7 +59,9 @@
 
     mainMenuProvider.addMenuItem({
       name: '应用',
-      state: listState.name
+      state: listState.name,
+      icon: 'action:ic_view_list_24px',
+      order: 2
     });
   }
 

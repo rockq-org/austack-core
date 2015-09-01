@@ -1,1 +1,20 @@
-#account-items-content {}
+#account-content {
+  background-color: $as-primary;
+  margin-bottom: 8%;
+  .text-center {
+    color: #fff;
+  }
+  .captcha {
+    margin-top: 20px;
+    height: 30px;
+    cursor: pointer;
+  }
+  md-card {
+    width: 100%;
+    max-width: 360px;
+    border-radius: 8px;
+    .md-button {
+      min-width: inherit;
+    }
+  }
+}

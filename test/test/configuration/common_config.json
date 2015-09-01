@@ -1,7 +1,0 @@
-{
-  "defaultURL": "http://localhost:9001",
-  "credential": {
-    "name": "dave",
-    "passwd": "auth4fun!"
-  }
-}

@@ -1,0 +1,15 @@
+<md-card layout="row" layout-align="center center">
+  <img src="/assets/images/profile.png"></img>
+  <div flex ng-click="list.showDetail(item, $index)">
+    <div class="md-title">{{user.uid}}</div>
+    <div class="md-subtitle">{{user.mobile}}</div>
+    <p class="md-caption">上次登录于
+      <span am-time-ago="user.lastActive"></span>
+    </p>
+  </div>
+  <div>
+    <md-switch ng-model="user.disabled" aria-label="Disable user">
+      {{ user.disabled?'禁用':'启用' }}
+    </md-switch>
+  </div>
+</md-card>

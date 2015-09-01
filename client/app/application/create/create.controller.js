@@ -29,9 +29,9 @@
       function createApplicationSuccess(newApplication) {
         Toast.show({
           type: 'success',
-          text: 'Application ' + newApplication.name + ' has been created',
+          text: '应用 ' + newApplication.name + ' 创建成功',
           link: {
-            state: 'application.list.detail',
+            state: 'application.detail',
             params: {
               id: newApplication._id
             }
@@ -47,7 +47,7 @@
 
         Toast.show({
           type: 'warn',
-          text: 'Error while creating a new Application'
+          text: '创建应用失败'
         });
       }
     }

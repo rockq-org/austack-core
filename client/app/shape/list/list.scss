@@ -1,0 +1,28 @@
+#shape-list-content {
+  .list-head {
+    color: $as-primary;
+  }
+  [dnd-list] {
+    position: relative;
+    md-list-item {
+      position: relative;
+      min-height: 36px;
+      margin-bottom: 12px;
+      background-color: lighten($as-primary, 30%);
+      border-left: 3px solid $as-accent;
+      &.static {
+        background-color: lighten($as-primary, 40%);
+        border-left: 3px solid lighten($as-accent, 10%);
+      }
+    }
+    .dndDraggingSource {
+      display: none;
+    }
+    .dndPlaceholder {
+      display: block;
+      background-color: lighten($as-primary, 30%);
+      min-height: 36px;
+      margin-bottom: 12px;
+    }
+  }
+}

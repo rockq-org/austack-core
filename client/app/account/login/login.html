@@ -1,29 +1,28 @@
-<section id="login-content" layout="column" flex layout-align="center center">
-  <h1>登录</h1>
-  <p ng-show="login.error" class="md-warn">{{login.error.message}}</p>
-  <form class="card" name="loginForm" layout="column" layout-fill layout-align="space-between" ng-submit="login.login(loginForm)">
-    <md-input-container md-is-error="loginForm.name.$error.required && loginForm.name.$dirty">
-      <label>用户ID / 手机号</label>
-      <input name="name" ng-model="login.user.name" required/>
-      <div ng-messages="loginForm.name.$error" ng-if="loginForm.name.$dirty">
-        <div ng-message="required">请输入您的用户ID / 手机号</div>
-      </div>
-    </md-input-container>
-    <md-input-container md-is-error="loginForm.password.$error.required && loginForm.password.$dirty">
-      <label>密码</label>
-      <input name="password" type="password" ng-model="login.user.password" required/>
-      <div ng-messages="loginForm.password.$error" ng-if="loginForm.password.$dirty">
-        <div ng-message="required">请输入您的密码</div>
-      </div>
-    </md-input-container>
-    <span layout="row" layout-align="center center">
-      <md-button class="md-primary md-raised" ng-disabled="!loginForm.$valid" type="submit">登录</md-button>
-    </span>
-    <br>
-    <br>
-    <section layout="row" layout-sm="column" layout-align="center center">
-      <md-button class="md-primary" ui-sref="account.signup">注册</md-button>
-      <md-button ui-sref="account.resetPassword">重置密码</md-button>
-    </section>
-  </form>
+<section id="login-content" layout="column" layout-fill layout-align="center center">
+  <h1 class="text-center">登入 Austack</h1>
+  <md-card>
+    <md-card-content>
+      <form class="card" name="loginForm" layout="column" layout-fill layout-align="space-between" ng-submit="login.login(loginForm)">
+        <md-input-container md-is-error="loginForm.name.$error.required && loginForm.name.$dirty">
+          <label>用户ID / 手机号</label>
+          <input name="name" ng-model="login.user.name" required/>
+          <div ng-messages="loginForm.name.$error" ng-if="loginForm.name.$dirty">
+            <div ng-message="required">请输入您的用户ID / 手机号</div>
+          </div>
+        </md-input-container>
+        <md-input-container md-is-error="loginForm.password.$error.required && loginForm.password.$dirty">
+          <label>密码</label>
+          <input name="password" type="password" ng-model="login.user.password" required/>
+          <div ng-messages="loginForm.password.$error" ng-if="loginForm.password.$dirty">
+            <div ng-message="required">请输入您的密码</div>
+          </div>
+        </md-input-container>
+        <md-button class="md-primary md-raised" ng-disabled="!loginForm.$valid" type="submit">登录</md-button>
+        <div class="md-actions" layout="row" layout-align="space-between center">
+          <md-button class="md-accent" ui-sref="account.signup">注册</md-button>
+          <md-button ui-sref="account.reset">重置密码</md-button>
+        </div>
+      </form>
+    </md-card-content>
+  </md-card>
 </section>

@@ -1,0 +1,25 @@
+#layout-header {
+  .breadcrumb {
+    font-size: 24px !important;
+    font-weight: 400 !important;
+    list-style: none;
+    padding-left: 0;
+    md-icon {
+      margin-right: 6px;
+    }
+    li {
+      display: inline-block;
+    }
+  }
+  .md-button {
+    //min-width: inherit;
+    text-transform: none;
+    img {
+      vertical-align: middle;
+      height: 36px;
+      width: 36px;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+  }
+}

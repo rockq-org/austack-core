@@ -9,9 +9,11 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var crypto = require('crypto');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
-
+var mongoosePaginatePlugin = require('../../lib/mongoose/mongoose-paginate');
 /**
  * The Application model definition
  * @type {Object}
@@ -20,11 +22,13 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
  * @property {Boolean} active - Flag indicating this application is active
  */
 var ApplicationDefinition = {
-  appName: {
+  name: {
     type: String,
     required: true
   },
+  description: String,
   ownerId: String,
+  repoName: String,
   clientId: String,
   clientSecret: String,
   jwtExpiration: {
@@ -32,7 +36,13 @@ var ApplicationDefinition = {
     default: 36000
   },
   callbackUrls: [String],
-  corsDomains: [String]
+  corsDomains: [String],
+  loginTemplate: String,
+  loginTemplatePreview: String,
+  isTrashed: {
+    type: Boolean,
+    default: false
+  }
 };
 
 /**
@@ -51,18 +61,39 @@ ApplicationSchema.plugin(requestContext, {
   contextPath: 'request:acl.user.name'
 });
 
+ApplicationSchema.plugin(mongoosePaginatePlugin);
+
 /**
  * Validations
  */
-ApplicationSchema
-  .path('appName')
-  .validate(validateUniqueName, 'The specified name is already in use.');
+// ApplicationSchema
+//   .path('name')
+//   .validate(validateUniqueName, 'The specified name is already in use.');
 
+ApplicationSchema.statics.generateRandomObjectId = function generateRandomObjectId() {
+  return crypto.createHash('md5').update(Math.random().toString()).digest('hex').substring(0, 24);
+};
+
+ApplicationSchema.statics.findByClientId = function (clientId, cb) {
+  return this.findOne({
+    clientId: clientId
+  }, function (err, doc) {
+    if (err || doc == null) {
+      return cb('can not find clientId for ' + clientId);
+    }
+    cb(null, doc);
+  });
+};
 /**
  *  The registered mongoose model instance of the Application model
  *  @type {Application}
  */
-var Application = mongoose.model('Application', ApplicationSchema);
+var Application;
+if (mongoose.models.Application) {
+  Application = mongoose.model('Application');
+} else {
+  Application = mongoose.model('Application', ApplicationSchema, '_applications');
+}
 
 module.exports = {
 

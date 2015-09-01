@@ -14,16 +14,20 @@
     .service('ApplicationService', ApplicationService);
 
   // add Application dependencies to inject
-  Application.$inject = ['Resource'];
+  Application.$inject = ['Resource', 'Config'];
 
   /**
    * Application resource constructor
    */
-  function Application($resource) {
+  function Application($resource, Config) {
     // factory members
-    var apiURL = '/api/applications';
+    var apiURL = Config.API_URL + 'applications';
     // public API
-    return $resource(apiURL + '/:id/:controller');
+    return $resource(apiURL + '/:id/:controller', {}, {
+      query: {
+        isArray: false
+      }
+    });
   }
 
   // add ApplicationService dependencies to inject
@@ -41,7 +45,8 @@
     return {
       create: create,
       update: update,
-      remove: remove
+      remove: remove,
+      refreshSecret: refreshSecret
     };
 
     /**
@@ -95,6 +100,28 @@
       var cb = callback || angular.noop;
 
       return Application.update(application,
+        function (application) {
+          return cb(application);
+        },
+        function (err) {
+          return cb(err);
+        }).$promise;
+    }
+
+    /**
+     * Refresh Secret Token
+     *
+     * @param  {Object}   application - applicationData
+     * @param  {Function} callback - optional
+     * @return {Promise}
+     */
+    function refreshSecret(application, callback) {
+      var cb = callback || angular.noop;
+
+      return Application.get({
+          id: application._id,
+          controller: 'refresh-secret-token'
+        },
         function (application) {
           return cb(application);
         },

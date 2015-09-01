@@ -52,8 +52,15 @@ function getAuthentication(authModel, config) {
    */
   function authenticate(name, password, done) {
     authModel.findOne({
-      name: name,
-      active: true
+      $and: [{
+        $or: [{
+          name: name
+        }, {
+          mobile: name
+        }]
+      }, {
+        active: true
+      }]
     }, function (err, user) {
       if (err) {
         return done(err);

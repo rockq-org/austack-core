@@ -1,1 +1,21 @@
-
+#profile-content {
+  .header {
+    text-align: center;
+    color: #fff;
+    background-color: $as-primary;
+    padding: 10px 0;
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #fff;
+      border: 5px solid rgba($as-primary, 0.8);
+    }
+  }
+  .md-button {
+    min-width: inherit;
+  }
+  md-dialog-content {
+    color: $as-primary;
+  }
+}

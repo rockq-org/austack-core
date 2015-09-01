@@ -18,6 +18,8 @@
       'ngMessages',
       'ngMaterial',
       'ui.router',
+      'ui.ace',
+      'calHeatmap',
       'btford.socket-io',
       'angular-loading-bar',
       'austackApp.config',
@@ -27,9 +29,11 @@
       'austackApp.io',
       'austackApp.socket',
       'austackApp.auth',
-      'austackApp.admin',
       'austackApp.account',
       'austackApp.dashboard',
+      'austackApp.user',
+      'austackApp.repo',
+      'austackApp.shape',
       'austackApp.layout'
     ])
     .config(appConfig)
@@ -48,6 +52,7 @@
    * @param $locationProvider
    */
   function appConfig(Config, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, $httpProvider) {
+    $httpProvider.defaults.withCredentials = true;
     $urlRouterProvider.otherwise('/');
     $urlMatcherFactoryProvider.strictMode(false);
     $locationProvider.html5Mode(true);
@@ -71,12 +76,20 @@
           .accentPalette('pink')
           .backgroundPalette('grey-background');
     */
-    var spritePath = Config.ICON_ROOT;
+
+    $mdThemingProvider
+      .theme('default')
+      .primaryPalette('blue')
+      .accentPalette('orange')
+      .warnPalette('deep-orange');
+
+    var spritePath = 'assets/svg-sprite/';
     $mdIconProvider.iconSet('navigation', spritePath + 'svg-sprite-navigation.svg');
     $mdIconProvider.iconSet('action', spritePath + 'svg-sprite-action.svg');
     $mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');
     $mdIconProvider.iconSet('toggle', spritePath + 'svg-sprite-toggle.svg');
     $mdIconProvider.iconSet('alert', spritePath + 'svg-sprite-alert.svg');
+    $mdIconProvider.iconSet('social', spritePath + 'svg-sprite-social.svg');
   }
 
   /* App run bootstrap */

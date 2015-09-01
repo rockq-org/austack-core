@@ -5,19 +5,23 @@
     .module('austackApp.account')
     .controller('ProfileController', ProfileController);
 
-  ProfileController.$inject = ['$mdDialog'];
+  ProfileController.$inject = ['$state', '$mdDialog', 'Auth'];
 
-  function ProfileController($mdDialog) {
+  function ProfileController($state, $mdDialog, Auth) {
     var vm = this;
 
-    vm.hide = function () {
+    vm.user = Auth.getCurrentUser();
+    vm.gotoSettings = gotoSettings;
+
+    function gotoSettings() {
+      $state.go('settings');
       $mdDialog.hide();
-    };
-    vm.cancel = function () {
-      $mdDialog.cancel();
-    };
-    vm.answer = function (answer) {
-      $mdDialog.hide(answer);
+    }
+
+    vm.user.avatar = vm.user.avatar || 'assets/images/profile.png';
+
+    vm.close = function () {
+      $mdDialog.hide();
     };
   }
 

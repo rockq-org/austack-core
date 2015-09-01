@@ -14,7 +14,9 @@
   angular
     .module('austackApp.account', [
       'ui.router',
-      'ngMaterial'
+      'timer',
+      'ngMaterial',
+      'austackApp.account.settings'
     ])
     .config(configAccountRoute);
 
@@ -25,7 +27,7 @@
   function configAccountRoute($stateProvider) {
     var accountState = {
       name: 'account',
-      url: '/acount',
+      abstract: true,
       templateUrl: 'app/account/account.html',
       controller: 'AccountController',
       controllerAs: 'account'

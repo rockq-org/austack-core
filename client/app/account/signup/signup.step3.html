@@ -1,19 +1,19 @@
 <form class="card" name="userDetailForm" layout="column" layout-fill layout-align="space-between" ng-submit="signup.submitUserDetail(userDetailForm)">
   <md-input-container>
     <label>用户ID</label>
-    <input name="userId" ng-model="signup.user.userId" required/>
-    <div ng-messages="userDetailForm.userId.$error" ng-if="userDetailForm.userId.$dirty">
+    <input name="name" pattern="^[a-zA-Z]\w{2,14}$" ng-model="signup.user.name" required/>
+    <div ng-messages="userDetailForm.name.$error" ng-if="userDetailForm.name.$dirty">
       <div ng-message="required">请输入您的用户ID</div>
+      <div ng-message="pattern">用户名只能包含字符、数字和下划线，以字母开头，长度在3~15之间</div>
     </div>
   </md-input-container>
   <md-input-container>
     <label>密码</label>
-    <input name="password" type="password" ng-model="signup.user.password" required/>
+    <input name="password" pattern="^[a-zA-Z]\w{5,17}$" type="password" ng-model="signup.user.password" required/>
     <div ng-messages="userDetailForm.password.$error" ng-if="userDetailForm.password.$dirty">
       <div ng-message="required">请输入您的密码！</div>
+      <div ng-message="pattern">密码只能包含字符、数字和下划线，以字母开头，长度在6~18之间</div>
     </div>
   </md-input-container>
-  <md-input-container>
-    <md-button class="md-primary md-raised" ng-disabled="!userDetailForm.$valid" type="submit">提交注册</md-button>
-  </md-input-container>
+  <md-button class="md-primary md-raised" ng-disabled="!userDetailForm.$valid" type="submit">提交注册</md-button>
 </form>

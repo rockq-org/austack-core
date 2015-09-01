@@ -14,7 +14,7 @@ var crypto = require('crypto');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
 var auth = require('../../lib/auth/auth.service');
-
+var Q = require('q');
 var Schema = mongoose.Schema;
 
 /**
@@ -29,10 +29,14 @@ var Schema = mongoose.Schema;
  * @property {String} salt - Salt used to build the password
  */
 var UserDefinition = {
-  name: {
+  mobile: {
     type: String,
-    required: true
+    required: true,
+    match: /^1\d{10}$/
   },
+  avatar: String,
+  email: String,
+  company: String,
   role: {
     type: String,
     default: 'user',
@@ -44,19 +48,28 @@ var UserDefinition = {
     default: false
   },
   hashedPassword: String,
-  userId: String,
+  name: {
+    type: String,
+    match: /^[a-zA-Z0-9\-]{1,}[a-zA-Z0-9]$/ //字母数字及“-”并以字母数字结尾
+  },
   signupAt: {
     type: Date,
     default: Date.now
   },
   verifyCode: String,
   verifyCodeExpiredAt: Date,
+  verifyCodeLatestSendTime: Date,
   isVerified: {
     type: Boolean,
     default: false
   },
   provider: String,
-  salt: String
+  salt: String,
+  // Dave's repositories, in prototype, just support
+  // one repository, repos are actually repo names, also
+  // shape names as shapes are store in Shape collection.
+  // Each repo has one Shape record.
+  repos: [String]
 };
 
 /**
@@ -103,12 +116,12 @@ UserSchema
 
 // Validate username is not taken
 UserSchema
-  .path('name')
-  .validate(validateUniqueName, 'The specified username is already in use.');
+  .path('mobile')
+  .validate(validateUniqueMobile, 'The specified username is already in use.');
 
 UserSchema
-  .path('userId')
-  .validate(validateUniqueUserId, 'The specified userId is already in use.');
+  .path('name')
+  .validate(validateUniqueName, 'The specified userId is already in use.');
 
 // Validate unique root user
 UserSchema
@@ -176,12 +189,27 @@ UserSchema.statics.getRoot = function (cb) {
   }, cb);
 };
 
+UserSchema.statics.getById = function (id) {
+  var d = Q.defer();
+  this.findOne({
+    _id: id
+  }, function (err, user) {
+    logger.log(id, err, user);
+    if (err) {
+      return d.reject(err);
+    }
+    d.resolve(user);
+  });
+
+  return d.promise;
+};
+
 /**
  * Attach pre hook plugins
  */
 UserSchema.plugin(requestContext, {
   propertyName: 'modifiedBy',
-  contextPath: 'request:acl.user.name'
+  contextPath: 'request:acl.user.mobile'
 });
 
 /**
@@ -232,10 +260,15 @@ function getProfile() {
   // jshint validthis: true
   return {
     '_id': this._id,
+    'mobile': this.mobile,
     'name': this.name,
+    'avatar': this.avatar,
+    'email': this.email,
+    'company': this.company,
     'active': this.active,
     'role': this.role,
-    'info': this.info
+    'info': this.info,
+    'signupAt': this.signupAt
   };
 }
 
@@ -282,13 +315,13 @@ function validatePresenceOf(value) {
  * @param {String} value - The username to check for uniqueness
  * @param {Function} respond - The callback function
  */
-function validateUniqueName(value, respond) {
+function validateUniqueMobile(value, respond) {
   // jshint validthis: true
   var self = this;
 
   // check for uniqueness of user name
   this.constructor.findOne({
-    name: value
+    mobile: value
   }, function (err, user) {
     if (err) {
       throw err;
@@ -304,20 +337,21 @@ function validateUniqueName(value, respond) {
 }
 
 /**
- * Validate the uniqueness of the given userId
+ * Validate the uniqueness of the given name
  *
  * @api private
- * @param {String} value - The userId to check for uniqueness
+ * @param {String} value - The name to check for uniqueness
  * @param {Function} respond - The callback function
  */
-function validateUniqueUserId(value, respond) {
+function validateUniqueName(value, respond) {
   // jshint validthis: true
   var self = this;
 
-  // check for uniqueness of userId
+  // check for uniqueness of name
   this.constructor.findOne({
-    userId: value
+    name: value
   }, function (err, user) {
+    logger.log(err);
     if (err) {
       throw err;
     }
@@ -395,8 +429,14 @@ function preSave(next) {
       // delete the role to prevent loosing the root status
       delete self.role;
 
+      if (!self.getContext) { // if no self.getContext - no root user check
+        return next();
+      }
+
+      // if req.user exists, self.getContext is imported with the logined user.
       // get the user role to check if a root user will perform the update
       var userRole = self.getContext('request:acl.user.role');
+
       if (!userRole) { // no user role - no root user check
         return next();
       }
@@ -449,5 +489,5 @@ module.exports = {
    *  The registered mongoose model instance of the User model
    *  @type {User}
    */
-  model: mongoose.model('User', UserSchema)
+  model: mongoose.model('User', UserSchema, '_users')
 };

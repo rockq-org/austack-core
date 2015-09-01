@@ -3,3 +3,94 @@
 
 // injector
 // endinjector
+html,
+body {
+  font-family: 'Microsoft YaHei', RobotoDraft, Roboto, 'Helvetica Neue', sans-serif
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.tip {
+  color: #fff;
+  background-color: $as-accent;
+}
+
+md-dialog {
+  max-width: 750px;
+  min-width: 360px;
+  md-toolbar {
+    height: 48px !important;
+    min-height: 48px;
+  }
+  md-dialog-content {
+    padding: 16px;
+  }
+}
+
+.md-toolbar-tools .md-button {
+  min-width: inherit;
+}
+
+md-menu-item > .md-button {
+  display: flex;
+  display: -moz-box;
+}
+
+form {
+  md-list-item .md-no-style {
+    padding: 0 2px;
+  }
+  md-list-item .md-secondary {
+    right: 6px !important;
+  }
+  md-switch .md-container {
+    margin-right: 0px;
+  }
+}
+
+md-input-container {
+  .md-input[disabled],
+  [disabled] & .md-input {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  md-select[disabled] .md-select-value {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .message {
+    color: $as-warn;
+    position: absolute;
+    order: 3;
+    font-size: 12px;
+    line-height: 24px;
+    padding-right: 30px;
+  }
+}
+
+.collapse-animate {
+  background-color: #eee;
+  max-height: 3000px;
+  transition: all 0.3s ease-in-out;
+  &.ng-hide {
+    background-color: #fff;
+    max-height: 0;
+  }
+}

@@ -1,0 +1,132 @@
+<md-dialog id="repo-code" flex="99">
+
+  <md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+      <h2>代码示例</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="code.close()" aria-label="关闭">
+        <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <md-select ng-model="code.selectedApp" placeholder="选择一个应用">
+      <md-option ng-value="item" ng-repeat="item in code.applicationList">[应用名] {{ item.name }} - [ClientId] {{ item.clientId }}</md-option>
+    </md-select>
+    <md-button class="md-primary" ng-click="code.showStep('install-dep')">&nbsp; &nbsp; 安装依赖库 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('install-dep')">
+      <hljs lang="bash" should-interpolate="true" re-render="code.selectedApp">npm install --save austack-nodejs
+      </hljs>
+    </md-content>
+    <md-button class="md-primary" ng-click="code.showStep('init')">&nbsp; &nbsp; 初始化Austack </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('init')">
+      <hljs lang="bash" should-interpolate="true" re-render="code.selectedApp">var Austack = require('austack-nodejs');
+Austack.init({
+  clientId: '{{code.selectedApp.clientId}}',
+  apiBaseURL: '{{code.API_URL}}',
+  clientSecret: '{{code.selectedApp.clientSecret}}'
+});
+      </hljs>
+    </md-content>
+
+    <md-button class="md-primary" ng-click="code.showStep('1')">1. 获取JWT令牌 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('1')">
+      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">//获取 application jwt
+Austack.getApplicationJwt() // 默认已经保存在内存中
+  .then(function (applicationJwt) {
+    // 你可以保存该applicationJwt到你的服务器数据库里
+    console.log('success get applicationJwt', applicationJwt);
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+      </hljs>
+    </md-content>
+    <md-button class="md-primary" ng-click="code.showStep('2')">2. 创建新用户 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('2')">
+      <hljs lang="js" should-interpolate="true" re-render="code.selectedApp">var data = {
+  mobile: '1894502xxxx' //替换成手机号即可
+};
+
+Austack.createNewUser(data)
+  .then(function(user){
+    console.log('success create new user', user);
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+      </hljs>
+    </md-content>
+    <md-button class="md-primary" ng-click="code.showStep('3')">3. 获取指定用户详细信息 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('3')">
+      <hljs lang="js">
+        var uid = 'xxx';
+Austack.getUserDetail(uid)
+  .then(function(user){
+    console.log('success get user', user);
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+      </hljs>
+    </md-content>
+    <md-button class="md-primary" ng-click="code.showStep('4')">4. 更新指定用户详细信息 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('4')">
+      <hljs lang="js">
+var uid = 'linda1';
+var data = {
+  mobile: 'xxxxx'
+};
+
+Austack.updateUser(uid, data)
+  .then(function (data) {
+    logger.log(data);
+    res.status(200).json(data);
+  })
+  .fail(function (err) {
+    logger.log(err);
+    res.status(400).json({
+      message: err
+    });
+  });
+      </hljs>
+    </md-content>
+    <md-button class="md-primary" ng-click="code.showStep('5')">5. 删除指定用户 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('5')">
+      <hljs lang="js">
+var uid = 'linda1';
+
+Austack.deleteUser(uid)
+  .then(function (data) {
+    logger.log(data);
+    res.status(200).json(data);
+  })
+  .fail(function (err) {
+    logger.log(err);
+    res.status(400).json({
+      message: err
+    });
+  });
+      </hljs>
+    </md-content>
+    <md-button class="md-primary" ng-click="code.showStep('6')">6. 获取用户列表 </md-button>
+    <md-content class="collapse-animate" ng-show="code.isShowStep('6')">
+      <hljs lang="js">
+Austack.listUser()
+  .then(function (data) {
+    logger.log(data);
+    res.status(200).json(data);
+  })
+  .fail(function (err) {
+    logger.log(err);
+    res.status(400).json({
+      message: err
+    });
+  });
+      </hljs>
+    </md-content>
+    <br />
+
+  </md-dialog-content>
+</md-dialog>

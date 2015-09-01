@@ -1,0 +1,17 @@
+<ion-view view-title="Account">
+    <ion-content>
+        <ion-list>
+            <ion-toggle ng-model="settings.enableFriends">
+                Enable Friends
+            </ion-toggle>
+        </ion-list>
+        <h2>maybe put some name here</h2>
+        <p>
+            {{token}}
+        </p>
+        <button class="btn btn-lg btn-primary" ng-click="callApi()">Call API(do not work yet)</button>
+        <br />
+        <button class="btn-sm btn-warning" ng-click="logout()">Logout</button>
+        </div>
+    </ion-content>
+</ion-view>

@@ -44,14 +44,20 @@
    */
 
   /* @ngInject */
-  function User($resource, Config) {
+  function User(Resource, Config) {
     // factory members
-    var apiURL = Config.API + 'user';
+    var apiURL = Config.API_URL + 'users';
     var methods = {
       verifyMobile: {
         method: 'PUT',
         params: {
           controller: 'verifyMobile'
+        }
+      },
+      resendVerifyCode: {
+        method: 'PUT',
+        params: {
+          controller: 'resendVerifyCode'
         }
       },
       submitUserDetail: {
@@ -60,6 +66,13 @@
           controller: 'submitUserDetail'
         }
       },
+      setNewPassword: {
+        method: 'PUT',
+        params: {
+          controller: 'setNewPassword'
+        }
+      },
+
       changePassword: {
         method: 'PUT',
         params: {
@@ -80,7 +93,7 @@
       }
     };
 
-    return $resource(apiURL + '/:id/:controller', {}, methods);
+    return Resource(apiURL + '/:id/:controller', {}, methods);
   }
 
   /**
