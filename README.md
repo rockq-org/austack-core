@@ -1,5 +1,7 @@
 # Austack 认证即服务
 
+![image](https://cloud.githubusercontent.com/assets/3538629/9595072/c6767052-5096-11e5-949d-99d9267a1703.png)
+
 什么是认证即服务？
 
 http://blog.austack.com/2015/08/16/austack-nodejs-ionic-2/
