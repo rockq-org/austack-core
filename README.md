@@ -50,3 +50,9 @@ exports.users = [{
   active: true
 }];
 ```
+
+# License
+Copyright (c) 2015 Hain, Lyman, Neo, Wendy, contributors.
+
+Released under the [MIT license](https://tldrlegal.com/license/mit-license).
+
