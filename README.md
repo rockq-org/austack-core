@@ -13,11 +13,13 @@ http://blog.austack.com/2015/08/16/austack-nodejs-ionic-2/
 [Auth0](https://www.auth0.com)
 
 
-## Online Demo
-```
-http://console-stg.austack.com/
-account: dave1 password: dave1 
-```
+## Demo
+
+<embed src="http://player.youku.com/player.php/sid/XMTMyNTAxNDA5Ng==/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+
+### iframe
+
+<iframe height=498 width=510 src="http://player.youku.com/embed/XMTMyNTAxNDA5Ng==" frameborder=0 allowfullscreen></iframe>
 
 
 ## Project skeleton
