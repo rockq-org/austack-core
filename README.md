@@ -1,3 +1,5 @@
+> 已经有几个月没有更新了，2016年依旧有计划进行维护。 感兴趣的朋友联系我微信 hai_liang_wang, 或者 hailiang.hl.wang@gmail.com, 并说明是在github上看到austack的。
+
 # Austack 认证即服务
 
 ![image](https://cloud.githubusercontent.com/assets/3538629/9595072/c6767052-5096-11e5-949d-99d9267a1703.png)
@@ -93,7 +95,21 @@ exports.users = [{
 ```
 
 # License
-Copyright (c) 2015 Hain, Lyman, Neo, Wendy, contributors.
+Copyright (c) 2015 contributors.
+
+## Product Owner
+[Hai Liang Wang](https://github.com/Samurais)
+
+
+## Frontend && Backend Developer 
+[Lyman Lai](https://github.com/lymanlai)
+
+
+## User Experience & Frontend Developer
+[Neo Nie](https://github.com/nihgwu)
+
+## Graphics Designer
+[Wen Zhen Yu](https://github.com/wendy-yu)
 
 Released under the [MIT license](https://tldrlegal.com/license/mit-license).
 
