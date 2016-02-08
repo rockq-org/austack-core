@@ -11,7 +11,7 @@
     "ccap": "^0.6.0",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",
-    "connect-mongo": "^0.4.1",
+    "connect-mongo": "^1.1.0",
     "cookie-parser": "~1.0.1",
     "cors": "^2.7.1",
     "date-util": "^1.2.1",
@@ -26,9 +26,9 @@
     "method-override": "~1.0.0",
     "minimatch": "^2.0.8",
     "moment": "^2.10.5",
-    "mongoose": ">=3.8.8",
+    "mongoose": "4.4.1",
     "mongoose-createdmodified": "0.0.2",
-    "mongoose-request-context": "~0.0.1",
+    "mongoose-request-context": "0.0.5",
     "morgan": "~1.0.0",
     "nonce": "^1.0.3",
     "passport": "~0.2.0",
@@ -60,7 +60,7 @@
     "authentication"
   ],
   "engines": {
-    "node": ">=0.10.33"
+    "node": ">=4.2.1"
   },
   "author": "Dev Team of Beijing Arrking Tech Co., Ltd",
   "devDependencies": {
@@ -90,7 +90,7 @@
     "gulp-replace": "~0.5.0",
     "gulp-rev": "~3.0.1",
     "gulp-rev-replace": "~0.3.1",
-    "gulp-sass": "~1.3.0",
+    "gulp-sass": "^2.2.0",
     "gulp-size": "~1.2.0",
     "gulp-sourcemaps": "~1.3.0",
     "gulp-uglify": "~1.1.0",
