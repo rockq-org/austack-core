@@ -63,6 +63,7 @@ npm start
 cd austack-core
 export NODE_ENV=production
 gulp build
+# then publish dist/ into your CDN service.
 ```
 
 
