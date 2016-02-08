@@ -11,12 +11,12 @@ module.exports = {
   publicDir: 'server/public',
 
   mongo: {
-    uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
+    uri: 'mongodb://localhost:27017/' + process.env.DATABASE_NAME
   },
 
   logLevel: 'log',
 
   apiBaseURL: 'http://localhost:9001/api',
 
-  seedDB: false
+  seedDB: true
 };
