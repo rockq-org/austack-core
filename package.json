@@ -21,6 +21,7 @@
     "express": "~4.9.0",
     "express-jwt": "^3.0.0",
     "express-session": "^1.11.3",
+    "gulp": "^3.9.1",
     "jsonwebtoken": "^5.0.0",
     "lodash": "~3.2.0",
     "method-override": "~1.0.0",
