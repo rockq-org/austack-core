@@ -3,6 +3,7 @@
  */
 
 var config = require('../../config');
+var logger = require('../../common').loggerUtil.getLogger('lib/sms');
 
 var smsProvider;
 

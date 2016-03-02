@@ -20,7 +20,7 @@ var Q = require('q');
 var LoginRecord = require('./loginRecord.model').model;
 var LoginRecordDailyCount = require('./loginRecordDailyCount.model').model;
 var RepoProxy = require('../repo/repo.proxy');
-var SmsRecordModel = require('../../lib/sms/smsRecord.model.js').model;
+var SmsRecordModel = require('../../services/sms/smsRecord.model.js').model;
 /**
  * LoginRecordController constructor
  * @classdesc Controller that handles /api/loginRecords route requests

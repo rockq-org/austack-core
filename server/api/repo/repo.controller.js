@@ -14,7 +14,7 @@ var Shape = require('../shape/shape.model');
 var Repo = require('./repo.proxy');
 var Config = require('../../config');
 var Q = require('q');
-var mongooseUtil = require('../../lib/mongoose/mongoose-util');
+var mongooseUtil = require('../../persistence/mongoose/mongoose-util');
 
 /**
  * RepoController constructor

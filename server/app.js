@@ -31,13 +31,13 @@ app.use(function (req, res, next) {
     '/img/logo.png',
     '/img/favicon.ico'
   ];
-  if( arr.indexOf(req.originalUrl) === -1 ){
-    console.log('================================ originalUrl', req.originalUrl);
-    console.log('================================ baseUrl', req.baseUrl);
-    console.log('================================ body', req.body);
-    console.log('================================ params', req.params);
-    console.log('================================ path', req.path);
-  }
+  // if( arr.indexOf(req.originalUrl) === -1 ){
+  //   console.log('================================ originalUrl', req.originalUrl);
+  //   console.log('================================ baseUrl', req.baseUrl);
+  //   console.log('================================ body', req.body);
+  //   console.log('================================ params', req.params);
+  //   console.log('================================ path', req.path);
+  // }
 
   next();
 });

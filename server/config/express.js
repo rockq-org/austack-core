@@ -19,6 +19,7 @@ var methodOverride = require('method-override');
 var errorHandler = require('errorhandler');
 var passport = require('passport');
 var config = require('./index');
+var logger = require('../common').loggerUtil.getLogger('config/express');
 
 // export the express configuration function
 module.exports = initExpress;
@@ -34,7 +35,7 @@ function initExpress(app) {
   console.log(distDir);
   var publicDir = path.join(config.root, config.publicDir);
 
-  console.log(distDir, publicDir);
+  logger.info(distDir, publicDir);
 
   app.set('ip', config.ip);
   app.set('port', config.port);

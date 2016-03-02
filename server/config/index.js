@@ -34,7 +34,7 @@ var common = {
   port: process.env.PORT || 9001,
 
   corsOptions: {
-    credentials: true
+    credentials: true,
   },
 
   // Secret for session, you will want to change this and make it an environment variable

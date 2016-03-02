@@ -13,7 +13,7 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
-var mongoosePaginatePlugin = require('../../lib/mongoose/mongoose-paginate');
+var mongoosePaginatePlugin = require('../../persistence/mongoose/mongoose-paginate');
 /**
  * The Application model definition
  * @type {Object}
