@@ -2,7 +2,7 @@
  * Utilities for mongoose
  */
 var Q = require('q');
-var Config = require('../../config');
+var Config = require('../config');
 
 exports.getQuery = _getQuery;
 exports.getPaginateOptions = _getPaginateOptions;

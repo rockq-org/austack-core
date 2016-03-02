@@ -11,7 +11,7 @@ module.exports = ApplicationController;
 var _ = require('lodash');
 var ParamController = require('../../controllers/param.controller');
 var roles = require('../../permission/roles');
-var mongooseUtil = require('../../persistence/mongoose/mongoose-util');
+var mongooseUtil = require('../../persistence/mongoose-util');
 
 /**
  * The Application model instance
