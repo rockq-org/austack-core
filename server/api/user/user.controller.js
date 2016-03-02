@@ -9,7 +9,7 @@
 
 var _ = require('lodash');
 var shortid = require('shortid');
-var ParamController = require('../../lib/controllers/param.controller');
+var ParamController = require('../../controllers/param.controller');
 var config = require('../../config');
 var SMS = require('../../services/sms/index');
 var Shape = require('../shape/shape.proxy');

@@ -8,7 +8,7 @@
 'use strict';
 
 var path = require('path');
-var middleware = require('./lib/middleware');
+var middleware = require('./common/responses');
 
 module.exports = function (app) {
 

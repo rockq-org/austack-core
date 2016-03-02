@@ -9,7 +9,7 @@
 module.exports = ApplicationController;
 
 var _ = require('lodash');
-var ParamController = require('../../lib/controllers/param.controller');
+var ParamController = require('../../controllers/param.controller');
 var roles = require('../../lib/auth/roles');
 var mongooseUtil = require('../../persistence/mongoose/mongoose-util');
 

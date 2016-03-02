@@ -9,7 +9,7 @@
 module.exports = LoginRecordController;
 
 var _ = require('lodash');
-var ParamController = require('../../lib/controllers/param.controller');
+var ParamController = require('../../controllers/param.controller');
 var auth = require('../../lib/auth/auth.service');
 var Q = require('q');
 

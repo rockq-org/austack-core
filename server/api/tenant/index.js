@@ -14,7 +14,7 @@
 
 var router = require('express').Router();
 var contextService = require('request-context');
-var middleware = require('../../lib/middleware');
+var middleware = require('../../common/responses');
 var TenantController = require('./tenant.controller');
 var auth = require('../../lib/auth/auth.service');
 

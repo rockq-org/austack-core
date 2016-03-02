@@ -9,7 +9,7 @@
 module.exports = AppUserController;
 
 var _ = require('lodash');
-var ParamController = require('../../lib/controllers/param.controller');
+var ParamController = require('../../controllers/param.controller');
 var RepoProxy = require('../repo/repo.proxy');
 var shortid = require('shortid');
 var ApplicationModel = require('../application/application.model').model;

@@ -3,7 +3,7 @@
 module.exports = TenantController;
 
 var _ = require('lodash');
-var ParamController = require('../../lib/controllers/param.controller');
+var ParamController = require('../../controllers/param.controller');
 var LoginRecordModel = require('../loginRecord/loginRecord.model').model;
 var ApplicationModel = require('../application/application.model').model;
 var User = require('../user/user.model').model;

@@ -5,7 +5,7 @@
 'use strict';
 var router = require('express').Router();
 var contextService = require('request-context');
-var middleware = require('../../lib/middleware');
+var middleware = require('../../common/responses');
 var RepoController = require('./repo.controller');
 var auth = require('../../lib/auth/auth.service');
 
