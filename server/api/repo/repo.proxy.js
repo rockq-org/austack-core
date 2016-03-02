@@ -19,6 +19,7 @@ var u = require('util');
 var Q = require('q');
 var shortid = require('shortid');
 var _ = require('lodash');
+var logger = require('../../common').loggerUtil.getLogger('api/repo.proxy');
 
 module.exports = {
   import: _import,
@@ -84,7 +85,7 @@ function _create(shape) {
     if (!err) {
       deferred.reject('repo does exist.');
     } else {
-      logger.log(shape.mSchema);
+      logger.debug(shape.mSchema);
       // https://github.com/arrking/austack-core/issues/181
       var mschema = new mongoose.Schema(convertSchema(shape.mSchema), {
         strict: false

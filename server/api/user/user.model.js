@@ -16,6 +16,7 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
 var auth = require('../../permission/auth.service');
 var Q = require('q');
 var Schema = mongoose.Schema;
+var logger = require('../../common').loggerUtil.getLogger('api/user.model');
 
 /**
  * The User model definition

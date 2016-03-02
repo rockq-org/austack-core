@@ -4,20 +4,20 @@
  */
 
 'use strict';
-logger.log('seeding');
-var mongoose = require('mongoose');
-var env = process.env.NODE_ENV || 'development';
-var Config = require('../config');
-var ObjectId = mongoose.Schema.Types.ObjectId;
-var Q = require('q');
-var S = require('string');
-var _ = require('lodash');
-var util = require('util');
-var shortid = require('shortid');
-var User = require('../api/user/user.model').model;
-var Application = require('../api/application/application.model').model;
-var Shape = require('../api/shape/shape.proxy');
-var Repo = require('../api/repo/repo.proxy');
+var mongoose = require('mongoose'),
+  env = process.env.NODE_ENV || 'development',
+  Config = require('../config'),
+  ObjectId = mongoose.Schema.Types.ObjectId,
+  Q = require('q'),
+  S = require('string'),
+  _ = require('lodash'),
+  util = require('util'),
+  shortid = require('shortid'),
+  User = require('../api/user/user.model').model,
+  Application = require('../api/application/application.model').model,
+  Shape = require('../api/shape/shape.proxy'),
+  Repo = require('../api/repo/repo.proxy'),
+  logger = require('../common').loggerUtil.getLogger('persistence/seed');
 
 /*
 // Insert some data needed to bootstrap or init the application

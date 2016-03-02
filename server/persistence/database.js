@@ -7,6 +7,7 @@
 
 var mongoose = require('mongoose');
 var config = require('../config');
+var logger = require('../common').loggerUtil.getLogger('persistence/database');
 
 // connect to mongodb
 var connection = mongoose.connect(config.mongo.uri, config.mongo.options);

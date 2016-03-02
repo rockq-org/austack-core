@@ -5,6 +5,7 @@
 var Shape = require('./shape.model');
 var u = require('util');
 var Q = require('q');
+var logger = require('../../common').loggerUtil.getLogger('api/shape.proxy');
 
 /**
  * create a shape with params
@@ -18,7 +19,7 @@ exports.create = function (params) {
   s.ownerId = params.ownerId;
   s.type = params.type;
   s.mSchema = params.mSchema;
-  logger.log(params.mSchema);
+  logger.debug(params.mSchema);
   s.description = params.description;
   s.save(function (err, doc) {
     if (err) {
