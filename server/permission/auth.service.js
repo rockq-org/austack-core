@@ -11,9 +11,9 @@ var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var roles = require('./roles');
-var config = require('../../config');
+var config = require('../config');
 var contextService = require('request-context');
-var Application = require('../../api/application/application.model').model;
+var Application = require('../api/application/application.model').model;
 var Q = require('q');
 
 var secretCallback = function (req, payload, done) {

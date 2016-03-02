@@ -7,7 +7,7 @@ var router = require('express').Router();
 var contextService = require('request-context');
 var middleware = require('../../common/responses');
 var ShapeController = require('./shape.controller');
-var auth = require('../../lib/auth/auth.service');
+var auth = require('../../permission/auth.service');
 
 // Export the configured express router for the shape api routes
 module.exports = router;

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var config = require('../../config/');
+var config = require('../config/');
 
 /**
  * The array of user roles

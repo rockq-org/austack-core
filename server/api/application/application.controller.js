@@ -10,7 +10,7 @@ module.exports = ApplicationController;
 
 var _ = require('lodash');
 var ParamController = require('../../controllers/param.controller');
-var roles = require('../../lib/auth/roles');
+var roles = require('../../permission/roles');
 var mongooseUtil = require('../../persistence/mongoose/mongoose-util');
 
 /**

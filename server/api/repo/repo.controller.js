@@ -8,7 +8,7 @@ module.exports = RepoController;
 
 var _ = require('lodash');
 var shortid = require('shortid');
-var roles = require('../../lib/auth/roles');
+var roles = require('../../permission/roles');
 var User = require('../user/user.model').model;
 var Shape = require('../shape/shape.model');
 var Repo = require('./repo.proxy');

@@ -11,7 +11,7 @@ var Schema = mongoose.Schema;
 module.exports = ShapeController;
 
 var _ = require('lodash');
-var roles = require('../../lib/auth/roles');
+var roles = require('../../permission/roles');
 var Repo = require('../repo/repo.proxy');
 
 /**

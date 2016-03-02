@@ -9,7 +9,7 @@
 'use strict';
 
 var router = require('express').Router();
-var config = require('../../config/');
+var config = require('../config/');
 
 // // export the configures express router
 module.exports = router;
@@ -18,8 +18,8 @@ module.exports = router;
  * The authentication model: User
  * @type {user:model~User}
  */
-var User = require('../../api/user/user.model').model;
-var Application = require('../../api/application/application.model').model;
+var User = require('../api/user/user.model').model;
+var Application = require('../api/application/application.model').model;
 
 // username, password in user
 require('./local/passport').setup(User, config);

@@ -10,7 +10,7 @@ module.exports = LoginRecordController;
 
 var _ = require('lodash');
 var ParamController = require('../../controllers/param.controller');
-var auth = require('../../lib/auth/auth.service');
+var auth = require('../../permission/auth.service');
 var Q = require('q');
 
 /**

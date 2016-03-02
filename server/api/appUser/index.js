@@ -16,7 +16,7 @@ var router = require('express').Router();
 var contextService = require('request-context');
 var middleware = require('../../common/responses');
 var AppUserController = require('./appUser.controller');
-var auth = require('../../lib/auth/auth.service');
+var auth = require('../../permission/auth.service');
 
 // Export the configured express router for the appUser api routes
 module.exports = router;
