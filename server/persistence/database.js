@@ -6,7 +6,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var config = require('./index');
+var config = require('../config');
 
 // connect to mongodb
 var connection = mongoose.connect(config.mongo.uri, config.mongo.options);

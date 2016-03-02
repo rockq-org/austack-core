@@ -118,4 +118,4 @@ var common = {
 
 module.exports = _.merge(
   common,
-  require('./env/' + process.env.NODE_ENV + '.js') || {});
+  require('./environment/' + process.env.NODE_ENV + '.js') || {});
