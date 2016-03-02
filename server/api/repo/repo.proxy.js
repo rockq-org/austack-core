@@ -51,7 +51,6 @@ function _getModel(shape) {
   var schema = new mongoose.Schema(convertSchema(shape.mSchema));
   schema.plugin(mongoosePaginatePlugin);
   var model = mongoose.model(shape.name, schema, shape.name);
-  logger.log(shape.name, shape.mSchema);
   return model;
 }
 
@@ -85,7 +84,6 @@ function _create(shape) {
     if (!err) {
       deferred.reject('repo does exist.');
     } else {
-      logger.debug(shape.mSchema);
       // https://github.com/arrking/austack-core/issues/181
       var mschema = new mongoose.Schema(convertSchema(shape.mSchema), {
         strict: false
@@ -111,9 +109,6 @@ function _import(repoName, data) {
       name: repoName
     })
     .then(function (doc) {
-      if (repoName == 'repo_root') {
-        logger.log(repoName, data);
-      };
       if (doc) {
         return _getModel(doc).create(data);
       } else {
@@ -154,17 +149,15 @@ function insertOrUpdate(user, M) {
 function getRepo(data) {
   var d = Q.defer();
   var ownerId = data.ownerId;
-  logger.log(data);
 
   User.getById(ownerId)
     .then(function (user) {
       // var shapeName = 'repo_' + user.userId;
       var shapeName = user.repos[0];
-      logger.log('shapename', shapeName);
+      logger.debug('shapename', shapeName);
       ShapeProxy.getShapeByName(shapeName)
         .then(function (shape) {
           var repoModel = _getModel(shape);
-          logger.log(shape.name, shape.mSchema, repoModel);
           d.resolve(repoModel);
         });
     });
@@ -179,11 +172,10 @@ function getRepoName(ownerId) {
     .then(function (user) {
       // var shapeName = 'repo_' + user.userId;
       var shapeName = user.repos[0];
-      logger.log(shapeName);
       d.resolve(shapeName);
     })
     .catch(function (err) {
-      logger.log(err);
+      logger.error(err);
       d.reject(err);
     });
 
@@ -196,11 +188,10 @@ function getRepoByName(repoName) {
   ShapeProxy.getShapeByName(repoName)
     .then(function (shape) {
       var repoModel = _getModel(shape);
-      logger.log(shape.name, shape.mSchema, repoModel);
       d.resolve(repoModel);
     })
     .catch(function (err) {
-      logger.log(err);
+      logger.error(err);
       d.reject(err);
     });
 
@@ -225,10 +216,9 @@ function createAppUser(repoModel, mobile) {
       };
       repoModel.create(user, function (err, _user) {
         if (err) {
-          logger.log(err);
+          logger.error(err);
           return d.reject('error while repoModel.create');
         }
-        logger.log(_user, repoModel.modelName);
         return d.resolve(_user);
       });
     });

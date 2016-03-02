@@ -2,10 +2,15 @@
 
 process.env.DATABASE_NAME = process.env.DATABASE_NAME || 'austack-dev';
 
+var corsWhitelist = ['http://localhost:3000'];
+
 module.exports = {
 
   corsOptions: {
-    origin: 'http://localhost:3000'
+    origin: function (origin, callback) {
+      var originIsWhitelisted = corsWhitelist.indexOf(origin) !== -1;
+      callback(null, originIsWhitelisted);
+    }
   },
 
   publicDir: 'server/public',

@@ -6,6 +6,7 @@
 'use strict';
 
 var config = require('../config');
+var logger = require('../common').loggerUtil.getLogger('socketio');
 
 // export the socket configuration function
 module.exports = initSocketIO;
@@ -23,7 +24,7 @@ function onDisconnect(socket) {}
 function onConnect(socket) {
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
-    console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
+    logger.debug('[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
 
   // Insert sockets below
@@ -66,11 +67,11 @@ function initSocketIO(socketio) {
     // Call onDisconnect.
     socket.on('disconnect', function () {
       onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.address);
+      logger.debug('[%s] DISCONNECTED', socket.address);
     });
 
     // Call onConnect.
     onConnect(socket);
-    console.info('[%s] CONNECTED', socket.address);
+    logger.debug('[%s] CONNECTED', socket.address);
   });
 };
