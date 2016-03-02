@@ -5,7 +5,7 @@
 
 'use strict';
 
-var config = require('./index');
+var config = require('../config');
 
 // export the socket configuration function
 module.exports = initSocketIO;

@@ -10,7 +10,7 @@ require('date-util');
 var express = require('express');
 var socketio = require('socket.io');
 var config = require('./config/index');
-var socketConfig = require('./config/socketio');
+var socketConfig = require('./services/socketio');
 var db = require('./persistence/database');
 var app = express();
 var express = require('express');
